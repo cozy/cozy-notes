@@ -1,0 +1,65 @@
+{
+  "name": "cozy-notes",
+  "version": "1.0.0",
+  "scripts": {
+    "tx": "tx pull --all || true",
+    "lint": "yarn lint:js && yarn lint:styles",
+    "lint:js": "cs lint '{src,test}/**/*.{js,jsx}'",
+    "lint:styles": "stylint src/styles --config ./.stylintrc",
+    "prebuild": "yarn lint",
+    "build": "yarn build:browser",
+    "build:browser": "cs build --browser",
+    "build:mobile": "cs build --mobile",
+    "watch": "yarn watch:browser",
+    "watch:browser": "cs watch --browser",
+    "watch:mobile": "cs watch --mobile",
+    "start": "cs start --hot --browser",
+    "deploy": "git-directory-deploy --directory build/ --branch ${DEPLOY_BRANCH:-build} --repo=${DEPLOY_REPOSITORY:-https://$GITHUB_TOKEN@github.com/edas/myapp.git}",
+    "test": "cs test --verbose --coverage",
+    "cozyPublish": "git fetch origin ${DEPLOY_BRANCH:-build}:${DEPLOY_BRANCH:-build} && cs publish --token $REGISTRY_TOKEN --build-commit $(git rev-parse ${DEPLOY_BRANCH:-build})"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cozy/cozy-notes.git"
+  },
+  "author": "",
+  "contributors": [],
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/cozy/cozy-notes/issues"
+  },
+  "homepage": "https://github.com/cozy/cozy-notes#readme",
+  "devDependencies": {
+    "babel-preset-cozy-app": "1.2.5",
+    "enzyme": "3.8.0",
+    "enzyme-adapter-react-16": "1.9.1",
+    "eslint-plugin-prettier": "3.0.1",
+    "eslint-plugin-react": "7.12.4",
+    "git-directory-deploy": "1.5.1",
+    "install-peers": "^1.0.3",
+    "prettier": "1.15.3",
+    "react-hot-loader": "4.6.5",
+    "react-test-renderer": "16.8.1",
+    "redux-mock-store": "1.5.3",
+    "stylint": "1.5.9"
+  },
+  "dependencies": {
+    "@atlaskit/editor-core": "^106.1.1",
+    "@atlaskit/emoji": "^58.1.1",
+    "@atlaskit/media-card": "^57.0.2",
+    "@atlaskit/media-core": "^29.0.1",
+    "@atlaskit/media-editor": "^31.0.1",
+    "@atlaskit/media-picker": "^37.0.1",
+    "@atlaskit/media-viewer": "^39.0.1",
+    "cozy-bar": "6.12.0",
+    "cozy-client": "6.16.0",
+    "cozy-scripts": "1.13.0",
+    "cozy-ui": "17.6.0",
+    "eslint-config-cozy-app": "1.1.8",
+    "lodash.debounce": "^4.0.8",
+    "react": "16.8.1",
+    "react-dom": "16.8.1",
+    "react-intl": "^2.8.0",
+    "react-router-dom": "4.3.1"
+  }
+}
