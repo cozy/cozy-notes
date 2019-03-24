@@ -4,8 +4,6 @@ import { withMutations } from 'cozy-client'
 
 import { withRouter } from 'react-router-dom'
 
-import Input from 'cozy-ui/react/Input'
-import Label from 'cozy-ui/react/Label'
 import Button from 'cozy-ui/react/Button'
 
 import doctype from './doctype'
@@ -19,24 +17,30 @@ class Add extends Component {
     }
   }
 
-  handleClick = async (event) => {
-    this.setState(() => { isWorking: true })
+  handleClick = async () => {
+    this.setState(() => {
+      true
+    })
     const { createDocument } = this.props
-    const {data: doc} = await createDocument(doctype, { })
-    this.setState(() => { isWorking: false })
+    const { data: doc } = await createDocument(doctype, {})
+    this.setState(() => {
+      false
+    })
     this.props.history.push(`/n/${doc.id}`)
   }
 
   render() {
     const { isWorking } = this.state
-    return <Button
-      onClick={this.handleClick}
-      type="submit"
-      busy={isWorking}
-      label="ajouter une note"
-      size="large"
-      extension="narrow"
-    />
+    return (
+      <Button
+        onClick={this.handleClick}
+        type="submit"
+        busy={isWorking}
+        label="ajouter une note"
+        size="large"
+        extension="narrow"
+      />
+    )
   }
 }
 

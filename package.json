@@ -8,6 +8,7 @@
     "lint:styles": "stylint src/styles --config ./.stylintrc",
     "prebuild": "yarn lint",
     "build": "yarn build:browser",
+    "build:browser:dev": "cs build --browser --development",
     "build:browser": "cs build --browser",
     "build:mobile": "cs build --mobile",
     "watch": "yarn watch:browser",
@@ -45,12 +46,9 @@
   },
   "dependencies": {
     "@atlaskit/editor-core": "^106.1.1",
-    "@atlaskit/emoji": "^58.1.1",
-    "@atlaskit/media-card": "^57.0.2",
     "@atlaskit/media-core": "^29.0.1",
     "@atlaskit/media-editor": "^31.0.1",
-    "@atlaskit/media-picker": "^37.0.1",
-    "@atlaskit/media-viewer": "^39.0.1",
+    "bufferutil": "^4.0.1",
     "cozy-bar": "6.12.0",
     "cozy-client": "6.16.0",
     "cozy-scripts": "1.13.0",
@@ -60,6 +58,10 @@
     "react": "16.8.1",
     "react-dom": "16.8.1",
     "react-intl": "^2.8.0",
-    "react-router-dom": "4.3.1"
+    "react-router-dom": "4.3.1",
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0",
+    "utf-8-validate": "^5.0.2",
+    "uws": "10.148.1"
   }
 }

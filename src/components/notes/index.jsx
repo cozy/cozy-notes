@@ -6,13 +6,5 @@ import query from './query'
 import schema from './schema'
 export * from './utils'
 
-
 //
-export {
-  List,
-  Editor,
-  Add,
-  doctype,
-  query,
-  schema
-}
+export { List, Editor, Add, doctype, query, schema }

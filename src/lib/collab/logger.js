@@ -3,8 +3,10 @@ export const logger = (
   data = null,
   style = 'color:blue;font-weight:bold;'
 ) => {
-  console.log(`%cCollab-Edit: ${msg}`, style);
+  // eslint-disable-next-line no-console
+  console.log(`%cCollab-Edit: ${msg}`, style)
   if (data) {
-    console.log(data);
+    // eslint-disable-next-line no-console
+    console.log(data)
   }
 }

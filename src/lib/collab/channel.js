@@ -1,15 +1,11 @@
-import { utils } from '@atlaskit/util-service-support';
-import { EventEmitter2 } from 'eventemitter2';
-import { getVersion, sendableSteps } from 'prosemirror-collab';
-import { logger } from './logger';
-import { Step } from 'prosemirror-transform';
-
+import { EventEmitter2 } from 'eventemitter2'
+import { getVersion, sendableSteps } from 'prosemirror-collab'
+import { logger } from './logger'
 
 export class Channel {
-
-  constructor(config, pubSubClient) {
-    this.config = config;
-    this.pubSubClient = pubSubClient;
+  constructor(config, serviceClient) {
+    this.config = config
+    this.service = serviceClient
     this.eventEmitter = new EventEmitter2()
   }
 
@@ -18,27 +14,23 @@ export class Channel {
    */
   async getDocument() {
     try {
-      const { doc, version } = await utils.requestService(
-        this.config,
-        {
-          path: `document/${this.config.docId}`,
-        },
-      );
-
+      const { docId } = this.config
+      const { doc, version } = await this.service.getDoc(docId)
+      console.log("channel getDoc return value", { doc, version })
       return {
         doc,
-        version,
-      };
+        version
+      }
     } catch (err) {
       logger(
         `Collab-Edit: Document "${
           this.config.docId
-        }" does not exist. Creating one locally.`,
-      );
+        }" does not exist. Creating one locally.`
+      )
       return {
-        doc: {},
-        version: 1,
-      };
+        doc: {"type":"doc","content":[{"type":"paragraph"}]},
+        version: 1
+      }
     }
   }
 
@@ -46,93 +38,75 @@ export class Channel {
    * Connect to pubsub to start receiving events
    */
   async connect() {
-    const { docId } = this.config;
-    const { doc, version } = await this.getDocument();
+    const { docId } = this.config
+    const { doc, version } = await this.getDocument()
 
-    this.pubSubClient.on('CONNECT', () => {
-      logger('Connected to FPS-service');
-    });
+    this.service.join(docId)
 
-    this.pubSubClient.join([`ari:cloud::fabric:collab-service/${docId}`]);
-    this.pubSubClient.on(
-        'avi:pf-collab-service:steps:created',
-        (event, payload) => {
-          logger('Received FPS-payload', { payload });
-          this.emit('data', payload);
-        },
-      )
-    this.pubSubClient.on(
-        'avi:pf-collab-service:telepointer:updated',
-        (event, payload) => {
-          logger('Received telepointer-payload', { payload });
-          this.emit('telepointer', payload);
-        },
-      );
+    this.service.onStepsCreated(docId, data => {
+      logger('Received FPS-payload', data)
+      this.emit('data', data)
+    })
+    this.service.onTelepointerUpdated(docId, payload => {
+      logger('Received telepointer-payload', { payload })
+      this.emit('telepointer', payload)
+    })
 
     this.eventEmitter.emit('connected', {
       doc,
-      version,
-    });
+      version
+    })
   }
 
   debounce(getState) {
-    logger(`Debouncing steps`);
+    logger(`Debouncing steps`)
 
     if (this.debounced) {
-      clearTimeout(this.debounced);
+      clearTimeout(this.debounced)
     }
 
     this.debounced = window.setTimeout(() => {
-      logger(`Sending debounced`);
-      this.sendSteps(getState(), getState);
-    }, 250);
+      logger(`Sending debounced`)
+      this.sendSteps(getState(), getState)
+    }, 250)
   }
 
   /**
    * Send steps to service
    */
   async sendSteps(state, getState, localSteps) {
+    const { docId } = this.config
+
     if (this.isSending) {
-      this.debounce(getState);
-      return;
+      this.debounce(getState)
+      return
     }
 
-    const version = getVersion(state);
+    const version = getVersion(state)
 
     // Don't send any steps before we're ready.
     if (typeof version === undefined) {
-      return;
+      return
     }
 
-    const { steps } = localSteps || sendableSteps(state) || { steps: [] }; // sendableSteps can return null..
+    const { steps } = localSteps || sendableSteps(state) || { steps: [] } // sendableSteps can return null..
 
     if (steps.length === 0) {
-      logger(`No steps to send. Aborting.`);
-      return;
+      logger(`No steps to send. Aborting.`)
+      return
     }
 
-    this.isSending = true;
+    this.isSending = true
 
     try {
-      const response = await utils.requestService(this.config, {
-        path: `document/${this.config.docId}/steps`,
-        requestInit: {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            version,
-            steps,
-            sessionId: this.config.userId
-          }),
-        },
-      });
-
-      this.isSending = false;
-      logger(`Steps sent and accepted by service.`);
-      this.emit('data', response);
+      this.isSending = false
+      const response = await this.service.pushSteps(docId, version, steps)
+      logger(`Steps sent and accepted by service.`)
+      this.emit('data', response)
     } catch (err) {
-      this.isSending = false;
-      logger(`Error sending steps: "${err}"`);
+      this.debounce(getState)
+      this.isSending = false
+      logger(`Error sending steps: "${err}"`)
     }
   }
 
@@ -140,51 +114,41 @@ export class Channel {
    * Get steps from version x to latest
    */
   async getSteps(version) {
-    return await utils.requestService(this.config, {
-      path: `document/${this.config.docId}/steps`,
-      queryParams: {
-        version,
-      },
-    });
+    const { docId } = this.config
+    return await this.service.getSteps(docId, version)
   }
 
   /**
    * Send telepointer
    */
-  async sendTelepointer(data: any) {
-    logger(`Sending telepointer`, data);
+  async sendTelepointer(data) {
+    const { docId } = this.config
+    logger(`Sending telepointer`, data)
 
-    await utils.requestService(this.config, {
-      path: `document/${this.config.docId}/telepointer`,
-      requestInit: {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, sessionId: this.config.userId }),
-      },
-    });
+    return await this.service.pushTelepointer(docId, data)
   }
 
   /**
    * Subscribe to events emitted by this channel
    */
   on(evt, handler) {
-    this.eventEmitter.on(evt, handler);
-    return this;
+    this.eventEmitter.on(evt, handler)
+    return this
   }
 
   /**
    * Unsubscribe from events emitted by this channel
    */
   off(evt, handler) {
-    this.eventEmitter.off(evt, handler);
-    return this;
+    this.eventEmitter.off(evt, handler)
+    return this
   }
 
   /**
    * Emit events to subscribers
    */
   emit(evt, data) {
-    this.eventEmitter.emit(evt, data);
-    return this;
+    this.eventEmitter.emit(evt, data)
+    return this
   }
 }

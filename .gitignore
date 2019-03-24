@@ -6,6 +6,7 @@ yarn-error.log
 
 # Build
 build/
+build.*/
 
 # Coverage
 coverage/
