@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react'
+import React, { useState, useCallback, useRef, useEffect, useMemo } from 'react'
 
 import { Editor } from '@atlaskit/editor-core';
 import { createTheme } from '@atlaskit/theme';
@@ -17,49 +17,63 @@ import { queryConnect, withMutations } from 'cozy-client'
 
 import doctype from './doctype'
 import { defaultTitle } from './utils'
+import { collabEditProvider } from './collab_provider'
+import editorConfig from './editor_config'
 
-import HeaderMenu from '../header_menu.jsx'
-
-
-const debounced = debounce(
-  (saveDocument, document) => {
-    return saveDocument(document)
-  },
-  5000,
-  { leading: true, trailing: true }
-)
+import HeaderMenu from '../header_menu'
 
 const jsonTransformer = new JSONTransformer()
 
 const Form = (props) => {
+  // current state of the note being edited, initialized from the props
   const [note, setNote] = useState({ title: props.note.title, content: props.note.content })
-
+  // first note received in the props, to avoid useless changes in defaultValue
+  const firstNote = useMemo(() => ({ title: props.note.title, content: props.note.content }), [props.note._id])
+  // same with the title placeholder
+  const defaultTitleValue = useMemo(() => defaultTitle(props.note), [props.note._id])
+  // then with the collabProvider to avoid an init at each render
+  const collabProvider = useMemo(
+    () => ({
+      provider: collabEditProvider('rick', firstNote),
+      inviteToEditHandler: () => console.log(clicked),
+      isInviteToEditButtonSelected: true,
+    }),
+    [props.note._id]
+  )
+  // get the previous note in a ref to be able to fetch the last _rev
+  // when sending the update to the couch server
   const serverNote = useRef(props.note)
+  useEffect(
+    () => {
+      console.log("update ref new doc")
+      serverNote.current = props.note
+    },
+    [props.note._rev]
+  )
+  // do not save more often than 5000ms
+  // it will generate conflict with _rev of couchdb
+  // and will overload couch database with useless versions
+  const save = useMemo(
+    () => debounce(
+      (next) => props.saveDocument({...serverNote.current, ...next})
+      , 5000
+      , { leading: true, trailing: true }
+    ),
+    [props.note._id]
+  )
 
-  const save = (note) => {
-    const doc = { ...serverNote.current, ...note }
-    return debounced(props.saveDocument, doc)
-  }
-
-  useEffect( () => {
-    serverNote.current = props.note
-  }, [props.note._rev])
-
-  useEffect( () => {
-    serverNote.current = props.note
-  }, [note.title, note.content])
-
-  const onTitleChange = (e) => {
+  // fix callbacks
+  const onTitleChange = useCallback((e) => {
     const newTitle = e.target.value
     const title = (newTitle && (newTitle.trim().length > 0)) ? newTitle : null
     if (title != note.title) {
       const newNote = { ...note, title }
       setNote(newNote)
-      save(newNote)
+      window.setTimeout(() => save(newNote))
     }
-  }
+  }, [props.note._id])
 
-  const onContentChange = (editorView) => {
+  const onContentChange = useCallback((editorView) => {
     console.log(editorView)
     const content = JSON.stringify(
       jsonTransformer.encode(editorView.state.doc),
@@ -69,20 +83,38 @@ const Form = (props) => {
     if (content != note.content) {
       const newNote = { ...note, content }
       setNote(newNote)
-      save(newNote)
+      window.setTimeout(() => save(newNote))
     }
-  }
+  }, [props.note._id])
 
-  const title = note.title || ""
+  const withCollab = false
+  const collabOrChange = useMemo(() => withCollab ? { collabEdit:collabProvider} : {onChange:onContentChange}, [withCollab])
 
-  return <React.Fragment>
-    <Input fullwidth={true} defaultValue={title} onChange={onTitleChange} placeholder={defaultTitle(props.note)} style={{border: 'none', fontWeight: 'bold', fontSize:"1.5rem", marginBottom: "-1rem"}} />
+  // then memoize the rendering, the rest is pureComponent
+  return useMemo(() => <React.Fragment>
+    <Input
+      fullwidth={true}
+      defaultValue={firstNote.title}
+      onChange={onTitleChange}
+      placeholder={defaultTitleValue}
+      style={{border: 'none', fontWeight: 'bold', fontSize:"1.5rem", marginBottom: "-1rem"}}
+    />
     <div style={{position: 'relative', display: 'flex', flexDirection: 'column', overflow: 'hidden', flexGrow:'1'}}>
-      <Editor allowLists={true} defaultValue={props.note.content} onChange={onContentChange} allowTables={true} allowRule={true} appearance="full-page" placeholder="Que voulez-vous dire ?" shouldFocus={true} />
-    </div>
-  </React.Fragment>
-}
+      <Editor
 
+        {...collabOrChange}
+
+        defaultValue={firstNote.content}
+
+        {...editorConfig}
+
+        appearance="full-page"
+        placeholder="Que voulez-vous dire ?"
+        shouldFocus={true}
+      />
+    </div>
+  </React.Fragment> , [ props.note._id ])
+}
 
 const MutatedForm = withMutations()(Form)
 
