@@ -26,7 +26,7 @@ import HeaderMenu from '../header_menu'
 const jsonTransformer = new JSONTransformer()
 
 const withCollab = true
-const collabUrl = 'http://localhost:3000'
+const collabUrl = 'https://poc-collab.cozycloud.cc/'
 const allowPublicCollab = true
 
 const Form = props => {
