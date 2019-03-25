@@ -1,8 +1,11 @@
 import { EventEmitter2 } from 'eventemitter2'
 import { getVersion, sendableSteps } from 'prosemirror-collab'
+import { JSONTransformer } from '@atlaskit/editor-json-transformer'
 import { Channel } from './channel'
 import { logger } from './logger'
 import { getParticipant } from './participant'
+
+const jsonTransformer = new JSONTransformer()
 
 export class CollabProvider {
   constructor(config, serviceClient) {
@@ -17,7 +20,6 @@ export class CollabProvider {
 
   initialize(getState) {
     this.getState = getState
-
     this.channel.on('connected', ({ doc, version }) => {
       const { userId } = this.config
 
@@ -28,7 +30,11 @@ export class CollabProvider {
     })
     this.channel.on('data', this.onReceiveData)
     this.channel.on('telepointer', this.onReceiveTelepointer)
-    this.channel.connect()
+    const state = getState()
+    console.log(state)
+    const doc = jsonTransformer.encode(state.doc)
+    const version = doc.version
+    this.channel.connect(version, doc)
 
     return this
   }
@@ -109,6 +115,7 @@ export class CollabProvider {
 
         // Re-aply local steps
         if (localSteps.length) {
+          console.log("apply local steps", localSteps)
           this.emit('local-steps', { steps: localSteps })
         }
 
@@ -116,7 +123,7 @@ export class CollabProvider {
         this.pauseQueue = false
         this.queueTimeout = undefined
       } else if (steps) {
-        logger(`Applying the new steps. Version: ${version}`)
+        logger(`Applying the new steps. Version: ${version}`, steps)
         this.onReceiveData({ steps, version }, true)
         clearTimeout(this.queueTimeout)
         this.pauseQueue = false
@@ -141,6 +148,7 @@ export class CollabProvider {
 
     const [firstItem] = this.queue
     const currentVersion = getVersion(this.getState())
+    console.log("process queue currentVersion", currentVersion)
     const expectedVersion = currentVersion + firstItem.steps.length
 
     if (firstItem.version === expectedVersion) {
@@ -161,6 +169,7 @@ export class CollabProvider {
     logger(`Processing data. Version: ${version}`)
 
     if (steps && steps.length) {
+      console.log("applying steps", steps)
       const userIds = steps.map(step => step.userId || step.sessionId)
       this.emit('data', { json: steps, version, userIds })
     }

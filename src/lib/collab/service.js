@@ -123,6 +123,7 @@ class Service {
       steps: history.concat(steps)
     }
     this.patchInstance(id, instance)
+    setTimeout(() => this.purgeInstance(id), 100)
     return nextVersion
   }
 }

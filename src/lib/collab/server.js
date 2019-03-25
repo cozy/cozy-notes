@@ -8,14 +8,19 @@ function startCollabServer(service, port = 3000) {
 
     socket.on('join',
       (sessionId, id) => {
-        console.log(`Socket ${socket.id} user ${sessionId} just joined document ${id}`)
+        console.log(`user ${sessionId} doc ${id} just joined document ${id}`)
         socket.join(id)
       }
     )
 
     socket.on('doc:get',
-      (sessionId, id, send) => {
-        console.log(`Socket ${socket.id} user ${sessionId} doc:get`)
+      (sessionId, id, version, doc, send) => {
+        console.log(`user ${sessionId} doc ${id} doc:get`)
+        console.log(`version ${version}`)
+        console.log(`doc`, doc)
+        if (!service.hasInstance(id) && version && doc) {
+          service.patchInstance(id, { version, doc })
+        }
         const message = service.getDocMessage(id)
         console.log(message)
         send(message)
@@ -24,7 +29,7 @@ function startCollabServer(service, port = 3000) {
 
     socket.on('steps:get',
       (sessionId, id, version, send) => {
-        console.log(`Socket ${socket.id} user ${sessionId} steps:get for version ${version}`)
+        console.log(`user ${sessionId} doc ${id} steps:get for version ${version}`)
         const message = service.getStepsOrDocMessage(id, version)
         console.log(message)
         send(message)
@@ -34,7 +39,7 @@ function startCollabServer(service, port = 3000) {
     socket.on(
       'steps:push',
       (sessionId, id, fromVersion, anonymousSteps, send) => {
-        console.log(`Socket ${socket.id} user ${sessionId} steps:push ${anonymousSteps.length} steps from version ${fromVersion}`)
+        console.log(`user ${sessionId} doc ${id} steps:push ${anonymousSteps.length} steps from version ${fromVersion}`)
         const assignedSteps = anonymousSteps.map(step => ({
           ...step,
           sessionId
@@ -63,7 +68,7 @@ function startCollabServer(service, port = 3000) {
     )
 
     socket.on('telepointer:push', (sessionId, id, data, send) => {
-      console.log(`Socket ${socket.id} user ${sessionId} telepointer:push`)
+      console.log(`user ${sessionId} doc ${id} telepointer:push`)
       const event = `telepointer:updated:${id}`
       const broadcast = {
         ...data,

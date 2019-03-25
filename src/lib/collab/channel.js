@@ -12,10 +12,10 @@ export class Channel {
   /**
    * Get initial document from service
    */
-  async getDocument() {
+  async getDocument(previousVersion, previousDoc) {
     try {
       const { docId } = this.config
-      const { doc, version } = await this.service.getDoc(docId)
+      const { doc, version } = await this.service.getDoc(docId, previousVersion, previousDoc)
       console.log("channel getDoc return value", { doc, version })
       return {
         doc,
@@ -37,9 +37,9 @@ export class Channel {
   /**
    * Connect to pubsub to start receiving events
    */
-  async connect() {
+  async connect(previousVersion, previousDoc) {
     const { docId } = this.config
-    const { doc, version } = await this.getDocument()
+    const { doc, version } = await this.getDocument(previousVersion, previousDoc)
 
     this.service.join(docId)
 

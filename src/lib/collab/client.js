@@ -21,9 +21,9 @@ export class ServiceClient {
     this.socket.on(`telepointer:updated:${docId}`, data => callback(data))
   }
 
-  async getDoc(docId) {
+  async getDoc(docId, version, doc) {
     return new Promise(resolve => {
-      this.socket.emit('doc:get', this.sessionId, docId, data =>
+      this.socket.emit('doc:get', this.sessionId, docId, 1, doc, data =>
         resolve({ ...data, docId })
       )
     })
