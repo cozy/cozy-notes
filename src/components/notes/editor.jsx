@@ -95,6 +95,11 @@ const Form = props => {
       ),
     [props.note._id]
   )
+  // always save immediatly when leaving the editor
+  useEffect(
+    () => () => save.flush(),
+    [props.note._id]
+  )
 
   // fix callbacks
   const onTitleChange = useCallback(
