@@ -1,9 +1,9 @@
 {
   "name": "Cozy Notes",
   "slug": "app",
-  "icon": "icon.svg",
+  "icon": "icon-notes.svg",
   "categories": [],
-  "version": "0.1.0",
+  "version": "1.0.1",
   "licence": "AGPL-3.0",
   "editor": "",
   "source": "https://github.com/cozy/cozy-notes.git@build",

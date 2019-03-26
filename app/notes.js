@@ -1357,6 +1357,12 @@ var Form = function Form(props) {
       leading: true,
       trailing: true
     });
+  }, [props.note._id]); // always save immediatly when leaving the editor
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    return function () {
+      return save.flush();
+    };
   }, [props.note._id]); // fix callbacks
 
   var onTitleChange = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (e) {
@@ -2243,7 +2249,7 @@ var App = function App() {
 /***/ "pZg0":
 /***/ (function(module, exports) {
 
-module.exports = {"name":"Cozy Notes","slug":"notes","icon":"icon.svg","categories":[],"version":"0.1.0","licence":"AGPL-3.0","editor":"","source":"https://github.com/cozy/cozy-notes.git@build","developer":{"name":"edas","url":"https://eric.daspet.name/"},"routes":{"/":{"folder":"/","index":"index.html","public":false}},"permissions":{"apps":{"description":"Required by the cozy-bar to display the icons of the apps","type":"io.cozy.apps","verbs":["GET"]},"notes":{"description":"Notes","type":"io.cozy.notes"}}}
+module.exports = {"name":"Cozy Notes","slug":"notes","icon":"icon-notes.svg","categories":[],"version":"1.0.1","licence":"AGPL-3.0","editor":"","source":"https://github.com/cozy/cozy-notes.git@build","developer":{"name":"edas","url":"https://eric.daspet.name/"},"routes":{"/":{"folder":"/","index":"index.html","public":false}},"permissions":{"apps":{"description":"Required by the cozy-bar to display the icons of the apps","type":"io.cozy.apps","verbs":["GET"]},"notes":{"description":"Notes","type":"io.cozy.notes"}}}
 
 /***/ })
 
