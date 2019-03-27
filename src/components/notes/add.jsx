@@ -32,14 +32,17 @@ class Add extends Component {
   render() {
     const { isWorking } = this.state
     return (
-      <Button
-        onClick={this.handleClick}
-        type="submit"
-        busy={isWorking}
-        label="ajouter une note"
-        size="large"
-        extension="narrow"
-      />
+      <div>
+        <Button
+          onClick={this.handleClick}
+          type="submit"
+          busy={isWorking}
+          icon="plus"
+          label="ajouter une note"
+          size="normal"
+          extension="narrow"
+        />
+      </div>
     )
   }
 }

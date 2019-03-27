@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect, useMemo } from 'react'
 
-import { Editor } from '@atlaskit/editor-core'
 import { JSONTransformer } from '@atlaskit/editor-json-transformer'
 
 import { withRouter } from 'react-router-dom'
@@ -8,20 +7,15 @@ import { Link } from 'react-router-dom'
 
 import debounce from 'lodash.debounce'
 
-import Spinner from 'cozy-ui/react/Spinner'
-import Input from 'cozy-ui/react/Input'
-import Button from 'cozy-ui/react/Button'
-
 import { queryConnect, withMutations } from 'cozy-client'
+
+import EditorView from './editor-view'
+import EditorLoading from './editor-loading'
 
 import doctype from './doctype'
 import { defaultTitle } from './utils'
-//import { collabEditProvider } from './collab_provider'
 import CollabProvider from '../../lib/collab/provider'
 import ServiceClient from '../../lib/collab/client'
-import editorConfig from './editor_config'
-
-import HeaderMenu from '../header_menu'
 
 const jsonTransformer = new JSONTransformer()
 
@@ -132,58 +126,16 @@ const Form = props => {
     [props.note._id]
   )
 
-  const collabProps = useMemo(
-    () => withCollab ? { collabEdit: collabProvider } : { },
-    [withCollab, props.note._id]
-  )
-
-  const changeContentProps = useMemo(
-    () => autoSave ? { onChange: onContentChange } : { },
-    [autoSave, props.note._id]
-  )
-
-  const changeTitleProps = useMemo(
-    () => autoSave ? { onChange: onTitleChange } : { readOnly: true },
-    [autoSave, props.note._id]
-  )
-
-
   // then memoize the rendering, the rest is pureComponent
   return useMemo(
     () => (
-      <React.Fragment>
-        <Input
-          fullwidth={true}
-          defaultValue={firstNote.title}
-          {...changeTitleProps}
-          placeholder={defaultTitleValue}
-          style={{
-            border: 'none',
-            fontWeight: 'bold',
-            fontSize: '1.5rem',
-            marginBottom: '-1rem'
-          }}
-        />
-        <div
-          style={{
-            position: 'relative',
-            display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden',
-            flexGrow: '1'
-          }}
-        >
-          <Editor
-            {...collabProps}
-            {...changeContentProps}
-            defaultValue={firstNote.content}
-            {...editorConfig}
-            appearance="full-page"
-            placeholder="Que voulez-vous dire ?"
-            shouldFocus={true}
-          />
-        </div>
-      </React.Fragment>
+      <EditorView
+        onTitleChange={ autoSave ? onTitleChange : undefined }
+        onContentChange={ autoSave ? onContentChange : undefined }
+        collabProvider={ withCollab ? collabProvider : undefined }
+        defaultTitle={ defaultTitleValue }
+        defaultValue={ firstNote }
+      />
     ),
     [props.note._id]
   )
@@ -204,7 +156,7 @@ const FormOrSpinner = props => {
         return {
           _id: props.id,
           id: props.id,
-          defaultTitle: "Note collaborative en édition publique"
+          title: "Note collaborative en édition publique"
         }
       } else {
         return undefined
@@ -221,29 +173,7 @@ const FormOrSpinner = props => {
 
   const showSpinner = isLoading || !note
 
-  const left = (
-    <Button
-      icon="back"
-      tag={Link}
-      to="/"
-      className="sto-app-back"
-      label="Retour à la liste"
-      subtle
-    />
-  )
-
-  return (
-    <article
-      style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
-    >
-      <HeaderMenu left={left} />
-      {showSpinner ? (
-        <Spinner size="xxlarge" middle />
-      ) : (
-        <MutatedForm note={note} autoSave={couchNote ? true : false} />
-      )}
-    </article>
-  )
+  return showSpinner ? <EditorLoading /> : <MutatedForm note={note} autoSave={couchNote ? true : false} />
 }
 
 export default ({ match }) => {

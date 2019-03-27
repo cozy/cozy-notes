@@ -1,24 +1,74 @@
 @require 'cozy-ui/build'
 
+html {
+    --documentMaxWidth: 768px;
+    --documentMargin: 2rem;
+    --documentPadding: 2em;
+    --documentMarginColor: #F5F6F7;
+    --documentDividerColor: #D6D8DA;
+}
+@media (max-width: 800px) {
+    html {
+        --documentMaxWidth: 800px;
+        --documentMargin: 0;
+        --documentPadding: 0;
+        --documentMarginColor: var(--white);
+    }
+}
+
 // @stylint off
 .sto-app-back {
   display: inline-flex;
   align-items: center;
-  margin-top: 1.5rem;
   text-decoration: none;
-  color: var(--slateGrey)!important;
+  color: var(--slateGrey) !important;
 }
 
 .page-header-menu {
   display: flex;
   justify-content: space-between;
   margin: 1rem;
+  align-items: center;
 }
 .page-header-menu--left {
   display: flex;
+  flex-grow: 1;
+  align-items: center;
 }
 .page-header-menu--right {
   display: flex;
+  align-items: center;
+}
+
+html .note-article {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+html .note-title {
+    flex-grow: 1;
+    height: 2.5rem;
+    align-items: center;
+    margin: 0 0 0 0.5rem;
+}
+html .note-title-input,
+html .note-title-input:focus
+html .note-title-input:hover {
+    border: none;
+    font-weight: bold;
+    font-size: 1rem;
+    width: 100%;
+    padding: 0.5rem 0 0.5rem;
+    line-height: 1.5;
+}
+
+html .note-editor-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    flex-grow: 1;
+    margin-top: -2rem;
 }
 
 html .ProseMirror {
@@ -35,8 +85,102 @@ html .ProseMirror h6 {
   line-height: 1.15 !important
 }
 
-html .fabric-editor-popup-scroll-parent > div > div {
-  margin: 0 -16px;
-  padding: 0
+html .akEditor {
+    background-color: #F5F6F7;
 }
+
+html .akEditor > div:first-child {
+    padding: 0.3rem 0;
+    height: auto;
+    background-color: var(--white);
+    border-bottom: 1px solid var(--documentDividerColor);
+}
+html .akEditor > div:first-child > div:first-child > div:first-child {
+    max-width: var(--documentMaxWidth);
+    margin: auto;
+}
+
+html .fabric-editor-popup-scroll-parent > div > div {
+  margin: 0 auto;
+  padding: 0;
+  max-width: var(--documentMaxWidth);
+}
+
+html .ak-editor-content-area {
+    padding: var(--documentPadding) !important;
+    background-color: var(--white);
+    border-bottom: var(--documentMargin) solid var(--documentMarginColor);
+    border-top: var(--documentMargin) solid var(--documentMarginColor);
+}
+
+
+html body .ProseMirror p,
+html body .ProseMirror h1,
+html body .ProseMirror h2,
+html body .ProseMirror h3,
+html body .ProseMirror h4,
+html body .ProseMirror h5,
+html body .ProseMirror h6 {
+    line-height: 1.5 !important;
+    margin: 1rem 0;
+}
+
+html .note-editor-container .akEditor h1 {
+    font-size: 2,25rem;
+}
+html .note-editor-container .ProseMirror h1 {
+    margin: 2rem 0;
+}
+html .note-editor-container .akEditor h2 {
+    font-size: 1.5rem;
+    border-top: 2px solid var(--documentDividerColor);
+    padding-top: 0.5rem;
+}
+html .note-editor-container .ProseMirror h2 {
+    margin: 2rem 0;
+}
+html .note-editor-container .akEditor .ProseMirror > h2:first-child {
+    border-top: none;
+}
+html .note-editor-container .akEditor h3 {
+    font-size: 1.375rem;
+    margin: 1.5rem 0;
+}
+html .note-editor-container .akEditor h4 {
+    font-size: 1.125rem;
+    margin: 1.5rem 0;
+}
+html .note-editor-container .akEditor h5 {
+    font-size: 1rem;
+    color: var(--slateGrey);
+    margin: 1rem 0;
+}
+html .note-editor-container .akEditor h6 {
+    font-size: 1rem;
+    color: var(--slateGrey);
+    font-weight: normal;
+    margin: 1rem 0;
+}
+
+.notes-list {
+    width: calc(100% - 20px);
+}
+.notes-list td, .notes-list th {
+    text-align: left;
+    color: var(--coolGrey);
+}
+
+.note-item {
+    display: flex;
+    align-items: center;
+}
+.note-icon {
+    margin-right: 1rem;
+}
+.note-link {
+    text-decoration: none;
+    text-transform: none;
+    font-weight: normal;
+}
+
 // @stylint on
