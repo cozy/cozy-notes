@@ -2910,14 +2910,17 @@ html {
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 .page-header-menu--right {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-}
-.note-header-menu--editing {
-  margin-top: -1rem;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 html .note-article {
   display: -webkit-box;
@@ -2933,6 +2936,11 @@ html .note-title {
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
+  height: 2.5rem;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0 0 0 0.5rem;
 }
 html .note-title-input,
 html .note-title-input:focus,
@@ -2941,6 +2949,8 @@ html .note-title-input:hover {
   font-weight: bold;
   font-size: 1rem;
   width: 100%;
+  padding: 0.5rem 0 0.5rem;
+  line-height: 1.5;
 }
 html .note-editor-container {
   position: relative;
