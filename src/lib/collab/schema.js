@@ -7,410 +7,434 @@ import { Schema } from 'prosemirror-model'
 //       or running a JSDOM faking a navigator
 
 const nodes = {
-  doc: {
-    content: '(block)+',
-    marks: 'link'
+  "doc": {
+    "content": "(block)+",
+    "marks": "link"
   },
-  paragraph: {
-    content: 'inline*',
-    group: 'block',
-    marks: 'strong code em link strike subsup typeAheadQuery underline',
-    parseDOM: [
+  "paragraph": {
+    "content": "inline*",
+    "group": "block",
+    "marks": "strong code em link strike subsup textColor typeAheadQuery underline",
+    "parseDOM": [
       {
-        tag: 'p'
+        "tag": "p"
       }
     ]
   },
-  text: {
-    group: 'inline'
+  "text": {
+    "group": "inline"
   },
-  bulletList: {
-    group: 'block',
-    content: 'listItem+',
-    parseDOM: [
+  "bulletList": {
+    "group": "block",
+    "content": "listItem+",
+    "parseDOM": [
       {
-        tag: 'ul'
+        "tag": "ul"
       }
     ]
   },
-  orderedList: {
-    group: 'block',
-    content: 'listItem+',
-    parseDOM: [
+  "orderedList": {
+    "group": "block",
+    "content": "listItem+",
+    "parseDOM": [
       {
-        tag: 'ol'
+        "tag": "ol"
       }
     ]
   },
-  listItem: {
-    content: '(paragraph ) (paragraph | bulletList | orderedList )*',
-    defining: true,
-    parseDOM: [
+  "listItem": {
+    "content": "(paragraph ) (paragraph | bulletList | orderedList )*",
+    "defining": true,
+    "parseDOM": [
       {
-        tag: 'li'
+        "tag": "li"
       }
     ]
   },
-  heading: {
-    attrs: {
-      level: {
-        default: 1
+  "heading": {
+    "attrs": {
+      "level": {
+        "default": 1
       }
     },
-    content: 'inline*',
-    group: 'block',
-    defining: true,
-    parseDOM: [
+    "content": "inline*",
+    "group": "block",
+    "defining": true,
+    "parseDOM": [
       {
-        tag: 'h1',
-        attrs: {
-          level: 1
+        "tag": "h1",
+        "attrs": {
+          "level": 1
         }
       },
       {
-        tag: 'h2',
-        attrs: {
-          level: 2
+        "tag": "h2",
+        "attrs": {
+          "level": 2
         }
       },
       {
-        tag: 'h3',
-        attrs: {
-          level: 3
+        "tag": "h3",
+        "attrs": {
+          "level": 3
         }
       },
       {
-        tag: 'h4',
-        attrs: {
-          level: 4
+        "tag": "h4",
+        "attrs": {
+          "level": 4
         }
       },
       {
-        tag: 'h5',
-        attrs: {
-          level: 5
+        "tag": "h5",
+        "attrs": {
+          "level": 5
         }
       },
       {
-        tag: 'h6',
-        attrs: {
-          level: 6
+        "tag": "h6",
+        "attrs": {
+          "level": 6
         }
       }
     ]
   },
-  blockquote: {
-    content: 'paragraph+',
-    group: 'block',
-    defining: true,
-    selectable: false,
-    parseDOM: [
+  "blockquote": {
+    "content": "paragraph+",
+    "group": "block",
+    "defining": true,
+    "selectable": false,
+    "parseDOM": [
       {
-        tag: 'blockquote'
+        "tag": "blockquote"
       }
     ]
   },
-  rule: {
-    group: 'block',
-    parseDOM: [
+  "rule": {
+    "group": "block",
+    "parseDOM": [
       {
-        tag: 'hr'
+        "tag": "hr"
       }
     ]
   },
-  confluenceUnsupportedBlock: {
-    group: 'block',
-    attrs: {
-      cxhtml: {
-        default: null
+  "panel": {
+    "group": "block",
+    "content": "(paragraph | heading | bulletList | orderedList)+",
+    "attrs": {
+      "panelType": {
+        "default": "info"
       }
     },
-    parseDOM: [
+    "parseDOM": [
       {
-        tag: 'div[data-node-type="confluenceUnsupportedBlock"]'
+        "tag": "div[data-panel-type]"
       }
     ]
   },
-  confluenceUnsupportedInline: {
-    group: 'inline',
-    inline: true,
-    atom: true,
-    attrs: {
-      cxhtml: {
-        default: null
+  "confluenceUnsupportedBlock": {
+    "group": "block",
+    "attrs": {
+      "cxhtml": {
+        "default": null
       }
     },
-    parseDOM: [
+    "parseDOM": [
       {
-        tag: 'div[data-node-type="confluenceUnsupportedInline"]'
+        "tag": "div[data-node-type=\"confluenceUnsupportedBlock\"]"
       }
     ]
   },
-  unsupportedBlock: {
-    inline: false,
-    group: 'block',
-    atom: true,
-    selectable: true,
-    attrs: {
-      originalValue: {
-        default: {}
+  "confluenceUnsupportedInline": {
+    "group": "inline",
+    "inline": true,
+    "atom": true,
+    "attrs": {
+      "cxhtml": {
+        "default": null
       }
     },
-    parseDOM: [
+    "parseDOM": [
       {
-        tag: '[data-node-type="unsupportedBlock"]'
+        "tag": "div[data-node-type=\"confluenceUnsupportedInline\"]"
       }
     ]
   },
-  unsupportedInline: {
-    inline: true,
-    group: 'inline',
-    selectable: true,
-    attrs: {
-      originalValue: {
-        default: {}
+  "unsupportedBlock": {
+    "inline": false,
+    "group": "block",
+    "atom": true,
+    "selectable": true,
+    "attrs": {
+      "originalValue": {
+        "default": {}
       }
     },
-    parseDOM: [
+    "parseDOM": [
       {
-        tag: '[data-node-type="unsupportedInline"]'
+        "tag": "[data-node-type=\"unsupportedBlock\"]"
       }
     ]
   },
-  hardBreak: {
-    inline: true,
-    group: 'inline',
-    selectable: false,
-    parseDOM: [
-      {
-        tag: 'br'
-      }
-    ]
-  },
-  table: {
-    content: 'tableRow+',
-    attrs: {
-      isNumberColumnEnabled: {
-        default: false
-      },
-      layout: {
-        default: 'default'
-      },
-      __autoSize: {
-        default: false
+  "unsupportedInline": {
+    "inline": true,
+    "group": "inline",
+    "selectable": true,
+    "attrs": {
+      "originalValue": {
+        "default": {}
       }
     },
-    tableRole: 'table',
-    isolating: true,
-    selectable: false,
-    group: 'block',
-    parseDOM: [
+    "parseDOM": [
       {
-        tag: 'table'
+        "tag": "[data-node-type=\"unsupportedInline\"]"
       }
     ]
   },
-  tableHeader: {
-    content:
-      '(paragraph | blockquote | orderedList | bulletList | rule | heading )+',
-    attrs: {
-      colspan: {
-        default: 1
+  "hardBreak": {
+    "inline": true,
+    "group": "inline",
+    "selectable": false,
+    "parseDOM": [
+      {
+        "tag": "br"
+      }
+    ]
+  },
+  "table": {
+    "content": "tableRow+",
+    "attrs": {
+      "isNumberColumnEnabled": {
+        "default": false
       },
-      rowspan: {
-        default: 1
+      "layout": {
+        "default": "default"
       },
-      colwidth: {
-        default: null
-      },
-      background: {
-        default: null
+      "__autoSize": {
+        "default": false
       }
     },
-    tableRole: 'header_cell',
-    isolating: true,
-    marks: '',
-    parseDOM: [
+    "tableRole": "table",
+    "isolating": true,
+    "selectable": false,
+    "group": "block",
+    "parseDOM": [
       {
-        tag: 'th'
+        "tag": "table"
       }
     ]
   },
-  tableRow: {
-    content: '(tableCell | tableHeader)+',
-    tableRole: 'row',
-    parseDOM: [
-      {
-        tag: 'tr'
-      }
-    ]
-  },
-  tableCell: {
-    content:
-      '(paragraph | blockquote | orderedList | bulletList | rule | heading | unsupportedBlock)+',
-    attrs: {
-      colspan: {
-        default: 1
+  "tableHeader": {
+    "content": "(paragraph | panel | blockquote | orderedList | bulletList | rule | heading )+",
+    "attrs": {
+      "colspan": {
+        "default": 1
       },
-      rowspan: {
-        default: 1
+      "rowspan": {
+        "default": 1
       },
-      colwidth: {
-        default: null
+      "colwidth": {
+        "default": null
       },
-      background: {
-        default: null
+      "background": {
+        "default": null
       }
     },
-    tableRole: 'cell',
-    marks: '',
-    isolating: true,
-    parseDOM: [
+    "tableRole": "header_cell",
+    "isolating": true,
+    "marks": "",
+    "parseDOM": [
       {
-        tag: '.ak-renderer-table-number-column',
-        ignore: true
+        "tag": "th"
+      }
+    ]
+  },
+  "tableRow": {
+    "content": "(tableCell | tableHeader)+",
+    "tableRole": "row",
+    "parseDOM": [
+      {
+        "tag": "tr"
+      }
+    ]
+  },
+  "tableCell": {
+    "content": "(paragraph | panel | blockquote | orderedList | bulletList | rule | heading | unsupportedBlock)+",
+    "attrs": {
+      "colspan": {
+        "default": 1
+      },
+      "rowspan": {
+        "default": 1
+      },
+      "colwidth": {
+        "default": null
+      },
+      "background": {
+        "default": null
+      }
+    },
+    "tableRole": "cell",
+    "marks": "",
+    "isolating": true,
+    "parseDOM": [
+      {
+        "tag": ".ak-renderer-table-number-column",
+        "ignore": true
       },
       {
-        tag: 'td'
+        "tag": "td"
       }
     ]
   }
 }
 
 const marks = {
-  link: {
-    excludes: '',
-    group: 'link',
-    attrs: {
-      href: {},
-      __confluenceMetadata: {
-        default: null
+  "link": {
+    "excludes": "color",
+    "group": "link",
+    "attrs": {
+      "href": {},
+      "__confluenceMetadata": {
+        "default": null
       }
     },
-    inclusive: false,
-    parseDOM: [
+    "inclusive": false,
+    "parseDOM": [
       {
-        tag: 'a[href]'
+        "tag": "a[href]"
       }
     ]
   },
-  em: {
-    inclusive: true,
-    group: 'fontStyle',
-    parseDOM: [
+  "em": {
+    "inclusive": true,
+    "group": "fontStyle",
+    "parseDOM": [
       {
-        tag: 'i'
+        "tag": "i"
       },
       {
-        tag: 'em'
+        "tag": "em"
       },
       {
-        style: 'font-style=italic'
+        "style": "font-style=italic"
       }
     ]
   },
-  strong: {
-    inclusive: true,
-    group: 'fontStyle',
-    parseDOM: [
+  "strong": {
+    "inclusive": true,
+    "group": "fontStyle",
+    "parseDOM": [
       {
-        tag: 'strong'
+        "tag": "strong"
       },
       {
-        tag: 'b'
+        "tag": "b"
       },
       {
-        style: 'font-weight'
+        "style": "font-weight"
       }
     ]
   },
-  strike: {
-    inclusive: true,
-    group: 'fontStyle',
-    parseDOM: [
+  "textColor": {
+    "attrs": {
+      "color": {}
+    },
+    "inclusive": true,
+    "group": "color",
+    "parseDOM": [
       {
-        tag: 'strike'
-      },
-      {
-        tag: 's'
-      },
-      {
-        tag: 'del'
-      },
-      {
-        style: 'text-decoration'
+        "style": "color"
       }
     ]
   },
-  subsup: {
-    inclusive: true,
-    group: 'fontStyle',
-    attrs: {
-      type: {
-        default: 'sub'
+  "strike": {
+    "inclusive": true,
+    "group": "fontStyle",
+    "parseDOM": [
+      {
+        "tag": "strike"
+      },
+      {
+        "tag": "s"
+      },
+      {
+        "tag": "del"
+      },
+      {
+        "style": "text-decoration"
+      }
+    ]
+  },
+  "subsup": {
+    "inclusive": true,
+    "group": "fontStyle",
+    "attrs": {
+      "type": {
+        "default": "sub"
       }
     },
-    parseDOM: [
+    "parseDOM": [
       {
-        tag: 'sub',
-        attrs: {
-          type: 'sub'
+        "tag": "sub",
+        "attrs": {
+          "type": "sub"
         }
       },
       {
-        tag: 'sup',
-        attrs: {
-          type: 'sup'
+        "tag": "sup",
+        "attrs": {
+          "type": "sup"
         }
       }
     ]
   },
-  underline: {
-    inclusive: true,
-    group: 'fontStyle',
-    parseDOM: [
+  "underline": {
+    "inclusive": true,
+    "group": "fontStyle",
+    "parseDOM": [
       {
-        tag: 'u'
+        "tag": "u"
       },
       {
-        style: 'text-decoration'
+        "style": "text-decoration"
       }
     ]
   },
-  code: {
-    excludes: 'fontStyle link searchQuery',
-    inclusive: true,
-    parseDOM: [
+  "code": {
+    "excludes": "fontStyle link searchQuery color",
+    "inclusive": true,
+    "parseDOM": [
       {
-        tag: 'span.code',
-        preserveWhitespace: true
+        "tag": "span.code",
+        "preserveWhitespace": true
       },
       {
-        tag: 'code',
-        preserveWhitespace: true
+        "tag": "code",
+        "preserveWhitespace": true
       },
       {
-        tag: 'tt',
-        preserveWhitespace: true
+        "tag": "tt",
+        "preserveWhitespace": true
       },
       {
-        tag: 'span',
-        preserveWhitespace: true
+        "tag": "span",
+        "preserveWhitespace": true
       }
     ]
   },
-  typeAheadQuery: {
-    excludes: 'searchQuery',
-    inclusive: true,
-    group: 'searchQuery',
-    parseDOM: [
+  "typeAheadQuery": {
+    "excludes": "searchQuery",
+    "inclusive": true,
+    "group": "searchQuery",
+    "parseDOM": [
       {
-        tag: 'span[data-type-ahead-query]'
+        "tag": "span[data-type-ahead-query]"
       }
     ],
-    attrs: {
-      trigger: {
-        default: ''
+    "attrs": {
+      "trigger": {
+        "default": ""
       }
     }
   }

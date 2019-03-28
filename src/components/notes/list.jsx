@@ -17,7 +17,7 @@ import HeaderMenu from '../header_menu.jsx'
 
 import icon from '../../assets/icons/icon-note-32.svg'
 
-const Item = props => <div class="note-item">
+const Item = props => <div className="note-item">
   <Icon icon={icon} width={32} height={32} className="note-icon" />
   <Link to={`/n/${props.note.id}`} className="note-link">
     <ListItemText

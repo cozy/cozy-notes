@@ -39,7 +39,6 @@ class Add extends Component {
           busy={isWorking}
           icon="plus"
           label="ajouter une note"
-          size="normal"
           extension="narrow"
         />
       </div>
