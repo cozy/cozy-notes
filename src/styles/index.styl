@@ -45,9 +45,11 @@ html .note-article {
     flex-direction: column;
     height: 100%;
 }
+.note-header-menu--editing {
+    margin-top: -0.5rem;
+}
 html .note-title {
     flex-grow: 1;
-    height: 2.5rem;
     align-items: center;
     margin: 0 0 0 0.5rem;
 }
@@ -58,8 +60,11 @@ html .note-title-input:hover {
     font-weight: bold;
     font-size: 1rem;
     width: 100%;
-    padding: 0.5rem 0 0.5rem;
-    line-height: 1.5;
+    padding: 0;
+    margin: 0.25rem 0
+    line-height: 1;
+    height: 3rem;
+    overflow: visible;
 }
 
 html .note-editor-container {
@@ -69,6 +74,10 @@ html .note-editor-container {
     overflow: hidden;
     flex-grow: 1;
     margin-top: -2rem;
+}
+html .notes-list-container .page-header-menu {
+    margin-left: 2rem;
+    margin-right: 2rem;
 }
 
 html .ProseMirror {
@@ -168,6 +177,14 @@ html .note-editor-container .akEditor h6 {
 .notes-list td, .notes-list th {
     text-align: left;
     color: var(--coolGrey);
+}
+.notes-list tr > th:first-child {
+    padding-left: 2rem;
+}
+.notes-list tr > td:last-child,
+.notes-list tr > th:last-child {
+    padding-right: 2rem;
+    text-align: right;
 }
 
 .note-item {

@@ -28,7 +28,6 @@ const Item = props => <div className="note-item">
 </div>
 
 const Row = props => {
-  console.log(props.note)
   const updatedAt = new Date(props.note.cozyMetadata.updatedAt)
   const options = { day: "numeric", month: "long", year: "numeric" }
   const formatedUpdatedAt = updatedAt.toLocaleDateString(undefined, options)
