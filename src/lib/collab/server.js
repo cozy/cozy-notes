@@ -20,6 +20,8 @@ function startCollabServer(service, port = 3000) {
         console.log(`doc`, doc)
         if (!service.hasInstance(id) && version && doc && version > 0 && doc != "") {
           service.patchInstance(id, { version, doc })
+        } else if (version && doc && doc != "" && service.getVersion(id) < version) {
+          service.patchInstance(id, { version, doc })
         }
         const message = service.getDocMessage(id)
         console.log(message)
