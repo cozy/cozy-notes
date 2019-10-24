@@ -5,7 +5,7 @@ import schema from './schema'
 const jsonTransformer = new JSONTransformer()
 
 const emptyInstance = {
-  doc: { type:'doc', content:[ { type:'paragraph' } ] },
+  doc: { type: 'doc', content: [{ type: 'paragraph' }] },
   steps: [],
   version: 1
 }
@@ -108,14 +108,12 @@ class Service {
     const schemaDoc = schema.nodeFromJSON(previousDoc)
     const docSteps = steps.map(s => Step.fromJSON(schema, s))
     const nextVersion = previousVersion + steps.length
-    const updatedSchemaDoc = docSteps.reduce(
-      (doc, step) => {
-        console.log("to apply", step)
-        const update = step.apply(doc)
-        console.log("applied", doc)
-        return update.doc
-      }, schemaDoc
-    )
+    const updatedSchemaDoc = docSteps.reduce((doc, step) => {
+      console.log('to apply', step)
+      const update = step.apply(doc)
+      console.log('applied', doc)
+      return update.doc
+    }, schemaDoc)
     const updatedDoc = jsonTransformer.encode(updatedSchemaDoc)
     const instance = {
       doc: updatedDoc,

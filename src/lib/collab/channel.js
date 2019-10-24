@@ -15,8 +15,12 @@ export class Channel {
   async getDocument(previousVersion, previousDoc) {
     try {
       const { docId } = this.config
-      const { doc, version } = await this.service.getDoc(docId, previousVersion, previousDoc)
-      console.log("channel getDoc return value", { doc, version })
+      const { doc, version } = await this.service.getDoc(
+        docId,
+        previousVersion,
+        previousDoc
+      )
+      console.log('channel getDoc return value', { doc, version })
       return {
         doc,
         version
@@ -28,7 +32,7 @@ export class Channel {
         }" does not exist. Creating one locally.`
       )
       return {
-        doc: {"type":"doc","content":[{"type":"paragraph"}]},
+        doc: { type: 'doc', content: [{ type: 'paragraph' }] },
         version: 1
       }
     }
@@ -39,7 +43,10 @@ export class Channel {
    */
   async connect(previousVersion, previousDoc) {
     const { docId } = this.config
-    const { doc, version } = await this.getDocument(previousVersion, previousDoc)
+    const { doc, version } = await this.getDocument(
+      previousVersion,
+      previousDoc
+    )
 
     this.service.join(docId)
 

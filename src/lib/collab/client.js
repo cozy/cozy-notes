@@ -3,7 +3,7 @@ import io from 'socket.io-client'
 export class ServiceClient {
   constructor(config) {
     const { url, sessionId } = config
-    console.log("construct service Client with", config)
+    console.log('construct service Client with', config)
     console.log(`init config with client ${sessionId}`)
     this.sessionId = sessionId
     this.socket = io.connect(url)

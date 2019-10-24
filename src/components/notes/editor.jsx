@@ -24,7 +24,7 @@ const collabUrl = 'https://poc-collab.cozycloud.cc/'
 const allowPublicCollab = true
 
 const Form = props => {
-  const {readOnlyTitle, autoSave} = props
+  const { readOnlyTitle, autoSave } = props
 
   // first note received in the props, to avoid useless changes in defaultValue
   const firstNote = useMemo(
@@ -37,10 +37,7 @@ const Form = props => {
     [props.note._id]
   )
   // then with the collabProvider to avoid an init at each render
-  const userId  = useMemo(
-    () => `user${Math.floor(Math.random() * 1000)}`,
-    []
-  )
+  const userId = useMemo(() => `user${Math.floor(Math.random() * 1000)}`, [])
   const sessionId = userId
   const docId = props.note._id
   const collabProvider = useMemo(
@@ -70,12 +67,10 @@ const Form = props => {
 
   // we do note use the state in our callbacks to
   // avoid a capture of an old {note} variable
-  const currentNote = useRef(
-    {
-      title: props.note.title,
-      content: props.note.content
-    }
-  )
+  const currentNote = useRef({
+    title: props.note.title,
+    content: props.note.content
+  })
 
   // do not save more often than 5000ms
   // it will generate conflict with _rev of couchdb
@@ -83,17 +78,15 @@ const Form = props => {
   const save = useMemo(
     () =>
       debounce(
-        () => props.saveDocument({ ...serverNote.current, ...currentNote.current }),
+        () =>
+          props.saveDocument({ ...serverNote.current, ...currentNote.current }),
         5000,
         { leading: true, trailing: true }
       ),
     [props.note._id]
   )
   // always save immediatly when leaving the editor
-  useEffect(
-    () => () => save.flush(),
-    [props.note._id]
-  )
+  useEffect(() => () => save.flush(), [props.note._id])
 
   // fix callbacks
   const onTitleChange = useCallback(
@@ -101,7 +94,12 @@ const Form = props => {
       const newTitle = e.target.value
       const title = newTitle && newTitle.trim().length > 0 ? newTitle : null
       if (title != currentNote.current.title) {
-        console.log("save title", title, "with content", currentNote.current.content)
+        console.log(
+          'save title',
+          title,
+          'with content',
+          currentNote.current.content
+        )
         currentNote.current = { ...currentNote.current, title }
         window.setTimeout(() => save())
       }
@@ -118,7 +116,12 @@ const Form = props => {
         2
       )
       if (content != currentNote.current.content) {
-        console.log("save content", content, "with title", currentNote.current.title)
+        console.log(
+          'save content',
+          content,
+          'with title',
+          currentNote.current.title
+        )
         currentNote.current = { ...currentNote.current, content }
         window.setTimeout(() => save())
       }
@@ -130,11 +133,11 @@ const Form = props => {
   return useMemo(
     () => (
       <EditorView
-        onTitleChange={ autoSave ? onTitleChange : undefined }
-        onContentChange={ autoSave ? onContentChange : undefined }
-        collabProvider={ withCollab ? collabProvider : undefined }
-        defaultTitle={ defaultTitleValue }
-        defaultValue={ firstNote }
+        onTitleChange={autoSave ? onTitleChange : undefined}
+        onContentChange={autoSave ? onContentChange : undefined}
+        collabProvider={withCollab ? collabProvider : undefined}
+        defaultTitle={defaultTitleValue}
+        defaultValue={firstNote}
       />
     ),
     [props.note._id]
@@ -156,7 +159,7 @@ const FormOrSpinner = props => {
         return {
           _id: props.id,
           id: props.id,
-          title: "Note collaborative en édition publique"
+          title: 'Note collaborative en édition publique'
         }
       } else {
         return undefined
@@ -173,7 +176,11 @@ const FormOrSpinner = props => {
 
   const showSpinner = isLoading || !note
 
-  return showSpinner ? <EditorLoading /> : <MutatedForm note={note} autoSave={couchNote ? true : false} />
+  return showSpinner ? (
+    <EditorLoading />
+  ) : (
+    <MutatedForm note={note} autoSave={couchNote ? true : false} />
+  )
 }
 
 export default ({ match }) => {
