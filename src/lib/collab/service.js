@@ -109,9 +109,7 @@ class Service {
     const docSteps = steps.map(s => Step.fromJSON(schema, s))
     const nextVersion = previousVersion + steps.length
     const updatedSchemaDoc = docSteps.reduce((doc, step) => {
-      console.log('to apply', step)
       const update = step.apply(doc)
-      console.log('applied', doc)
       return update.doc
     }, schemaDoc)
     const updatedDoc = jsonTransformer.encode(updatedSchemaDoc)

@@ -20,7 +20,6 @@ export default function EditorView(props) {
     defaultTitle,
     collabProvider
   } = props
-  console.log('props', props)
 
   const left = (
     <React.Fragment>

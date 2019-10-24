@@ -20,7 +20,6 @@ export class Channel {
         previousVersion,
         previousDoc
       )
-      console.log('channel getDoc return value', { doc, version })
       return {
         doc,
         version

@@ -1,9 +1,8 @@
-import React, { useState, useCallback, useRef, useEffect, useMemo } from 'react'
+import React, { useCallback, useRef, useEffect, useMemo } from 'react'
 
 import { JSONTransformer } from '@atlaskit/editor-json-transformer'
 
 import { withRouter } from 'react-router-dom'
-import { Link } from 'react-router-dom'
 
 import debounce from 'lodash.debounce'
 
@@ -24,7 +23,7 @@ const collabUrl = 'https://poc-collab.cozycloud.cc/'
 const allowPublicCollab = true
 
 const Form = props => {
-  const { readOnlyTitle, autoSave } = props
+  const { autoSave } = props
 
   // first note received in the props, to avoid useless changes in defaultValue
   const firstNote = useMemo(
@@ -94,12 +93,6 @@ const Form = props => {
       const newTitle = e.target.value
       const title = newTitle && newTitle.trim().length > 0 ? newTitle : null
       if (title != currentNote.current.title) {
-        console.log(
-          'save title',
-          title,
-          'with content',
-          currentNote.current.content
-        )
         currentNote.current = { ...currentNote.current, title }
         window.setTimeout(() => save())
       }
@@ -109,19 +102,12 @@ const Form = props => {
 
   const onContentChange = useCallback(
     editorView => {
-      console.log(editorView.state)
       const content = JSON.stringify(
         jsonTransformer.encode(editorView.state.doc),
         null,
         2
       )
       if (content != currentNote.current.content) {
-        console.log(
-          'save content',
-          content,
-          'with title',
-          currentNote.current.title
-        )
         currentNote.current = { ...currentNote.current, content }
         window.setTimeout(() => save())
       }

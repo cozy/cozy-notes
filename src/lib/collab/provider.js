@@ -31,7 +31,6 @@ export class CollabProvider {
     this.channel.on('data', this.onReceiveData)
     this.channel.on('telepointer', this.onReceiveTelepointer)
     const state = getState()
-    console.log(state)
     const doc = jsonTransformer.encode(state.doc)
     const version = doc.version
     this.channel.connect(
@@ -118,7 +117,6 @@ export class CollabProvider {
 
         // Re-aply local steps
         if (localSteps.length) {
-          console.log('apply local steps', localSteps)
           this.emit('local-steps', { steps: localSteps })
         }
 
@@ -151,7 +149,6 @@ export class CollabProvider {
 
     const [firstItem] = this.queue
     const currentVersion = getVersion(this.getState())
-    console.log('process queue currentVersion', currentVersion)
     const expectedVersion = currentVersion + firstItem.steps.length
 
     if (firstItem.version === expectedVersion) {
@@ -172,7 +169,6 @@ export class CollabProvider {
     logger(`Processing data. Version: ${version}`)
 
     if (steps && steps.length) {
-      console.log('applying steps', steps)
       const userIds = steps.map(step => step.userId || step.sessionId)
       this.emit('data', { json: steps, version, userIds })
     }
