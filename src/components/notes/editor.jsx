@@ -145,7 +145,7 @@ const FormOrSpinner = props => {
         return {
           _id: props.id,
           id: props.id,
-          title: 'Note collaborative en édition publique'
+          title: 'Note collaborative'
         }
       } else {
         return undefined
