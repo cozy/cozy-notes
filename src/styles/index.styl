@@ -3,10 +3,28 @@ html {
     --documentMaxWidth: 48rem;
     --documentDividerColor: #D6D8DA;
     --note-base-size: 1.125rem;
-    --note-block-spacing: calc(var(--note-base-size) * 2);
+    --note-base-lh: 1.5;
+    --note-base-color: var(--charcoalGrey);
+    --note-block-spacing: calc(var(--note-base-size) * 1.333);
     --note-maintitle-padding: 2rem;
     --documentTopPadding: calc(2 * var(--note-base-size));
     --documentPadding: calc(2 * var(--note-base-size));
+    --note-title0-fs: calc(2 * var(--note-base-size));
+    --note-title1-fs: calc(1.666 * var(--note-base-size));
+    --note-title2-fs: calc(1.333 * var(--note-base-size));
+    --note-title3-fs: var(--note-base-size);
+    --note-title4-fs: var(--note-base-size);
+    --note-title0-lh: 1.2;
+    --note-title1-lh: 1.3;
+    --note-title2-lh: 1.4;
+    --note-title3-lh: var(--note-base-lh);
+    --note-title4-lh: var(--note-base-lh);
+    --note-title0-color: var(--note-base-color);
+    --note-title1-color: var(--note-base-color);
+    --note-title2-color: var(--note-base-color);
+    --note-title3-color: var(--note-base-color);
+    --note-title4-color: var(--coolGrey);
+    color: var(--note-base-color);
 }
 @media (max-width: 800px) {
     html {
@@ -16,6 +34,9 @@ html {
 @media (max-width: 420px) {
     html {
         --note-base-size: 1rem;
+        --note-title0-fs: calc(1.75 * var(--note-base-size));
+        --note-title1-fs: calc(1.5 * var(--note-base-size));
+        --note-title2-fs: calc(1.25 * var(--note-base-size));
         --note-block-spacing: var(--note-base-size);
         --note-maintitle-padding: 0;
     }
@@ -138,9 +159,9 @@ html .note-title {
     align-items: center;
     margin: 0 2rem calc(2 * var(--note-block-spacing)) 2rem;
     text-align: center;
-    font-size: calc( 2 * var(--note-base-size));
+    font-size: var(--note-title0-fs);
     color: var(--charcoal-grey);
-    line-height: 1.22;
+    line-height: var(--note-title0-lh);
     font-weight: 900;
     font-family: var(--primaryFont);
 }
@@ -154,9 +175,9 @@ html .note-title-input::placeholder {
     margin: 0
     overflow: visible;
     text-align: center;
-    font-size: calc( 2 * var(--note-base-size));
+    font-size: var(--note-title0-fs);
     color: var(--charcoal-grey);
-    line-height: 1.222;
+    line-height: var(--note-title0-lh);
     font-weight: 900;
     font-family: Lato-Black, var(--primaryFont);
     vertical-align: bottom;
@@ -182,18 +203,105 @@ html .ProseMirror {
   font-size: 1rem !important
 }
 
-html .ProseMirror p,
-html .ProseMirror h1,
-html .ProseMirror h2,
-html .ProseMirror h3,
-html .ProseMirror h4,
-html .ProseMirror h5,
-html .ProseMirror h6 {
-  line-height: 1.15 !important
+/* Titres */
+html body .note-editor-container .akEditor p,
+html body .note-editor-container .akEditor li {
+    font-size: var(--note-base-size) !important;
+    line-height: var(--note-base-lh) !important;
+    color: var(--note-base-color);
+}
+html body .note-editor-container .akEditor h1 {
+    border-top: 1px solid var(--silver);
+    padding-top: var(--note-block-spacing);
+    font-size: var(--note-title1-fs) !important;
+    line-height: var(--note-title1-lh) !important;
+    color: var(--note-title1-color);
+}
+html body .note-editor-container .akEditor h1.note-title {
+    border: none;
+    padding-top: 0;
+}
+html body .note-editor-container .akEditor h2 {
+    font-size: var(--note-title2-fs) !important;
+    line-height: var(--note-title2-lh) !important;
+    color: var(--note-title2-color);
+}
+html body .note-editor-container .akEditor h3 {
+    font-size: var(--note-title3-fs) !important;
+    line-height: var(--note-title3-lh) !important;
+    color: var(--note-title3-color);
+}
+html body .note-editor-container .akEditor h4,
+html body .note-editor-container .akEditor h5,
+html body .note-editor-container .akEditor h6 {
+    font-size: var(--note-title4-fs) !important;
+    line-height: var(--note-title4-lh) !important;
+    color: var(--note-title4-color);
+}
+
+/* Titres dans la dropdown de la barre d'outils */
+html body .note-editor-container .akEditor > div:first-child  h4,
+html body .note-editor-container .akEditor > div:first-child  h5,
+html body .note-editor-container .akEditor > div:first-child  h6 {
+    margin-bottom: 0;
+}
+.akEditor > div:first-child /* sc-bYwvMP */ > div:first-child > div:first-child > div:first-child /* sc-gmeYpB */ > span:first-child /* sc-kTUwUJ */ > div:first-child /* sc-kZmsYB */  div[role=group] > div:nth-child(6),
+.akEditor > div:first-child /* sc-bYwvMP */ > div:first-child > div:first-child > div:first-child /* sc-gmeYpB */ > span:first-child /* sc-kTUwUJ */ > div:first-child /* sc-kZmsYB */  div[role=group] > div:nth-child(7) {
+    display: none;
+}
+
+
+/* spacing between blocks */
+html body .note-editor-container .akEditor p,
+html body .note-editor-container .akEditor ul,
+html body .note-editor-container .akEditor ol,
+html body .note-editor-container .akEditor blockquote,
+html body .note-editor-container .akEditor hr,
+html body .note-editor-container .akEditor .tableView-content-wrap,
+html body .note-editor-container .akEditor .ak-editor-panel,
+html body .note-editor-container .akEditor h1,
+html body .note-editor-container .akEditor h2,
+html body .note-editor-container .akEditor h3,
+html body .note-editor-container .akEditor h4,
+html body .note-editor-container .akEditor h5,
+html body .note-editor-container .akEditor h6 {
+    margin-top: 0;
+    margin-bottom: var(--note-block-spacing);
+}
+html body .note-editor-container .akEditor .ak-editor-panel__content > :last-child,
+html body .note-editor-container .akEditor li > * {
+    margin-bottom: 0;
+}
+
+/* blockquote */
+html body .note-editor-container .akEditor blockquote {
+    margin-left: 0;
+    padding-left: 28px;
+    border-left: 4px solid var(--silver);
+    font-style: italic;
+}
+html body .note-editor-container .akEditor blockquote i,
+html body .note-editor-container .akEditor blockquote em {
+    font-style: normal;
+}
+html body .note-editor-container .akEditor blockquote::before {
+    display: none;
+}
+
+/* hr */
+html body .note-editor-container .akEditor hr {
+    height: 1px;
+    color: var(--silver);
+}
+
+/* tables */
+html body .note-editor-container .akEditor .tableView-content-wrap {
+    margin-top: -1.8rem;
 }
 
 html .akEditor {
     background-color: var(--documentMarginColor);
+    min-width: calc(320px - 2rem);
 }
 
 
@@ -215,54 +323,6 @@ html .ak-editor-content-area {
 
 html .fabric-editor-popup-scroll-parent > div > div {
     height: 100%;
-}
-
-html body .ProseMirror p,
-html body .ProseMirror h1,
-html body .ProseMirror h2,
-html body .ProseMirror h3,
-html body .ProseMirror h4,
-html body .ProseMirror h5,
-html body .ProseMirror h6 {
-    line-height: 1.5 !important;
-    margin: 1rem 0;
-}
-
-html .note-editor-container .akEditor h1 {
-    font-size: 2,25rem;
-}
-html .note-editor-container .ProseMirror h1 {
-    margin: var(--note-maintitle-padding) 0;
-}
-html .note-editor-container .akEditor h2 {
-    font-size: 1.5rem;
-    border-top: 2px solid var(--documentDividerColor);
-    padding-top: 0.5rem;
-}
-html .note-editor-container .ProseMirror h2 {
-    margin: 2rem 0;
-}
-html .note-editor-container .akEditor .ProseMirror > h2:first-child {
-    border-top: none;
-}
-html .note-editor-container .akEditor h3 {
-    font-size: 1.375rem;
-    margin: 1.5rem 0;
-}
-html .note-editor-container .akEditor h4 {
-    font-size: 1.125rem;
-    margin: 1.5rem 0;
-}
-html .note-editor-container .akEditor h5 {
-    font-size: 1rem;
-    color: var(--slateGrey);
-    margin: 1rem 0;
-}
-html .note-editor-container .akEditor h6 {
-    font-size: 1rem;
-    color: var(--slateGrey);
-    font-weight: normal;
-    margin: 1rem 0;
 }
 
 .notes-list {
