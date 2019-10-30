@@ -1,21 +1,106 @@
 @import '../../node_modules/cozy-ui/transpiled/react/stylesheet.css'
 html {
-    --documentMaxWidth: 768px;
-    --documentMargin: 2rem;
-    --documentPadding: 2em;
-    --documentMarginColor: #F5F6F7;
+    --documentMaxWidth: 48rem;
     --documentDividerColor: #D6D8DA;
+    --note-base-size: 1.125rem;
+    --note-block-spacing: calc(var(--note-base-size) * 2);
+    --note-maintitle-padding: 2rem;
+    --documentTopPadding: calc(2 * var(--note-base-size));
+    --documentPadding: calc(2 * var(--note-base-size));
 }
 @media (max-width: 800px) {
     html {
-        --documentMaxWidth: 800px;
-        --documentMargin: 0;
-        --documentPadding: 0;
-        --documentMarginColor: var(--white);
+        --documentPadding: var(--note-base-size);
+    }
+}
+@media (max-width: 420px) {
+    html {
+        --note-base-size: 1rem;
+        --note-block-spacing: var(--note-base-size);
+        --note-maintitle-padding: 0;
     }
 }
 
+/* For layout change in cozy-ui */
+@media (max-width:63.938rem) {
+    .note-header-menu--editing {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background-color: var(--white);
+    }
+    html .akEditor > div:first-child {
+        position: sticky;
+        top: 0;
+        z-index: 3;
+        background-color: var(--white);
+    }
+
+}
+
 // @stylint off
+
+/* div o-layout : do not add the space for the cozy-bar */
+html [role=application] > div::before,
+html [role=application] > div::after, {
+    height: auto !important;
+    display: none !important;
+}
+
+/* prose mirror toolbar in the upper bar */
+html .akEditor > div:first-child {
+    margin-left: 3rem;
+    margin-right: 3rem;
+    margin-top: -48px;
+    margin-bottom: 0;
+    height: 48px;
+}
+html .akEditor > div:first-child > div:first-child {
+    width: auto !important;
+    margin: auto;
+}
+html .akEditor > div:first-child > div:first-child + div {
+    display: none;
+}
+/* icon for text color was not aligned */
+.sc-gxMtzJ {
+    position: relative;
+    top: 0.2rem;
+}
+
+/* auto size for the toolbar */
+html .akEditor > div:first-child > div:first-child > div:first-child {
+    width: calc(100vw - 6rem) !important;
+}
+@media (min-width: 398px) {
+    html .akEditor > div:first-child > div:first-child > div:first-child {
+        margin-right: calc(398px - 100vw);
+    }
+}
+@media (min-width: 467px) {
+    html .akEditor > div:first-child > div:first-child > div:first-child {
+        margin-right: calc(450px - 100vw);
+    }
+}
+@media (min-width: 547px) {
+    html .akEditor > div:first-child > div:first-child > div:first-child {
+        margin-right: calc(482px - 100vw);
+    }
+}
+@media (min-width: 677px) {
+    html .akEditor > div:first-child > div:first-child > div:first-child {
+        margin-right: calc(561px - 100vw);
+    }
+}
+@media (min-width: 747px) {
+    html .akEditor > div:first-child > div:first-child > div:first-child {
+        margin-right: calc(677px - 100vw);
+    }
+}
+
+
+
+
 .sto-app-back {
   display: inline-flex;
   align-items: center;
@@ -26,8 +111,11 @@ html {
 .page-header-menu {
   display: flex;
   justify-content: space-between;
-  margin: 1rem;
+  padding: 0 1rem
+  margin: 0;
   align-items: center;
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(50, 54, 63, 0.08);
+  z-index: 3;
 }
 .page-header-menu--left {
   display: flex;
@@ -44,9 +132,7 @@ html .note-article {
     flex-direction: column;
     height: 100%;
 }
-.note-header-menu--editing {
-    margin-top: -0.5rem;
-}
+
 html .note-title {
     flex-grow: 1;
     align-items: center;
@@ -85,9 +171,7 @@ html .note-editor-container {
     position: relative;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     flex-grow: 1;
-    margin-top: -2rem;
 }
 html .notes-list-container .page-header-menu {
     margin-left: 2rem;
@@ -109,33 +193,29 @@ html .ProseMirror h6 {
 }
 
 html .akEditor {
-    background-color: #F5F6F7;
+    background-color: var(--documentMarginColor);
 }
 
-html .akEditor > div:first-child {
-    padding: 0.3rem 0;
-    height: auto;
-    background-color: var(--white);
-    border-bottom: 1px solid var(--documentDividerColor);
-}
-html .akEditor > div:first-child > div:first-child > div:first-child {
-    max-width: var(--documentMaxWidth);
-    margin: auto;
-}
+
 
 html .fabric-editor-popup-scroll-parent > div > div {
   margin: 0 auto;
   padding: 0;
-  max-width: var(--documentMaxWidth);
+  max-width: calc(var(--documentMaxWidth) + 2 * var(--documentPadding));
 }
 
 html .ak-editor-content-area {
-    padding: var(--documentPadding) !important;
+    padding: var(--documentTopPadding) var(--documentPadding) var(--documentPadding) var(--documentPadding) !important;
     background-color: var(--white);
-    border-bottom: var(--documentMargin) solid var(--documentMarginColor);
-    border-top: var(--documentMargin) solid var(--documentMarginColor);
 }
 
+#editor-scroll-gutter {
+    display: none;
+}
+
+html .fabric-editor-popup-scroll-parent > div > div {
+    height: 100%;
+}
 
 html body .ProseMirror p,
 html body .ProseMirror h1,

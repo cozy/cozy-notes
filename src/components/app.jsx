@@ -9,7 +9,7 @@ import { List, Editor } from './notes'
 const App = () => (
   //
   <HashRouter>
-    <Layout>
+    <Layout monoColumn={true}>
       <Main>
         <Content className="app-content">
           <Switch>
