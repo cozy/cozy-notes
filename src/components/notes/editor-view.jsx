@@ -37,7 +37,7 @@ export default function EditorView(props) {
     [onTitleChange]
   )
 
-  //useEffect(() => updateTextareaHeight(titleEl.current), [])
+  useEffect(() => updateTextareaHeight(titleEl.current), [])
 
   const left = (
     <React.Fragment>
