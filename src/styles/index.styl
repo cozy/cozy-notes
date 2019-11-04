@@ -81,7 +81,7 @@ html .akEditor > div:first-child {
 html .akEditor > div:first-child > div:first-child {
     width: auto !important;
     margin: auto;
-    overflow: hidden;
+    overflow: visible; /* important for dropdowns */
 }
 
 /* avatars */
@@ -91,42 +91,52 @@ html .akEditor > div:first-child > div:first-child + div {
 
 
 
-/* icon for text color was not aligned */
+/* icon for text color in the toolbar was not correctly aligned */
 .sc-gxMtzJ {
     position: relative;
     top: 0.2rem;
 }
 
+
 /* auto size for the toolbar */
 html .akEditor > div:first-child > div:first-child > div:first-child {
-    width: calc(100vw - 6rem) !important;
+    --window-width: 100vw;
+}
+@media (min-width: 771px) and (max-width: 1025px) {
+    html .akEditor > div:first-child > div:first-child > div:first-child {
+        /* yes, this is ugly, but I didn't see how to fix
+           an horizontal scrolling appearing in this range */
+        --window-width: 771px;
+    }
+}
+html .akEditor > div:first-child > div:first-child > div:first-child {
+    width: calc(var(--window-width) - 6rem) !important;
 }
 @media (min-width: 398px) {
     html .akEditor > div:first-child > div:first-child > div:first-child {
-        margin-right: calc(398px - 100vw);
+        margin-right: calc(398px - var(--window-width));
     }
 }
 @media (min-width: 467px) {
     html .akEditor > div:first-child > div:first-child > div:first-child {
-        margin-right: calc(450px - 100vw);
+        margin-right: calc(450px - var(--window-width));
     }
 }
 @media (min-width: 547px) {
     html .akEditor > div:first-child > div:first-child > div:first-child {
-        margin-right: calc(482px - 100vw);
+        margin-right: calc(482px - var(--window-width));
     }
 }
 @media (min-width: 677px) {
     html .akEditor > div:first-child > div:first-child > div:first-child {
-        margin-right: calc(561px - 100vw);
+        margin-right: calc(561px - var(--window-width));
     }
 }
 @media (min-width: 747px) {
     html .akEditor > div:first-child > div:first-child > div:first-child {
-        margin-right: calc(677px - 100vw);
+        margin-right: calc(677px - var(--window-width));
     }
 }
-
 
 
 
