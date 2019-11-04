@@ -25,6 +25,7 @@ html {
     --note-title2-color: var(--note-base-color);
     --note-title3-color: var(--note-base-color);
     --note-title4-color: var(--coolGrey);
+    --note-border-radius: 8px;
     --note-header-height: 3rem;
     color: var(--note-base-color);
 }
@@ -306,6 +307,76 @@ html body .note-editor-container .akEditor hr {
 /* tables */
 html body .note-editor-container .akEditor .tableView-content-wrap {
     margin-top: -1.8rem;
+}
+html body .note-editor-container .akEditor .pm-table-wrapper > table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-width: 0;
+}
+html body .note-editor-container .akEditor .pm-table-wrapper > table td,
+html body .note-editor-container .akEditor .pm-table-wrapper > table th {
+    border: 1px solid #C1C7D0;
+    border-bottom-width: 0;
+    border-right-width: 0;
+}
+html body .note-editor-container .akEditor .pm-table-wrapper > table tr:last-child td,
+html body .note-editor-container .akEditor .pm-table-wrapper > table tr:last-child th {
+    border-bottom-width: 1px;
+}
+html body .note-editor-container .akEditor .pm-table-wrapper > table td:last-child,
+html body .note-editor-container .akEditor .pm-table-wrapper > table th:last-child {
+    border-right-width: 1px;
+}
+html body .note-editor-container .akEditor tbody > tr:first-child > th:first-child,
+html body .note-editor-container .akEditor tbody > tr:first-child > td:first-child {
+    border-top-left-radius: var(--note-border-radius);
+}
+html body .note-editor-container .akEditor tbody > tr:first-child > th:last-child,
+html body .note-editor-container .akEditor tbody > tr:first-child > td:last-child {
+    border-top-right-radius: var(--note-border-radius);
+}
+html body .note-editor-container .akEditor tbody > tr:last-child > th:first-child,
+html body .note-editor-container .akEditor tbody > tr:last-child > td:first-child {
+    border-bottom-left-radius: var(--note-border-radius);
+}
+html body .note-editor-container .akEditor tbody > tr:last-child > th:last-child,
+html body .note-editor-container .akEditor tbody > tr:last-child > td:last-child {
+    border-bottom-right-radius: var(--note-border-radius);
+}
+
+/* panels */
+html body .note-editor-container .akEditor .ak-editor-panel {
+    border-radius: var(--note-border-radius);
+}
+html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=note] {
+    background-color: #F5F6F7 ; /* var(--pale-grey) * 0.8 */
+}
+html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=note] .ak-editor-panel__icon {
+    color: #96999D;
+}
+html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=info] {
+    background-color: #EEF5FD ; /* var(--dodgerBlue) * 0.8 */
+}
+html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=info] .ak-editor-panel__icon {
+    color: 3F7FE9;
+}
+html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=success] {
+    background-color: #F0FAF4 ; /* var(--emerald) * 0.8 */
+}
+html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=success] .ak-editor-panel__icon {
+    color: #68CA73;
+}
+html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=warning] {
+    background-color: #FEF7EF ; /* var(--mango) * 0.8 */
+}
+html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=warning] .ak-editor-panel__icon {
+    color: #EAA649;
+}
+html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=error] {
+    background-color: #FBEFEE; /* var(--pomegranate) * 0,8; */
+}
+html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=error] .ak-editor-panel__icon {
+    color: #E24239;
 }
 
 html .akEditor {
