@@ -25,6 +25,7 @@ html {
     --note-title2-color: var(--note-base-color);
     --note-title3-color: var(--note-base-color);
     --note-title4-color: var(--coolGrey);
+    --note-header-height: 3rem;
     color: var(--note-base-color);
 }
 @media (max-width: 800px) {
@@ -44,20 +45,20 @@ html {
 }
 
 /* For layout change in cozy-ui */
-@media (max-width:63.938rem) {
-    .note-header-menu--editing {
-        position: sticky;
-        top: 0;
-        z-index: 2;
-        background-color: var(--white);
-    }
-    html .akEditor > div:first-child {
-        position: sticky;
-        top: 0;
-        z-index: 3;
-        background-color: var(--white);
-    }
-
+.note-header-menu--editing {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: var(--white);
+}
+html .akEditor > div:first-child {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    background-color: var(--white);
+}
+.note-editor-container {
+    height: calc(100% - 48px);
 }
 
 // @stylint off
@@ -73,17 +74,22 @@ html [role=application] > div::after, {
 html .akEditor > div:first-child {
     margin-left: 3rem;
     margin-right: 3rem;
-    margin-top: -48px;
     margin-bottom: 0;
-    height: 48px;
+    height: var(--note-header-height);
 }
 html .akEditor > div:first-child > div:first-child {
     width: auto !important;
     margin: auto;
+    overflow: hidden;
 }
+
+/* avatars */
 html .akEditor > div:first-child > div:first-child + div {
     display: none;
 }
+
+
+
 /* icon for text color was not aligned */
 .sc-gxMtzJ {
     position: relative;
@@ -130,7 +136,7 @@ html .akEditor > div:first-child > div:first-child > div:first-child {
   color: var(--slateGrey) !important;
 }
 
-.page-header-menu {
+.note-header-menu--editing {
   display: flex;
   justify-content: space-between;
   padding: 0 1rem
@@ -138,13 +144,15 @@ html .akEditor > div:first-child > div:first-child > div:first-child {
   align-items: center;
   box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(50, 54, 63, 0.08);
   z-index: 3;
+  height: var(--note-header-height);
+  margin-bottom: calc(0px - var(--note-header-height));
 }
-.page-header-menu--left {
+.note-header-menu--editing .page-header-menu--left {
   display: flex;
   flex-grow: 1;
   align-items: center;
 }
-.page-header-menu--right {
+.note-header-menu--editing .page-header-menu--right {
   display: flex;
   align-items: center;
 }
