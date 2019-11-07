@@ -3,7 +3,7 @@
   "slug": "notes",
   "icon": "icon.svg",
   "categories": [],
-  "version": "1.0.7",
+  "version": "1.0.8",
   "licence": "AGPL-3.0",
   "editor": "",
   "source": "https://github.com/cozy/cozy-notes.git@build",
