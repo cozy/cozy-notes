@@ -1,6 +1,6 @@
 {
   "name": "Cozy Notes",
-  "slug": "app",
+  "slug": "notes",
   "icon": "icon.svg",
   "categories": [],
   "version": "1.0.7",
@@ -30,5 +30,11 @@
       "description": "Notes",
       "type": "io.cozy.notes"
     }
-  }
+  },
+  "locales": {
+    "en": {}
+  },
+  "langs": [
+    "en"
+  ]
 }
