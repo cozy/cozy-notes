@@ -105,10 +105,12 @@ export class Channel {
     this.isSending = true
 
     try {
-      this.isSending = false
       const response = await this.service.pushSteps(docId, version, steps)
+      this.isSending = false
       logger(`Steps sent and accepted by service.`)
-      this.emit('data', response)
+      if (response && response.steps && response.steps.length > 0) {
+        this.emit('data', response)
+      }
     } catch (err) {
       this.debounce(getState)
       this.isSending = false

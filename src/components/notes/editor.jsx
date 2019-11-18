@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom'
 
 import debounce from 'lodash.debounce'
 
-import { queryConnect, withMutations } from 'cozy-client'
+import { queryConnect, withMutations, withClient } from 'cozy-client'
 
 import EditorView from './editor-view'
 import EditorLoading from './editor-loading'
@@ -14,7 +14,7 @@ import EditorLoading from './editor-loading'
 import doctype from './doctype'
 import { defaultTitle } from './utils'
 import CollabProvider from '../../lib/collab/provider'
-import ServiceClient from '../../lib/collab/client'
+import ServiceClient from '../../lib/collab/stack-client'
 
 const jsonTransformer = new JSONTransformer()
 
@@ -23,7 +23,7 @@ const collabUrl = 'https://poc-collab.cozycloud.cc/'
 const allowPublicCollab = true
 
 const Form = props => {
-  const { autoSave } = props
+  const { autoSave, client: cozyClient } = props
 
   // first note received in the props, to avoid useless changes in defaultValue
   const firstNote = useMemo(
@@ -45,7 +45,13 @@ const Form = props => {
       provider: Promise.resolve(
         new CollabProvider(
           { docId, userId, sessionId },
-          new ServiceClient({ url: collabUrl, docId, userId, sessionId })
+          new ServiceClient({
+            url: collabUrl,
+            docId,
+            userId,
+            sessionId,
+            cozyClient
+          })
         )
       ),
       inviteToEditHandler: () => undefined,
@@ -130,7 +136,7 @@ const Form = props => {
   )
 }
 
-const MutatedForm = withMutations()(Form)
+const MutatedForm = withMutations()(withClient(Form))
 
 const FormOrSpinner = props => {
   const {
