@@ -1,185 +1,110 @@
-import React, { useCallback, useRef, useEffect, useMemo } from 'react'
-
-import { JSONTransformer } from '@atlaskit/editor-json-transformer'
+import React, { useCallback, useRef, useState, useEffect, useMemo } from 'react'
 
 import { withRouter } from 'react-router-dom'
 
-import debounce from 'lodash.debounce'
-
-import { queryConnect, withMutations, withClient } from 'cozy-client'
+import { withClient } from 'cozy-client'
 
 import EditorView from './editor-view'
 import EditorLoading from './editor-loading'
 
-import doctype from './doctype'
-import { defaultTitle } from './utils'
 import CollabProvider from '../../lib/collab/provider'
 import ServiceClient from '../../lib/collab/stack-client'
 
-const jsonTransformer = new JSONTransformer()
+function shortNameFromClient(client) {
+  return client.getStackClient().getCozyURL().hostname
+}
 
-const withCollab = true
-const collabUrl = 'https://poc-collab.cozycloud.cc/'
-const allowPublicCollab = true
+const Editor = withClient(function(props) {
+  const { client, noteId } = props
+  const userName = props.userName || shortNameFromClient(client)
 
-const Form = props => {
-  const { autoSave, client: cozyClient } = props
+  // alias for later shortcuts
+  const docId = noteId
+  const userId = userName
+  const sessionId = userName
+  const cozyClient = client
 
-  // first note received in the props, to avoid useless changes in defaultValue
-  const firstNote = useMemo(
-    () => ({ title: props.note.title, content: props.note.content }),
-    [props.note._id]
+  // state
+  const [loading, setLoading] = useState(true)
+  const [doc, setDoc] = useState(undefined)
+  const currentTitle = useRef(undefined)
+
+  // plugins and config
+  const serviceClient = useMemo(
+    () => {
+      return new ServiceClient(docId, userId, sessionId, cozyClient)
+    },
+    [noteId]
   )
-  // same with the title placeholder
-  const defaultTitleValue = useMemo(
-    () => props.note.defaultTitle || defaultTitle(props.note),
-    [props.note._id]
-  )
-  // then with the collabProvider to avoid an init at each render
-  const userId = useMemo(() => `user${Math.floor(Math.random() * 1000)}`, [])
-  const sessionId = userId
-  const docId = props.note._id
   const collabProvider = useMemo(
     () => ({
       useNativePlugin: true,
       provider: Promise.resolve(
-        new CollabProvider(
-          { docId, userId, sessionId },
-          new ServiceClient({
-            url: collabUrl,
-            docId,
-            userId,
-            sessionId,
-            cozyClient
-          })
-        )
+        new CollabProvider({ docId, userId, sessionId }, serviceClient)
       ),
       inviteToEditHandler: () => undefined,
-      isInviteToEditButtonSelected: true,
+      isInviteToEditButtonSelected: false,
       userId
     }),
-    [props.note._id, userId]
+    [noteId, userName, serviceClient]
   )
-  // get the previous note in a ref to be able to fetch the last _rev
-  // when sending the update to the couch server
-  const serverNote = useRef(props.note)
+
+  // fetch the actual note on load
   useEffect(
-    () => {
-      serverNote.current = props.note
+    async () => {
+      try {
+        if (!loading) {
+          setLoading(true)
+        }
+        const doc = await serviceClient.getDoc(noteId)
+        currentTitle.current = doc.attributes.metadata.title || ''
+        setDoc(doc)
+      } catch (e) {
+        setDoc(false)
+      }
+      setLoading(false)
     },
-    [props.note._rev]
+    [noteId]
   )
 
-  // we do note use the state in our callbacks to
-  // avoid a capture of an old {note} variable
-  const currentNote = useRef({
-    title: props.note.title,
-    content: props.note.content
-  })
-
-  // do not save more often than 5000ms
-  // it will generate conflict with _rev of couchdb
-  // and will overload couch database with useless versions
-  const save = useMemo(
-    () =>
-      debounce(
-        () =>
-          props.saveDocument({ ...serverNote.current, ...currentNote.current }),
-        5000,
-        { leading: true, trailing: true }
-      ),
-    [props.note._id]
-  )
-  // always save immediatly when leaving the editor
-  useEffect(() => () => save.flush(), [props.note._id])
-
-  // fix callbacks
+  // callbacks
   const onTitleChange = useCallback(
     e => {
       const newTitle = e.target.value
       const title = newTitle && newTitle.trim().length > 0 ? newTitle : null
-      if (title != currentNote.current.title) {
-        currentNote.current = { ...currentNote.current, title }
-        window.setTimeout(() => save())
+      if (title != currentTitle.current) {
+        currentTitle.current = title
+        serviceClient.setTitle(noteId, title)
       }
     },
-    [props.note._id]
+    [noteId]
   )
+  const onContentChange = useCallback(() => null, [noteId])
 
-  const onContentChange = useCallback(
-    editorView => {
-      const content = JSON.stringify(
-        jsonTransformer.encode(editorView.state.doc),
-        null,
-        2
-      )
-      if (content != currentNote.current.content) {
-        currentNote.current = { ...currentNote.current, content }
-        window.setTimeout(() => save())
-      }
-    },
-    [props.note._id]
-  )
+  // Failure in loading the note ?
+  useEffect(() => {
+    if (!loading && !doc) {
+      console.warn(`Could not load note ${noteId}`)
+      window.setTimeout(() => props.history.push(`/`), 0)
+    }
+  })
 
-  // then memoize the rendering, the rest is pureComponent
-  return useMemo(
-    () => (
+  // rendering
+  if (loading || !doc) {
+    return <EditorLoading />
+  } else {
+    return (
       <EditorView
-        onTitleChange={autoSave ? onTitleChange : undefined}
-        onContentChange={autoSave ? onContentChange : undefined}
-        collabProvider={withCollab ? collabProvider : undefined}
-        defaultTitle={defaultTitleValue}
-        defaultValue={firstNote}
+        onTitleChange={onTitleChange}
+        onContentChange={onContentChange}
+        collabProvider={collabProvider}
+        defaultTitle={doc.attributes.metadata.title}
+        defaultValue={doc.attributes.metadata.content}
       />
-    ),
-    [props.note._id]
-  )
-}
-
-const MutatedForm = withMutations()(withClient(Form))
-
-const FormOrSpinner = props => {
-  const {
-    notes: { data, fetchStatus }
-  } = props
-  const isLoading = fetchStatus === 'loading' || fetchStatus === 'pending'
-
-  const couchNote = data && data[0]
-  const fakeNote = useMemo(
-    () => {
-      if (allowPublicCollab && withCollab) {
-        return {
-          _id: props.id,
-          id: props.id,
-          title: 'Note collaborative'
-        }
-      } else {
-        return undefined
-      }
-    },
-    [props.id, allowPublicCollab]
-  )
-
-  const note = couchNote || fakeNote
-
-  if (!isLoading && !note) {
-    window.setTimeout(() => props.history.push(`/`), 0)
+    )
   }
+})
 
-  const showSpinner = isLoading || !note
-
-  return showSpinner ? (
-    <EditorLoading />
-  ) : (
-    <MutatedForm note={note} autoSave={couchNote ? true : false} />
-  )
-}
-
-export default ({ match }) => {
-  const id = match.params.id
-  const query = client => client.find(doctype).where({ _id: id })
-  const Component = queryConnect({
-    notes: { query, as: 'notes' }
-  })(withRouter(FormOrSpinner))
-  return <Component id={id} />
-}
+export default withRouter(({ match, userName }) => (
+  <Editor noteId={match.params.id} userName={userName} />
+))
