@@ -27,6 +27,10 @@
     "notes": {
       "description": "Notes",
       "type": "io.cozy.notes"
+    },
+    "files": {
+      "description": "Notes as files",
+      "type": "io.cozy.files"
     }
   }
 }
