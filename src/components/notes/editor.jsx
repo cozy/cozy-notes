@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState, useEffect, useMemo } from 'react'
+import React, { useCallback, useState, useEffect, useMemo } from 'react'
 
 import { withRouter } from 'react-router-dom'
 
@@ -11,100 +11,141 @@ import CollabProvider from '../../lib/collab/provider'
 import ServiceClient from '../../lib/collab/stack-client'
 
 function shortNameFromClient(client) {
-  return client.getStackClient().getCozyURL().hostname
+  const url = new URL(client.getStackClient().uri)
+  return url.hostname + Math.floor(Math.random() * 100)
 }
 
-const Editor = withClient(function(props) {
-  const { client, noteId } = props
-  const userName = props.userName || shortNameFromClient(client)
+const Editor = withRouter(
+  withClient(function(props) {
+    const { client } = props
+    const noteId = props.match.params.id
+    const userName = props.userName || shortNameFromClient(client)
 
-  // alias for later shortcuts
-  const docId = noteId
-  const userId = userName
-  const sessionId = userName
-  const cozyClient = client
+    // alias for later shortcuts
+    const docId = noteId
+    const userId = userName
+    const cozyClient = client
 
-  // state
-  const [loading, setLoading] = useState(true)
-  const [doc, setDoc] = useState(undefined)
-  const currentTitle = useRef(undefined)
+    // state
+    const [loading, setLoading] = useState(true)
+    const [doc, setDoc] = useState(undefined)
+    const [title, setTitle] = useState(undefined)
 
-  // plugins and config
-  const serviceClient = useMemo(
-    () => {
-      return new ServiceClient(docId, userId, sessionId, cozyClient)
-    },
-    [noteId]
-  )
-  const collabProvider = useMemo(
-    () => ({
-      useNativePlugin: true,
-      provider: Promise.resolve(
-        new CollabProvider({ docId, userId, sessionId }, serviceClient)
-      ),
-      inviteToEditHandler: () => undefined,
-      isInviteToEditButtonSelected: false,
-      userId
-    }),
-    [noteId, userName, serviceClient]
-  )
-
-  // fetch the actual note on load
-  useEffect(
-    async () => {
-      try {
-        if (!loading) {
-          setLoading(true)
+    // plugins and config
+    const serviceClient = useMemo(
+      () => {
+        return new ServiceClient({ userId, userName, cozyClient })
+      },
+      [noteId]
+    )
+    const docVersion = doc && doc.version
+    //console.log("docVersion", doc, doc && doc.version, docVersion)
+    const collabProvider = useMemo(
+      () => {
+        //console.log("collab provider memo", docVersion)
+        if (docVersion !== undefined) {
+          //console.log('new collabProvider')
+          const provider = new CollabProvider(
+            { version: doc.version, docId },
+            serviceClient
+          )
+          return {
+            useNativePlugin: true,
+            provider: Promise.resolve(provider),
+            inviteToEditHandler: () => undefined,
+            isInviteToEditButtonSelected: false,
+            userId
+          }
+        } else {
+          return null
         }
-        const doc = await serviceClient.getDoc(noteId)
-        currentTitle.current = doc.attributes.metadata.title || ''
-        setDoc(doc)
-      } catch (e) {
-        setDoc(false)
-      }
-      setLoading(false)
-    },
-    [noteId]
-  )
+      },
+      [noteId, docVersion, userName, serviceClient]
+    )
+    //console.log("end collabProviderMemo", collabProvider)
 
-  // callbacks
-  const onTitleChange = useCallback(
-    e => {
-      const newTitle = e.target.value
-      const title = newTitle && newTitle.trim().length > 0 ? newTitle : null
-      if (title != currentTitle.current) {
-        currentTitle.current = title
-        serviceClient.setTitle(noteId, title)
-      }
-    },
-    [noteId]
-  )
-  const onContentChange = useCallback(() => null, [noteId])
+    // fetch the actual note on load
+    useEffect(
+      () => {
+        const fn = async function() {
+          try {
+            if (!loading) {
+              setLoading(true)
+            }
+            const doc = await serviceClient.getDoc(noteId)
+            setTitle(doc.title || '')
+            setDoc(doc)
+          } catch (e) {
+            setTitle(false)
+            setDoc(false)
+          }
+          setLoading(false)
+        }
+        fn()
+      },
+      [noteId]
+    )
 
-  // Failure in loading the note ?
-  useEffect(() => {
-    if (!loading && !doc) {
-      console.warn(`Could not load note ${noteId}`)
-      window.setTimeout(() => props.history.push(`/`), 0)
+    // callbacks
+    const onContentChange = useCallback(() => null, [noteId])
+    const onLocalTitleChange = useCallback(
+      e => {
+        const newTitle = e.target.value
+        const modifiedTitle = newTitle
+        console.log(
+          'new',
+          newTitle,
+          'modified',
+          modifiedTitle,
+          'current',
+          title
+        )
+        if (title != modifiedTitle) {
+          setTitle(modifiedTitle)
+          serviceClient.setTitle(noteId, modifiedTitle)
+        }
+      },
+      [noteId, setTitle, serviceClient]
+    )
+    const onRemoteTitleChange = useCallback(
+      modifiedTitle => {
+        if (title != modifiedTitle) {
+          setTitle(modifiedTitle)
+        }
+      },
+      [noteId, setTitle]
+    )
+    useMemo(
+      () => {
+        serviceClient.onTitleUpdated(noteId, onRemoteTitleChange)
+      },
+      [onRemoteTitleChange, serviceClient]
+    )
+
+    // Failure in loading the note ?
+    useEffect(() => {
+      if (!loading && !doc) {
+        console.warn(`Could not load note ${noteId}`)
+        window.setTimeout(() => props.history.push(`/`), 0)
+      }
+    })
+
+    // rendering
+    if (loading || !doc) {
+      return <EditorLoading />
+    } else {
+      return (
+        <EditorView
+          onTitleChange={onLocalTitleChange}
+          onContentChange={onContentChange}
+          collabProvider={collabProvider}
+          defaultTitle={'Ici votre titre…'}
+          defaultValue={{ ...doc.doc, version: doc.version }}
+          title={title && title.length > 0 ? title : undefined}
+        />
+      )
     }
   })
+)
 
-  // rendering
-  if (loading || !doc) {
-    return <EditorLoading />
-  } else {
-    return (
-      <EditorView
-        onTitleChange={onTitleChange}
-        onContentChange={onContentChange}
-        collabProvider={collabProvider}
-        defaultTitle={doc.attributes.metadata.title}
-        defaultValue={doc.attributes.metadata.content}
-      />
-    )
-  }
-})
-
-export default withRouter(({ match, userName }) => (
-  <Editor noteId={match.params.id} userName={userName} />
-))
+export default Editor

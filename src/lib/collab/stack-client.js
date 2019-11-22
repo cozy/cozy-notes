@@ -6,14 +6,19 @@ import { schemaOrdered as defaultSchema } from './schema'
 
 export class ServiceClient {
   constructor(config) {
-    const { cozyClient, sessionId, schema } = config
-    this.sessionId = sessionId
+    const { userId, cozyClient, schema } = config
+    const now = new Date()
+    const sessionSuffix =
+      now.getTime() + '.' + now.getMilliseconds() + '.' + Math.random()
+    this.sessionId = userId + ':' + sessionSuffix
+    this.userId = userId
     this.cozyClient = cozyClient
     this.stackClient = cozyClient.getStackClient()
     this.schema = schema
     this.onRealtimeEvent = this.onRealtimeEvent.bind(this)
     this.realtime = new CozyRealtime({ client: cozyClient })
     this.resetCallbacks()
+    console.debug("Collab.ServiceClient: Created new ServiceClient for", this.userId, "with session", this.sessionId)
   }
 
   resetCallbacks() {
@@ -25,7 +30,16 @@ export class ServiceClient {
     this.callbacks[type][id] = callback
   }
 
+  getUserId(sessionId) {
+    return sessionId // ? sessionId.match(/[^:]+/)[0] : this.userId
+  }
+
+  getSessionId() {
+    return this.sessionId
+  }
+
   close() {
+    console.debug("Collab.ServiceClient: Closed ServiceClient")
     this.realtime.unsubscribeAll()
     this.resetCallbacks()
   }
@@ -36,6 +50,18 @@ export class ServiceClient {
 
   path(id, sub) {
     return id ? (sub ? `/notes/${id}/${sub}` : `/notes/${id}`) : '/notes'
+  }
+
+  client2server(data) {
+    return { sessionID: data.sessionId || this.sessionId, ...data }
+  }
+
+  server2client(data) {
+    return {
+      sessionId: data.sessionID,
+      userId: this.getUserId(data.sessionID),
+      ...data
+    }
   }
 
   async create(title, schema) {
@@ -56,61 +82,92 @@ export class ServiceClient {
       data: {
         type: 'io.cozy.notes.documents',
         id: docId,
-        attributes: {
-          title: title
-        }
+        attributes: this.client2server({ title: title })
       }
     }
     await this.stackClient.fetchJSON('PUT', this.path(docId, 'title'), titleDoc)
   }
 
   onRealtimeEvent(doc) {
-    const id = doc.id
-    const type = doc.type
-    if (this.callbacks[type] && this.callbacks[type][id])
-      this.callbacks[type][id](doc)
+    const id = doc.id || doc._id
+    const type = doc.doctype
+    if (this.callbacks[type] && this.callbacks[type][id]) {
+      return this.callbacks[type][id](doc)
+    } else {
+      console.warn('not managed event', type, id, this.callbacks)
+    }
   }
 
   async join(docId) {
-    await this.realtime.subscribe(
-      'created',
-      'io.cozy.notes.events',
-      docId,
-      this.onRealtimeEvent
-    )
+    console.debug("Collab.ServiceClient: Join", docId)
+    const onRealtimeCreated = function(doc) {
+      if (doc.id == docId) {
+        return this.onRealtimeEvent(docId)
+      } else {
+        return undefined
+      }
+    }
+    await Promise.all([
+      this.realtime.subscribe(
+        'created',
+        'io.cozy.notes.events',
+        onRealtimeCreated
+      ),
+      this.realtime.subscribe(
+        'updated',
+        'io.cozy.notes.events',
+        docId,
+        this.onRealtimeEvent
+      ),
+      this.realtime.subscribe(
+        'deleted',
+        'io.cozy.notes.events',
+        docId,
+        this.onRealtimeEvent
+      )
+    ])
   }
 
   async onStepsCreated(docId, callback) {
-    this.setCallback('io.cozy.notes.steps', docId, callback)
-  }
-
-  async onTelepointerUpdated(docId, callback) {
-    this.setCallback('io.cozy.notes.telepointers', docId, callback)
-  }
-
-  async onTitleUpdated(docId, callback) {
-    this.setCallback('io.cozy.notes.documents', docId, doc =>
-      callback(doc.title)
+    this.setCallback('io.cozy.notes.steps', docId, data =>
+      callback(this.server2client(data))
     )
   }
 
+  async onTelepointerUpdated(docId, callback) {
+    this.setCallback('io.cozy.notes.telepointers', docId, data =>
+      callback(this.server2client(data))
+    )
+  }
+
+  async onTitleUpdated(docId, callback) {
+    this.setCallback('io.cozy.notes.documents', docId, doc => {
+      return !doc.sessionID || doc.sessionID != this.sessionId
+        ? callback(doc.title)
+        : null
+    })
+  }
+
   async getDoc(docId) {
+    console.debug("Collab.ServiceClient: getDoc", docId)
     const res = await this.stackClient.fetchJSON('GET', this.path(docId))
     return {
       doc: res.data.attributes.metadata.content,
-      version: res.data.attributes.metadata.version
+      version: res.data.attributes.metadata.version,
+      title: res.data.attributes.metadata.title
     }
   }
 
   async pushSteps(docId, version, steps) {
+    console.debug("Collab.ServiceClient: pushSteps", docId, version, steps)
     const options = { headers: { 'if-match': version } }
     const stepsDoc = {
       data: steps.map(step => ({
         type: 'io.cozy.notes.steps',
-        attributes: { ...step.toJSON(), sessionID: this.sessionId }
+        attributes: this.client2server(step.toJSON())
       }))
     }
-    // will throw in case of 412
+    // will throw in case of 409
     // which will occurs if the server has more versions than us
     await this.stackClient.fetchJSON(
       'PATCH',
@@ -122,6 +179,7 @@ export class ServiceClient {
   }
 
   async getSteps(docId, version) {
+    console.debug("Collab.ServiceClient: getSteps", docId, "since", version)
     try {
       const res = await this.stackClient.fetchJSON(
         'GET',
@@ -134,10 +192,7 @@ export class ServiceClient {
           version: res.data[res.data.length - 1].version,
           steps: res.data.map(step => ({
             ...step,
-            attributes: {
-              ...step.attributes,
-              sessionId: step.attributes.sessionId
-            }
+            attributes: this.client2server(step.attributes)
           }))
         }
       }
@@ -149,7 +204,11 @@ export class ServiceClient {
       const ver = meta && meta.version
       if (response.status == 412 && doc && ver) {
         // server does not have all steps we try to fetch
-        // it responds with a full document
+        // it responds with a full document and a title
+        const ev = 'io.cozy.notes.documents'
+        if (this.callbacks[ev] && this.callbacks[ev][doc.id || doc._id]) {
+          this.callbacks[ev][doc.id || doc._id](doc)
+        }
         return {
           doc: doc,
           version: ver
@@ -161,14 +220,12 @@ export class ServiceClient {
   }
 
   async pushTelepointer(docId, data) {
+    console.debug("Collab.ServiceClient: pushTelepointer", docId, data)
     const telepointerDoc = {
       data: {
         type: 'io.cozy.notes.telepointers',
         id: docId,
-        attributes: {
-          ...data,
-          sessionID: this.sessionId
-        }
+        attributes: this.client2server(data)
       }
     }
     return this.stackClient.fetchJSON(

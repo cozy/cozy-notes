@@ -82,7 +82,8 @@ document.addEventListener('DOMContentLoaded', () => {
     appNamePrefix: appNamePrefix,
     iconPath: appIcon,
     lang: appLocale,
-    replaceTitleOnMobile: true
+    replaceTitleOnMobile: true,
+    cozyClient: client
   })
 
   renderApp(client)

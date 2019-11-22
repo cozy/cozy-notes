@@ -1,5 +1,6 @@
 export const getParticipant = userId => ({
-  userId,
+  userId: userId,
+  sessionId: userId,
   name: userId,
   avatar: `https://api.adorable.io/avatars/80/${userId.replace(
     /[^a-zA-Z0-9]/g,

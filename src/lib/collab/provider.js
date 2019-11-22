@@ -10,32 +10,39 @@ const jsonTransformer = new JSONTransformer()
 export class CollabProvider {
   constructor(config, serviceClient) {
     this.config = config
+    this.config['sessionId'] = serviceClient.getSessionId()
+    this.config['userId'] = serviceClient.getUserId()
+    console.debug("Collab.Provider: new")
+    this.serviceClient = serviceClient
     this.channel = config.channel || new Channel(config, serviceClient)
     this.eventEmitter = new EventEmitter2()
     this.queue = []
     this.getState = () => {}
     this.participants = new Map()
     this.pauseQueue = false
+    this.initialVersion = config.version
   }
 
   initialize(getState) {
+    console.debug("Collab.Provider: initialize")
     this.getState = getState
     this.channel.on('connected', ({ doc, version }) => {
-      const { userId } = this.config
-
-      logger(`Joined collab-session. The document version is ${version}`)
-
-      this.emit('init', { sid: userId, doc, version }) // Set initial document
-      this.emit('connected', { sid: userId }) // Let the plugin know that we're connected an ready to go
+      const { sessionId } = this.config
+      console.debug("Collab.Provider: init with sid", sessionId)
+      this.emit('init', { sid: sessionId, doc, version }) // Set initial document
+      this.emit('connected', { sid: sessionId }) // Let the plugin know that we're connected an ready to go
     })
     this.channel.on('data', this.onReceiveData)
     this.channel.on('telepointer', this.onReceiveTelepointer)
     const state = getState()
     const doc = jsonTransformer.encode(state.doc)
-    const version = doc.version
+    const usableVersion =
+      this.initialVersion !== undefined ? this.initialVersion : doc.version
+    const collabDoc = { ...doc, version: usableVersion }
+    console.debug("Collab.Provider: initialize", this.config['sessionId'], usableVersion)
     this.channel.connect(
-      version,
-      doc
+      usableVersion,
+      collabDoc
     )
 
     return this
@@ -72,7 +79,7 @@ export class CollabProvider {
   }
 
   queueData(data) {
-    logger(`Queuing data for version ${data.version}`)
+    console.debug("Collab.Provider: queue", data)
     const orderedQueue = [...this.queue, data].sort((a, b) =>
       a.version > b.version ? 1 : -1
     )
@@ -87,9 +94,8 @@ export class CollabProvider {
   }
 
   async catchup() {
+    console.debug("Collab.Provider: catchup")
     this.pauseQueue = true
-
-    logger(`Too far behind - fetching data from service`)
 
     const currentVersion = getVersion(this.getState())
 
@@ -107,13 +113,12 @@ export class CollabProvider {
 
       // We are too far behind - replace the entire document
       if (doc) {
-        logger(`Replacing document.`)
-        const { userId } = this.config
+        const { sessionId } = this.config
 
         const { steps: localSteps = [] } = sendableSteps(this.getState()) || {}
 
         // Replace local document and version number
-        this.emit('init', { sid: userId, doc, version })
+        this.emit('init', { sid: sessionId, doc, version })
 
         // Re-aply local steps
         if (localSteps.length) {
@@ -124,7 +129,6 @@ export class CollabProvider {
         this.pauseQueue = false
         this.queueTimeout = undefined
       } else if (steps) {
-        logger(`Applying the new steps. Version: ${version}`, steps)
         this.onReceiveData({ steps, version }, true)
         clearTimeout(this.queueTimeout)
         this.pauseQueue = false
@@ -137,40 +141,50 @@ export class CollabProvider {
 
   processQeueue() {
     if (this.pauseQueue) {
-      logger(`Queue is paused. Aborting.`)
       return
     }
-
-    logger(`Looking for proccessable data`)
 
     if (this.queue.length === 0) {
       return
     }
 
+    console.debug("Collab.Provider: processQueue")
     const [firstItem] = this.queue
     const currentVersion = getVersion(this.getState())
     const expectedVersion = currentVersion + firstItem.steps.length
 
     if (firstItem.version === expectedVersion) {
-      logger(`Applying data from queue!`)
       this.queue.splice(0, 1)
       this.processRemoteData(firstItem)
     }
   }
 
   processRemoteData = (data, forceApply) => {
+    console.debug("Collab.Provider: processRemoteData", data, forceApply)
     if (this.pauseQueue && !forceApply) {
-      logger(`Queue is paused. Aborting.`)
       return
     }
 
     const { version, steps } = data
 
-    logger(`Processing data. Version: ${version}`)
-
     if (steps && steps.length) {
-      const userIds = steps.map(step => step.userId || step.sessionId)
-      this.emit('data', { json: steps, version, userIds })
+      const userIds = steps.map(
+        step => step.userId || this.serviceClient.getUserId(step.sessionId)
+      )
+      const cleanSteps = steps.map(
+        step => {
+          delete step['timestamp']
+          delete step['_id']
+          delete step['_rev']
+          delete step['doctype']
+          delete step['sessionID']
+          delete step['userId']
+          delete step['version']
+          return step
+        }
+      )
+      console.debug("Collab.Provider: processRemoteData emit data", { json: cleanSteps, version, userIds })
+      this.emit('data', { json: cleanSteps, version, userIds })
     }
 
     this.processQeueue()
@@ -181,48 +195,47 @@ export class CollabProvider {
     const expectedVersion = currentVersion + data.steps.length
 
     if (data.version === currentVersion) {
-      logger(`Received data we already have. Ignoring.`)
+      // Received data we already have. Ignoring
+      console.debug("Collab.Provider: onReceiveData - same version, ignoring", currentVersion)
     } else if (data.version === expectedVersion) {
+      console.debug("Collab.Provider: onReceiveData", data.version, data)
       this.processRemoteData(data, forceApply)
     } else if (data.version > expectedVersion) {
-      logger(
-        `Version too high. Expected ${expectedVersion} but got ${
-          data.version
-        }. Current local version is ${currentVersion}`
-      )
+      console.debug("Collab.Provider: onReceiveData - future version, queue", data.version)
       this.queueData(data)
     }
   }
 
   onReceiveTelepointer = data => {
     const { sessionId } = data
-
-    if (sessionId === this.config.userId) {
+    const userId = this.serviceClient.getUserId(sessionId)
+    if (userId === this.config.userId) {
+      console.debug("Collab.Provider: onReceiveTelepointer - receive own telepointer", userId)
       return
     }
 
-    const participant = this.participants.get(sessionId)
-
+    const participant = this.participants.get(userId)
     if (participant && participant.lastActive > data.timestamp) {
-      logger(`Old telepointer event. Ignoring.`)
+      console.debug("Collab.Provider: onReceiveTelepointer - has more recent telepointer", userId)
       return
     }
 
-    this.updateParticipant(sessionId, data.timestamp)
-    logger(`Remote telepointer from ${sessionId}`)
-
+    console.debug("Collab.Provider: onReceiveTelepointer - emit", userId)
+    this.updateParticipant(userId, data.timestamp)
     this.emit('telepointer', data)
   }
 
-  updateParticipant(userId, timestamp) {
-    // TODO: Make batch-request to backend to resolve participants
-    const { name = '', email = '', avatar = '' } = getParticipant(userId)
+  updateParticipant(sessionId, timestamp) {
+    const userId = this.serviceClient.getUserId(sessionId)
+    const participant = getParticipant(userId)
 
     this.participants.set(userId, {
-      name,
-      email,
-      avatar,
+      name: '',
+      email: '',
+      avatar: '',
       sessionId: userId,
+      userId: userId,
+      ...participant,
       lastActive: timestamp
     })
 
@@ -236,7 +249,7 @@ export class CollabProvider {
       p => (now - p.lastActive) / 1000 > 300
     )
 
-    left.forEach(p => this.participants.delete(p.sessionId))
+    left.forEach(p => this.participants.delete(p.userId))
 
     this.emit('presence', { joined, left })
   }
@@ -263,6 +276,13 @@ export class CollabProvider {
   off(evt, handler) {
     this.eventEmitter.off(evt, handler)
     return this
+  }
+
+  /**
+   * Unsubscribe all listeners for this event
+   */
+  unsubscribeAll(evt) {
+    this.eventEmitter.removeAllListeners(evt)
   }
 }
 

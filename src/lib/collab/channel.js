@@ -10,54 +10,18 @@ export class Channel {
   }
 
   /**
-   * Get initial document from service
-   */
-  async getDocument(previousVersion, previousDoc) {
-    try {
-      const { docId } = this.config
-      const { doc, version } = await this.service.getDoc(
-        docId,
-        previousVersion,
-        previousDoc
-      )
-      return {
-        doc,
-        version
-      }
-    } catch (err) {
-      logger(
-        `Collab-Edit: Document "${
-          this.config.docId
-        }" does not exist. Creating one locally.`
-      )
-      return {
-        doc: { type: 'doc', content: [{ type: 'paragraph' }] },
-        version: 1
-      }
-    }
-  }
-
-  /**
    * Connect to pubsub to start receiving events
    */
-  async connect(previousVersion, previousDoc) {
+  async connect(version, doc) {
+    console.debug("Collab.Channel: connect", version, doc)
     const { docId } = this.config
-    const { doc, version } = await this.getDocument(
-      previousVersion,
-      previousDoc
-    )
-
     this.service.join(docId)
-
     this.service.onStepsCreated(docId, data => {
-      logger('Received FPS-payload', data)
-      this.emit('data', data)
+      this.emit('data', { version: data.version, steps: [data] })
     })
     this.service.onTelepointerUpdated(docId, payload => {
-      logger('Received telepointer-payload', { payload })
       this.emit('telepointer', payload)
     })
-
     this.eventEmitter.emit('connected', {
       doc,
       version
@@ -65,14 +29,12 @@ export class Channel {
   }
 
   debounce(getState) {
-    logger(`Debouncing steps`)
-
     if (this.debounced) {
       clearTimeout(this.debounced)
     }
 
     this.debounced = window.setTimeout(() => {
-      logger(`Sending debounced`)
+      console.debug("Collab.Channel: sendSteps after debounce")
       this.sendSteps(getState(), getState)
     }, 250)
   }
@@ -84,6 +46,7 @@ export class Channel {
     const { docId } = this.config
 
     if (this.isSending) {
+      console.debug("Collab.Channel: sendSteps still 'isSending' -> debounce")
       this.debounce(getState)
       return
     }
@@ -98,23 +61,21 @@ export class Channel {
     const { steps } = localSteps || sendableSteps(state) || { steps: [] } // sendableSteps can return null..
 
     if (steps.length === 0) {
-      logger(`No steps to send. Aborting.`)
       return
     }
 
     this.isSending = true
-
+    console.debug("Collab.Channel: sendSteps", version, steps)
     try {
       const response = await this.service.pushSteps(docId, version, steps)
       this.isSending = false
-      logger(`Steps sent and accepted by service.`)
       if (response && response.steps && response.steps.length > 0) {
         this.emit('data', response)
       }
     } catch (err) {
+      console.debug("Collab.Channel: sendSteps error (conflict?) -> debounce", err)
       this.debounce(getState)
       this.isSending = false
-      logger(`Error sending steps: "${err}"`)
     }
   }
 
@@ -122,6 +83,7 @@ export class Channel {
    * Get steps from version x to latest
    */
   async getSteps(version) {
+    console.debug("Collab.Channel: getSteps", version)
     const { docId } = this.config
     return await this.service.getSteps(docId, version)
   }
@@ -130,9 +92,8 @@ export class Channel {
    * Send telepointer
    */
   async sendTelepointer(data) {
+    console.debug("Collab.Channel: sendTelepointer", data)
     const { docId } = this.config
-    logger(`Sending telepointer`, data)
-
     return await this.service.pushTelepointer(docId, data)
   }
 
