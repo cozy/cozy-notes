@@ -1,6 +1,5 @@
 import { EventEmitter2 } from 'eventemitter2'
 import { getVersion, sendableSteps } from 'prosemirror-collab'
-import { logger } from './logger'
 
 export class Channel {
   constructor(config, serviceClient) {
@@ -13,7 +12,6 @@ export class Channel {
    * Connect to pubsub to start receiving events
    */
   async connect(version, doc) {
-    console.debug("Collab.Channel: connect", version, doc)
     const { docId } = this.config
     this.service.join(docId)
     this.service.onStepsCreated(docId, data => {
@@ -34,7 +32,6 @@ export class Channel {
     }
 
     this.debounced = window.setTimeout(() => {
-      console.debug("Collab.Channel: sendSteps after debounce")
       this.sendSteps(getState(), getState)
     }, 250)
   }
@@ -46,7 +43,6 @@ export class Channel {
     const { docId } = this.config
 
     if (this.isSending) {
-      console.debug("Collab.Channel: sendSteps still 'isSending' -> debounce")
       this.debounce(getState)
       return
     }
@@ -65,7 +61,6 @@ export class Channel {
     }
 
     this.isSending = true
-    console.debug("Collab.Channel: sendSteps", version, steps)
     try {
       const response = await this.service.pushSteps(docId, version, steps)
       this.isSending = false
@@ -73,7 +68,6 @@ export class Channel {
         this.emit('data', response)
       }
     } catch (err) {
-      console.debug("Collab.Channel: sendSteps error (conflict?) -> debounce", err)
       this.debounce(getState)
       this.isSending = false
     }
@@ -83,7 +77,6 @@ export class Channel {
    * Get steps from version x to latest
    */
   async getSteps(version) {
-    console.debug("Collab.Channel: getSteps", version)
     const { docId } = this.config
     return await this.service.getSteps(docId, version)
   }
@@ -92,7 +85,6 @@ export class Channel {
    * Send telepointer
    */
   async sendTelepointer(data) {
-    console.debug("Collab.Channel: sendTelepointer", data)
     const { docId } = this.config
     return await this.service.pushTelepointer(docId, data)
   }

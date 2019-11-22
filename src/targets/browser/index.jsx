@@ -9,7 +9,7 @@ import { I18n } from 'cozy-ui/react/I18n'
 import { schema } from 'components/notes'
 
 let appLocale
-const renderApp = function(client) {
+const renderApp = function(client, isPublic) {
   const App = require('components/app').default
   render(
     <I18n
@@ -17,7 +17,7 @@ const renderApp = function(client) {
       dictRequire={appLocale => require(`locales/${appLocale}`)}
     >
       <CozyProvider client={client}>
-        <App />
+        <App public={isPublic} />
       </CozyProvider>
     </I18n>,
     document.querySelector('[role=application]')
@@ -30,10 +30,36 @@ const getDataOrDefault = function(toTest, defaultData) {
   return templateRegex.test(toTest) ? defaultData : toTest
 }
 
+const getDataset = function() {
+  const root = document.querySelector('[role=application]')
+  return root.dataset
+}
+
+const getToken = function(dataset) {
+  if (
+    dataset &&
+    dataset.cozyToken &&
+    dataset.cozyToken.length > 0 &&
+    dataset.cozyToken[0] != '{'
+  ) {
+    return { isPublic: false, token: dataset.cozyToken }
+  } else {
+    const arrToObj = (obj = {}, [key, val = true]) => {
+      obj[key] = val
+      return obj
+    }
+    const { sharecode } = window.location.search
+      .substring(1)
+      .split('&')
+      .map(varval => varval.split('='))
+      .reduce(arrToObj, {})
+    return { isPublic: false, token: sharecode }
+  }
+}
+
 // initial rendering of the application
 document.addEventListener('DOMContentLoaded', () => {
-  const root = document.querySelector('[role=application]')
-  const data = root.dataset
+  const data = getDataset()
 
   const appIcon = getDataOrDefault(
     data.cozyIconPath,
@@ -64,27 +90,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const protocol = window.location ? window.location.protocol : 'https:'
 
+  const { isPublic, token } = getToken(data)
+
   // initialize the client to interact with the cozy stack
   const client = new CozyClient({
     uri: `${protocol}//${data.cozyDomain}`,
-    token: data.cozyToken,
+    token: token,
     schema,
     appMetadata: {
       slug: appSlug,
       version: appVersion
     }
   })
+  client.isPublic = isPublic
+  if (!isPublic) {
+    // initialize the bar, common of all applications, it allows
+    // platform features like apps navigation without doing anything
+    cozy.bar.init({
+      appName: appName,
+      appNamePrefix: appNamePrefix,
+      iconPath: appIcon,
+      lang: appLocale,
+      replaceTitleOnMobile: true,
+      cozyClient: client,
+      isPublic: isPublic
+    })
+  }
 
-  // initialize the bar, common of all applications, it allows
-  // platform features like apps navigation without doing anything
-  cozy.bar.init({
-    appName: appName,
-    appNamePrefix: appNamePrefix,
-    iconPath: appIcon,
-    lang: appLocale,
-    replaceTitleOnMobile: true,
-    cozyClient: client
-  })
-
-  renderApp(client)
+  renderApp(client, isPublic)
 })

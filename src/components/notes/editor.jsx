@@ -19,7 +19,10 @@ const Editor = withRouter(
   withClient(function(props) {
     const { client } = props
     const noteId = props.match.params.id
-    const userName = props.userName || shortNameFromClient(client)
+    const userName = useMemo(
+      () => props.userName || shortNameFromClient(client),
+      [props.userName]
+    )
 
     // alias for later shortcuts
     const docId = noteId
@@ -54,7 +57,7 @@ const Editor = withRouter(
             provider: Promise.resolve(provider),
             inviteToEditHandler: () => undefined,
             isInviteToEditButtonSelected: false,
-            userId
+            userId: serviceClient.getSessionId()
           }
         } else {
           return null
@@ -92,14 +95,6 @@ const Editor = withRouter(
       e => {
         const newTitle = e.target.value
         const modifiedTitle = newTitle
-        console.log(
-          'new',
-          newTitle,
-          'modified',
-          modifiedTitle,
-          'current',
-          title
-        )
         if (title != modifiedTitle) {
           setTitle(modifiedTitle)
           serviceClient.setTitle(noteId, modifiedTitle)

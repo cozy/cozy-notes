@@ -11,14 +11,13 @@ export class ServiceClient {
     const sessionSuffix =
       now.getTime() + '.' + now.getMilliseconds() + '.' + Math.random()
     this.sessionId = userId + ':' + sessionSuffix
-    this.userId = userId
+    this.userId = this.getUserId(userId)
     this.cozyClient = cozyClient
     this.stackClient = cozyClient.getStackClient()
     this.schema = schema
     this.onRealtimeEvent = this.onRealtimeEvent.bind(this)
     this.realtime = new CozyRealtime({ client: cozyClient })
     this.resetCallbacks()
-    console.debug("Collab.ServiceClient: Created new ServiceClient for", this.userId, "with session", this.sessionId)
   }
 
   resetCallbacks() {
@@ -31,7 +30,7 @@ export class ServiceClient {
   }
 
   getUserId(sessionId) {
-    return sessionId // ? sessionId.match(/[^:]+/)[0] : this.userId
+    return sessionId ? sessionId.match(/[^:]+/)[0] : this.userId
   }
 
   getSessionId() {
@@ -39,7 +38,6 @@ export class ServiceClient {
   }
 
   close() {
-    console.debug("Collab.ServiceClient: Closed ServiceClient")
     this.realtime.unsubscribeAll()
     this.resetCallbacks()
   }
@@ -99,7 +97,6 @@ export class ServiceClient {
   }
 
   async join(docId) {
-    console.debug("Collab.ServiceClient: Join", docId)
     const onRealtimeCreated = function(doc) {
       if (doc.id == docId) {
         return this.onRealtimeEvent(docId)
@@ -149,7 +146,6 @@ export class ServiceClient {
   }
 
   async getDoc(docId) {
-    console.debug("Collab.ServiceClient: getDoc", docId)
     const res = await this.stackClient.fetchJSON('GET', this.path(docId))
     return {
       doc: res.data.attributes.metadata.content,
@@ -159,7 +155,6 @@ export class ServiceClient {
   }
 
   async pushSteps(docId, version, steps) {
-    console.debug("Collab.ServiceClient: pushSteps", docId, version, steps)
     const options = { headers: { 'if-match': version } }
     const stepsDoc = {
       data: steps.map(step => ({
@@ -179,7 +174,6 @@ export class ServiceClient {
   }
 
   async getSteps(docId, version) {
-    console.debug("Collab.ServiceClient: getSteps", docId, "since", version)
     try {
       const res = await this.stackClient.fetchJSON(
         'GET',
@@ -220,7 +214,6 @@ export class ServiceClient {
   }
 
   async pushTelepointer(docId, data) {
-    console.debug("Collab.ServiceClient: pushTelepointer", docId, data)
     const telepointerDoc = {
       data: {
         type: 'io.cozy.notes.telepointers',
