@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 
-import { withMutations } from 'cozy-client'
+import { withClient } from 'cozy-client'
 
 import { withRouter } from 'react-router-dom'
 
 import Button from 'cozy-ui/react/Button'
 
-import doctype from './doctype'
+import { schemaOrdered } from '../../lib/collab/schema'
 
 class Add extends Component {
   constructor(props, context) {
@@ -21,8 +21,18 @@ class Add extends Component {
     this.setState(() => {
       true
     })
-    const { createDocument } = this.props
-    const { data: doc } = await createDocument(doctype, {})
+    const { client: cozyClient } = this.props
+    const { data: doc } = await cozyClient
+      .getStackClient()
+      .fetchJSON('POST', '/notes', {
+        data: {
+          type: 'io.cozy.notes.documents',
+          attributes: {
+            title: '',
+            schema: schemaOrdered
+          }
+        }
+      })
     this.setState(() => {
       false
     })
@@ -47,4 +57,4 @@ class Add extends Component {
 }
 
 // get mutations from the client to use createDocument
-export default withMutations()(withRouter(Add))
+export default withClient(withRouter(Add))

@@ -23,6 +23,7 @@ export default function EditorView(props) {
     onTitleChange,
     onContentChange,
     defaultTitle,
+    title,
     collabProvider
   } = props
 
@@ -59,7 +60,7 @@ export default function EditorView(props) {
         <Editor
           collabEdit={collabProvider}
           onChange={onContentChange}
-          defaultValue={defaultValue.content}
+          defaultValue={defaultValue}
           {...editorConfig}
           appearance="full-page"
           placeholder="Que voulez-vous dire ?"
@@ -72,9 +73,8 @@ export default function EditorView(props) {
                     ref={titleEl}
                     rows="1"
                     fullwidth={true}
-                    defaultValue={defaultValue.title}
+                    value={title}
                     onChange={onTitleEvent}
-                    readOnly={!onTitleChange}
                     placeholder={defaultTitle}
                     className="note-title-input"
                   />

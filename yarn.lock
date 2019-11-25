@@ -4766,6 +4766,13 @@ cozy-realtime@3.2.1:
   dependencies:
     minilog "3.1.0"
 
+cozy-realtime@^3.2.3:
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-3.2.3.tgz#5fa6575e1e599d32bc8a71bec8eaaa25a4bc8e8e"
+  integrity sha512-YuBo7XEtX0POJn9CJ7OYemyGmDB9wq5aHS5Z5A4aDy3mOikrVzK9Sdp0koMU0SXHcIs0QWgbty7CTwUlTpojxQ==
+  dependencies:
+    minilog "https://github.com/cozy/minilog.git#master"
+
 cozy-scripts@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/cozy-scripts/-/cozy-scripts-2.0.2.tgz#a8c7765bae64dee88eff9e5b132960bf94353748"
@@ -9758,6 +9765,12 @@ minilog@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/minilog/-/minilog-3.1.0.tgz#d2d0f1887ca363d1acf0ea86d5c4df293b3fb675"
   integrity sha1-0tDxiHyjY9Gs8OqG1cTfKTs/tnU=
+  dependencies:
+    microee "0.0.6"
+
+"minilog@git+https://github.com/cozy/minilog.git#master":
+  version "3.1.0"
+  resolved "git+https://github.com/cozy/minilog.git#f01f7d9dfe20981177dd34b9662c2f077d818f82"
   dependencies:
     microee "0.0.6"
 
