@@ -1,5 +1,6 @@
 {
-  "name": "Cozy Notes",
+  "name": "Notes",
+  "name_prefix": "Cozy",
   "slug": "notes",
   "icon": "icon.svg",
   "categories": [],
