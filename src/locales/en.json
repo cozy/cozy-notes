@@ -1,2 +1,6 @@
 {
+  "Error": {
+    "unshared_title": "This share is no longer active",
+    "unshared_text": "The owner may have revoked this share. You can no longer edit a note at this address."
+  }
 }

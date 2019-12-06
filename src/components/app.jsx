@@ -3,9 +3,11 @@ import get from 'lodash/get'
 import { hot } from 'react-hot-loader'
 import { Route, Switch, HashRouter, withRouter } from 'react-router-dom'
 import { withClient } from 'cozy-client'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { Layout, Main, Content } from 'cozy-ui/react/Layout'
 import { Sprite as IconSprite } from 'cozy-ui/react/Icon'
 import Spinner from 'cozy-ui/react/Spinner'
+import { Empty } from 'cozy-ui/transpiled/react'
 
 import { List, Editor } from './notes'
 
@@ -32,14 +34,27 @@ const PrivateContext = () => (
   </Switch>
 )
 
+const Unshared = translate()(({ t }) => (
+  <Empty
+    icon={'warning-circle'}
+    title={t(`Error.unshared_title`)}
+    text={t(`Error.unshared_text`)}
+  />
+))
+
 const PublicContext = withClient(({ client }) => {
-  const [sharedDocumentId, setSharedDocumentId] = useState(undefined)
+  const [sharedDocumentId, setSharedDocumentId] = useState(null)
   useEffect(
-    () => getSharedDocument(client).then(id => setSharedDocumentId(id)),
+    () =>
+      getSharedDocument(client)
+        .then(id => setSharedDocumentId(id))
+        .catch(() => setSharedDocumentId(false)),
     []
   )
   if (sharedDocumentId) {
     return <Editor noteId={sharedDocumentId} />
+  } else if (sharedDocumentId !== null) {
+    return <Unshared />
   } else {
     return <Spinner size="xxlarge" middle />
   }
