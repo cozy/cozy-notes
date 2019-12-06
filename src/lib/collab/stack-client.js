@@ -43,7 +43,7 @@ export class ServiceClient {
   }
 
   defaultTitle() {
-    new Date().toISOString()
+    return new Date().toISOString()
   }
 
   path(id, sub) {
