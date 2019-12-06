@@ -116,6 +116,7 @@ const Editor = withClient(function(props) {
   // Failure in loading the note ?
   useEffect(() => {
     if (!loading && !doc) {
+      // eslint-disable-next-line no-console
       console.warn(`Could not load note ${noteId}`)
       window.setTimeout(() => props.history.push(`/`), 0)
     }
@@ -137,6 +138,5 @@ const Editor = withClient(function(props) {
     )
   }
 })
-)
 
 export default Editor
