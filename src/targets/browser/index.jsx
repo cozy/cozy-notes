@@ -7,6 +7,7 @@ import CozyClient, { CozyProvider } from 'cozy-client'
 import { render } from 'react-dom'
 import { I18n } from 'cozy-ui/react/I18n'
 import { schema } from 'components/notes'
+import IsPublic from 'components/IsPublic'
 
 let appLocale
 const renderApp = function(client, isPublic) {
@@ -17,7 +18,9 @@ const renderApp = function(client, isPublic) {
       dictRequire={appLocale => require(`locales/${appLocale}`)}
     >
       <CozyProvider client={client}>
-        <App public={isPublic} />
+        <IsPublic.provider value={isPublic}>
+          <App isPublic={isPublic} />
+        </IsPublic.provider>
       </CozyProvider>
     </I18n>,
     document.querySelector('[role=application]')
@@ -53,7 +56,7 @@ const getToken = function(dataset) {
       .split('&')
       .map(varval => varval.split('='))
       .reduce(arrToObj, {})
-    return { isPublic: false, token: sharecode }
+    return { isPublic: true, token: sharecode }
   }
 }
 
@@ -102,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
       version: appVersion
     }
   })
-  client.isPublic = isPublic
+
   if (!isPublic) {
     // initialize the bar, common of all applications, it allows
     // platform features like apps navigation without doing anything

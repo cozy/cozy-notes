@@ -2,14 +2,11 @@ import React, { useCallback, useRef, useEffect } from 'react'
 
 import { Editor, WithEditorActions } from '@atlaskit/editor-core'
 
-import { Link } from 'react-router-dom'
-
-import Button from 'cozy-ui/react/Button'
 import { MainTitle } from 'cozy-ui/react/Text'
 import Textarea from 'cozy-ui/react/Textarea'
 
 import editorConfig from './editor_config'
-
+import BackFromEditing from './back_from_editing'
 import HeaderMenu from '../header_menu'
 
 function updateTextareaHeight(target) {
@@ -40,22 +37,13 @@ export default function EditorView(props) {
 
   useEffect(() => updateTextareaHeight(titleEl.current), [])
 
-  const left = (
-    <React.Fragment>
-      <Button
-        icon="previous"
-        tag={Link}
-        to="/"
-        className="sto-app-back"
-        subtle
-      />
-    </React.Fragment>
-  )
-
   return (
     <article className="note-article">
       <style>#coz-bar {'{ display: none }'}</style>
-      <HeaderMenu left={left} className="note-header-menu--editing" />
+      <HeaderMenu
+        left={<BackFromEditing />}
+        className="note-header-menu--editing"
+      />
       <section className="note-editor-container">
         <Editor
           collabEdit={collabProvider}

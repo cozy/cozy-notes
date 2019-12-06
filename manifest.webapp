@@ -17,6 +17,11 @@
       "folder": "/",
       "index": "index.html",
       "public": false
+    },
+    "/public": {
+      "folder": "/",
+      "index": "index.html",
+      "public": true
     }
   },
   "permissions": {
@@ -24,10 +29,6 @@
       "description": "Required by the cozy-bar to display the icons of the apps",
       "type": "io.cozy.apps",
       "verbs": ["GET"]
-    },
-    "notes": {
-      "description": "Notes",
-      "type": "io.cozy.notes"
     },
     "files": {
       "description": "Notes as files",
