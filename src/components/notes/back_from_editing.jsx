@@ -1,25 +1,10 @@
-import React, { useContext, useMemo } from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, ButtonLink } from 'cozy-ui/react/Button'
 import IsPublic from '../IsPublic'
 
-function arrToObj(obj = {}, [key, val = true]) {
-  obj[key] = val
-  return obj
-}
-
-function getReturnUrl() {
-  const { returnUrl } = window.location.search
-    .substring(1)
-    .split('&')
-    .map(varval => varval.split('='))
-    .reduce(arrToObj, {})
-  return returnUrl
-}
-
-export default function BackFromEditing() {
+export default function BackFromEditing({ returnUrl }) {
   const isPublic = useContext(IsPublic)
-  const returnUrl = useMemo(() => isPublic && getReturnUrl(), [])
   if (returnUrl) {
     return (
       <ButtonLink

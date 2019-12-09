@@ -8,15 +8,12 @@ import EditorLoading from './editor-loading'
 import CollabProvider from '../../lib/collab/provider'
 import ServiceClient from '../../lib/collab/stack-client'
 
-function shortNameFromClient(client) {
-  const url = new URL(client.getStackClient().uri)
-  return url.hostname + Math.floor(Math.random() * 100)
-}
+import { getShortNameFromClient, getParentFolderLink } from '../../lib/utils.js'
 
 const Editor = withClient(function(props) {
   const { client, noteId } = props
   const userName = useMemo(
-    () => props.userName || shortNameFromClient(client),
+    () => props.userName || getShortNameFromClient(client),
     [props.userName]
   )
 
@@ -112,15 +109,27 @@ const Editor = withClient(function(props) {
     },
     [onRemoteTitleChange, serviceClient]
   )
-
   // Failure in loading the note ?
   useEffect(() => {
     if (!loading && !doc) {
       // eslint-disable-next-line no-console
       console.warn(`Could not load note ${noteId}`)
-      window.setTimeout(() => props.history.push(`/`), 0)
+      props.history.push(`/`)
     }
   })
+
+  const returnUrl = useMemo(
+    () => {
+      if (props.returnUrl !== undefined) {
+        return props.returnUrl
+      } else if (doc) {
+        return getParentFolderLink(client, doc.file)
+      } else {
+        return props.returnUrl
+      }
+    },
+    [props.returnUrl, doc]
+  )
 
   // rendering
   if (loading || !doc) {
@@ -134,6 +143,7 @@ const Editor = withClient(function(props) {
         defaultTitle={'Ici votre titre…'}
         defaultValue={{ ...doc.doc, version: doc.version }}
         title={title && title.length > 0 ? title : undefined}
+        returnUrl={returnUrl}
       />
     )
   }

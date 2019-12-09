@@ -150,7 +150,8 @@ export class ServiceClient {
     return {
       doc: res.data.attributes.metadata.content,
       version: res.data.attributes.metadata.version,
-      title: res.data.attributes.metadata.title
+      title: res.data.attributes.metadata.title,
+      file: res.data
     }
   }
 

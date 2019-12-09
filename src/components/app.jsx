@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react'
-import get from 'lodash/get'
+import React, { useState, useEffect, useMemo } from 'react'
 import { hot } from 'react-hot-loader'
 import { Route, Switch, HashRouter, withRouter } from 'react-router-dom'
 import { withClient } from 'cozy-client'
@@ -10,18 +9,7 @@ import Spinner from 'cozy-ui/react/Spinner'
 import { Empty } from 'cozy-ui/transpiled/react'
 
 import { List, Editor } from './notes'
-
-const getSharedDocument = async client => {
-  const { data: permissionsData } = await client
-    .collection('io.cozy.permissions')
-    .getOwnPermissions()
-
-  const permissions = permissionsData.attributes.permissions
-  // permissions contains several named keys, but the one to use depends on the situation. Using the first one is what we want in all known cases.
-  const sharedDocumentId = get(Object.values(permissions), '0.values.0')
-
-  return sharedDocumentId
-}
+import { getReturnUrl, getSharedDocument } from '../../lib/utils.js'
 
 const RoutedEditor = withRouter(props => (
   <Editor noteId={props.match.params.id} />
@@ -44,6 +32,8 @@ const Unshared = translate()(({ t }) => (
 
 const PublicContext = withClient(({ client }) => {
   const [sharedDocumentId, setSharedDocumentId] = useState(null)
+  const returnUrl = useMemo(() => getReturnUrl(), [])
+
   useEffect(
     () =>
       getSharedDocument(client)
@@ -52,7 +42,7 @@ const PublicContext = withClient(({ client }) => {
     []
   )
   if (sharedDocumentId) {
-    return <Editor noteId={sharedDocumentId} />
+    return <Editor noteId={sharedDocumentId} returnUrl={returnUrl || false} />
   } else if (sharedDocumentId !== null) {
     return <Unshared />
   } else {
