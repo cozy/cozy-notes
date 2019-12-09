@@ -21,7 +21,8 @@ export default function EditorView(props) {
     onContentChange,
     defaultTitle,
     title,
-    collabProvider
+    collabProvider,
+    returnUrl
   } = props
 
   const titleEl = useRef(null)
@@ -41,7 +42,7 @@ export default function EditorView(props) {
     <article className="note-article">
       <style>#coz-bar {'{ display: none }'}</style>
       <HeaderMenu
-        left={<BackFromEditing />}
+        left={<BackFromEditing returnUrl={returnUrl} />}
         className="note-header-menu--editing"
       />
       <section className="note-editor-container">
