@@ -46,6 +46,7 @@ function EditorView(props) {
       <HeaderMenu
         left={<BackFromEditing returnUrl={returnUrl} />}
         className="note-header-menu--editing"
+        right={props.actions}
       />
       <section className="note-editor-container">
         <Editor

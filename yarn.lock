@@ -4810,7 +4810,7 @@ cozy-device-helper@1.8.0, cozy-device-helper@^1.7.3, cozy-device-helper@^1.8.0:
   dependencies:
     lodash "4.17.15"
 
-cozy-doctypes@^1.70.0:
+cozy-doctypes@^1.69.0, cozy-doctypes@^1.70.0:
   version "1.70.0"
   resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.70.0.tgz#22c031b2d0f50174a06bd9d7fd3d2e88cc8187ea"
   integrity sha512-F9u2gff90Fz4RF1pI6rGmhgoWmHHzjK25N4fuUgkTgTgn5cL6mb8jiDDjFPEJsFkis6a+ah5TX3ttsFa2ms35w==
@@ -4901,6 +4901,22 @@ cozy-scripts@^2.0.2:
     webpack-bundle-analyzer "3.3.2"
     webpack-dev-server "3.7.2"
     webpack-merge "4.2.1"
+
+cozy-sharing@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-1.2.0.tgz#9d93204005c1d4a4b197bbef0fe2fda0e0b1b2c7"
+  integrity sha512-fjYxQlSL6Hl//NcfGKrtHEM2yOYlB8qYYFOA1JMHvqArg/+yIVAoxNXcmJcVxQmPxKHhw5eJ6ms68gcG+1GcGw==
+  dependencies:
+    babel-plugin-inline-react-svg "^1.1.0"
+    classnames "^2.2.6"
+    copy-text-to-clipboard "^2.1.1"
+    cozy-device-helper "^1.8.0"
+    cozy-doctypes "^1.69.0"
+    cozy-realtime "^3.2.3"
+    lodash "^4.17.15"
+    minilog "^3.1.0"
+    react-autosuggest "^9.4.3"
+    react-tooltip "^3.11.1"
 
 cozy-stack-client@^8.8.0:
   version "8.8.0"

@@ -4,6 +4,7 @@ import { withClient } from 'cozy-client'
 
 import EditorView from './editor-view'
 import EditorLoading from './editor-loading'
+import SharingWidget from './sharing'
 
 import CollabProvider from '../../lib/collab/provider'
 import ServiceClient from '../../lib/collab/stack-client'
@@ -147,6 +148,7 @@ const Editor = translate()(
           defaultValue={{ ...doc.doc, version: doc.version }}
           title={title && title.length > 0 ? title : undefined}
           returnUrl={returnUrl}
+          actions={<SharingWidget fileId={noteId} />}
         />
       )
     }
