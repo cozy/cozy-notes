@@ -1,9 +1,10 @@
 {
-  "name": "Cozy Notes",
+  "name": "Notes",
+  "name_prefix": "Cozy",
   "slug": "notes",
   "icon": "icon.svg",
   "categories": [],
-  "version": "1.0.8",
+  "version": "1.0.7",
   "licence": "AGPL-3.0",
   "editor": "",
   "source": "https://github.com/cozy/cozy-notes.git@build",
@@ -29,6 +30,10 @@
     "notes": {
       "description": "Notes",
       "type": "io.cozy.notes"
+    },
+    "files": {
+      "description": "Notes as files",
+      "type": "io.cozy.files"
     }
   },
   "locales": {
