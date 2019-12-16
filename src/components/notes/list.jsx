@@ -88,6 +88,7 @@ const ListHeader = () => {
   )
 }
 
+// eslint-disable-next-line no-unused-vars
 const ConnectedList = props => {
   const { data, fetchStatus } = props.notes
   // cozy-client statuses
