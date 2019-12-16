@@ -1,6 +1,9 @@
 import get from 'lodash/get'
-
-import { generateWebLink } from 'cozy-ui/transpiled/react/AppLinker'
+import { isMobile } from 'cozy-device-helper'
+import {
+  generateWebLink,
+  generateUniversalLink
+} from 'cozy-ui/transpiled/react/AppLinker'
 
 export function getShortNameFromClient(client) {
   const url = new URL(client.getStackClient().uri)
@@ -37,9 +40,7 @@ export function getParentFolderId(file) {
   return file.relationships.parent.data.id
 }
 
-function getAppDomain(client, app) {
-  const cozyURL = new URL(client.getStackClient().uri)
-  const { cozySubdomainType } = client.getInstanceOptions()
+function getAppDomain(app, cozyURL, cozySubdomainType) {
   return generateWebLink({
     cozyUrl: cozyURL.origin,
     slug: app,
@@ -47,10 +48,38 @@ function getAppDomain(client, app) {
   })
 }
 
-function getFolderLink(client, id) {
-  return `${getAppDomain(client, 'drive')}/#/folder/${id.replace(/-/g, '')}`
+function getFolderLink(id) {
+  return `/#/folder/${id.replace(/-/g, '')}`
+}
+
+function getFullLink(client, id) {
+  const cozyURL = new URL(client.getStackClient().uri)
+  const { cozySubdomainType } = client.getInstanceOptions()
+
+  const driveSlug = 'drive'
+  const pathForDrive = getFolderLink(id)
+  const fallbackUrl = `${getAppDomain(
+    driveSlug,
+    cozyURL,
+    cozySubdomainType
+  )}${pathForDrive}`
+  /** If no mobile, then return the fallback directly. No need
+   * for the universal link
+   */
+
+  if (!isMobile()) {
+    return fallbackUrl
+  }
+
+  const urlWithUL = generateUniversalLink({
+    slug: driveSlug,
+    fallbackUrl,
+    nativePath: pathForDrive,
+    subDomainType: cozySubdomainType
+  })
+  return urlWithUL
 }
 
 export function getParentFolderLink(client, file) {
-  return getFolderLink(client, getParentFolderId(file))
+  return getFullLink(client, getParentFolderId(file))
 }
