@@ -92,7 +92,8 @@ export class ServiceClient {
     if (this.callbacks[type] && this.callbacks[type][id]) {
       return this.callbacks[type][id](doc)
     } else {
-      console.warn('not managed event', type, id, this.callbacks)
+      // eslint-disable-next-line no-console
+      console.warn('Event not manager', type, id, this.callbacks)
     }
   }
 
