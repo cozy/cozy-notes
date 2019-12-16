@@ -19,8 +19,13 @@ export class CollabProvider {
     this.participants = new Map()
     this.pauseQueue = false
     this.initialVersion = config.version
+    this.pauseQueue = false
   }
 
+  /**
+   * Initialze the collaboration provider
+   * @param {Function} getState - How to get the proseMirror state
+   */
   initialize(getState) {
     this.getState = getState
     this.channel.on('connected', ({ doc, version }) => {
@@ -30,6 +35,7 @@ export class CollabProvider {
     })
     this.channel.on('data', this.onReceiveData)
     this.channel.on('telepointer', this.onReceiveTelepointer)
+    this.channel.on('needcatchup', () => this.catchup())
     const state = getState()
     const doc = jsonTransformer.encode(state.doc)
     const usableVersion =
@@ -52,7 +58,7 @@ export class CollabProvider {
       return
     }
 
-    this.channel.sendSteps(newState, this.getState)
+    this.channel.sendSteps(this.getState, newState)
   }
 
   /**
@@ -88,7 +94,12 @@ export class CollabProvider {
     this.queue = orderedQueue
   }
 
+  /**
+   * Catchup after multiple errors
+   * @param {Function} getState - filled when requested from channel
+   */
   async catchup() {
+    this.pauseQueue = true
     const currentVersion = getVersion(this.getState())
     try {
       const { doc, version, steps } = await this.channel.getSteps(
@@ -111,10 +122,12 @@ export class CollabProvider {
       }
       // processQueue again
       this.queueTimeout = undefined
+      this.pauseQueue = false
       this.processQueue()
     } catch (err) {
       // something got wrong, try to catchup again
       // TODO : maybe try to reinit the full doc ?
+      this.pauseQueue = false
       this.programCatchup()
     }
   }
@@ -135,7 +148,7 @@ export class CollabProvider {
   }
 
   processQueue() {
-    if (this.queue.length > 0) {
+    if (this.queue.length > 0 && !this.pauseQueue) {
       let currentVersion = getVersion(this.getState())
       while (this.queue.length > 0) {
         const first = this.queue[0]
