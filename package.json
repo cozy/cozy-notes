@@ -51,6 +51,7 @@
     "bufferutil": "^4.0.1",
     "cozy-bar": "^7.7.8",
     "cozy-client": "^7.6.0",
+    "cozy-device-helper": "^1.8.0",
     "cozy-realtime": "^3.2.3",
     "cozy-scripts": "^2.0.2",
     "cozy-ui": "^25.10.2",
