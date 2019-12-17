@@ -40,40 +40,33 @@ export function getParentFolderId(file) {
   return file.relationships.parent.data.id
 }
 
-function getAppDomain(app, cozyURL, cozySubdomainType) {
-  return generateWebLink({
-    cozyUrl: cozyURL.origin,
-    slug: app,
-    subDomainType: cozySubdomainType
-  })
-}
-
 function getFolderLink(id) {
-  return `/#/folder/${id.replace(/-/g, '')}`
+  return `/folder/${id.replace(/-/g, '')}`
 }
 
 function getFullLink(client, id) {
   const cozyURL = new URL(client.getStackClient().uri)
   const { cozySubdomainType } = client.getInstanceOptions()
-
   const driveSlug = 'drive'
   const pathForDrive = getFolderLink(id)
-  const fallbackUrl = `${getAppDomain(
-    driveSlug,
-    cozyURL,
-    cozySubdomainType
-  )}${pathForDrive}`
+
+  const webUrl = generateWebLink({
+    cozyUrl: cozyURL.origin,
+    slug: driveSlug,
+    subDomainType: cozySubdomainType,
+    nativePath: pathForDrive
+  })
+
   /** If no mobile, then return the fallback directly. No need
    * for the universal link
    */
-
   if (!isMobile()) {
-    return fallbackUrl
+    return webUrl
   }
 
   const urlWithUL = generateUniversalLink({
     slug: driveSlug,
-    fallbackUrl,
+    fallbackUrl: webUrl,
     nativePath: pathForDrive,
     subDomainType: cozySubdomainType
   })
