@@ -34,13 +34,17 @@ const PublicContext = withClient(({ client }) => {
   const [sharedDocumentId, setSharedDocumentId] = useState(null)
   const returnUrl = useMemo(() => getReturnUrl(), [])
 
-  useEffect(
-    () =>
-      getSharedDocument(client)
-        .then(id => setSharedDocumentId(id))
-        .catch(() => setSharedDocumentId(false)),
-    []
-  )
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const id = await getSharedDocument(client)
+        setSharedDocumentId(id)
+      } catch {
+        setSharedDocumentId(false)
+      }
+    }
+    fetchData()
+  }, [])
   if (sharedDocumentId) {
     return <Editor noteId={sharedDocumentId} returnUrl={returnUrl || false} />
   } else if (sharedDocumentId !== null) {
