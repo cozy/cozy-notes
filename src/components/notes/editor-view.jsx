@@ -8,13 +8,14 @@ import Textarea from 'cozy-ui/react/Textarea'
 import editorConfig from './editor_config'
 import BackFromEditing from './back_from_editing'
 import HeaderMenu from '../header_menu'
+import { translate } from 'cozy-ui/react/I18n'
 
 function updateTextareaHeight(target) {
   target.style.height = 'inherit'
   target.style.height = `${target.scrollHeight}px`
 }
 
-export default function EditorView(props) {
+function EditorView(props) {
   const {
     defaultValue,
     onTitleChange,
@@ -22,7 +23,8 @@ export default function EditorView(props) {
     defaultTitle,
     title,
     collabProvider,
-    returnUrl
+    returnUrl,
+    t
   } = props
 
   const titleEl = useRef(null)
@@ -52,7 +54,7 @@ export default function EditorView(props) {
           defaultValue={defaultValue}
           {...editorConfig}
           appearance="full-page"
-          placeholder="Que voulez-vous dire ?"
+          placeholder={t('Notes.EditorView.main_placeholder')}
           shouldFocus={true}
           contentComponents={
             <WithEditorActions
@@ -76,3 +78,5 @@ export default function EditorView(props) {
     </article>
   )
 }
+
+export default translate()(EditorView)

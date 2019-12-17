@@ -1,4 +1,18 @@
 {
+  "Notes": {
+    "Add": {
+      "add_note": "Add a note"
+    },
+    "EditorLoading": {
+      "back_to_list": "Back to the list"
+    },
+    "EditorView": {
+      "main_placeholder": "Write anything…"
+    },
+    "Editor": {
+      "title_placeholder": "Here is your title"
+    }
+  },
   "Error": {
     "unshared_title": "This share is no longer active",
     "unshared_text": "The owner may have revoked this share. You can no longer edit a note at this address."

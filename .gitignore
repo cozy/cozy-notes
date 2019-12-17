@@ -13,8 +13,8 @@ coverage/
 
 
 # Locales
-**/locales/*
-!**/locales/en.json
+#**/locales/*
+#!**/locales/en.json
 
 
 # transifex

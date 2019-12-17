@@ -5,6 +5,7 @@ import { withClient } from 'cozy-client'
 import { withRouter } from 'react-router-dom'
 
 import Button from 'cozy-ui/react/Button'
+import { translate } from 'cozy-ui/react/I18n'
 
 import { schemaOrdered } from '../../lib/collab/schema'
 import { generateReturnUrlToNotesIndex } from '../../lib/utils'
@@ -43,6 +44,7 @@ class Add extends Component {
 
   render() {
     const { isWorking } = this.state
+    const { t } = this.props
     return (
       <div>
         <Button
@@ -50,7 +52,7 @@ class Add extends Component {
           type="submit"
           busy={isWorking}
           icon="plus"
-          label="ajouter une note"
+          label={t('Notes.Add.add_note')}
           extension="narrow"
         />
       </div>
@@ -59,4 +61,4 @@ class Add extends Component {
 }
 
 // get mutations from the client to use createDocument
-export default withClient(withRouter(Add))
+export default translate()(withClient(withRouter(Add)))

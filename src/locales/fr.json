@@ -1,0 +1,20 @@
+{
+  "Notes": {
+    "Add": {
+      "add_note": "Ajouter une note"
+    },
+    "EditorLoading": {
+      "back_to_list": "Retour à la liste"
+    },
+    "EditorView": {
+      "main_placeholder": "Écrivez ce que vous souhaitez…"
+    },
+    "Editor": {
+      "title_placeholder": "Ici votre titre"
+    }
+  },
+  "Error": {
+    "unshared_title": "The partage n'est plus actif",
+    "unshared_text": "Le propriétaire a peut-être révoqué ce partage. Vous ne pouvez plus éditer de note à cette adresse."
+  }
+}
