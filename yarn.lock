@@ -4731,13 +4731,13 @@ cozy-bar@^7.7.8:
     redux-persist "5.10.0"
     redux-thunk "2.3.0"
 
-cozy-client@^7.6.0:
-  version "7.6.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-7.6.0.tgz#f3118a2a2b5a7ef8462d84c7417bb206c05de635"
-  integrity sha512-GcqYF/N3Bbf6FaY5IiFKQvPV2ydv6KOZNrtPjgJ0YV7Z80G1LmLbA6hKFX215u1C3u4ELPy+XGJna/sc4WLmXw==
+cozy-client@8.9.0:
+  version "8.9.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-8.9.0.tgz#e0c7d6be90f3bcfc86b7931f7c1a17f277f8f84a"
+  integrity sha512-GZTjgp/TRLq2hTVn/e7LgFG97Iqsx6dzFiu6velGg2geBb9kygu0TAY7Aiq9E5fj5D3gIBe8JmkdLXtAlGg2Zw==
   dependencies:
     cozy-device-helper "^1.7.3"
-    cozy-stack-client "^7.5.0"
+    cozy-stack-client "^8.8.0"
     lodash "^4.17.13"
     microee "^0.0.6"
     prop-types "^15.6.2"
@@ -4826,10 +4826,10 @@ cozy-scripts@^2.0.2:
     webpack-dev-server "3.7.2"
     webpack-merge "4.2.1"
 
-cozy-stack-client@^7.5.0:
-  version "7.5.0"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-7.5.0.tgz#6e8280370e02593cafb79cdbf2dc6158199eb821"
-  integrity sha512-3qSHc/wqdeT3teKlNCOHMHmCd+XD9SAhUUNkidm7X+KCo251P3z5MO+yb/M3fY1MmoXD6sKSniBh06QgR8kMvQ==
+cozy-stack-client@^8.8.0:
+  version "8.8.0"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-8.8.0.tgz#0bfbfcc3180c1eb6b1468a3d14b965b05c84c84d"
+  integrity sha512-Ltc/OjDN9EdlMioSsQM0zCw7lb+LZisjU0XeOaTK+1jH1AdWBdywdu1uUrxCSF/rStsqfBqleNFwPK5WySvPTw==
   dependencies:
     detect-node "^2.0.4"
     mime "^2.4.0"
