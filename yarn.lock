@@ -4752,7 +4752,7 @@ cozy-bar@^7.7.8:
     redux-persist "5.10.0"
     redux-thunk "2.3.0"
 
-cozy-client@^8.9.0:
+cozy-client@^8.10.0:
   version "8.10.0"
   resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-8.10.0.tgz#6a49e7065d0d283153c5570559d90a5f9c7045a4"
   integrity sha512-RuSgRqw6KIUz8AIvMdmboahLTb4oHeugpbODw2uXzc545PbrDaHrv7On8SeeITpzIOKfyzatN2Gxj9gzds+DaA==
@@ -12220,7 +12220,7 @@ react-input-autosize@^2.2.1, react-input-autosize@^2.2.2:
   dependencies:
     prop-types "^15.5.8"
 
-react-intl@^2.8.0:
+react-intl@2.9.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-2.9.0.tgz#c97c5d17d4718f1575fdbd5a769f96018a3b1843"
   integrity sha512-27jnDlb/d2A7mSJwrbOBnUgD+rPep+abmoJE511Tf8BnoONIAUehy/U1zZCHGO17mnOwMWxqN4qC0nW11cD6rA==

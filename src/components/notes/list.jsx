@@ -1,18 +1,23 @@
 import React from 'react'
 
-import Spinner from 'cozy-ui/react/Spinner'
-import { Link } from 'react-router-dom'
-
-import ListItemText from 'cozy-ui/react/ListItemText'
-import Button from 'cozy-ui/react/Button'
-import Icon from 'cozy-ui/react/Icon'
 import { MainTitle } from 'cozy-ui/react/Text'
 
 import Add from './add'
 
 import HeaderMenu from '../header_menu.jsx'
 
+/*
+
+import Spinner from 'cozy-ui/react/Spinner'
+import { Link } from 'react-router-dom'
+
+import ListItemText from 'cozy-ui/react/ListItemText'
+import Button from 'cozy-ui/react/Button'
+import Icon from 'cozy-ui/react/Icon'
+
 import icon from '../../assets/icons/icon-note-32.svg'
+
+
 
 const titleWithDefault = () => {}
 
@@ -77,17 +82,6 @@ const List = props => {
   )
 }
 
-const ListHeader = () => {
-  return (
-    <>
-      <HeaderMenu
-        left={<MainTitle tag="h1">Mes notes</MainTitle>}
-        right={<Add />}
-      />
-    </>
-  )
-}
-
 const ConnectedList = props => {
   const { data, fetchStatus } = props.notes
   // cozy-client statuses
@@ -103,6 +97,19 @@ const ConnectedList = props => {
         </div>
       )}
     </div>
+  )
+}
+
+*/
+
+const ListHeader = () => {
+  return (
+    <>
+      <HeaderMenu
+        left={<MainTitle tag="h1">Mes notes</MainTitle>}
+        right={<Add />}
+      />
+    </>
   )
 }
 

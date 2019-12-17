@@ -6,15 +6,17 @@ import HeaderMenu from '../header_menu'
 
 import Spinner from 'cozy-ui/react/Spinner'
 import Button from 'cozy-ui/react/Button'
+import { translate } from 'cozy-ui/react/I18n'
 
-export default function EditorLoading() {
+function EditorLoading(props) {
+  const { t } = props
   const left = (
     <Button
       icon="back"
       tag={Link}
       to="/"
       className="sto-app-back"
-      label="Retour à la liste"
+      label={t('Notes.EditorLoading.back_to_list')}
       subtle
     />
   )
@@ -25,3 +27,5 @@ export default function EditorLoading() {
     </div>
   )
 }
+
+export default translate()(EditorLoading)
