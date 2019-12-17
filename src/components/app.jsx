@@ -11,9 +11,11 @@ import { Empty } from 'cozy-ui/transpiled/react'
 import { List, Editor } from './notes'
 import { getReturnUrl, getSharedDocument } from './../lib/utils.js'
 
-const RoutedEditor = withRouter(props => (
-  <Editor noteId={props.match.params.id} />
-))
+const RoutedEditor = withRouter(props => {
+  const returnUrl = getReturnUrl()
+
+  return <Editor noteId={props.match.params.id} returnUrl={returnUrl} />
+})
 
 const PrivateContext = () => (
   <Switch>

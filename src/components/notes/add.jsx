@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom'
 import Button from 'cozy-ui/react/Button'
 
 import { schemaOrdered } from '../../lib/collab/schema'
+import { generateReturnUrlToNotesIndex } from '../../lib/utils'
 
 class Add extends Component {
   constructor(props, context) {
@@ -36,7 +37,8 @@ class Add extends Component {
     this.setState(() => {
       false
     })
-    this.props.history.push(`/n/${doc.id}`)
+
+    window.location.href = generateReturnUrlToNotesIndex(doc)
   }
 
   render() {
