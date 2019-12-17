@@ -10,18 +10,14 @@ export function getShortNameFromClient(client) {
   return url.hostname + Math.floor(Math.random() * 100)
 }
 
-function arrToObj(obj = {}, [key, val = true]) {
-  obj[key] = val
-  return obj
-}
-
 export function getReturnUrl() {
-  const { returnUrl } = window.location.search
-    .substring(1)
-    .split('&')
-    .map(varval => varval.split('='))
-    .reduce(arrToObj, {})
-  return returnUrl
+  const searchParams = new URLSearchParams(window.location.search)
+  for (const [key, value] of searchParams) {
+    if (key === 'returnUrl') {
+      return value
+    }
+  }
+  return undefined
 }
 
 export async function getSharedDocument(client) {
