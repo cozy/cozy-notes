@@ -14,7 +14,7 @@
     }
   },
   "Error": {
-    "unshared_title": "The partage n'est plus actif",
+    "unshared_title": "Le partage n'est plus actif",
     "unshared_text": "Le propriétaire a peut-être révoqué ce partage. Vous ne pouvez plus éditer de note à cette adresse."
   }
 }
