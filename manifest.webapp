@@ -36,5 +36,13 @@
       "description": "Notes as files",
       "type": "io.cozy.files"
     }
-  }
+  },
+  "locales": {
+    "en": {},
+    "fr": {}
+  },
+  "langs": [
+    "en",
+    "fr"
+  ]
 }
