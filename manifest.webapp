@@ -17,6 +17,11 @@
       "folder": "/",
       "index": "index.html",
       "public": false
+    },
+    "/public": {
+      "folder": "/",
+      "index": "index.html",
+      "public": true
     }
   },
   "permissions": {
@@ -27,19 +32,9 @@
         "GET"
       ]
     },
-    "notes": {
-      "description": "Notes",
-      "type": "io.cozy.notes"
-    },
     "files": {
       "description": "Notes as files",
       "type": "io.cozy.files"
     }
-  },
-  "locales": {
-    "en": {}
-  },
-  "langs": [
-    "en"
-  ]
+  }
 }
