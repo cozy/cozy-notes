@@ -6,6 +6,14 @@ import { getParticipant } from './participant'
 
 const jsonTransformer = new JSONTransformer()
 
+/**
+ * The CollabProvider is called directly by the
+ * collaboration plugin of proseMirror.
+ * It will then use `Channel` as communication
+ * layer with the `ServiceClient`, which itself
+ * talk to the server.
+ */
+
 export class CollabProvider {
   constructor(config, serviceClient) {
     this.config = config
@@ -19,8 +27,13 @@ export class CollabProvider {
     this.participants = new Map()
     this.pauseQueue = false
     this.initialVersion = config.version
+    this.pauseQueue = false
   }
 
+  /**
+   * Initialze the collaboration provider
+   * @param {Function} getState - How to get the proseMirror state
+   */
   initialize(getState) {
     this.getState = getState
     this.channel.on('connected', ({ doc, version }) => {
@@ -30,6 +43,7 @@ export class CollabProvider {
     })
     this.channel.on('data', this.onReceiveData)
     this.channel.on('telepointer', this.onReceiveTelepointer)
+    this.channel.on('needcatchup', () => this.catchup())
     const state = getState()
     const doc = jsonTransformer.encode(state.doc)
     const usableVersion =
@@ -52,7 +66,7 @@ export class CollabProvider {
       return
     }
 
-    this.channel.sendSteps(newState, this.getState)
+    this.channel.sendSteps(this.getState, newState)
   }
 
   /**
@@ -73,6 +87,11 @@ export class CollabProvider {
     }
   }
 
+  /**
+   * Queue new steps from the server which should
+   * be applied to the local editor
+   * @param {Object} data - new steps
+   */
   queueData(data) {
     const orderedQueue = [...this.queue, data].sort((a, b) => {
       // order by starting version
@@ -88,7 +107,12 @@ export class CollabProvider {
     this.queue = orderedQueue
   }
 
+  /**
+   * Catchup after multiple errors
+   * @param {Function} getState - filled when requested from channel
+   */
   async catchup() {
+    this.pauseQueue = true
     const currentVersion = getVersion(this.getState())
     try {
       const { doc, version, steps } = await this.channel.getSteps(
@@ -111,14 +135,21 @@ export class CollabProvider {
       }
       // processQueue again
       this.queueTimeout = undefined
+      this.pauseQueue = false
       this.processQueue()
     } catch (err) {
       // something got wrong, try to catchup again
       // TODO : maybe try to reinit the full doc ?
+      this.pauseQueue = false
       this.programCatchup()
     }
   }
 
+  /**
+   * Something got wrong, we program a catchup,
+   * waiting 1s in case we receive new message
+   * that may resolve our problems
+   */
   programCatchup() {
     if (!this.queueTimeout) {
       this.queueTimeout = window.setTimeout(() => {
@@ -127,6 +158,10 @@ export class CollabProvider {
     }
   }
 
+  /**
+   * When received new messages that resolve a previous
+   * problem: Cancelling the programed catchup
+   */
   cancelCatchup() {
     if (this.queueTimeout) {
       window.clearTimeout(this.queueTimeout)
@@ -134,8 +169,11 @@ export class CollabProvider {
     }
   }
 
+  /**
+   * Process the message queue (new steps from the servers)
+   */
   processQueue() {
-    if (this.queue.length > 0) {
+    if (this.queue.length > 0 && !this.pauseQueue) {
       let currentVersion = getVersion(this.getState())
       while (this.queue.length > 0) {
         const first = this.queue[0]
@@ -162,6 +200,10 @@ export class CollabProvider {
     }
   }
 
+  /**
+   * Send new steps from the server to the local proseMirror editor
+   * These steps should be previously checked and ordered
+   */
   processRemoteData = data => {
     const { version, steps } = data
 
@@ -179,11 +221,17 @@ export class CollabProvider {
     }
   }
 
+  /**
+   * We receive new steps  from the server
+   */
   onReceiveData = data => {
     this.queueData(data)
     this.processQueue()
   }
 
+  /**
+   * We receive new user cursor positions from the server
+   */
   onReceiveTelepointer = data => {
     const { sessionId } = data
     const userId = this.serviceClient.getUserId(sessionId)
