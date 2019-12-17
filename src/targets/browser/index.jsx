@@ -18,9 +18,9 @@ const renderApp = function(client, isPublic) {
       dictRequire={appLocale => require(`locales/${appLocale}`)}
     >
       <CozyProvider client={client}>
-        <IsPublic.provider value={isPublic}>
+        <IsPublic.Provider value={isPublic}>
           <App isPublic={isPublic} />
-        </IsPublic.provider>
+        </IsPublic.Provider>
       </CozyProvider>
     </I18n>,
     document.querySelector('[role=application]')
