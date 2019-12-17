@@ -213,6 +213,7 @@ export class CollabProvider {
       )
       this.emit('data', { json: steps, version, userIds })
     } else {
+      // eslint-disable-next-line no-console
       console.warn(
         'Collab.Provider: processRemoteData no steps ? ',
         steps,

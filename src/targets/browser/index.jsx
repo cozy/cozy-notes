@@ -7,7 +7,6 @@ import { IntlProvider, addLocaleData } from 'react-intl'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { render } from 'react-dom'
 import { I18n } from 'cozy-ui/react/I18n'
-import { schema } from 'components/notes'
 import IsPublic from 'components/IsPublic'
 
 let appLocale
@@ -32,7 +31,7 @@ const renderApp = function(client, isPublic) {
       lang={appLocale}
       dictRequire={appLocale => require(`locales/${appLocale}`)}
     >
-	  <IntlProvider locale={appLocale} messages={locales[appLocale].atlaskit}>
+      <IntlProvider locale={appLocale} messages={locales[appLocale].atlaskit}>
         <CozyProvider client={client}>
           <IsPublic.Provider value={isPublic}>
             <App isPublic={isPublic} />
@@ -116,7 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const client = new CozyClient({
     uri: `${protocol}//${data.cozyDomain}`,
     token: token,
-    schema,
     appMetadata: {
       slug: appSlug,
       version: appVersion
