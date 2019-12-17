@@ -3,6 +3,7 @@
 import 'styles'
 
 import React from 'react'
+import { IntlProvider, addLocaleData } from 'react-intl'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { render } from 'react-dom'
 import { I18n } from 'cozy-ui/react/I18n'
@@ -10,18 +11,34 @@ import { schema } from 'components/notes'
 import IsPublic from 'components/IsPublic'
 
 let appLocale
+const locales = {
+  en: {
+    react: require('react-intl/locale-data/en'),
+    atlaskit: require('@atlaskit/editor-core/dist/cjs/i18n/en').default
+  },
+  fr: {
+    react: require('react-intl/locale-data/fr'),
+    atlaskit: require('@atlaskit/editor-core/dist/cjs/i18n/fr').default
+  }
+}
+addLocaleData(locales.en.react)
+addLocaleData(locales.fr.react)
+
 const renderApp = function(client, isPublic) {
   const App = require('components/app').default
+
   render(
     <I18n
       lang={appLocale}
       dictRequire={appLocale => require(`locales/${appLocale}`)}
     >
-      <CozyProvider client={client}>
-        <IsPublic.Provider value={isPublic}>
-          <App isPublic={isPublic} />
-        </IsPublic.Provider>
-      </CozyProvider>
+	  <IntlProvider locale={appLocale} messages={locales[appLocale].atlaskit}>
+        <CozyProvider client={client}>
+          <IsPublic.Provider value={isPublic}>
+            <App isPublic={isPublic} />
+          </IsPublic.Provider>
+        </CozyProvider>
+      </IntlProvider>
     </I18n>,
     document.querySelector('[role=application]')
   )
