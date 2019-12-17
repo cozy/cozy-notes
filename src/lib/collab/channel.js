@@ -104,9 +104,12 @@ export class Channel {
 
   /**
    * Program a push for new steps to the service
-   * @param {Function} getState - function to get a current proseMirror state
-   * @param {Object} state - proseMirror state
-   * @param {Object[]} localSteps - local steps to send
+   * @param {Object} state - state from proseMirror internals
+   * @param {Function} getState - returns current proseMirror state
+   * @param {Object} localSteps - localSteps object from proseMirror internals
+   * Today the provider calling `sendSteps` do not fill the localSteps
+   * parameter. This parameter is however provisionned in the demo code from
+   * Atlaskit. I prefer not to remove it, in case we need it later.
    */
   async sendSteps(getState, state, localSteps) {
     this.enqueueSteps({ getState, state, localSteps })

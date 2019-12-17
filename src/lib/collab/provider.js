@@ -6,6 +6,14 @@ import { getParticipant } from './participant'
 
 const jsonTransformer = new JSONTransformer()
 
+/**
+ * The CollabProvider is called directly by the
+ * collaboration plugin of proseMirror.
+ * It will then use `Channel` as communication
+ * layer with the `ServiceClient`, which itself
+ * talk to the server.
+ */
+
 export class CollabProvider {
   constructor(config, serviceClient) {
     this.config = config
@@ -79,6 +87,11 @@ export class CollabProvider {
     }
   }
 
+  /**
+   * Queue new steps from the server which should
+   * be applied to the local editor
+   * @param {Object} data - new steps
+   */
   queueData(data) {
     const orderedQueue = [...this.queue, data].sort((a, b) => {
       // order by starting version
@@ -132,6 +145,11 @@ export class CollabProvider {
     }
   }
 
+  /**
+   * Something got wrong, we program a catchup,
+   * waiting 1s in case we receive new message
+   * that may resolve our problems
+   */
   programCatchup() {
     if (!this.queueTimeout) {
       this.queueTimeout = window.setTimeout(() => {
@@ -140,6 +158,10 @@ export class CollabProvider {
     }
   }
 
+  /**
+   * When received new messages that resolve a previous
+   * problem: Cancelling the programed catchup
+   */
   cancelCatchup() {
     if (this.queueTimeout) {
       window.clearTimeout(this.queueTimeout)
@@ -147,6 +169,9 @@ export class CollabProvider {
     }
   }
 
+  /**
+   * Process the message queue (new steps from the servers)
+   */
   processQueue() {
     if (this.queue.length > 0 && !this.pauseQueue) {
       let currentVersion = getVersion(this.getState())
@@ -175,6 +200,10 @@ export class CollabProvider {
     }
   }
 
+  /**
+   * Send new steps from the server to the local proseMirror editor
+   * These steps should be previously checked and ordered
+   */
   processRemoteData = data => {
     const { version, steps } = data
 
@@ -192,11 +221,17 @@ export class CollabProvider {
     }
   }
 
+  /**
+   * We receive new steps  from the server
+   */
   onReceiveData = data => {
     this.queueData(data)
     this.processQueue()
   }
 
+  /**
+   * We receive new user cursor positions from the server
+   */
   onReceiveTelepointer = data => {
     const { sessionId } = data
     const userId = this.serviceClient.getUserId(sessionId)
