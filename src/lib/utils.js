@@ -10,16 +10,24 @@ export function getShortNameFromClient(client) {
   return url.hostname + Math.floor(Math.random() * 100)
 }
 
+const returnUrlKey = 'returnUrl'
+
 export function getReturnUrl() {
   const searchParams = new URLSearchParams(window.location.search)
   for (const [key, value] of searchParams) {
-    if (key === 'returnUrl') {
+    if (key === returnUrlKey) {
       return value
     }
   }
   return undefined
 }
 
+export const generateReturnUrlToNotesIndex = doc => {
+  const url = new URL(window.location)
+  url.searchParams.append(returnUrlKey, window.location.origin)
+  url.hash = `#/n/${doc.id}`
+  return url
+}
 export async function getSharedDocument(client) {
   const { data: permissionsData } = await client
     .collection('io.cozy.permissions')
