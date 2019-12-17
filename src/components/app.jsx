@@ -9,7 +9,7 @@ import Spinner from 'cozy-ui/react/Spinner'
 import { Empty } from 'cozy-ui/transpiled/react'
 
 import { List, Editor } from './notes'
-import { getReturnUrl, getSharedDocument } from '../../lib/utils.js'
+import { getReturnUrl, getSharedDocument } from './../lib/utils.js'
 
 const RoutedEditor = withRouter(props => (
   <Editor noteId={props.match.params.id} />
