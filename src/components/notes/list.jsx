@@ -30,8 +30,7 @@ const EmptyComponent = translate()(({ t }) => (
     </Empty>
   </div>
 ))
-/* const cellStyles = { flexGrow: 1 }
-const nameCellStyles = { flexGrow: 10 } */
+
 const List = translate()(({ t }) => (
   <Table>
     <TableHead>
@@ -60,16 +59,20 @@ const List = translate()(({ t }) => (
   </Table>
 ))
 
-const TitleApp = translate()(({ t }) => (
-  <MainTitle className="u-pl-1">{t('Notes.List.my_notes')}</MainTitle>
-))
+//We don't not display the Title this way in Mobile.
+//We use Bar.centrer
+const TitleApp = ({ t, breakpoints: { isMobile } }) => {
+  return isMobile ? null : (
+    <MainTitle className="u-pl-1 u-mt-1">{t('Notes.List.my_notes')}</MainTitle>
+  )
+}
 
-const EmptyPage = withBreakpoints()(({ breakpoints: { isMobile } }) => (
-  //On Mobile, we don't want a margin top since we don't have title and
-  //we want the component to start at the end of the bar
-  <Stack className={isMobile ? '' : 'u-mt-1'}>
-    <TitleApp />
+const TitleAppConnected = withBreakpoints()(translate()(TitleApp))
+
+const EmptyPage = () => (
+  <Stack>
+    <TitleAppConnected />
     <List />
   </Stack>
-))
+)
 export default EmptyPage
