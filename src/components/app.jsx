@@ -1,3 +1,5 @@
+/* global cozy */
+
 import React, { useState, useEffect, useMemo } from 'react'
 import { hot } from 'react-hot-loader'
 import { Route, Switch, HashRouter, withRouter } from 'react-router-dom'
@@ -6,10 +8,14 @@ import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { Layout, Main, Content } from 'cozy-ui/react/Layout'
 import { Sprite as IconSprite } from 'cozy-ui/react/Icon'
 import Spinner from 'cozy-ui/react/Spinner'
-import { Empty } from 'cozy-ui/transpiled/react'
+import { Empty, withBreakpoints } from 'cozy-ui/transpiled/react'
+import AppTitle from 'cozy-ui/react/AppTitle'
 
+const manifest = require('../../manifest.webapp')
 import { List, Editor } from './notes'
 import { getReturnUrl, getSharedDocument } from './../lib/utils.js'
+
+import { getDataOrDefault } from './../lib/initFromDom'
 
 const RoutedEditor = withRouter(props => {
   const returnUrl = getReturnUrl()
@@ -56,18 +62,32 @@ const PublicContext = withClient(({ client }) => {
   }
 })
 
-const App = ({ isPublic }) => (
-  <HashRouter>
-    <Layout monoColumn={true}>
-      <Main>
-        <Content className="app-content">
-          {isPublic ? <PublicContext /> : <PrivateContext />}
-        </Content>
-      </Main>
-      <IconSprite />
-    </Layout>
-  </HashRouter>
-)
+const App = ({ isPublic, breakpoints: { isMobile }, client }) => {
+  let appName = ''
+  if (isMobile) {
+    const data = client.getInstanceOptions()
+    appName = getDataOrDefault(data.cozyAppName, manifest.name)
+  }
+  const { BarCenter } = cozy.bar
+
+  return (
+    <HashRouter>
+      <Layout monoColumn={true}>
+        {isMobile && (
+          <BarCenter>
+            <AppTitle>{appName}</AppTitle>
+          </BarCenter>
+        )}
+        <Main>
+          <Content className="app-content">
+            {isPublic ? <PublicContext /> : <PrivateContext />}
+          </Content>
+        </Main>
+        <IconSprite />
+      </Layout>
+    </HashRouter>
+  )
+}
 
 /*
   Enable Hot Module Reload using `react-hot-loader` here
@@ -75,4 +95,4 @@ const App = ({ isPublic }) => (
   No need to use it anywhere else, it sould work for all
   child components
 */
-export default hot(module)(App)
+export default hot(module)(withBreakpoints()(withClient(App)))
