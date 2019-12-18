@@ -6,20 +6,12 @@
   "categories": [],
   "version": "1.0.7",
   "licence": "AGPL-3.0",
-  "editor": "Cozy",
+  "editor": "",
   "source": "https://github.com/cozy/cozy-notes.git@build",
   "developer": {
-    "name": "Cozy Cloud",
-    "url": "https://cozy.io"
+    "name": "edas",
+    "url": "https://eric.daspet.name/"
   },
-  "locales": {
-    "en": {},
-    "fr": {}
-  },
-  "langs": [
-    "en",
-    "fr"
-  ],
   "routes": {
     "/": {
       "folder": "/",
@@ -44,5 +36,13 @@
       "description": "Notes as files",
       "type": "io.cozy.files"
     }
-  }
+  },
+  "locales": {
+    "en": {},
+    "fr": {}
+  },
+  "langs": [
+    "en",
+    "fr"
+  ]
 }
