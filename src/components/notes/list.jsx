@@ -1,116 +1,75 @@
 import React from 'react'
 
 import { MainTitle } from 'cozy-ui/react/Text'
+import {
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableHeader,
+  TableCell
+} from 'cozy-ui/react/Table'
+import Empty from 'cozy-ui/react/Empty'
+import Stack from 'cozy-ui/react/Stack'
+import { translate } from 'cozy-ui/react/I18n'
+import { withBreakpoints } from 'cozy-ui/transpiled/react'
 
 import Add from './add'
+import icon from '../../assets/icons/icon_note_empty.svg'
+import './list.styl'
 
-import HeaderMenu from '../header_menu.jsx'
-
-/*
-
-import Spinner from 'cozy-ui/react/Spinner'
-import { Link } from 'react-router-dom'
-
-import ListItemText from 'cozy-ui/react/ListItemText'
-import Button from 'cozy-ui/react/Button'
-import Icon from 'cozy-ui/react/Icon'
-
-import icon from '../../assets/icons/icon-note-32.svg'
-
-
-
-const titleWithDefault = () => {}
-
-const Item = props => (
-  <div className="note-item">
-    <Icon icon={icon} width={32} height={32} className="note-icon" />
-    <Link to={`/n/${props.note.id}`} className="note-link">
-      <ListItemText
-        primaryText={titleWithDefault(props.note)}
-        secondaryText="/Notes/2019/demo"
-      />
-    </Link>
+const EmptyComponent = translate()(({ t }) => (
+  <div className="empty">
+    <Empty
+      id="empty"
+      icon={icon}
+      title={t('Notes.Empty.welcome')}
+      text={t('Notes.Empty.after_created')}
+    >
+      <Add />
+    </Empty>
   </div>
-)
+))
+/* const cellStyles = { flexGrow: 1 }
+const nameCellStyles = { flexGrow: 10 } */
+const List = translate()(({ t }) => (
+  <Table>
+    <TableHead>
+      <TableRow>
+        <TableHeader className="tableCellName">
+          {t('Notes.List.name')}
+        </TableHeader>
+        <TableHeader className="tableCell">
+          {t('Notes.List.updated_at')}
+        </TableHeader>
+        <TableHeader className="tableCell">
+          {t('Notes.List.location')}
+        </TableHeader>
+        <TableHeader className="tableCell">
+          {t('Notes.List.sharings')}
+        </TableHeader>
+      </TableRow>
+    </TableHead>
+    <TableBody>
+      <TableRow className="tableRowEmpty">
+        <TableCell className="tableCellEmpty">
+          <EmptyComponent />
+        </TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+))
 
-const Row = props => {
-  const updatedAt = new Date(props.note.cozyMetadata.updatedAt)
-  const options = { day: 'numeric', month: 'long', year: 'numeric' }
-  const formatedUpdatedAt = updatedAt.toLocaleDateString(undefined, options)
-  return (
-    <tr className="c-table-row">
-      <th className="c-table-cell c-table-cell--primary">
-        <Item {...props} />
-      </th>
-      <td className="c-table-cell">
-        <time datatime={props.note.cozyMetadata.updatedAt}>
-          {formatedUpdatedAt}
-        </time>
-      </td>
-      <td className="c-table-cell">—</td>
-      <td className="c-table-cell">
-        <Button
-          theme="action"
-          extension="narrow"
-          icon={<Icon icon="dots" color="coolGrey" width="17" height="17" />}
-          iconOnly
-          label="actions"
-        />
-      </td>
-    </tr>
-  )
-}
+const TitleApp = translate()(({ t }) => (
+  <MainTitle className="u-pl-1">{t('Notes.List.my_notes')}</MainTitle>
+))
 
-const List = props => {
-  const { notes } = props
-  return !notes || !notes.length ? null : (
-    <table className="notes-list c-table">
-      <thead className="c-table-head">
-        <tr className="c-table-row-head">
-          <th className="c-table-header">Nom</th>
-          <th className="c-table-header">Dernière mise à jour</th>
-          <th className="c-table-header">Partages</th>
-          <th className="c-table-header" />
-        </tr>
-      </thead>
-      <tbody>
-        {notes.map(note => (
-          <Row key={note._id} note={note} />
-        ))}
-      </tbody>
-    </table>
-  )
-}
-
-const ConnectedList = props => {
-  const { data, fetchStatus } = props.notes
-  // cozy-client statuses
-  const isLoading = fetchStatus === 'loading' || fetchStatus === 'pending'
-  return (
-    <div className="notes notes-list-container">
-      {isLoading ? (
-        <Spinner size="xxlarge" middle />
-      ) : (
-        <div>
-          <ListHeader />
-          <List notes={data} />
-        </div>
-      )}
-    </div>
-  )
-}
-
-*/
-
-const ListHeader = () => {
-  return (
-    <>
-      <HeaderMenu
-        left={<MainTitle tag="h1">Mes notes</MainTitle>}
-        right={<Add />}
-      />
-    </>
-  )
-}
-
-export default ListHeader
+const EmptyPage = withBreakpoints()(({ breakpoints: { isMobile } }) => (
+  //On Mobile, we don't want a margin top since we don't have title and
+  //we want the component to start at the end of the bar
+  <Stack className={isMobile ? '' : 'u-mt-1'}>
+    <TitleApp />
+    <List />
+  </Stack>
+))
+export default EmptyPage
