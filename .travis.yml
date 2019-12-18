@@ -6,6 +6,8 @@ node_js:
 branches:
   only:
     - master
+    # tags
+    - /^v\d+\.\d+\.\d+(\-beta.\d+)?$/
 env:
   global:
     # REGISTRY_TOKEN
