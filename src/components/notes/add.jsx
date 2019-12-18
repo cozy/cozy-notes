@@ -44,7 +44,7 @@ class Add extends Component {
 
   render() {
     const { isWorking } = this.state
-    const { t } = this.props
+    const { t, className } = this.props
     return (
       <div>
         <Button
@@ -54,6 +54,7 @@ class Add extends Component {
           icon="plus"
           label={t('Notes.Add.add_note')}
           extension="narrow"
+          className={className}
         />
       </div>
     )
