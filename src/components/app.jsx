@@ -12,10 +12,10 @@ import { Empty, withBreakpoints } from 'cozy-ui/transpiled/react'
 import AppTitle from 'cozy-ui/react/AppTitle'
 
 const manifest = require('../../manifest.webapp')
-import { List, Editor } from './notes'
-import { getReturnUrl, getSharedDocument } from './../lib/utils.js'
+import { List, Editor } from 'components/notes'
+import { getReturnUrl, getSharedDocument } from 'lib/utils.js'
 
-import { getDataOrDefault } from './../lib/initFromDom'
+import { getDataOrDefault } from 'lib/initFromDom'
 
 const RoutedEditor = withRouter(props => {
   const returnUrl = getReturnUrl()

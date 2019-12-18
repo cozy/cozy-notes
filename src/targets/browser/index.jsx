@@ -8,7 +8,7 @@ import CozyClient, { CozyProvider } from 'cozy-client'
 import { render } from 'react-dom'
 import { I18n } from 'cozy-ui/react/I18n'
 import IsPublic from 'components/IsPublic'
-import { getDataset, getDataOrDefault, getToken } from '../../lib/initFromDom'
+import { getDataset, getDataOrDefault, getToken } from 'lib/initFromDom'
 
 const manifest = require('../../../manifest.webapp')
 

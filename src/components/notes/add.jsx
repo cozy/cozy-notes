@@ -7,8 +7,8 @@ import { withRouter } from 'react-router-dom'
 import Button from 'cozy-ui/react/Button'
 import { translate } from 'cozy-ui/react/I18n'
 
-import { schemaOrdered } from '../../lib/collab/schema'
-import { generateReturnUrlToNotesIndex } from '../../lib/utils'
+import { schemaOrdered } from 'lib/collab/schema'
+import { generateReturnUrlToNotesIndex } from 'lib/utils'
 
 class Add extends Component {
   constructor(props, context) {
