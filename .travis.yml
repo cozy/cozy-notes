@@ -26,7 +26,7 @@ deploy:
     repo: cozy/cozy-notes
     skip-cleanup: true
     # deploy the build on a build branch and publish to the Cozy registry
-    script: DEPLOY_BRANCH=build && yarn deploy && yarn cozyPublish
+    script: DEPLOY_BRANCH=ci-build && yarn deploy && yarn cozyPublish
     on:
       branch: master
   - provider: script
