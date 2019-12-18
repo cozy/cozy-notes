@@ -63,7 +63,9 @@ const List = translate()(({ t }) => (
 //We use Bar.centrer
 const TitleApp = ({ t, breakpoints: { isMobile } }) => {
   return isMobile ? null : (
-    <MainTitle className="u-pl-1 u-mt-1">{t('Notes.List.my_notes')}</MainTitle>
+    <MainTitle className="titlePadding u-mt-1">
+      {t('Notes.List.my_notes')}
+    </MainTitle>
   )
 }
 
