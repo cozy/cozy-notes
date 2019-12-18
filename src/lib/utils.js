@@ -48,11 +48,11 @@ function getFolderLink(id) {
   return `/folder/${id.replace(/-/g, '')}`
 }
 
-function getFullLink(client, id) {
+export function getFullLink(client, id = null) {
   const cozyURL = new URL(client.getStackClient().uri)
   const { cozySubdomainType } = client.getInstanceOptions()
   const driveSlug = 'drive'
-  const pathForDrive = getFolderLink(id)
+  const pathForDrive = id !== null ? getFolderLink(id) : ''
 
   const webUrl = generateWebLink({
     cozyUrl: cozyURL.origin,
