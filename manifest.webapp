@@ -12,6 +12,14 @@
     "name": "Cozy Cloud",
     "url": "https://cozy.io"
   },
+  "locales": {
+    "en": {},
+    "fr": {}
+  },
+  "langs": [
+    "en",
+    "fr"
+  ],
   "routes": {
     "/": {
       "folder": "/",
@@ -36,13 +44,5 @@
       "description": "Notes as files",
       "type": "io.cozy.files"
     }
-  },
-  "locales": {
-    "en": {},
-    "fr": {}
-  },
-  "langs": [
-    "en",
-    "fr"
-  ]
+  }
 }
