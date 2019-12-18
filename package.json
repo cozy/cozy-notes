@@ -62,6 +62,7 @@
     "react-dom": "~16.8.1",
     "react-intl": "2.9.0",
     "react-router-dom": "^5.1.2",
+    "snarkdown": "^1.2.2",
     "socket.io": "^2.2.0",
     "socket.io-client": "^2.2.0",
     "utf-8-validate": "^5.0.2",

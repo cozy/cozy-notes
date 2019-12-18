@@ -7,6 +7,8 @@ import { IntlProvider, addLocaleData } from 'react-intl'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { render } from 'react-dom'
 import { I18n } from 'cozy-ui/react/I18n'
+import { Document } from 'cozy-doctypes'
+
 import IsPublic from 'components/IsPublic'
 import { getDataset, getDataOrDefault, getToken } from 'lib/initFromDom'
 
@@ -77,6 +79,9 @@ document.addEventListener('DOMContentLoaded', () => {
       version: appVersion
     }
   })
+  if (!Document.cozyClient) {
+    Document.registerClient(client)
+  }
 
   if (!isPublic) {
     // initialize the bar, common of all applications, it allows
