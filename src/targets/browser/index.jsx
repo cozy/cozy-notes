@@ -10,7 +10,11 @@ import { I18n } from 'cozy-ui/react/I18n'
 import { Document } from 'cozy-doctypes'
 
 import IsPublic from 'components/IsPublic'
-import { getDataset, getDataOrDefault, getToken } from 'lib/initFromDom'
+import {
+  getDataset,
+  getDataOrDefault,
+  hasPublicSharecode
+} from 'lib/initFromDom'
 
 const manifest = require('../../../manifest.webapp')
 

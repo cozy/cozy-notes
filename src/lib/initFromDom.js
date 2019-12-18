@@ -13,20 +13,11 @@ const arrToObj = (obj = {}, [key, val = true]) => {
   return obj
 }
 
-export const getToken = function(dataset) {
-  if (
-    dataset &&
-    dataset.cozyToken &&
-    dataset.cozyToken.length > 0 &&
-    dataset.cozyToken[0] != '{'
-  ) {
-    return { isPublic: false, token: dataset.cozyToken }
-  } else {
-    const { sharecode } = window.location.search
-      .substring(1)
-      .split('&')
-      .map(varval => varval.split('='))
-      .reduce(arrToObj, {})
-    return { isPublic: true, token: sharecode }
-  }
+export const hasPublicSharecode = function() {
+  const { sharecode } = window.location.search
+    .substring(1)
+    .split('&')
+    .map(varval => varval.split('='))
+    .reduce(arrToObj, {})
+  return !!sharecode
 }
