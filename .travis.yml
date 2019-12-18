@@ -8,11 +8,10 @@ branches:
     - master
 env:
   global:
-  # GITHUB_TOKEN for yarn deploy script
-  # to generate yours : travis encrypt GITHUB_TOKEN=<your_GITHUB_TOKEN> -r edas/myapp --org
-  # REGISTRY_TOKEN for yarn cozyPublish script
-  # to generate yours : travis encrypt REGISTRY_TOKEN=<your_REGISTRY_TOKEN> -r edas/myapp --org
-  # N.B.: the --org option is needed only for public repositories
+    # REGISTRY_TOKEN
+    - secure: 'i1xWUxgKq3Uv1aUmSoAdlzn/UgBu6i2FVr28jgnAbqylrpMP+7ix65YTjnLEbyWKHr8Irngz1ydN/Y4ITk16BWKeaum7aBEPmemuVEFu83l0YrE1NRELoL1HAwvMcs4PuO/Rq1t+LOQcaci7Gcn3BZKnDIWizKHqMDI8XnomrtqpWzthVQptj+CLO2EutNON52Gm28naQfKdH4818ZEGwqiX7FuJI8Jz+zeVFtTn7hhpW84ZASeSmhWIjuhHmOQ9XU6a7C+x6Vf/kZu/Q/lDrGJlA0XFxcJOWHEit5vCTIf3WWW98eL+rdpdhVLFCifUEkuVN33QYNlEMDJ16/P3PoXuMEOxUCa8kyQ+aNumQiE47GCnZfZ6QeW8COx2fyD3T0dPeB/bCDQFfdVR0tqt+ZMKh0lfTM6daeqsOCGKBhA582MKUzY4rSa+/k+hXkHUAXY6714ZMikrfqfK4gzsYnfui5RdB+/9ekDX+wEN9CQeg19QbYIOWctZQ1/0HtHerQqt2ViSBJ+Na4MsW4bzaUPlYqrdjCBPQJrGUP4Jn2bQiO/nkfG5KbQu9lF27TS0hxgt/MXH2aiVa74zo5P1yypQUqzJV3wMyp2Top90IDaD6+7uYnShR0I0s0o3p6KZzNPLKNAG3kNrJs1ilZ1YaBNFYesOR5PyhIoi8tsMA8g='
+    # GITHUB_TOKEN
+    - secure: 'VwOddbUrlAn2FLe+DbS28iH0sM7JSXuBmTHxswTNYlM8FDPCVZCV6Hfi9kVuQRmW4EnfWO5HJXOO9fEsRvLJ+TuR0Zia15S0cCNF4AL7S5nGT0gkl/VU1JTCnPKAyHRGp2fNDXjvmjwrqpAPgJArsRoNzT12VASTstQQV47LdwZkJ/5I78Ay1vaULo6urorartqIExzAiEYAlojzrcCZ+sh35Z/dZT3JRr0qA+lBEWc8tfxHaDLwa3YRdVi5VRpRjAy9pSDTIVZGf69zONGR7jMGfMYyF/BI3HCgrjdzatcbp8oACut+eMb6KfGqE1VPWVlBFhp3o3VDOCqsSx46Zins6cHokmrVzcgG9Xfq6Pm4SeRLPSv+3rBEtE1GbWVQoO8PC2X86WweUiSuaknPOLm+lZHi3Y+Stq1E88JLh3hNxMOXhm79dn1/S6dAIcMMkoyFBnmdy2jXoRs0jJ7XruwVSPPCAngOwIfpnZrLuFeAX8AKOrXte65pai/Q+VzZiRHO08EO+GGzfS1nECGEWnVsRXdbRicM5WJLijw1n7/KRLM5lpxgS0kOwzZOEgFgAyiJBz7moNqm/JS2s0B1iMKRh6LLsbVbjQyB3NZLbN1G3X/KUquObn9ZxU55kwqmBvXm7wE4yNqAzGEwsC95S2JsDgdilscNa7D2UzYkPDY='
 cache:
   yarn: true
   directories:
