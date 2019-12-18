@@ -8,6 +8,9 @@ import CozyClient, { CozyProvider } from 'cozy-client'
 import { render } from 'react-dom'
 import { I18n } from 'cozy-ui/react/I18n'
 import IsPublic from 'components/IsPublic'
+import { getDataset, getDataOrDefault, getToken } from '../../lib/initFromDom'
+
+const manifest = require('../../../manifest.webapp')
 
 let appLocale
 const locales = {
@@ -43,39 +46,6 @@ const renderApp = function(client, isPublic) {
   )
 }
 
-// return a defaultData if the template hasn't been replaced by cozy-stack
-const getDataOrDefault = function(toTest, defaultData) {
-  const templateRegex = /^\{\{\.[a-zA-Z]*\}\}$/ // {{.Example}}
-  return templateRegex.test(toTest) ? defaultData : toTest
-}
-
-const getDataset = function() {
-  const root = document.querySelector('[role=application]')
-  return root.dataset
-}
-
-const getToken = function(dataset) {
-  if (
-    dataset &&
-    dataset.cozyToken &&
-    dataset.cozyToken.length > 0 &&
-    dataset.cozyToken[0] != '{'
-  ) {
-    return { isPublic: false, token: dataset.cozyToken }
-  } else {
-    const arrToObj = (obj = {}, [key, val = true]) => {
-      obj[key] = val
-      return obj
-    }
-    const { sharecode } = window.location.search
-      .substring(1)
-      .split('&')
-      .map(varval => varval.split('='))
-      .reduce(arrToObj, {})
-    return { isPublic: true, token: sharecode }
-  }
-}
-
 // initial rendering of the application
 document.addEventListener('DOMContentLoaded', () => {
   const data = getDataset()
@@ -84,26 +54,13 @@ document.addEventListener('DOMContentLoaded', () => {
     data.cozyIconPath,
     require('../vendor/assets/icon.svg')
   )
-
   const appNamePrefix = getDataOrDefault(
-    data.cozyAppNamePrefix || require('../../../manifest.webapp').name_prefix,
+    data.cozyAppNamePrefix || manifest.name_prefix,
     ''
   )
-
-  const appName = getDataOrDefault(
-    data.cozyAppName,
-    require('../../../manifest.webapp').name
-  )
-
-  const appSlug = getDataOrDefault(
-    data.cozyAppSlug,
-    require('../../../manifest.webapp').slug
-  )
-
-  const appVersion = getDataOrDefault(
-    data.cozyAppVersion,
-    require('../../../manifest.webapp').version
-  )
+  const appName = getDataOrDefault(data.cozyAppName, manifest.name)
+  const appSlug = getDataOrDefault(data.cozyAppSlug, manifest.slug)
+  const appVersion = getDataOrDefault(data.cozyAppVersion, manifest.version)
 
   appLocale = getDataOrDefault(data.cozyLocale, 'en')
 
@@ -129,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
       appNamePrefix: appNamePrefix,
       iconPath: appIcon,
       lang: appLocale,
-      //replaceTitleOnMobile: true,
+      replaceTitleOnMobile: true,
       cozyClient: client,
       isPublic: isPublic
     })
