@@ -11,6 +11,17 @@
     },
     "Editor": {
       "title_placeholder": "Ici votre titre"
+    },
+    "List": {
+      "my_notes": "Mes Notes",
+      "name": "Nom",
+      "updated_at": "Mise à jour",
+      "location": "Emplacement",
+      "sharings": "Partage"
+    },
+    "Empty": {
+      "welcome": "Bienvenue sur Cozy Notes",
+      "after_created": "Une fois votre note créée, il vous est possible de la retrouver dans Cozy Drive"
     }
   },
   "Error": {
