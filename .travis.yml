@@ -17,6 +17,7 @@ cache:
   directories:
     - node_modules
 script:
+  - yarn lint
   - yarn build
 before_deploy:
   - yarn add cozy-app-publish
