@@ -18,7 +18,14 @@ export default function SharingWidget(props) {
   const docId = file.id
   return (
     <LocalizedSharingProvider doctype={file.type} documentType="Notes">
-      <ShareButton theme="primary" docId={docId} onClick={onClick} label='' extension='narrow' iconOnly />
+      <ShareButton
+        theme="primary"
+        docId={docId}
+        onClick={onClick}
+        label=""
+        extension="narrow"
+        iconOnly
+      />
       {showModal && <ShareModal document={file} onClose={onClose} />}
     </LocalizedSharingProvider>
   )

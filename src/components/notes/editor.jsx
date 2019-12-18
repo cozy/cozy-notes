@@ -1,4 +1,10 @@
-import React, { useCallback, useState, useEffect, useMemo, useContext } from 'react'
+import React, {
+  useCallback,
+  useState,
+  useEffect,
+  useMemo,
+  useContext
+} from 'react'
 
 import { withClient } from 'cozy-client'
 
