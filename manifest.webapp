@@ -6,11 +6,11 @@
   "categories": [],
   "version": "1.0.7",
   "licence": "AGPL-3.0",
-  "editor": "",
+  "editor": "Cozy",
   "source": "https://github.com/cozy/cozy-notes.git@build",
   "developer": {
-    "name": "edas",
-    "url": "https://eric.daspet.name/"
+    "name": "Cozy Cloud",
+    "url": "https://cozy.io"
   },
   "routes": {
     "/": {
