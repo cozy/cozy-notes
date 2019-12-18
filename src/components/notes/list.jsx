@@ -26,7 +26,7 @@ const EmptyComponent = translate()(({ t }) => (
       title={t('Notes.Empty.welcome')}
       text={t('Notes.Empty.after_created')}
     >
-      <Add />
+      <Add className="u-mt-1" />
     </Empty>
   </div>
 ))
