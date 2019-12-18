@@ -14,9 +14,9 @@ import Stack from 'cozy-ui/react/Stack'
 import { translate } from 'cozy-ui/react/I18n'
 import { withBreakpoints } from 'cozy-ui/transpiled/react'
 
-import Add from './add'
-import icon from '../../assets/icons/icon_note_empty.svg'
-import './list.styl'
+import Add from 'components/notes/add'
+import icon from 'assets/icons/icon_note_empty.svg'
+import 'components/notes/list.styl'
 
 const EmptyComponent = translate()(({ t }) => (
   <div className="empty">
