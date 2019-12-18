@@ -68,7 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const protocol = window.location ? window.location.protocol : 'https:'
 
-  const { isPublic, token } = getToken(data)
+  const token = data.cozyToken
+  const isPublic = hasPublicSharecode()
 
   // initialize the client to interact with the cozy stack
   const client = new CozyClient({
