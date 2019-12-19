@@ -56,12 +56,20 @@
   },
   "locales": {
     "en": {
-      "short_description": "Cozy Notes is the application for saving, editing and managing all your notes in your Cozy.",
-      "long_description": "Create your notes, save them and find them in one click in your Cozy. Share ideas with anyone you want in a private and secure space. \n\nWith Cozy Notes, you can easily:\n\n-- Create your own notes\n-- Easily edit your notes\n-- Access your notes directly from your Cozy Drive application."
+      "short_description": "Cozy Notes is your personal and collaborative note-taking application.",
+      "long_description": "Notes is an online text editor that can already offer you to:\n\n* Create your own notes with the essential features (bold, underlined, links, tables...)\n* Fill and find your notes with you other documents in files of your personal Drive\n* Edit easily your notes from all your devices\n* Access your notes offline\n* For the fans, use shortcuts and input in markdown format ... and even write with contacts together on the same note (coming soon)!",
+      "screenshots": [
+        "screenshots/en/screenshot01.png",
+        "screenshots/en/screenshot02.png"
+      ]
     },
     "fr": {
-      "short_description": "Cozy Notes est l’application de sauvegarde, d’édition et de gestion de tous vos notes dans votre Cozy.",
-      "long_description": "Créez vos notes, sauvegardez-les et retrouvez-les en un clin d’oeil dans votre Cozy. Partagez des idées avec qui vous voulez dans un espace privé et sécurisé. \n\nAvec Cozy Notes, vous pouvez facilement :\n\n- Créer vos propres notes\n- Éditer facilement vos notes\n- Accéder à vos notes directement depuis votre application Cozy Drive."
+      "short_description": "Cozy Notes est votre application de prise de notes personnelles et collaboratives.",
+      "long_description": "Notes est un éditeur de texte en ligne destiné à :\n\n* Créer vos propres notes avec les fonctionnalités essentielles (gras, souligné, liens, tableaux...)\n* Classer et retrouver vos notes avec vos autres documents, dans les répertoires de votre Drive personnel\n* Éditer facilement vos notes depuis tous vos appareils\n* Accéder à vos notes, même sans internet, stockées sur votre PC\n* Pour les aficionados, utiliser les raccourcis et la saisie au format markdown\n*  ... et même écrire à plusieurs simultanément sur la même note (à venir) ! ",
+      "screenshots": [
+        "screenshots/fr/screenshot01.png",
+        "screenshots/fr/screenshot02.png"
+      ]
     }
   }
 }
