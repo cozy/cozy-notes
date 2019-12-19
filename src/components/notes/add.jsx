@@ -5,25 +5,13 @@ import { withClient } from 'cozy-client'
 import Button from 'cozy-ui/react/Button'
 import { translate } from 'cozy-ui/react/I18n'
 
-import { schemaOrdered } from 'lib/collab/schema'
-import { generateReturnUrlToNotesIndex } from 'lib/utils'
+import { createNoteDocument, generateReturnUrlToNotesIndex } from 'lib/utils'
 
 const Add = ({ t, className, client }) => {
   const [isWorking, setIsWorking] = useState(false)
   const handleClick = useCallback(async () => {
     setIsWorking(true)
-    const { data: doc } = await client
-      .getStackClient()
-      .fetchJSON('POST', '/notes', {
-        data: {
-          type: 'io.cozy.notes.documents',
-          attributes: {
-            title: '',
-            schema: schemaOrdered
-          }
-        }
-      })
-
+    const { data: doc } = await createNoteDocument(client)
     window.location.href = generateReturnUrlToNotesIndex(doc)
   }, [])
 
