@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import cloneDeep from 'lodash/cloneDeep'
-
+import get from 'lodash/get'
 const useFetchNotesByIds = client => {
   const [notes, setNotes] = useState([])
   const [fetchStatus, setFetchStatus] = useState('loading')
@@ -26,12 +26,12 @@ const useFetchNotesByIds = client => {
         const notes = await Promise.all(promiseNotes)
         const filesCloned = cloneDeep(files)
         filesCloned.forEach((file, i) => {
-          file.name = notes[i].data.attributes.name
+          file.name = get(notes[i], 'data.attributes.name', file.name)
         })
         setNotes(filesCloned)
         setFetchStatus('loaded')
       } catch (error) {
-        setFetchStatus('erroed')
+        setFetchStatus('errored')
         console.log({ error })
       }
     }
