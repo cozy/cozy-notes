@@ -22,6 +22,10 @@
       "long_description": "Créez vos notes, sauvegardez-les et retrouvez-les en un clin d’oeil dans votre Cozy. Partagez des idées avec qui vous voulez dans un espace privé et sécurisé. \n\nAvec Cozy Notes, vous pouvez facilement :\n\n- Créer vos propres notes\n- Éditer facilement vos notes\n- Accéder à vos notes directement depuis votre application Cozy Drive."
     }
   },
+  "screenshots": [
+    "screenshots/fr/screenshot01.png",
+    "screenshots/fr/screenshot02.png"
+  ],
   "langs": ["en", "fr"],
   "routes": {
     "/": {
