@@ -7,9 +7,7 @@ import { withBreakpoints } from 'cozy-ui/react'
 //We use Bar.centrer
 const AppTitle = ({ t, breakpoints: { isMobile } }) => {
   return isMobile ? null : (
-    <MainTitle className="titlePadding u-mt-1">
-      {t('Notes.List.my_notes')}
-    </MainTitle>
+    <MainTitle className="titlePadding">{t('Notes.List.my_notes')}</MainTitle>
   )
 }
 
