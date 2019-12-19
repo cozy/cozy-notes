@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import cloneDeep from 'lodash/cloneDeep'
 
-const useReferencedFolderForNote = client => {
+const useFetchNotesByIds = client => {
   const [notes, setNotes] = useState([])
   const [fetchStatus, setFetchStatus] = useState('loading')
   useEffect(() => {
@@ -25,7 +25,6 @@ const useReferencedFolderForNote = client => {
         })
         const notes = await Promise.all(promiseNotes)
         const filesCloned = cloneDeep(files)
-        //TODO check order
         filesCloned.forEach((file, i) => {
           file.name = notes[i].data.attributes.name
         })
@@ -45,4 +44,4 @@ const useReferencedFolderForNote = client => {
   }
 }
 
-export default useReferencedFolderForNote
+export default useFetchNotesByIds

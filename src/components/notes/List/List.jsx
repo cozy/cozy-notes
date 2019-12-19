@@ -14,7 +14,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import EmptyComponent from 'components/notes/List/EmptyComponent'
 import NoteRow from 'components/notes/List/NoteRow'
 import Add from 'components/notes/add'
-import useFetchNotesByIds from 'components/notes/hooks/useFetchNotesByIds'
+import useFetchNotesByIds from 'hooks/useFetchNotesByIds'
 
 const EmptyTableRow = () => (
   <TableRow className="tableSpecialRow">
