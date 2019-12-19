@@ -141,7 +141,7 @@ export class ServiceClient {
       return this.callbacks[type][id](doc)
     } else {
       // eslint-disable-next-line no-console
-      console.warn('Event not manager', type, id, this.callbacks)
+      console.warn('Event not managed', type, id, this.callbacks)
     }
   }
 
@@ -152,7 +152,7 @@ export class ServiceClient {
   async join(docId) {
     const onRealtimeCreated = function(doc) {
       if (doc.id == docId) {
-        return this.onRealtimeEvent(docId)
+        return this.onRealtimeEvent(doc)
       } else {
         return undefined
       }
@@ -270,11 +270,8 @@ export class ServiceClient {
         return { steps: [], version }
       } else {
         return {
-          version: res.data[res.data.length - 1].version,
-          steps: res.data.map(step => ({
-            ...step,
-            attributes: this.client2server(step.attributes)
-          }))
+          version: res.data[res.data.length - 1].attributes.version,
+          steps: res.data.map(step => this.client2server(step.attributes))
         }
       }
     } catch (err) {
