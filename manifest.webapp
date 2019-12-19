@@ -38,6 +38,13 @@
     "files": {
       "description": "Notes as files",
       "type": "io.cozy.files"
+    },
+     "settings": {
+      "description": "Required by the cozy-bar to display Claudy and know which applications are coming soon",
+      "type": "io.cozy.settings",
+      "verbs": [
+        "GET"
+      ]
     }
   }
 }
