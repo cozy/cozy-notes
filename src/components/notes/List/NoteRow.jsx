@@ -19,7 +19,7 @@ const NoteRow = ({ note, f, breakpoints: { isMobile } }) => {
       }
     >
       <TableCell className="tableCellName u-flex u-flex-items-center u-ellipsis u-fz-medium">
-        <Icon icon={NoteIcon} size={32} className="u-mr-1" />
+        <Icon icon={NoteIcon} size={32} className="u-mr-1 u-flex-shrink-0" />
         <span className="u-charcoalGrey">
           {note.metadata.title || filename}
         </span>
