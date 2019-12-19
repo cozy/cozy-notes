@@ -30,6 +30,10 @@
   },
   "manifest": {
     "short_description": "Cozy Notes est votre application de prise de notes personnelles et collaboratives.",
-    "long_description": "Notes est un éditeur de texte en ligne destiné à :\n\n* Créer vos propres notes avec les fonctionnalités essentielles (gras, souligné, liens, tableaux...)\n* Classer et retrouver vos notes avec vos autres documents, dans les répertoires de votre Drive personnel\n* Éditer facilement vos notes depuis tous vos appareils\n* Accéder à vos notes, même sans internet, stockées sur votre PC\n* Pour les aficionados, utiliser les raccourcis et la saisie au format markdown\n*  ... et même écrire à plusieurs simultanément sur la même note (à venir) ! "
+    "long_description": "Notes est un éditeur de texte en ligne destiné à :\n\n* Créer vos propres notes avec les fonctionnalités essentielles (gras, souligné, liens, tableaux...)\n* Classer et retrouver vos notes avec vos autres documents, dans les répertoires de votre Drive personnel\n* Éditer facilement vos notes depuis tous vos appareils\n* Accéder à vos notes, même sans internet, stockées sur votre PC\n* Pour les aficionados, utiliser les raccourcis et la saisie au format markdown\n*  ... et même écrire à plusieurs simultanément sur la même note (à venir) ! ",
+    "screenshots": [
+      "screenshots/fr/screenshot01.png",
+      "screenshots/fr/screenshot02.png"
+    ]
   }
 }
