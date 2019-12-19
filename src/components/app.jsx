@@ -4,15 +4,14 @@ import React, { useState, useEffect, useMemo } from 'react'
 import { hot } from 'react-hot-loader'
 import { Route, Switch, HashRouter, withRouter } from 'react-router-dom'
 import { withClient } from 'cozy-client'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { Layout, Main, Content } from 'cozy-ui/react/Layout'
 import { Sprite as IconSprite } from 'cozy-ui/react/Icon'
 import Spinner from 'cozy-ui/react/Spinner'
-import { Empty, withBreakpoints } from 'cozy-ui/transpiled/react'
+import { withBreakpoints } from 'cozy-ui/transpiled/react'
 import AppTitle from 'cozy-ui/react/AppTitle'
 
 const manifest = require('../../manifest.webapp')
-import { List, Editor } from 'components/notes'
+import { List, Editor, Unshared } from 'components/notes'
 import { getReturnUrl, getSharedDocument } from 'lib/utils.js'
 
 import { getDataOrDefault } from 'lib/initFromDom'
@@ -29,14 +28,6 @@ const PrivateContext = () => (
     <Route path="/" component={List} />
   </Switch>
 )
-
-const Unshared = translate()(({ t }) => (
-  <Empty
-    icon={'warning-circle'}
-    title={t(`Error.unshared_title`)}
-    text={t(`Error.unshared_text`)}
-  />
-))
 
 const PublicContext = withClient(({ client }) => {
   const [sharedDocumentId, setSharedDocumentId] = useState(null)
