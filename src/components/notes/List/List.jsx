@@ -1,5 +1,5 @@
 import React from 'react'
-import { queryConnect } from 'cozy-client'
+import { withClient } from 'cozy-client'
 import {
   Table,
   TableHead,
@@ -14,6 +14,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import EmptyComponent from 'components/notes/List/EmptyComponent'
 import NoteRow from 'components/notes/List/NoteRow'
 import Add from 'components/notes/add'
+import useFetchNotesByIds from 'components/notes/hooks/useFetchNotesByIds'
 
 const EmptyTableRow = () => (
   <TableRow className="tableSpecialRow">
@@ -39,49 +40,46 @@ const AddNoteRow = () => (
   </TableRow>
 )
 
-const List = ({ t, notesQuery: { fetchStatus, count, data } }) => (
-  <Table>
-    <TableHead>
-      <TableRow>
-        <TableHeader className="tableCellName">
-          {t('Notes.List.name')}
-        </TableHeader>
-        <TableHeader className="tableCell">
-          {t('Notes.List.updated_at')}
-        </TableHeader>
-        <TableHeader className="tableCell">
-          {t('Notes.List.location')}
-        </TableHeader>
-        <TableHeader className="tableCell">
-          {t('Notes.List.sharings')}
-        </TableHeader>
-      </TableRow>
-    </TableHead>
-    <TableBody>
-      {fetchStatus === 'loading' ? (
-        <LoadingTableRow />
-      ) : count === 0 ? (
-        <EmptyTableRow />
-      ) : (
-        <>
-          {data.map(note => (
-            <NoteRow note={note} key={note._id} />
-          ))}
-          <AddNoteRow />
-        </>
-      )}
-    </TableBody>
-  </Table>
-)
+const List = ({ t, client }) => {
+  const {
+    data: { notes },
+    fetchStatus
+  } = useFetchNotesByIds(client)
 
-const query = client =>
-  client
-    .all('io.cozy.files')
-    .where({
-      cozyMetadata: { createdByApp: 'notes' },
-      updated_at: { $gt: null }
-    })
-    .sortBy([{ 'cozyMetadata.createdByApp': 'desc' }, { updated_at: 'desc' }])
-    .indexFields(['cozyMetadata.createdByApp', 'updated_at'])
+  return (
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableHeader className="tableCellName">
+            {t('Notes.List.name')}
+          </TableHeader>
+          <TableHeader className="tableCell">
+            {t('Notes.List.updated_at')}
+          </TableHeader>
+          <TableHeader className="tableCell">
+            {t('Notes.List.location')}
+          </TableHeader>
+          <TableHeader className="tableCell">
+            {t('Notes.List.sharings')}
+          </TableHeader>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {fetchStatus === 'loading' ? (
+          <LoadingTableRow />
+        ) : notes.length === 0 ? (
+          <EmptyTableRow />
+        ) : (
+          <>
+            {notes.map(note => (
+              <NoteRow note={note} key={note._id} />
+            ))}
+            <AddNoteRow />
+          </>
+        )}
+      </TableBody>
+    </Table>
+  )
+}
 
-export default translate()(queryConnect({ notesQuery: { query } })(List))
+export default translate()(withClient(List))
