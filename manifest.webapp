@@ -3,7 +3,7 @@
   "name_prefix": "Cozy",
   "slug": "notes",
   "icon": "icon.svg",
-  "categories": [],
+  "categories": ["cozy"],
   "version": "1.1.0",
   "licence": "AGPL-3.0",
   "editor": "Cozy",
