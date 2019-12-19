@@ -2,8 +2,6 @@ import React, { useState, useCallback } from 'react'
 
 import { withClient } from 'cozy-client'
 
-import { withRouter } from 'react-router-dom'
-
 import Button from 'cozy-ui/react/Button'
 import { translate } from 'cozy-ui/react/I18n'
 
@@ -25,25 +23,21 @@ const Add = ({ t, className, client }) => {
           }
         }
       })
-    setIsWorking(false)
 
     window.location.href = generateReturnUrlToNotesIndex(doc)
   }, [])
 
   return (
-    <div>
-      <Button
-        onClick={handleClick}
-        type="submit"
-        busy={isWorking}
-        icon="plus"
-        label={t('Notes.Add.add_note')}
-        extension="narrow"
-        className={className}
-      />
-    </div>
+    <Button
+      onClick={handleClick}
+      type="submit"
+      busy={isWorking}
+      icon="plus"
+      label={t('Notes.Add.add_note')}
+      extension="narrow"
+      className={className}
+    />
   )
 }
 
-// get mutations from the client to use createDocument
-export default translate()(withClient(withRouter(Add)))
+export default translate()(withClient(Add))
