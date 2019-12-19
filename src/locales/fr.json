@@ -27,5 +27,9 @@
   "Error": {
     "unshared_title": "Le partage n'est plus actif",
     "unshared_text": "Le propriétaire a peut-être révoqué ce partage. Vous ne pouvez plus éditer de note à cette adresse."
+  },
+  "manifest": {
+    "short_description": "Cozy Notes est l’application de sauvegarde, d’édition et de gestion de tous vos notes dans votre Cozy.",
+    "long_description": "Créez vos notes, sauvegardez-les et retrouvez-les en un clin d’oeil dans votre Cozy. Partagez des idées avec qui vous voulez dans un espace privé et sécurisé. \n\nAvec Cozy Notes, vous pouvez facilement :\n\n- Créer vos propres notes\n- Éditer facilement vos notes\n- Accéder à vos notes directement depuis votre application Cozy Drive."
   }
 }
