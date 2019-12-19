@@ -16,7 +16,7 @@ import NoteRow from 'components/notes/List/NoteRow'
 import Add from 'components/notes/add'
 
 const EmptyTableRow = () => (
-  <TableRow className="tableRowEmpty">
+  <TableRow className="tableSpecialRow">
     <TableCell className="tableCellEmpty">
       <EmptyComponent />
     </TableCell>
@@ -24,7 +24,7 @@ const EmptyTableRow = () => (
 )
 
 const LoadingTableRow = () => (
-  <TableRow className="tableRowEmpty">
+  <TableRow className="tableSpecialRow">
     <TableCell className="tableCellEmpty u-ta-center">
       <Spinner size="xxlarge" />
     </TableCell>
@@ -32,7 +32,7 @@ const LoadingTableRow = () => (
 )
 
 const AddNoteRow = () => (
-  <TableRow className="tableRowEmpty">
+  <TableRow className="tableSpecialRow">
     <TableCell className="tableCellEmpty u-ta-center">
       <Add />
     </TableCell>
