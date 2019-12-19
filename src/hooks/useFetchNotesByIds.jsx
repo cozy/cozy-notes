@@ -12,6 +12,7 @@ const useFetchNotesByIds = client => {
             .all('io.cozy.files')
             .where({
               cozyMetadata: { createdByApp: 'notes' },
+              trashed: false,
               updated_at: { $gt: null }
             })
             .sortBy([
