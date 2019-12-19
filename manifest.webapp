@@ -13,8 +13,14 @@
     "url": "https://cozy.io"
   },
   "locales": {
-    "en": {},
-    "fr": {}
+    "en": {
+      "short_description": "Cozy Notes is the application for saving, editing and managing all your notes in your Cozy.",
+      "long_description": "Create your notes, save them and find them in one click in your Cozy. Share ideas with anyone you want in a private and secure space. \n\nWith Cozy Notes, you can easily:\n\n-- Create your own notes\n-- Easily edit your notes\n-- Access your notes directly from your Cozy Drive application."
+    },
+    "fr": {
+      "short_description": "Cozy Notes est l’application de sauvegarde, d’édition et de gestion de tous vos notes dans votre Cozy.",
+      "long_description": "Créez vos notes, sauvegardez-les et retrouvez-les en un clin d’oeil dans votre Cozy. Partagez des idées avec qui vous voulez dans un espace privé et sécurisé. \n\nAvec Cozy Notes, vous pouvez facilement :\n\n- Créer vos propres notes\n- Éditer facilement vos notes\n- Accéder à vos notes directement depuis votre application Cozy Drive."
+    }
   },
   "screenshots": [
     "screenshots/fr/screenshot01.png",
