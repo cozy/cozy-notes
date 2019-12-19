@@ -13,11 +13,11 @@ const arrToObj = (obj = {}, [key, val = true]) => {
   return obj
 }
 
-export const hasPublicSharecode = function() {
+export const getPublicSharecode = function() {
   const { sharecode } = window.location.search
     .substring(1)
     .split('&')
     .map(varval => varval.split('='))
     .reduce(arrToObj, {})
-  return !!sharecode
+  return sharecode
 }

@@ -13,7 +13,7 @@ import IsPublic from 'components/IsPublic'
 import {
   getDataset,
   getDataOrDefault,
-  hasPublicSharecode
+  getPublicSharecode
 } from 'lib/initFromDom'
 
 const manifest = require('../../../manifest.webapp')
@@ -72,8 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const protocol = window.location ? window.location.protocol : 'https:'
 
-  const token = data.cozyToken
-  const isPublic = hasPublicSharecode() || !token || token==""
+  const shareCode = getPublicSharecode()
+  const token = shareCode || data.cozyToken
+  const isPublic = shareCode || !token || token == ''
 
   // initialize the client to interact with the cozy stack
   const client = new CozyClient({
