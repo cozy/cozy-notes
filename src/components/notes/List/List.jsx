@@ -13,7 +13,6 @@ import Spinner from 'cozy-ui/react/Spinner'
 import { translate } from 'cozy-ui/react/I18n'
 import EmptyComponent from 'components/notes/List/EmptyComponent'
 import NoteRow from 'components/notes/List/NoteRow'
-import Add from 'components/notes/add'
 import useFetchNotesByIds from 'hooks/useFetchNotesByIds'
 
 const EmptyTableRow = () => (
@@ -28,14 +27,6 @@ const LoadingTableRow = () => (
   <TableRow className="tableSpecialRow">
     <TableCell className="tableCellEmpty u-ta-center">
       <Spinner size="xxlarge" />
-    </TableCell>
-  </TableRow>
-)
-
-const AddNoteRow = () => (
-  <TableRow className="tableSpecialRow">
-    <TableCell className="tableCellEmpty u-ta-center">
-      <Add />
     </TableCell>
   </TableRow>
 )
@@ -70,12 +61,7 @@ const List = ({ t, client }) => {
         ) : notes.length === 0 ? (
           <EmptyTableRow />
         ) : (
-          <>
-            {notes.map(note => (
-              <NoteRow note={note} key={note._id} />
-            ))}
-            <AddNoteRow />
-          </>
+          notes.map(note => <NoteRow note={note} key={note._id} />)
         )}
       </TableBody>
     </Table>
