@@ -1,9 +1,16 @@
-import React, { useCallback, useState, useEffect, useMemo } from 'react'
+import React, {
+  useCallback,
+  useState,
+  useEffect,
+  useMemo,
+  useContext
+} from 'react'
 
 import { withClient } from 'cozy-client'
 
 import EditorView from './editor-view'
 import EditorLoading from './editor-loading'
+import IsPublic from '../IsPublic'
 
 import CollabProvider from '../../lib/collab/provider'
 import ServiceClient from '../../lib/collab/stack-client'
@@ -19,6 +26,7 @@ const Editor = translate()(
       () => props.userName || getShortNameFromClient(client),
       [props.userName]
     )
+    const isPublic = useContext(IsPublic)
 
     // alias for later shortcuts
     const docId = noteId
@@ -112,14 +120,6 @@ const Editor = translate()(
       },
       [onRemoteTitleChange, serviceClient]
     )
-    // Failure in loading the note ?
-    useEffect(() => {
-      if (!loading && !doc) {
-        // eslint-disable-next-line no-console
-        console.warn(`Could not load note ${noteId}`)
-        props.history.push(`/`)
-      }
-    })
 
     const returnUrl = useMemo(
       () => {
@@ -127,11 +127,27 @@ const Editor = translate()(
           return props.returnUrl
         } else if (doc) {
           return getParentFolderLink(client, doc.file)
+        } else if (!isPublic) {
+          return '/'
         } else {
-          return props.returnUrl
+          return undefined
         }
       },
       [props.returnUrl, doc]
+    )
+
+    // Failure in loading the note ?
+    useEffect(
+      () => {
+        if (!loading && !doc) {
+          // eslint-disable-next-line no-console
+          console.warn(`Could not load note ${noteId}`)
+          if (returnUrl) {
+            document.location = returnUrl
+          }
+        }
+      },
+      [loading, doc, returnUrl]
     )
 
     // rendering
