@@ -30,6 +30,10 @@
   },
   "manifest": {
     "short_description": "Cozy Notes is your personal and collaborative note-taking application.",
-    "long_description": "Notes is an online text editor that can already offer you to:\n\n* Create your own notes with the essential features (bold, underlined, links, tables...)\n* Fill and find your notes with you other documents in files of your personal Drive\n* Edit easily your notes from all your devices\n* Access your notes offline\n* For the fans, use shortcuts and input in markdown format ... and even write with contacts together on the same note (coming soon)!"
+    "long_description": "Notes is an online text editor that can already offer you to:\n\n* Create your own notes with the essential features (bold, underlined, links, tables...)\n* Fill and find your notes with you other documents in files of your personal Drive\n* Edit easily your notes from all your devices\n* Access your notes offline\n* For the fans, use shortcuts and input in markdown format ... and even write with contacts together on the same note (coming soon)!",
+    "screenshots": [
+      "screenshots/en/screenshot01.png",
+      "screenshots/en/screenshot02.png"
+    ]
   }
 }
