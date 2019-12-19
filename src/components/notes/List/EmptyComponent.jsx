@@ -6,7 +6,7 @@ import { withClient } from 'cozy-client'
 
 import Add from 'components/notes/add'
 import icon from 'assets/icons/icon_note_empty.svg'
-import useReferencedFolderForNote from 'components/notes/hooks/useReferencedFolderForNote'
+import useReferencedFolderForNote from 'hooks/useReferencedFolderForNote'
 
 const EmptyComponent = ({ t, client }) => {
   const { notesFolder } = useReferencedFolderForNote(client)

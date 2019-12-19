@@ -17,9 +17,18 @@ import IsPublic from './../IsPublic'
 import CollabProvider from '../../lib/collab/provider'
 import ServiceClient from '../../lib/collab/stack-client'
 
-import { getShortNameFromClient, getParentFolderLink } from '../../lib/utils.js'
+import {
+  getShortNameFromClient,
+  getParentFolderLink,
+  getAppFullName
+} from '../../lib/utils.js'
 
 import { translate } from 'cozy-ui/react/I18n'
+
+function setPageTitle(appFullName, title) {
+  document.title =
+    title && title != '' ? `${appFullName} - ${title}` : appFullName
+}
 
 const Editor = translate()(
   withClient(function(props) {
@@ -28,6 +37,7 @@ const Editor = translate()(
       () => props.userName || getShortNameFromClient(client),
       [props.userName]
     )
+    const appFullName = useMemo(getAppFullName)
 
     const isPublic = useContext(IsPublic)
 
@@ -131,6 +141,13 @@ const Editor = translate()(
         props.history.push(`/`)
       }
     })
+
+    useEffect(
+      () => {
+        setPageTitle(appFullName, title)
+      },
+      [title]
+    )
 
     const returnUrl = useMemo(
       () => {

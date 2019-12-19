@@ -29,7 +29,11 @@
     "unshared_text": "The owner may have revoked this share. You can no longer edit a note at this address."
   },
   "manifest": {
-    "short_description": "Cozy Notes is the application for saving, editing and managing all your notes in your Cozy.",
-    "long_description": "Create your notes, save them and find them in one click in your Cozy. Share ideas with anyone you want in a private and secure space. \n\nWith Cozy Notes, you can easily:\n\n-- Create your own notes\n-- Easily edit your notes\n-- Access your notes directly from your Cozy Drive application."
+    "short_description": "Cozy Notes is your personal and collaborative note-taking application.",
+    "long_description": "Notes is an online text editor that can already offer you to:\n\n* Create your own notes with the essential features (bold, underlined, links, tables...)\n* Fill and find your notes with you other documents in files of your personal Drive\n* Edit easily your notes from all your devices\n* Access your notes offline\n* For the fans, use shortcuts and input in markdown format ... and even write with contacts together on the same note (coming soon)!",
+    "screenshots": [
+      "screenshots/en/screenshot01.png",
+      "screenshots/en/screenshot02.png"
+    ]
   }
 }
