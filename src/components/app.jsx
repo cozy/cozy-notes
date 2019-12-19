@@ -16,8 +16,6 @@ import { getReturnUrl, getSharedDocument } from 'lib/utils.js'
 
 import { getDataOrDefault } from 'lib/initFromDom'
 
-import 'cozy-sharing/dist/stylesheet'
-
 const RoutedEditor = withRouter(props => {
   const returnUrl = getReturnUrl()
 
