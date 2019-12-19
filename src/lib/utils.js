@@ -5,6 +5,7 @@ import {
   generateUniversalLink
 } from 'cozy-ui/transpiled/react/AppLinker'
 import { getDataset, getDataOrDefault } from './initFromDom'
+import { schemaOrdered } from 'lib/collab/schema'
 
 import manifest from '../../manifest.webapp'
 
@@ -92,4 +93,16 @@ export function getAppFullName() {
   )
   const appName = getDataOrDefault(dataset.cozyAppName, manifest.name)
   return appNamePrefix != '' ? `${appNamePrefix} ${appName}` : appName
+}
+
+export function createNoteDocument(client) {
+  return client.getStackClient().fetchJSON('POST', '/notes', {
+    data: {
+      type: 'io.cozy.notes.documents',
+      attributes: {
+        title: '',
+        schema: schemaOrdered
+      }
+    }
+  })
 }
