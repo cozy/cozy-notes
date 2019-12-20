@@ -3,9 +3,6 @@
     "Add": {
       "add_note": "Add a note"
     },
-    "EditorLoading": {
-      "back_to_list": "Back to the list"
-    },
     "EditorView": {
       "main_placeholder": "Write anything…"
     },
