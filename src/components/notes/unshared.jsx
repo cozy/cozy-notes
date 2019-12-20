@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { Empty } from 'cozy-ui/transpiled/react'
 import { translate } from 'cozy-ui/react/I18n'
