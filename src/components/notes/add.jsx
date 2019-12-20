@@ -36,6 +36,7 @@ export const AddMobile = withClient(({ client }) => (
       window.location.href = generateReturnUrlToNotesIndex(doc)
     }}
     icon="plus"
+    className="u-c-pointer"
   />
 ))
 export default translate()(withClient(Add))
