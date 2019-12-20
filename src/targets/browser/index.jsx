@@ -9,7 +9,7 @@ import { render } from 'react-dom'
 import { I18n } from 'cozy-ui/react/I18n'
 import { Document } from 'cozy-doctypes'
 
-import IsPublic from 'components/IsPublic'
+import IsPublicContext from 'components/IsPublicContext'
 import { getDataset, getDataOrDefault, getToken } from 'lib/initFromDom'
 
 const manifest = require('../../../manifest.webapp')
@@ -38,9 +38,9 @@ const renderApp = function(client, isPublic) {
     >
       <IntlProvider locale={appLocale} messages={locales[appLocale].atlaskit}>
         <CozyProvider client={client}>
-          <IsPublic.Provider value={isPublic}>
+          <IsPublicContext.Provider value={isPublic}>
             <App isPublic={isPublic} />
-          </IsPublic.Provider>
+          </IsPublicContext.Provider>
         </CozyProvider>
       </IntlProvider>
     </I18n>,

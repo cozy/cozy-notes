@@ -1,9 +1,18 @@
-import React, { useCallback, useState, useEffect, useMemo } from 'react'
+import React, {
+  useCallback,
+  useState,
+  useEffect,
+  useMemo,
+  useContext
+} from 'react'
 
 import { withClient } from 'cozy-client'
 
 import EditorView from './editor-view'
 import EditorLoading from './editor-loading'
+import EditorLoadingError from './editor-loading-error'
+
+import IsPublicContext from '../IsPublicContext'
 
 import CollabProvider from '../../lib/collab/provider'
 import ServiceClient from '../../lib/collab/stack-client'
@@ -29,6 +38,7 @@ const Editor = translate()(
       [props.userName]
     )
     const appFullName = useMemo(getAppFullName)
+    const isPublic = useContext(IsPublicContext)
 
     // alias for later shortcuts
     const docId = noteId
@@ -122,14 +132,6 @@ const Editor = translate()(
       },
       [onRemoteTitleChange, serviceClient]
     )
-    // Failure in loading the note ?
-    useEffect(() => {
-      if (!loading && !doc) {
-        // eslint-disable-next-line no-console
-        console.warn(`Could not load note ${noteId}`)
-        props.history.push(`/`)
-      }
-    })
 
     useEffect(
       () => {
@@ -144,17 +146,30 @@ const Editor = translate()(
           return props.returnUrl
         } else if (doc) {
           return getParentFolderLink(client, doc.file)
+        } else if (!isPublic) {
+          return '/'
         } else {
-          return props.returnUrl
+          return undefined
         }
       },
       [props.returnUrl, doc]
     )
 
+    // Failure in loading the note ?
+    useEffect(
+      () => {
+        if (!loading && !doc) {
+          // eslint-disable-next-line no-console
+          console.warn(`Could not load note ${noteId}`)
+        }
+      },
+      [loading, doc]
+    )
+
     // rendering
-    if (loading || !doc) {
+    if (loading) {
       return <EditorLoading />
-    } else {
+    } else if (doc) {
       return (
         <EditorView
           onTitleChange={onLocalTitleChange}
@@ -166,6 +181,8 @@ const Editor = translate()(
           returnUrl={returnUrl}
         />
       )
+    } else {
+      return <EditorLoadingError returnUrl={returnUrl} />
     }
   })
 )
