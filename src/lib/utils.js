@@ -4,6 +4,9 @@ import {
   generateWebLink,
   generateUniversalLink
 } from 'cozy-ui/transpiled/react/AppLinker'
+import { getDataset, getDataOrDefault } from './initFromDom'
+
+import manifest from '../../manifest.webapp'
 
 export function getShortNameFromClient(client) {
   const url = new URL(client.getStackClient().uri)
@@ -79,4 +82,14 @@ export function getFullLink(client, id = null) {
 
 export function getParentFolderLink(client, file) {
   return getFullLink(client, getParentFolderId(file))
+}
+
+export function getAppFullName() {
+  const dataset = getDataset()
+  const appNamePrefix = getDataOrDefault(
+    dataset.cozyAppNamePrefix || manifest.name_prefix,
+    ''
+  )
+  const appName = getDataOrDefault(dataset.cozyAppName, manifest.name)
+  return appNamePrefix != '' ? `${appNamePrefix} ${appName}` : appName
 }

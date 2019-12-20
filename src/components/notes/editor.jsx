@@ -10,14 +10,25 @@ import { withClient } from 'cozy-client'
 
 import EditorView from './editor-view'
 import EditorLoading from './editor-loading'
+import EditorLoadingError from './editor-loading-error'
+
 import IsPublic from '../IsPublic'
 
 import CollabProvider from '../../lib/collab/provider'
 import ServiceClient from '../../lib/collab/stack-client'
 
-import { getShortNameFromClient, getParentFolderLink } from '../../lib/utils.js'
+import {
+  getShortNameFromClient,
+  getParentFolderLink,
+  getAppFullName
+} from '../../lib/utils.js'
 
 import { translate } from 'cozy-ui/react/I18n'
+
+function setPageTitle(appFullName, title) {
+  document.title =
+    title && title != '' ? `${appFullName} - ${title}` : appFullName
+}
 
 const Editor = translate()(
   withClient(function(props) {
@@ -26,6 +37,7 @@ const Editor = translate()(
       () => props.userName || getShortNameFromClient(client),
       [props.userName]
     )
+    const appFullName = useMemo(getAppFullName)
     const isPublic = useContext(IsPublic)
 
     // alias for later shortcuts
@@ -121,6 +133,13 @@ const Editor = translate()(
       [onRemoteTitleChange, serviceClient]
     )
 
+    useEffect(
+      () => {
+        setPageTitle(appFullName, title)
+      },
+      [title]
+    )
+
     const returnUrl = useMemo(
       () => {
         if (props.returnUrl !== undefined) {
@@ -142,18 +161,15 @@ const Editor = translate()(
         if (!loading && !doc) {
           // eslint-disable-next-line no-console
           console.warn(`Could not load note ${noteId}`)
-          if (returnUrl) {
-            document.location = returnUrl
-          }
         }
       },
-      [loading, doc, returnUrl]
+      [loading, doc]
     )
 
     // rendering
-    if (loading || !doc) {
+    if (loading) {
       return <EditorLoading />
-    } else {
+    } else if (doc) {
       return (
         <EditorView
           onTitleChange={onLocalTitleChange}
@@ -165,6 +181,8 @@ const Editor = translate()(
           returnUrl={returnUrl}
         />
       )
+    } else {
+      return <EditorLoadingError returnUrl={returnUrl} />
     }
   })
 )
