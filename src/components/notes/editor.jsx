@@ -31,6 +31,39 @@ function setPageTitle(appFullName, title) {
     title && title != '' ? `${appFullName} - ${title}` : appFullName
 }
 
+async function loadNote(
+  serviceClient,
+  noteId,
+  loading,
+  setLoading,
+  setDoc,
+  setTitle
+) {
+  try {
+    if (!loading) {
+      setLoading(true)
+    }
+    const doc = await serviceClient.getDoc(noteId)
+    setTitle(doc.title || '')
+    setDoc(doc)
+  } catch (e) {
+    setTitle(false)
+    setDoc(false)
+  }
+  setLoading(false)
+}
+
+function getLocalTitleChangeCallback(serviceClient, noteId, title, setTitle) {
+  return e => {
+    const newTitle = e.target.value
+    const modifiedTitle = newTitle
+    if (title != modifiedTitle) {
+      setTitle(modifiedTitle)
+      serviceClient.setTitle(noteId, modifiedTitle)
+    }
+  }
+}
+
 const Editor = translate()(
   withClient(function(props) {
     const { client, noteId, t } = props
@@ -87,21 +120,7 @@ const Editor = translate()(
     // fetch the actual note on load
     useEffect(
       () => {
-        const fn = async function() {
-          try {
-            if (!loading) {
-              setLoading(true)
-            }
-            const doc = await serviceClient.getDoc(noteId)
-            setTitle(doc.title || '')
-            setDoc(doc)
-          } catch (e) {
-            setTitle(false)
-            setDoc(false)
-          }
-          setLoading(false)
-        }
-        fn()
+        loadNote(serviceClient, noteId, loading, setLoading, setDoc, setTitle)
       },
       [noteId]
     )
@@ -109,14 +128,7 @@ const Editor = translate()(
     // callbacks
     const onContentChange = useCallback(() => null, [noteId])
     const onLocalTitleChange = useCallback(
-      e => {
-        const newTitle = e.target.value
-        const modifiedTitle = newTitle
-        if (title != modifiedTitle) {
-          setTitle(modifiedTitle)
-          serviceClient.setTitle(noteId, modifiedTitle)
-        }
-      },
+      getLocalTitleChangeCallback(serviceClient, noteId, title, setTitle),
       [noteId, setTitle, serviceClient]
     )
     const onRemoteTitleChange = useCallback(
