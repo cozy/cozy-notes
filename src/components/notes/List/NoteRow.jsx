@@ -6,6 +6,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import Icon from 'cozy-ui/react/Icon'
 import { TableRow, TableCell } from 'cozy-ui/react/Table'
 
+import 'components/notes/List/list.styl'
 import { generateReturnUrlToNotesIndex } from 'lib/utils'
 import NoteIcon from 'assets/icons/icon-note-32.svg'
 
@@ -13,7 +14,7 @@ const NoteRow = ({ note, f, breakpoints: { isMobile } }) => {
   const { filename, extension } = CozyFile.splitFilename(note)
   return (
     <TableRow
-      className="u-c-pointer"
+      className="u-c-pointer tableRow"
       onClick={() =>
         (window.location.href = generateReturnUrlToNotesIndex(note))
       }
