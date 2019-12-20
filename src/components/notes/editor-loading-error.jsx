@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
-import { Empty } from 'cozy-ui/transpiled/react'
+import { Empty } from 'cozy-ui/react'
 import { translate } from 'cozy-ui/react/I18n'
 
-import IsPublic from '../IsPublic'
+import IsPublicContext from '../IsPublicContext'
 
 function EditorLoadingError(props) {
-  const isPublic = useContext(IsPublic)
+  const isPublic = useContext(IsPublicContext)
   const returnUrl = props.returnUrl || (!isPublic && '/') || undefined
   const { t } = props
 

@@ -12,7 +12,7 @@ import EditorView from './editor-view'
 import EditorLoading from './editor-loading'
 import EditorLoadingError from './editor-loading-error'
 
-import IsPublic from '../IsPublic'
+import IsPublicContext from '../IsPublicContext'
 
 import CollabProvider from '../../lib/collab/provider'
 import ServiceClient from '../../lib/collab/stack-client'
@@ -38,7 +38,7 @@ const Editor = translate()(
       [props.userName]
     )
     const appFullName = useMemo(getAppFullName)
-    const isPublic = useContext(IsPublic)
+    const isPublic = useContext(IsPublicContext)
 
     // alias for later shortcuts
     const docId = noteId
