@@ -4,6 +4,7 @@ import { withClient } from 'cozy-client'
 
 import Button from 'cozy-ui/react/Button'
 import { translate } from 'cozy-ui/react/I18n'
+import BarButton from 'cozy-ui/react/BarButton'
 
 import { createNoteDocument, generateReturnUrlToNotesIndex } from 'lib/utils'
 
@@ -28,4 +29,13 @@ const Add = ({ t, className, client }) => {
   )
 }
 
+export const AddMobile = withClient(({ client }) => (
+  <BarButton
+    onClick={async () => {
+      const { data: doc } = await createNoteDocument(client)
+      window.location.href = generateReturnUrlToNotesIndex(doc)
+    }}
+    icon="plus"
+  />
+))
 export default translate()(withClient(Add))
