@@ -4,10 +4,10 @@ import React, { useState, useEffect, useMemo } from 'react'
 import { hot } from 'react-hot-loader'
 import { Route, Switch, HashRouter, withRouter } from 'react-router-dom'
 import { withClient } from 'cozy-client'
+import { Alerter, withBreakpoints } from 'cozy-ui/react'
 import { Layout, Main, Content } from 'cozy-ui/react/Layout'
 import { Sprite as IconSprite } from 'cozy-ui/react/Icon'
 import Spinner from 'cozy-ui/react/Spinner'
-import { withBreakpoints } from 'cozy-ui/transpiled/react'
 import AppTitle from 'cozy-ui/react/AppTitle'
 
 const manifest = require('../../manifest.webapp')
@@ -77,6 +77,7 @@ const App = ({ isPublic, breakpoints: { isMobile }, client }) => {
           </Content>
         </Main>
         <IconSprite />
+        <Alerter />
       </Layout>
     </HashRouter>
   )
