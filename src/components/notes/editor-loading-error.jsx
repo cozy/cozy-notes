@@ -18,10 +18,7 @@ function EditorLoadingError(props) {
           className="u-mb-half"
           dangerouslySetInnerHTML={{
             __html: returnUrl
-              ? t(`Error.loading_error_text_returnUrl`).replace(
-                  '%url%',
-                  returnUrl
-                )
+              ? t(`Error.loading_error_text_returnUrl`, { url: returnUrl })
               : t(`Error.loading_error_text_noReturnUrl`)
           }}
         />
