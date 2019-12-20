@@ -1,5 +1,4 @@
 import React from 'react'
-import { withClient } from 'cozy-client'
 import {
   Table,
   TableHead,
@@ -13,7 +12,6 @@ import Spinner from 'cozy-ui/react/Spinner'
 import { translate } from 'cozy-ui/react/I18n'
 import EmptyComponent from 'components/notes/List/EmptyComponent'
 import NoteRow from 'components/notes/List/NoteRow'
-import useFetchNotesByIds from 'hooks/useFetchNotesByIds'
 
 const EmptyTableRow = () => (
   <TableRow className="tableSpecialRow">
@@ -31,12 +29,7 @@ const LoadingTableRow = () => (
   </TableRow>
 )
 
-const List = ({ t, client }) => {
-  const {
-    data: { notes },
-    fetchStatus
-  } = useFetchNotesByIds(client)
-
+const List = ({ t, notes, fetchStatus }) => {
   return (
     <Table>
       <TableHead>
@@ -68,4 +61,4 @@ const List = ({ t, client }) => {
   )
 }
 
-export default translate()(withClient(List))
+export default translate()(List)
