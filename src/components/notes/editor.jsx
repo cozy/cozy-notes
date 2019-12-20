@@ -175,7 +175,7 @@ const Editor = translate()(
           defaultValue={{ ...doc.doc, version: doc.version }}
           title={title && title.length > 0 ? title : undefined}
           returnUrl={returnUrl}
-          actions={!isPublic && <SharingWidget fileId={noteId} />}
+          actions={!isPublic && <SharingWidget file={doc.file} />}
         />
       )
     }
