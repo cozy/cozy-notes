@@ -1,17 +1,14 @@
 /* global cozy */
 import React from 'react'
 import Stack from 'cozy-ui/react/Stack'
-import BarButton from 'cozy-ui/react/BarButton'
 import { withBreakpoints } from 'cozy-ui/react'
-import { withClient } from 'cozy-client'
 import AppTitle from './AppTitle'
-import List from './List'
-import Add from 'components/notes/add'
-import { createNoteDocument, generateReturnUrlToNotesIndex } from 'lib/utils'
+import List from 'components/notes/List/List'
+import Add, { AddMobile } from 'components/notes/add'
 
-import './list.styl'
+import 'components/notes/List/list.styl'
 
-const ListView = ({ breakpoints: { isMobile }, client }) => {
+const ListView = ({ breakpoints: { isMobile } }) => {
   const { BarRight } = cozy.bar
   return (
     <>
@@ -24,17 +21,11 @@ const ListView = ({ breakpoints: { isMobile }, client }) => {
       </Stack>
       {isMobile && (
         <BarRight>
-          <BarButton
-            onClick={async () => {
-              const { data: doc } = await createNoteDocument(client)
-              window.location.href = generateReturnUrlToNotesIndex(doc)
-            }}
-            icon="plus"
-          />
+          <AddMobile />
         </BarRight>
       )}
     </>
   )
 }
 
-export default withBreakpoints()(withClient(ListView))
+export default withBreakpoints()(ListView)
