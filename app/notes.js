@@ -1645,10 +1645,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var isPublic = shareCode || !token || token == ''; // initialize the client to interact with the cozy stack
 
   var client = new cozy_client__WEBPACK_IMPORTED_MODULE_3___default.a({
-    uri: 'https://bellotzoetest607.cozy.works',
-    //`${protocol}//${data.cozyDomain}`,
-    token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhcHAiLCJpYXQiOjE1NzY4Mzg4MDIsImlzcyI6ImJlbGxvdHpvZXRlc3Q2MDcuY296eS53b3JrcyIsInN1YiI6Im5vdGVzIiwic2Vzc2lvbl9pZCI6IjYzNTM2MjYwYjg1NDI0N2IxNzhmNDliMjI4MTg1Mjk0In0.JYuDkgG3J9SqpmdyUv94b-N1RYaqGPP28XCsCgQiZAKD9pgSWzXXvUMHxV9tPg7NvJpgwtGpDywf_ggXZGPN0Q',
-    //token,
+    uri: "".concat(protocol, "//").concat(data.cozyDomain),
+    token: token,
     appMetadata: {
       slug: appSlug,
       version: appVersion
