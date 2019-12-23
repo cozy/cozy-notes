@@ -11,6 +11,7 @@ import { Document } from 'cozy-doctypes'
 
 import IsPublicContext from 'components/IsPublicContext'
 import { getDataset, getDataOrDefault, getToken } from 'lib/initFromDom'
+import 'cozy-ui/transpiled/react/stylesheet.css'
 
 const manifest = require('../../../manifest.webapp')
 
