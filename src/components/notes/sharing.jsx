@@ -5,6 +5,19 @@ import withLocales from 'cozy-sharing/dist/withLocales'
 
 const LocalizedSharingProvider = withLocales(SharingProvider)
 
+function normalizeFile(id, file, parent) {
+  const type = (file && (file.type || file._type)) || 'io.cozy.files'
+  const path = parent ? parent.path + '/' + file.name : undefined
+  return {
+    _id: id,
+    id: id,
+    _type: type,
+    type: type,
+    path: path,
+    ...(file || {})
+  }
+}
+
 export default withClient(function SharingWidget(props) {
   const { client } = props
   const [parent, setParent] = useState(undefined)
@@ -13,17 +26,7 @@ export default withClient(function SharingWidget(props) {
 
   const file = useMemo(
     () => {
-      const type =
-        (props.file && (props.file.type || props.file._type)) || 'io.cozy.files'
-      const path = parent && parent.path + '/' + props.file.name
-      return {
-        _id: id,
-        id: id,
-        _type: type,
-        type: type,
-        path: path,
-        ...(props.file || {})
-      }
+      return normalizeFile(id, props.file, parent)
     },
     [id, parent]
   )
