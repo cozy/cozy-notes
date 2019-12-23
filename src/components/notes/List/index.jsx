@@ -7,7 +7,7 @@ import AppTitle from 'components/notes/List/AppTitle'
 import List from 'components/notes/List/List'
 import Add, { AddMobile } from 'components/notes/add'
 import useFetchNotesByIds from 'hooks/useFetchNotesByIds'
-
+import styles from 'components/notes/List/list.styl'
 const shouldDisplayAddButton = (fetchStatus, notes) =>
   fetchStatus === 'loaded' && notes.length > 0
 
@@ -21,7 +21,11 @@ const ListView = ({ breakpoints: { isMobile }, client }) => {
   return (
     <>
       <Stack className="u-mt-1 u-mt-3-m">
-        <div className="u-flex u-flex-justify-between u-flex-items-center">
+        <div
+          className={`${
+            styles.appHeader
+          } u-flex u-flex-justify-between u-flex-items-center`}
+        >
           <AppTitle />
           {!isMobile && shouldDisplayAddButton(fetchStatus, notes) && <Add />}
         </div>
