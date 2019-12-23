@@ -6,7 +6,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import Icon from 'cozy-ui/react/Icon'
 import { TableRow, TableCell } from 'cozy-ui/react/Table'
 
-import 'components/notes/List/list.styl'
+import styles from 'components/notes/List/list.styl'
 import { generateReturnUrlToNotesIndex } from 'lib/utils'
 import NoteIcon from 'assets/icons/icon-note-32.svg'
 
@@ -14,23 +14,27 @@ const NoteRow = ({ note, f, breakpoints: { isMobile } }) => {
   const { filename, extension } = CozyFile.splitFilename(note)
   return (
     <TableRow
-      className="u-c-pointer tableRow"
+      className={`u-c-pointer ${styles.tableRow}`}
       onClick={() =>
         (window.location.href = generateReturnUrlToNotesIndex(note))
       }
     >
-      <TableCell className="tableCellName u-flex u-flex-items-center u-ellipsis u-fz-medium">
+      <TableCell
+        className={`${
+          styles.tableCellName
+        } u-flex u-flex-items-center u-ellipsis u-fz-medium`}
+      >
         <Icon icon={NoteIcon} size={32} className="u-mr-1 u-flex-shrink-0" />
         <span className="u-charcoalGrey">{filename}</span>
         <span>{extension}</span>
       </TableCell>
       {!isMobile && (
         <>
-          <TableCell className="tableCell">
+          <TableCell className={styles.tableCell}>
             {f(note.updated_at, 'DD MMMM')}
           </TableCell>
-          <TableCell className="tableCell">—</TableCell>
-          <TableCell className="tableCell">—</TableCell>
+          <TableCell className={styles.tableCell}>—</TableCell>
+          <TableCell className={styles.tableCell}>—</TableCell>
         </>
       )}
     </TableRow>

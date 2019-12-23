@@ -8,8 +8,6 @@ import List from 'components/notes/List/List'
 import Add, { AddMobile } from 'components/notes/add'
 import useFetchNotesByIds from 'hooks/useFetchNotesByIds'
 
-import 'components/notes/List/list.styl'
-
 const shouldDisplayAddButton = (fetchStatus, notes) =>
   fetchStatus === 'loaded' && notes.length > 0
 
