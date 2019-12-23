@@ -64,7 +64,7 @@ const App = ({ isPublic, breakpoints: { isMobile }, client }) => {
   return (
     <HashRouter>
       <Layout monoColumn={true}>
-        {isMobile && (
+        {!isPublic && isMobile && (
           <BarCenter>
             <AppTitle>{appName}</AppTitle>
           </BarCenter>
