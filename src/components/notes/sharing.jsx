@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useMemo, useEffect } from 'react'
 import SharingProvider, { ShareButton, ShareModal } from 'cozy-sharing'
 import { withClient } from 'cozy-client'
-import withLocales from 'cozy-sharing/dist/withLocales'
+import { withLocales } from 'cozy-sharing'
 
 const LocalizedSharingProvider = withLocales(SharingProvider)
 
