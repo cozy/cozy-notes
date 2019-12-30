@@ -134,7 +134,7 @@ export class Channel {
     const version = getVersion(state)
 
     // Don't send any steps before we're ready.
-    if (typeof version === undefined) return
+    if (typeof version === 'undefined') return
     // Nothing to do if no steps
     if (steps.length === 0) return
 
@@ -174,7 +174,7 @@ export class Channel {
     this.service.onTelepointerUpdated(docId, payload => {
       this.emit('telepointer', payload)
     })
-    this.eventEmitter.emit('connected', {
+    this.emit('connected', {
       doc,
       version
     })
