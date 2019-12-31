@@ -16,11 +16,11 @@ const jsonTransformer = new JSONTransformer()
 
 export class CollabProvider {
   constructor(config, serviceClient) {
-    this.config = config
+    this.config = { ...config }
     this.config['sessionId'] = serviceClient.getSessionId()
     this.config['userId'] = serviceClient.getUserId()
     this.serviceClient = serviceClient
-    this.channel = config.channel || new Channel(config, serviceClient)
+    this.channel = config.channel || new Channel(this.config, serviceClient)
     this.eventEmitter = new EventEmitter2()
     this.queue = []
     this.getState = () => {}
@@ -93,15 +93,21 @@ export class CollabProvider {
    * @param {Object} data - new steps
    */
   queueData(data) {
+    // If a change couldn't be applied or discarded, it will
+    // block the queue, waiting for missing steps
+    // Let order changes, putting first the one that could be
+    // applied (or discarded) first, and avoir dead-locks
     const orderedQueue = [...this.queue, data].sort((a, b) => {
-      // order by starting version
+      // order by document version before applying the change
       const aStart = a.version - a.steps.length
       const bStart = b.version - b.steps.length
       if (aStart > bStart) return 1
       if (aStart < bStart) return -1
       // for same starting version, keep first the one going further
+      // we could apply the shorter, but then we'd have to discard
+      // the longer, and may miss some step contained in it
       if (a.version > b.version) return -1
-      if (a.version > b.version) return 1
+      if (a.version < b.version) return 1
       return 0
     })
     this.queue = orderedQueue
@@ -112,6 +118,8 @@ export class CollabProvider {
    * @param {Function} getState - filled when requested from channel
    */
   async catchup() {
+    // forbids other changes to be accepted during the catchup
+    // we will process them later
     this.pauseQueue = true
     const currentVersion = getVersion(this.getState())
     try {
@@ -121,15 +129,13 @@ export class CollabProvider {
       if (doc) {
         // we lag too much, server did send us the whole document
         const { sessionId } = this.config
-        // get local steps
+        // get local steps and re-emit them after reinit the whole document
         const { steps: localSteps = [] } = sendableSteps(this.getState()) || {}
-        // Replace local document and version number
         this.emit('init', { sid: sessionId, doc, version })
-        // Re-aply local steps
         if (localSteps.length) {
           this.emit('local-steps', { steps: localSteps })
         }
-      } else {
+      } else if (steps.length > 0) {
         // we got steps to apply
         this.onReceiveData({ steps, version }, true)
       }
