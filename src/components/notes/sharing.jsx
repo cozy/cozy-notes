@@ -34,10 +34,16 @@ export default withClient(function SharingWidget(props) {
   useEffect(
     () => {
       async function getParent(file) {
-        const parent = await client.query(
-          client.get('io.cozy.files', file.attributes.dir_id)
-        )
-        setParent(parent.data)
+        try {
+            const parent = await client.query(
+            client.get('io.cozy.files', file.attributes.dir_id)
+          )
+          setParent(parent.data)
+        } catch(e) {
+          console.warn(`Request failed when try to fetch the parent ${file.attributes.dir_id} of io.cozy.files ${file.id || file._id}`)
+          // nothing to do here
+          // @TODO send a sentry event
+        }
       }
       getParent(file)
     },
