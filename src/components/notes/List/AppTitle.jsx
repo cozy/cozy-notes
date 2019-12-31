@@ -6,9 +6,7 @@ import { withBreakpoints } from 'cozy-ui/react'
 //We don't not display the Title this way in Mobile.
 //We use Bar.centrer
 const AppTitle = ({ t, breakpoints: { isMobile } }) => {
-  return isMobile ? null : (
-    <MainTitle className="titlePadding">{t('Notes.List.my_notes')}</MainTitle>
-  )
+  return !isMobile && <MainTitle>{t('Notes.List.my_notes')}</MainTitle>
 }
 
 const ConnectedAppTitle = withBreakpoints()(translate()(AppTitle))

@@ -13,17 +13,18 @@ import { translate } from 'cozy-ui/react/I18n'
 import EmptyComponent from 'components/notes/List/EmptyComponent'
 import NoteRow from 'components/notes/List/NoteRow'
 
+import styles from 'components/notes/List/list.styl'
 const EmptyTableRow = () => (
-  <TableRow className="tableSpecialRow">
-    <TableCell className="tableCellEmpty">
+  <TableRow className={styles.tableSpecialRow}>
+    <TableCell className={styles.tableCellEmpty}>
       <EmptyComponent />
     </TableCell>
   </TableRow>
 )
 
 const LoadingTableRow = () => (
-  <TableRow className="tableSpecialRow">
-    <TableCell className="tableCellEmpty u-ta-center">
+  <TableRow className={styles.tableSpecialRow}>
+    <TableCell className={`${styles.tableCellEmpty} u-ta-center`}>
       <Spinner size="xxlarge" />
     </TableCell>
   </TableRow>
@@ -34,16 +35,16 @@ const List = ({ t, notes, fetchStatus }) => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableHeader className="tableCellName">
+          <TableHeader className={styles.tableCellName}>
             {t('Notes.List.name')}
           </TableHeader>
-          <TableHeader className="tableCell">
+          <TableHeader className={styles.tableCell}>
             {t('Notes.List.updated_at')}
           </TableHeader>
-          <TableHeader className="tableCell">
+          <TableHeader className={styles.tableCell}>
             {t('Notes.List.location')}
           </TableHeader>
-          <TableHeader className="tableCell">
+          <TableHeader className={styles.tableCell}>
             {t('Notes.List.sharings')}
           </TableHeader>
         </TableRow>

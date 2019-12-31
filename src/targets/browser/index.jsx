@@ -15,6 +15,7 @@ import {
   getDataOrDefault,
   getPublicSharecode
 } from 'lib/initFromDom'
+import 'cozy-ui/transpiled/react/stylesheet.css'
 
 const manifest = require('../../../manifest.webapp')
 
