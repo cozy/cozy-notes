@@ -31,6 +31,7 @@
   },
   "homepage": "https://github.com/cozy/cozy-notes#readme",
   "devDependencies": {
+    "babel-jest": "^24.9.0",
     "babel-preset-cozy-app": "1.2.5",
     "enzyme": "3.8.0",
     "enzyme-adapter-react-16": "1.9.1",
