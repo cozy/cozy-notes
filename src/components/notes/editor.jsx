@@ -8,10 +8,11 @@ import React, {
 
 import { withClient } from 'cozy-client'
 
-import EditorView from './editor-view'
+import EditorView from 'components/notes/editor-view'
 import EditorLoading from 'components/notes/editor-loading'
 import EditorLoadingError from 'components/notes/editor-loading-error'
 import SharingWidget from 'components/notes/sharing'
+import BackFromEditing from 'components/notes/back_from_editing'
 
 import IsPublicContext from 'components/IsPublicContext'
 
@@ -191,7 +192,9 @@ const Editor = translate()(
           defaultTitle={t('Notes.Editor.title_placeholder')}
           defaultValue={{ ...doc.doc, version: doc.version }}
           title={title && title.length > 0 ? title : undefined}
-          returnUrl={returnUrl}
+          leftComponent={
+            <BackFromEditing returnUrl={returnUrl} file={doc.file} />
+          }
           actions={!isPublic && <SharingWidget file={doc.file} />}
         />
       )
