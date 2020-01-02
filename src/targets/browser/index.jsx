@@ -10,7 +10,11 @@ import { I18n } from 'cozy-ui/react/I18n'
 import { Document } from 'cozy-doctypes'
 
 import IsPublicContext from 'components/IsPublicContext'
-import { getDataset, getDataOrDefault, getToken } from 'lib/initFromDom'
+import {
+  getDataset,
+  getDataOrDefault,
+  getPublicSharecode
+} from 'lib/initFromDom'
 import 'cozy-ui/transpiled/react/stylesheet.css'
 
 const manifest = require('../../../manifest.webapp')
@@ -69,7 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const protocol = window.location ? window.location.protocol : 'https:'
 
-  const { isPublic, token } = getToken(data)
+  const shareCode = getPublicSharecode()
+  const token = shareCode || data.cozyToken
+  const isPublic = shareCode || !token || token == ''
 
   // initialize the client to interact with the cozy stack
   const client = new CozyClient({

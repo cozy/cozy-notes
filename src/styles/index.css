@@ -1,5 +1,3 @@
-// @stylint off
-
 /* Temporary fix waiting for https://github.com/cozy/cozy-bar/pull/675 */
 .coz-nav-apps-btns-main {
     font-size: 1rem;
@@ -33,6 +31,8 @@ html {
     --note-title4-color: var(--coolGrey);
     --note-border-radius: 8px;
     --note-header-height: 3rem;
+    --note-header-margin-left: 5rem;
+    --note-header-margin-right: 5rem;
     color: var(--note-base-color);
 }
 @media (max-width: 800px) {
@@ -62,7 +62,6 @@ html .akEditor > div:first-child {
     position: sticky;
     top: 0;
     z-index: 3;
-    background-color: var(--white);
 }
 .note-editor-container {
     height: calc(100% - 48px);
@@ -77,13 +76,12 @@ html [role=application] > div::after, {
 
 /* prose mirror toolbar in the upper bar */
 html .akEditor > div:first-child {
-    margin-left: 3rem;
-    margin-right: 3rem;
+    margin-left: var(--note-header-margin-left);
+    margin-right: var(--note-header-margin-right);
     margin-bottom: 0;
     height: var(--note-header-height);
 }
 html .akEditor > div:first-child > div:first-child {
-    width: auto !important;
     margin: auto;
     overflow: visible; /* important for dropdowns */
 }
@@ -102,47 +100,57 @@ html .akEditor > div:first-child > div:first-child + div {
 }
 
 
-/* auto size for the toolbar */
-html .akEditor > div:first-child > div:first-child > div:first-child {
-    --window-width: 100vw;
+/* auto size for the toolbar ... sizes for 5+5rem as margin */
+html .akEditor > div:first-child > div:first-child > div:first-child > div:first-child {
+    width: 565px; /* full toolbar */
+    max-width: 100%;
+    margin: auto;
 }
-@media (min-width: 771px) and (max-width: 1025px) {
-    html .akEditor > div:first-child > div:first-child > div:first-child {
-        /* yes, this is ugly, but I didn't see how to fix
-           an horizontal scrolling appearing in this range */
-        --window-width: 771px;
+@media (max-width: 810px) {
+    html .akEditor > div:first-child > div:first-child > div:first-child > div:first-child {
+        width: 480px; /* condensed view */
     }
 }
-html .akEditor > div:first-child > div:first-child > div:first-child {
-    width: calc(var(--window-width) - 6rem) !important;
-}
-@media (min-width: 398px) {
-    html .akEditor > div:first-child > div:first-child > div:first-child {
-        margin-right: calc(398px - var(--window-width));
+/* FIXME : without this repetition, the rule is not taken into account */
+@media (max-width: 810px) {
+    html .akEditor > div:first-child > div:first-child > div:first-child > div:first-child {
+        width: 480px; /* condensed view */
     }
 }
-@media (min-width: 467px) {
-    html .akEditor > div:first-child > div:first-child > div:first-child {
-        margin-right: calc(450px - var(--window-width));
+@media (max-width: 740px) {
+    html .akEditor > div:first-child > div:first-child > div:first-child > div:first-child {
+        width: 390px; /* block style as icon */
     }
 }
-@media (min-width: 547px) {
-    html .akEditor > div:first-child > div:first-child > div:first-child {
-        margin-right: calc(482px - var(--window-width));
+@media (max-width: 660px) {
+    html .akEditor > div:first-child > div:first-child > div:first-child > div:first-child {
+        width: 380px; /* merge ol and ul as dropdown */
     }
 }
-@media (min-width: 677px) {
-    html .akEditor > div:first-child > div:first-child > div:first-child {
-        margin-right: calc(561px - var(--window-width));
+@media (max-width: 610px) {
+    html .akEditor > div:first-child > div:first-child > div:first-child > div:first-child {
+        width: 350px; /* left icons as dropdown */
     }
 }
-@media (min-width: 747px) {
-    html .akEditor > div:first-child > div:first-child > div:first-child {
-        margin-right: calc(677px - var(--window-width));
+@media (max-width: 530px) {
+    html .akEditor > div:first-child > div:first-child > div:first-child > div:first-child {
+        width: 280px; /* more left icons as dropdown */
     }
 }
-
-
+@media (max-width: 480px) {
+    html {
+        --note-header-margin-left: 3rem;
+    }
+}
+@media (max-width: 375px) {
+    html {
+        --note-header-margin-left: 2.5rem;
+    }
+    .page-header-menu--right {
+        position: relative;
+        left: 0.5rem;
+    }
+}
 
 .sto-app-back {
   display: inline-flex;
@@ -154,7 +162,7 @@ html .akEditor > div:first-child > div:first-child > div:first-child {
 .note-header-menu--editing {
   display: flex;
   justify-content: space-between;
-  padding: 0 1rem
+  padding: 0 1rem;
   margin: 0;
   align-items: center;
   box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(50, 54, 63, 0.08);
@@ -196,7 +204,7 @@ html .note-title-input::placeholder {
     border: none;
     width: 100%;
     padding: 0;
-    margin: 0
+    margin: 0;
     overflow: visible;
     text-align: center;
     font-size: var(--note-title0-fs);
@@ -447,5 +455,3 @@ html .fabric-editor-popup-scroll-parent > div > div {
     text-transform: none;
     font-weight: normal;
 }
-
-// @stylint on

@@ -9,7 +9,7 @@ import { schemaOrdered as defaultSchema } from './schema'
  */
 export class ServiceClient {
   constructor(config) {
-    const { userId, cozyClient, schema } = config
+    const { userId, cozyClient, schema, realtime } = config
     const now = new Date()
     const sessionSuffix =
       now.getTime() + '.' + now.getMilliseconds() + '.' + Math.random()
@@ -19,7 +19,7 @@ export class ServiceClient {
     this.stackClient = cozyClient.getStackClient()
     this.schema = schema
     this.onRealtimeEvent = this.onRealtimeEvent.bind(this)
-    this.realtime = new CozyRealtime({ client: cozyClient })
+    this.realtime = realtime || new CozyRealtime({ client: cozyClient })
     this.resetCallbacks()
   }
 
@@ -141,7 +141,7 @@ export class ServiceClient {
       return this.callbacks[type][id](doc)
     } else {
       // eslint-disable-next-line no-console
-      console.warn('Event not manager', type, id, this.callbacks)
+      console.warn('Event not managed', type, id, this.callbacks)
     }
   }
 
@@ -152,7 +152,7 @@ export class ServiceClient {
   async join(docId) {
     const onRealtimeCreated = function(doc) {
       if (doc.id == docId) {
-        return this.onRealtimeEvent(docId)
+        return this.onRealtimeEvent(doc)
       } else {
         return undefined
       }
@@ -203,7 +203,7 @@ export class ServiceClient {
   /**
    * Listen for title changes in the document
    * @param {uuid} docId
-   * @param {Function} callback
+   * @param {Function} callback - function that get a title as paramerer
    */
   async onTitleUpdated(docId, callback) {
     this.setCallback('io.cozy.notes.documents', docId, doc => {
@@ -270,11 +270,8 @@ export class ServiceClient {
         return { steps: [], version }
       } else {
         return {
-          version: res.data[res.data.length - 1].version,
-          steps: res.data.map(step => ({
-            ...step,
-            attributes: this.client2server(step.attributes)
-          }))
+          version: res.data[res.data.length - 1].attributes.version,
+          steps: res.data.map(step => this.client2server(step.attributes))
         }
       }
     } catch (err) {
@@ -287,8 +284,14 @@ export class ServiceClient {
         // server does not have all steps we try to fetch
         // it responds with a full document and a title
         const ev = 'io.cozy.notes.documents'
-        if (this.callbacks[ev] && this.callbacks[ev][doc.id || doc._id]) {
-          this.callbacks[ev][doc.id || doc._id](doc)
+        const realtimeDoc = {
+          _id: docId,
+          _type: 'io.cozy.notes.events',
+          doctype: ev,
+          title: meta.title
+        }
+        if (this.callbacks[ev] && this.callbacks[ev][docId]) {
+          this.callbacks[ev][docId](realtimeDoc)
         }
         return {
           doc: doc,

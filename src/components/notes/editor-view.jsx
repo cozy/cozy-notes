@@ -5,9 +5,9 @@ import { Editor, WithEditorActions } from '@atlaskit/editor-core'
 import { MainTitle } from 'cozy-ui/react/Text'
 import Textarea from 'cozy-ui/react/Textarea'
 
-import editorConfig from './editor_config'
-import BackFromEditing from './back_from_editing'
-import HeaderMenu from '../header_menu'
+import editorConfig from 'components/notes/editor_config'
+import BackFromEditing from 'components/notes/back_from_editing'
+import HeaderMenu from 'components/header_menu'
 import { translate } from 'cozy-ui/react/I18n'
 
 function updateTextareaHeight(target) {
@@ -46,6 +46,7 @@ function EditorView(props) {
       <HeaderMenu
         left={<BackFromEditing returnUrl={returnUrl} />}
         className="note-header-menu--editing"
+        right={props.actions}
       />
       <section className="note-editor-container">
         <Editor

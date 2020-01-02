@@ -9,25 +9,59 @@ import React, {
 import { withClient } from 'cozy-client'
 
 import EditorView from './editor-view'
-import EditorLoading from './editor-loading'
-import EditorLoadingError from './editor-loading-error'
+import EditorLoading from 'components/notes/editor-loading'
+import EditorLoadingError from 'components/notes/editor-loading-error'
+import SharingWidget from 'components/notes/sharing'
 
-import IsPublicContext from '../IsPublicContext'
+import IsPublicContext from 'components/IsPublicContext'
 
-import CollabProvider from '../../lib/collab/provider'
-import ServiceClient from '../../lib/collab/stack-client'
+import CollabProvider from 'lib/collab/provider'
+import ServiceClient from 'lib/collab/stack-client'
 
 import {
   getShortNameFromClient,
   getParentFolderLink,
   getAppFullName
-} from '../../lib/utils.js'
+} from 'lib/utils.js'
 
 import { translate } from 'cozy-ui/react/I18n'
 
 function setPageTitle(appFullName, title) {
   document.title =
     title && title != '' ? `${appFullName} - ${title}` : appFullName
+}
+
+async function loadNote(
+  serviceClient,
+  noteId,
+  loading,
+  setLoading,
+  setDoc,
+  setTitle
+) {
+  try {
+    if (!loading) {
+      setLoading(true)
+    }
+    const doc = await serviceClient.getDoc(noteId)
+    setTitle(doc.title || '')
+    setDoc(doc)
+  } catch (e) {
+    setTitle(false)
+    setDoc(false)
+  }
+  setLoading(false)
+}
+
+function getLocalTitleChangeCallback(serviceClient, noteId, title, setTitle) {
+  return e => {
+    const newTitle = e.target.value
+    const modifiedTitle = newTitle
+    if (title != modifiedTitle) {
+      setTitle(modifiedTitle)
+      serviceClient.setTitle(noteId, modifiedTitle)
+    }
+  }
 }
 
 const Editor = translate()(
@@ -86,21 +120,7 @@ const Editor = translate()(
     // fetch the actual note on load
     useEffect(
       () => {
-        const fn = async function() {
-          try {
-            if (!loading) {
-              setLoading(true)
-            }
-            const doc = await serviceClient.getDoc(noteId)
-            setTitle(doc.title || '')
-            setDoc(doc)
-          } catch (e) {
-            setTitle(false)
-            setDoc(false)
-          }
-          setLoading(false)
-        }
-        fn()
+        loadNote(serviceClient, noteId, loading, setLoading, setDoc, setTitle)
       },
       [noteId]
     )
@@ -108,14 +128,7 @@ const Editor = translate()(
     // callbacks
     const onContentChange = useCallback(() => null, [noteId])
     const onLocalTitleChange = useCallback(
-      e => {
-        const newTitle = e.target.value
-        const modifiedTitle = newTitle
-        if (title != modifiedTitle) {
-          setTitle(modifiedTitle)
-          serviceClient.setTitle(noteId, modifiedTitle)
-        }
-      },
+      getLocalTitleChangeCallback(serviceClient, noteId, title, setTitle),
       [noteId, setTitle, serviceClient]
     )
     const onRemoteTitleChange = useCallback(
@@ -179,6 +192,7 @@ const Editor = translate()(
           defaultValue={{ ...doc.doc, version: doc.version }}
           title={title && title.length > 0 ? title : undefined}
           returnUrl={returnUrl}
+          actions={!isPublic && <SharingWidget file={doc.file} />}
         />
       )
     } else {
