@@ -23,7 +23,7 @@ function EditorView(props) {
     title,
     collabProvider,
     leftComponent,
-    actions,
+    rightComponent,
     t
   } = props
 
@@ -46,7 +46,7 @@ function EditorView(props) {
       <HeaderMenu
         left={leftComponent}
         className="note-header-menu--editing"
-        right={actions}
+        right={rightComponent}
       />
       <section className="note-editor-container">
         <Editor
