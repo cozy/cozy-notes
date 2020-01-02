@@ -1,9 +1,5 @@
 import get from 'lodash/get'
-import { isMobile } from 'cozy-device-helper'
-import {
-  generateWebLink,
-  generateUniversalLink
-} from 'cozy-ui/transpiled/react/AppLinker'
+import { generateWebLink } from 'cozy-ui/transpiled/react/AppLinker'
 import { getDataset, getDataOrDefault } from './initFromDom'
 import { schemaOrdered } from 'lib/collab/schema'
 
@@ -48,11 +44,11 @@ export function getParentFolderId(file) {
   return file.relationships.parent.data.id
 }
 
-function getFolderLink(id) {
+export function getFolderLink(id) {
   return `/folder/${id.replace(/-/g, '')}`
 }
 
-export function getFullLink(client, id = null) {
+export function getDriveLink(client, id = null) {
   const cozyURL = new URL(client.getStackClient().uri)
   const { cozySubdomainType } = client.getInstanceOptions()
   const driveSlug = 'drive'
@@ -65,24 +61,11 @@ export function getFullLink(client, id = null) {
     nativePath: pathForDrive
   })
 
-  /** If no mobile, then return the fallback directly. No need
-   * for the universal link
-   */
-  if (!isMobile()) {
-    return webUrl
-  }
-
-  const urlWithUL = generateUniversalLink({
-    slug: driveSlug,
-    fallbackUrl: webUrl,
-    nativePath: pathForDrive,
-    subDomainType: cozySubdomainType
-  })
-  return urlWithUL
+  return webUrl
 }
 
 export function getParentFolderLink(client, file) {
-  return getFullLink(client, getParentFolderId(file))
+  return getDriveLink(client, getParentFolderId(file))
 }
 
 export function getAppFullName() {
