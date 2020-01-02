@@ -195,7 +195,7 @@ const Editor = translate()(
           leftComponent={
             <BackFromEditing returnUrl={returnUrl} file={doc.file} />
           }
-          actions={!isPublic && <SharingWidget file={doc.file} />}
+          rightComponent={!isPublic && <SharingWidget file={doc.file} />}
         />
       )
     } else {
