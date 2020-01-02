@@ -6,7 +6,6 @@ import { MainTitle } from 'cozy-ui/react/Text'
 import Textarea from 'cozy-ui/react/Textarea'
 
 import editorConfig from 'components/notes/editor_config'
-import BackFromEditing from 'components/notes/back_from_editing'
 import HeaderMenu from 'components/header_menu'
 import { translate } from 'cozy-ui/react/I18n'
 
@@ -23,7 +22,8 @@ function EditorView(props) {
     defaultTitle,
     title,
     collabProvider,
-    returnUrl,
+    leftComponent,
+    actions,
     t
   } = props
 
@@ -44,9 +44,9 @@ function EditorView(props) {
     <article className="note-article">
       <style>#coz-bar {'{ display: none }'}</style>
       <HeaderMenu
-        left={<BackFromEditing returnUrl={returnUrl} />}
+        left={leftComponent}
         className="note-header-menu--editing"
-        right={props.actions}
+        right={actions}
       />
       <section className="note-editor-container">
         <Editor
