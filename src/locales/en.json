@@ -18,7 +18,7 @@
     },
     "Empty": {
       "welcome": "Welcome on Cozy Notes",
-      "after_created": "Once your Note is created, you can find it in your [**Cozy Drive**](%{notesFolder})"
+      "after_created": "Once your Note is created, you can find it in your "
     }
   },
   "Error": {
