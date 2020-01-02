@@ -22,7 +22,7 @@ export default withClient(function SharingWidget(props) {
   const { client } = props
   const [parent, setParent] = useState(undefined)
 
-  const id = props.fileId || props.file.id || props.file._id
+  const id = props.file.id || props.file._id
 
   const file = useMemo(
     () => {
