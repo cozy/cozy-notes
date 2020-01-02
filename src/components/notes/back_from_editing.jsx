@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, ButtonLink } from 'cozy-ui/react/Button'
-import IsPublicContext from '../IsPublicContext'
+import IsPublicContext from 'components/IsPublicContext'
 
 export default function BackFromEditing({ returnUrl }) {
   const isPublic = useContext(IsPublicContext)

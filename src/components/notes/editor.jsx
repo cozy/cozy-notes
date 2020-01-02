@@ -9,20 +9,20 @@ import React, {
 import { withClient } from 'cozy-client'
 
 import EditorView from './editor-view'
-import EditorLoading from './editor-loading'
-import EditorLoadingError from './editor-loading-error'
-import SharingWidget from './sharing'
+import EditorLoading from 'components/notes/editor-loading'
+import EditorLoadingError from 'components/notes/editor-loading-error'
+import SharingWidget from 'components/notes/sharing'
 
-import IsPublicContext from '../IsPublicContext'
+import IsPublicContext from 'components/IsPublicContext'
 
-import CollabProvider from '../../lib/collab/provider'
-import ServiceClient from '../../lib/collab/stack-client'
+import CollabProvider from 'lib/collab/provider'
+import ServiceClient from 'lib/collab/stack-client'
 
 import {
   getShortNameFromClient,
   getParentFolderLink,
   getAppFullName
-} from '../../lib/utils.js'
+} from 'lib/utils.js'
 
 import { translate } from 'cozy-ui/react/I18n'
 
