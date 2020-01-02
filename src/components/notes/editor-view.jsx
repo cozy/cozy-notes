@@ -9,7 +9,7 @@ import editorConfig from 'components/notes/editor_config'
 import BackFromEditing from 'components/notes/back_from_editing'
 import HeaderMenu from 'components/header_menu'
 import { translate } from 'cozy-ui/react/I18n'
-
+import styles from 'components/notes/editor-view.styl'
 function updateTextareaHeight(target) {
   target.style.height = 'inherit'
   target.style.height = `${target.scrollHeight}px`
@@ -41,7 +41,7 @@ function EditorView(props) {
   useEffect(() => updateTextareaHeight(titleEl.current), [])
 
   return (
-    <article className="note-article">
+    <article className={styles['note-article']}>
       <style>#coz-bar {'{ display: none }'}</style>
       <HeaderMenu
         left={<BackFromEditing returnUrl={returnUrl} />}
