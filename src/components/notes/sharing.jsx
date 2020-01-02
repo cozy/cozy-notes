@@ -1,20 +1,18 @@
 import React, { useCallback, useState, useMemo, useEffect } from 'react'
 import SharingProvider, { ShareButton, ShareModal } from 'cozy-sharing'
-import { withClient } from 'cozy-client'
+import { withClient, models } from 'cozy-client'
 import { withLocales } from 'cozy-sharing'
 
 const LocalizedSharingProvider = withLocales(SharingProvider)
 
-function normalizeFile(id, file, parent) {
-  const type = (file && (file.type || file._type)) || 'io.cozy.files'
-  const path = parent ? parent.path + '/' + file.name : undefined
-  return {
-    _id: id,
-    id: id,
-    _type: type,
-    type: type,
-    path: path,
-    ...(file || {})
+function normalizeFileAndPath(id, file, parent) {
+  const withId = { id, ...file }
+  const normalized = models.file.normalize(withId)
+  if (parent && parent.path) {
+    const withPath = models.file.ensureFilePath(normalized, parent)
+    return withPath
+  } else {
+    return normalized
   }
 }
 
@@ -24,12 +22,10 @@ export default withClient(function SharingWidget(props) {
 
   const id = props.file.id || props.file._id
 
-  const file = useMemo(
-    () => {
-      return normalizeFile(id, props.file, parent)
-    },
-    [id, parent]
-  )
+  const file = useMemo(() => normalizeFileAndPath(id, props.file, parent), [
+    id,
+    parent
+  ])
 
   useEffect(
     () => {
