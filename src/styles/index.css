@@ -1,5 +1,3 @@
-// @stylint off
-
 /* Temporary fix waiting for https://github.com/cozy/cozy-bar/pull/675 */
 .coz-nav-apps-btns-main {
     font-size: 1rem;
@@ -164,7 +162,7 @@ html .akEditor > div:first-child > div:first-child > div:first-child > div:first
 .note-header-menu--editing {
   display: flex;
   justify-content: space-between;
-  padding: 0 1rem
+  padding: 0 1rem;
   margin: 0;
   align-items: center;
   box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(50, 54, 63, 0.08);
@@ -206,7 +204,7 @@ html .note-title-input::placeholder {
     border: none;
     width: 100%;
     padding: 0;
-    margin: 0
+    margin: 0;
     overflow: visible;
     text-align: center;
     font-size: var(--note-title0-fs);
@@ -457,5 +455,3 @@ html .fabric-editor-popup-scroll-parent > div > div {
     text-transform: none;
     font-weight: normal;
 }
-
-// @stylint on
