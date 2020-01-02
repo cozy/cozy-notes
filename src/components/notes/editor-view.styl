@@ -1,0 +1,10 @@
+@require 'settings/breakpoints.styl'
+
+$COZY_BAR_HEIGHT=-3rem
+.note-article
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    
+    +medium-screen()
+        margin-top $COZY_BAR_HEIGHT

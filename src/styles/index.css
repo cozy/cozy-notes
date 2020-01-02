@@ -180,11 +180,6 @@ html .akEditor > div:first-child > div:first-child > div:first-child > div:first
   align-items: center;
 }
 
-html .note-article {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
 
 html .note-title {
     flex-grow: 1;
