@@ -220,7 +220,6 @@ describe('CollabProvider', () => {
       collab.on('init', init)
       await collab.catchup()
 
-      expect(init).toHaveBeenCalled()
       expect(init).toHaveBeenCalledWith({ doc, version, sid: sessionId })
     })
 
