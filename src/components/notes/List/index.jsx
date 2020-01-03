@@ -20,7 +20,7 @@ const ListView = ({ breakpoints: { isMobile }, client }) => {
 
   return (
     <>
-      <Stack className="u-mt-1 u-mt-3-m">
+      <Stack className="u-mt-1 u-mt-0-m">
         <div
           className={`${
             styles.appHeader

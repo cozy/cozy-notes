@@ -1,10 +1,15 @@
 @require 'settings/breakpoints.styl'
 
+/* Cozy-UI Layout adds a ::before with an height of 3rem 
+(https://github.com/cozy/cozy-ui/blob/master/stylus/objects/layouts.styl#L105) 
+on medium-screen to give to the bar the needed place. Since we hide the cozy-bar
+on the editor-view we remove this margin
+*/
 $COZY_BAR_HEIGHT=-3rem
 .note-article
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    
-    +medium-screen()
+    display flex
+    flex-direction column
+    height 100%
+
+    +medium-screen()	
         margin-top $COZY_BAR_HEIGHT

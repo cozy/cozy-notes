@@ -67,13 +67,6 @@ html .akEditor > div:first-child {
     height: calc(100% - 48px);
 }
 
-/* div o-layout : do not add the space for the cozy-bar */
-html [role=application] > div::before,
-html [role=application] > div::after, {
-    height: auto !important;
-    display: none !important;
-}
-
 /* prose mirror toolbar in the upper bar */
 html .akEditor > div:first-child {
     margin-left: var(--note-header-margin-left);
