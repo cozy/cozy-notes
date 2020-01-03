@@ -11,7 +11,6 @@ import HeaderMenu from 'components/header_menu'
 import { translate } from 'cozy-ui/react/I18n'
 import styles from 'components/notes/editor-view.styl'
 function updateTextareaHeight(target) {
-  target.style.height = 'inherit'
   target.style.height = `${target.scrollHeight}px`
 }
 
