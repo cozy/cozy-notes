@@ -70,9 +70,7 @@ const App = ({ isPublic, breakpoints: { isMobile }, client }) => {
           </BarCenter>
         )}
         <Main>
-          <Content className="app-content">
-            {isPublic ? <PublicContext /> : <PrivateContext />}
-          </Content>
+          <Content>{isPublic ? <PublicContext /> : <PrivateContext />}</Content>
         </Main>
         <IconSprite />
         <Alerter />
