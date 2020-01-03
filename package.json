@@ -56,7 +56,7 @@
     "cozy-doctypes": "^1.70.0",
     "cozy-realtime": "^3.2.3",
     "cozy-scripts": "^2.0.2",
-    "cozy-sharing": "^1.5.0",
+    "cozy-sharing": "^1.5.2",
     "cozy-ui": "^28.5.0",
     "eslint-config-cozy-app": "^1.3.3",
     "lodash": "^4.17.15",
