@@ -766,4 +766,19 @@ describe('ServiceClient', () => {
       expect(lastCall[2]).toHaveProperty('data.attributes.type', 'telepointer')
     })
   })
+
+  describe('sync', () => {
+    afterEach(() => {
+      jest.resetAllMocks()
+    })
+
+    it('should call the server', async () => {
+      const service = new ServiceClient({ userId, cozyClient })
+      await service.sync(docId)
+      expect(cozyClient.stackClient.fetchJSON).toHaveBeenCalledWith(
+        'POST',
+        `/notes/${docId}/sync`
+      )
+    })
+  })
 })

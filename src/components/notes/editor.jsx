@@ -26,6 +26,7 @@ import {
 } from 'lib/utils.js'
 
 import { translate } from 'cozy-ui/react/I18n'
+import useEventListener from 'cozy-ui/react/hooks/useEventListener'
 
 function setPageTitle(appFullName, title) {
   document.title =
@@ -103,6 +104,9 @@ const Editor = translate()(
             { version: doc.version, docId },
             serviceClient
           )
+          // The following object is defined in an Atlassian API.
+          // `provider` expects a Promise, even if we wouldn't
+          //  need it ourselves.
           return {
             useNativePlugin: true,
             provider: Promise.resolve(provider),
@@ -179,6 +183,27 @@ const Editor = translate()(
       },
       [loading, doc]
     )
+
+    // Be sure to save everything before leaving
+    // and force sync with the io.cozy.file
+    async function forceSync() {
+      if (doc) {
+        // wait for every event to finish
+        const provider = await collabProvider.provider
+        await provider.channel.ensureEmptyQueue()
+        // then force a server sync
+        await serviceClient.sync(docId)
+      }
+    }
+    useEffect(() => forceSync, [docId, doc])
+    // Sync on unload will probably be stopped by the browser,
+    // as most async code on unload, but let's try anyway
+    const emergencySync = useCallback(function() {
+      if (doc && docId) {
+        serviceClient.sync(docId) // force a server sync
+      }
+    }, [])
+    useEventListener(window, 'unload', emergencySync)
 
     // rendering
     if (loading) {

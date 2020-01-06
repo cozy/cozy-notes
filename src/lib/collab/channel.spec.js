@@ -449,4 +449,81 @@ describe('Channel', () => {
       )
     })
   })
+
+  describe('ensureEmptyQueue', () => {
+    const steps = {
+      getState: jest.fn(),
+      state: { is: 'first' },
+      localSteps: { steps: [{ first: 42 }, { second: 666 }] }
+    }
+
+    afterEach(() => {
+      jest.resetAllMocks()
+    })
+
+    it('should resolve immediatly by default', async () => {
+      const channel = new Channel(config, service)
+      expect(channel.hasQueuedSteps()).toBeFalsy()
+      const race = Promise.race([
+        new Promise(function(resolve) {
+          window.setTimeout(() => resolve('ensureEmptyQueue is > 50ms'), 50)
+        }),
+        channel.ensureEmptyQueue().then(() => 'ensureEmptyQueue is < 50ms')
+      ])
+      await expect(race).resolves.toBe('ensureEmptyQueue is < 50ms')
+    })
+
+    it('should resolve immediatly after emptying the queue', async () => {
+      getVersion.mockImplementation(() => 42)
+      const channel = new Channel(config, service)
+      const callback = jest.fn()
+      // generate some wait
+      channel.increaseBackoff()
+      channel.increaseBackoff()
+      channel.increaseBackoff()
+      const send = channel.sendSteps(
+        steps.getState,
+        steps.state,
+        steps.localSteps
+      )
+      channel.ensureEmptyQueue().then(callback)
+      expect(callback).not.toHaveBeenCalled()
+      await send
+      expect(callback).toHaveBeenCalled()
+    })
+
+    it('should should not resolve if something is not processed in the queue', async () => {
+      getVersion.mockImplementation(() => 42)
+      const channel = new Channel(config, service)
+      const callback = jest.fn()
+      channel.enqueueSteps(steps)
+      channel.ensureEmptyQueue().then(callback)
+      expect(callback).not.toHaveBeenCalled()
+      await channel.processQueue()
+      expect(callback).toHaveBeenCalled()
+    })
+
+    it('should not resolve when the queue is in conflict', async () => {
+      getVersion.mockImplementation(() => 42)
+      const localState = { is: 'new state' }
+      const localSteps = { steps: [{ a: 1 }, { b: 2 }] }
+      steps.getState.mockImplementation(() => localState)
+      sendableSteps.mockImplementation(() => localSteps)
+      service.pushSteps.mockImplementation(() => {
+        throw 'ERROR'
+      })
+      const channel = new Channel(config, service)
+      const callback = jest.fn()
+      channel.enqueueSteps(steps)
+      channel.ensureEmptyQueue().then(callback)
+      const process = channel.processQueue()
+      await new Promise(function(resolve) {
+        window.setTimeout(() => resolve(), 500)
+      })
+      expect(callback).not.toHaveBeenCalled()
+      service.pushSteps.mockImplementation(() => {})
+      await process
+      expect(callback).toHaveBeenCalled()
+    })
+  })
 })
