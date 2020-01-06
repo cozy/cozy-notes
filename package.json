@@ -46,9 +46,10 @@
     "stylint": "1.5.9"
   },
   "dependencies": {
-    "@atlaskit/editor-core": "^113.2.1",
-    "@atlaskit/media-core": "^30.0.17",
-    "@atlaskit/media-editor": "^37.0.0",
+    "@atlaskit/editor-core": "^115.2.2",
+    "@atlaskit/media-core": "^31.0.1",
+    "@atlaskit/media-editor": "^37.0.3",
+    "@atlaskit/smart-card": "^12.6.2",
     "cozy-bar": "^7.7.8",
     "cozy-client": "^9.3.0",
     "cozy-device-helper": "^1.8.0",
@@ -64,5 +65,6 @@
     "react-intl": "2.9.0",
     "react-router-dom": "^5.1.2",
     "url-search-params-polyfill": "^7.0.1",
+    "utf-8-validate": "^5.0.2"
   }
 }
