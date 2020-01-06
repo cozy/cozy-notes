@@ -35,6 +35,6 @@ deploy:
     repo: cozy/cozy-notes
     skip-cleanup: true
     # publish stable or beta versions using Github Releases (git tag)
-    script: DEPLOY_BRANCH=build && yarn cozyPublish
+    script: DEPLOY_BRANCH=build && yarn deploy && yarn cozyPublish
     on:
       tags: true
