@@ -24,7 +24,7 @@ export function getReturnUrl() {
 
 export const generateReturnUrlToNotesIndex = doc => {
   const url = new URL(window.location)
-  url.searchParams.append(returnUrlKey, window.location.origin)
+  url.searchParams.set(returnUrlKey, '#/')
   url.hash = `#/n/${doc.id}`
   return url
 }

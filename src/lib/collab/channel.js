@@ -5,6 +5,20 @@ const minimumBackoff = 128 // 128ms
 const maximumBackoff = 1000 * 60 * 5 // Max 5 minutes
 const failuresBeforeCatchup = 4
 
+const resolvablePromise = () => {
+  let resolveFunction
+  const promise = new Promise(resolve => {
+    resolveFunction = resolve
+  })
+  promise.resolved = false
+  promise.resolve = function() {
+    resolveFunction()
+    promise.resolved = true
+    return promise
+  }
+  return promise
+}
+
 export class Channel {
   constructor(config, serviceClient) {
     this.config = config
@@ -13,6 +27,7 @@ export class Channel {
     this.resetBackoff()
     this.initializeStepsQueue()
     this.isSending = false
+    this.emptyQueuePromise = resolvablePromise().resolve()
   }
 
   /**
@@ -61,12 +76,22 @@ export class Channel {
   }
 
   /**
+   * Ensures all local steps are sent to the server
+   */
+  async ensureEmptyQueue() {
+    return this.emptyQueuePromise
+  }
+
+  /**
    * Enqueue steps
    * @param {Function} getState - function to get a current proseMirror state
    * @param {Object} state - proseMirror state
    * @param {Object[]} localSteps - local steps to send
    */
   enqueueSteps({ getState, state, localSteps }) {
+    if (this.emptyQueuePromise.resolved) {
+      this.emptyQueuePromise = resolvablePromise()
+    }
     this.queuedStep = { getState, state, localSteps }
   }
 
@@ -120,8 +145,13 @@ export class Channel {
    * Send steps in queue
    */
   async processQueue() {
-    if (this.isSending) return
-    if (!this.hasQueuedSteps()) return
+    if (this.isSending) {
+      return
+    }
+    if (!this.hasQueuedSteps()) {
+      this.emptyQueuePromise.resolve()
+      return
+    }
 
     this.isSending = true
     await this.afterBackoff()
@@ -159,7 +189,7 @@ export class Channel {
       this.isSending = false
     }
     // if ever there was something waiting
-    this.processQueue()
+    await this.processQueue()
   }
 
   /**

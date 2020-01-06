@@ -115,6 +115,14 @@ export class ServiceClient {
   }
 
   /**
+   * Force the note to be written to the io.cozy.files now
+   * @param {uuid} docId - note id
+   */
+  async sync(docId) {
+    await this.stackClient.fetchJSON('POST', this.path(docId, 'sync'))
+  }
+
+  /**
    * Change the title of a note
    * @param {uuid} docId
    * @param {string} title

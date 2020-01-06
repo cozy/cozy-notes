@@ -4963,10 +4963,10 @@ cozy-ui@22.3.1:
     react-pdf "^4.0.5"
     react-select "2.2.0"
 
-cozy-ui@^28.5.0:
-  version "28.6.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-28.6.0.tgz#adf7011f60e2abe8959ce8102fd89df43b437b40"
-  integrity sha512-vurqenjQZMz6SPKTtLzQPq8v1V04Fl+kPWp+0u9KUon9u6thVeW7Qr3seLT/9Uo/oiIZSzX4n4/AYlkKpSVPxw==
+cozy-ui@^28.12.0:
+  version "28.12.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-28.12.0.tgz#182d9c16330ef3096ecfdd4f86100140ac2d605b"
+  integrity sha512-+PxXzNy8+lm8L3hILUMYGVGPH/AQFEEPLs6QKhaeDPRzVJHFekvCk40phDwYW4/fVEyPLXx7844zrMLUZFxuMQ==
   dependencies:
     "@babel/runtime" "^7.3.4"
     body-scroll-lock "^2.5.8"
@@ -9908,13 +9908,6 @@ minilog@3.1.0, minilog@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/minilog/-/minilog-3.1.0.tgz#d2d0f1887ca363d1acf0ea86d5c4df293b3fb675"
   integrity sha1-0tDxiHyjY9Gs8OqG1cTfKTs/tnU=
-  dependencies:
-    microee "0.0.6"
-
-"minilog@git+https://github.com/cozy/minilog.git#master":
-  version "3.1.0"
-  uid f01f7d9dfe20981177dd34b9662c2f077d818f82
-  resolved "git+https://github.com/cozy/minilog.git#f01f7d9dfe20981177dd34b9662c2f077d818f82"
   dependencies:
     microee "0.0.6"
 
