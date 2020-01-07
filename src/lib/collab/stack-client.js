@@ -277,10 +277,9 @@ export class ServiceClient {
       if (res.data.length == 0) {
         return { steps: [], version }
       } else {
-        return {
-          version: res.data[res.data.length - 1].attributes.version,
-          steps: res.data.map(step => this.client2server(step.attributes))
-        }
+        const steps = res.data.map(step => this.server2client(step.attributes))
+        const version = res.data[res.data.length - 1].attributes.version
+        return { version, steps }
       }
     } catch (err) {
       const response = err.response
