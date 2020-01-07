@@ -703,6 +703,16 @@ describe('ServiceClient', () => {
       expect(res.steps).toHaveLength(2)
     })
 
+    it('should return steps with a `sessionId`', async () => {
+      cozyClient.stackClient.fetchJSON.mockImplementation(() => remoteSteps)
+      const service = new ServiceClient({ userId, cozyClient })
+      const res = await service.getSteps(docId, localVersion)
+      expect(res.steps[0]).toHaveProperty(
+        'sessionId',
+        remoteSteps.data[0].attributes.sessionID
+      )
+    })
+
     it('should return current version when there is 0 steps', async () => {
       cozyClient.stackClient.fetchJSON.mockImplementation(() => ({ data: [] }))
       const service = new ServiceClient({ userId, cozyClient })
