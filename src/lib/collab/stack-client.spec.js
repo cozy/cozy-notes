@@ -6,7 +6,7 @@ import CozyRealtime from 'cozy-realtime'
 import { createMockClient } from 'cozy-client/dist/mock'
 
 const userId = 'myuser'
-const docId = 'e3a0921e38f9687cd9e8c60a3c04f9d0'
+const noteId = 'e3a0921e38f9687cd9e8c60a3c04f9d0'
 const sessionId = userId + ':1577115994661.661.0.16413785152829485'
 const cozyClient = createMockClient({})
 const realtime = { subscribe: jest.fn() }
@@ -326,7 +326,7 @@ describe('ServiceClient', () => {
     const eventType = 'io.cozy.notes.events'
     const telepointerEvent = 'io.cozy.notes.telepointers'
     const telepointerUpdateDoc = {
-      _id: docId,
+      _id: noteId,
       doctype: telepointerEvent,
       selection: { anchor: 6, head: 6, type: 'textSelection' },
       sessionID: sessionId,
@@ -335,7 +335,7 @@ describe('ServiceClient', () => {
     }
     const stepsEvent = 'io.cozy.notes.steps'
     const stepsUpdateDoc = {
-      _id: docId,
+      _id: noteId,
       _rev: '1-03dc114ca621366c35f9bef06205da53',
       doctype: stepsEvent,
       from: 6,
@@ -349,7 +349,7 @@ describe('ServiceClient', () => {
     const titleEvent = 'io.cozy.notes.documents'
     const newTitle = 'hello my new title'
     const titleUpdateDoc = {
-      _id: docId,
+      _id: noteId,
       doctype: titleEvent,
       sessionID: sessionId,
       title: newTitle
@@ -361,7 +361,7 @@ describe('ServiceClient', () => {
     describe('join', () => {
       it('should subscribe to realtime', async () => {
         const service = new ServiceClient({ userId, cozyClient, realtime })
-        await service.join(docId)
+        await service.join(noteId)
         expect(realtime.subscribe).toHaveBeenCalled()
         expect(realtime.subscribe.mock.calls[0][1]).toBe(eventType)
       })
@@ -377,13 +377,13 @@ describe('ServiceClient', () => {
         })
         const onSteps = jest.fn()
         const service = new ServiceClient({ userId, cozyClient, realtime })
-        await service.join(docId)
-        await service.onStepsCreated(docId, onSteps)
+        await service.join(noteId)
+        await service.onStepsCreated(noteId, onSteps)
         expect(callback).toBeDefined()
         callback(stepsUpdateDoc)
         expect(onSteps).toHaveBeenCalled()
         const data = onSteps.mock.calls[0][0]
-        expect(data._id).toBe(docId)
+        expect(data._id).toBe(noteId)
         expect(data.doctype).toBe(stepsEvent)
       })
     })
@@ -398,13 +398,13 @@ describe('ServiceClient', () => {
         })
         const onTelepointer = jest.fn()
         const service = new ServiceClient({ userId, cozyClient, realtime })
-        await service.join(docId)
-        await service.onTelepointerUpdated(docId, onTelepointer)
+        await service.join(noteId)
+        await service.onTelepointerUpdated(noteId, onTelepointer)
         expect(callback).toBeDefined()
         callback(telepointerUpdateDoc)
         expect(onTelepointer).toHaveBeenCalled()
         const data = onTelepointer.mock.calls[0][0]
-        expect(data._id).toBe(docId)
+        expect(data._id).toBe(noteId)
         expect(data.doctype).toBe(telepointerEvent)
       })
     })
@@ -419,8 +419,8 @@ describe('ServiceClient', () => {
         })
         const onTitle = jest.fn()
         const service = new ServiceClient({ userId, cozyClient, realtime })
-        await service.join(docId)
-        await service.onTitleUpdated(docId, onTitle)
+        await service.join(noteId)
+        await service.onTitleUpdated(noteId, onTitle)
         expect(callback).toBeDefined()
         callback(titleUpdateDoc)
         expect(onTitle).toHaveBeenCalled()
@@ -438,8 +438,8 @@ describe('ServiceClient', () => {
       })
       const onSteps = jest.fn()
       const service = new ServiceClient({ userId, cozyClient, realtime })
-      await service.join(docId)
-      await service.onStepsCreated(docId, onSteps)
+      await service.join(noteId)
+      await service.onStepsCreated(noteId, onSteps)
       expect(callback).toBeDefined()
       callback(stepsUpdateDoc)
       expect(onSteps).toHaveBeenCalled()
@@ -468,13 +468,13 @@ describe('ServiceClient', () => {
     it('should call the stack with title', async () => {
       const title = 'hello my new title'
       const service = new ServiceClient({ userId, cozyClient })
-      await service.setTitle(docId, title)
+      await service.setTitle(noteId, title)
       expect(cozyClient.stackClient.fetchJSON).toHaveBeenCalled()
       const fetchJSON = cozyClient.stackClient.fetchJSON
       const called = fetchJSON.mock.calls.length
       const lastCall = fetchJSON.mock.calls[called - 1]
       expect(lastCall[0]).toBe('PUT')
-      expect(lastCall[1]).toBe(`/notes/${docId}/title`)
+      expect(lastCall[1]).toBe(`/notes/${noteId}/title`)
       expect(lastCall[2].data.type).toBe('io.cozy.notes.documents')
       expect(lastCall[2].data.attributes.title).toBe(title)
     })
@@ -486,7 +486,7 @@ describe('ServiceClient', () => {
     const serverResponse = {
       data: {
         type: 'io.cozy.files',
-        id: docId,
+        id: noteId,
         attributes: {
           type: 'file',
           name: 'zdzadda.cozy-note',
@@ -520,39 +520,39 @@ describe('ServiceClient', () => {
 
     it('should call the stack', async () => {
       const service = new ServiceClient({ userId, cozyClient })
-      await service.getDoc(docId)
+      await service.getDoc(noteId)
       expect(cozyClient.stackClient.fetchJSON).toHaveBeenCalled()
       const fetchJSON = cozyClient.stackClient.fetchJSON
       const called = fetchJSON.mock.calls.length
       const lastCall = fetchJSON.mock.calls[called - 1]
       expect(lastCall[0]).toBe('GET')
-      expect(lastCall[1]).toBe(`/notes/${docId}`)
+      expect(lastCall[1]).toBe(`/notes/${noteId}`)
     })
 
     it('should return the doc content', async () => {
       const service = new ServiceClient({ userId, cozyClient })
-      const { doc } = await service.getDoc(docId)
+      const { doc } = await service.getDoc(noteId)
       expect(doc).toHaveProperty('type', 'doc')
       expect(doc).toHaveProperty('content')
     })
 
     it('should return the version', async () => {
       const service = new ServiceClient({ userId, cozyClient })
-      const { version } = await service.getDoc(docId)
+      const { version } = await service.getDoc(noteId)
       expect(version).toBe(serverVersion)
     })
 
     it('should return the title', async () => {
       const service = new ServiceClient({ userId, cozyClient })
-      const { title } = await service.getDoc(docId)
+      const { title } = await service.getDoc(noteId)
       expect(title).toBe(serverTitle)
     })
 
     it('should return the file document', async () => {
       const service = new ServiceClient({ userId, cozyClient })
-      const { file } = await service.getDoc(docId)
+      const { file } = await service.getDoc(noteId)
       expect(file.type).toBe('io.cozy.files')
-      expect(file.id).toBe(docId)
+      expect(file.id).toBe(noteId)
     })
   })
 
@@ -584,13 +584,13 @@ describe('ServiceClient', () => {
 
     it('should send to the server', async () => {
       const service = new ServiceClient({ userId, cozyClient })
-      await service.pushSteps(docId, localVersion, localSteps)
+      await service.pushSteps(noteId, localVersion, localSteps)
       expect(cozyClient.stackClient.fetchJSON).toHaveBeenCalled()
       const fetchJSON = cozyClient.stackClient.fetchJSON
       const called = fetchJSON.mock.calls.length
       const lastCall = fetchJSON.mock.calls[called - 1]
       expect(lastCall[0]).toBe('PATCH')
-      expect(lastCall[1]).toBe(`/notes/${docId}`)
+      expect(lastCall[1]).toBe(`/notes/${noteId}`)
       expect(lastCall[2].data).toHaveLength(localSteps.length)
       // for conflict resolution
       expect(lastCall[3]).toHaveProperty('headers.if-match', localVersion)
@@ -598,7 +598,7 @@ describe('ServiceClient', () => {
 
     it('should send io.cozy.notes.steps documents', async () => {
       const service = new ServiceClient({ userId, cozyClient })
-      await service.pushSteps(docId, localVersion, localSteps)
+      await service.pushSteps(noteId, localVersion, localSteps)
       expect(cozyClient.stackClient.fetchJSON).toHaveBeenCalled()
       const fetchJSON = cozyClient.stackClient.fetchJSON
       const called = fetchJSON.mock.calls.length
@@ -612,7 +612,7 @@ describe('ServiceClient', () => {
         throw new Error()
       })
       const service = new ServiceClient({ userId, cozyClient })
-      const push = service.pushSteps(docId, localVersion, localSteps)
+      const push = service.pushSteps(noteId, localVersion, localSteps)
       await expect(push).rejects.toBeInstanceOf(Error)
     })
   })
@@ -654,7 +654,7 @@ describe('ServiceClient', () => {
     const remoteDocument = {
       data: {
         type: 'io.cozy.files',
-        id: docId,
+        id: noteId,
         attributes: {
           type: 'file',
           name: 'zdzadda.cozy-note',
@@ -685,19 +685,19 @@ describe('ServiceClient', () => {
     it('should ask the server', async () => {
       cozyClient.stackClient.fetchJSON.mockImplementation(() => ({ data: [] }))
       const service = new ServiceClient({ userId, cozyClient })
-      await service.getSteps(docId, localVersion)
+      await service.getSteps(noteId, localVersion)
       expect(cozyClient.stackClient.fetchJSON).toHaveBeenCalled()
       const fetchJSON = cozyClient.stackClient.fetchJSON
       const called = fetchJSON.mock.calls.length
       const lastCall = fetchJSON.mock.calls[called - 1]
       expect(lastCall[0]).toBe('GET')
-      expect(lastCall[1]).toBe(`/notes/${docId}/steps?Version=${localVersion}`)
+      expect(lastCall[1]).toBe(`/notes/${noteId}/steps?Version=${localVersion}`)
     })
 
     it('should return steps when the server has some', async () => {
       cozyClient.stackClient.fetchJSON.mockImplementation(() => remoteSteps)
       const service = new ServiceClient({ userId, cozyClient })
-      const res = await service.getSteps(docId, localVersion)
+      const res = await service.getSteps(noteId, localVersion)
       expect(res).toHaveProperty('version', remoteVersion)
       expect(res).toHaveProperty('steps')
       expect(res.steps).toHaveLength(2)
@@ -706,7 +706,7 @@ describe('ServiceClient', () => {
     it('should return steps with a `sessionId`', async () => {
       cozyClient.stackClient.fetchJSON.mockImplementation(() => remoteSteps)
       const service = new ServiceClient({ userId, cozyClient })
-      const res = await service.getSteps(docId, localVersion)
+      const res = await service.getSteps(noteId, localVersion)
       expect(res.steps[0]).toHaveProperty(
         'sessionId',
         remoteSteps.data[0].attributes.sessionID
@@ -716,7 +716,7 @@ describe('ServiceClient', () => {
     it('should return current version when there is 0 steps', async () => {
       cozyClient.stackClient.fetchJSON.mockImplementation(() => ({ data: [] }))
       const service = new ServiceClient({ userId, cozyClient })
-      const res = await service.getSteps(docId, localVersion)
+      const res = await service.getSteps(noteId, localVersion)
       expect(res).toHaveProperty('version', localVersion)
       expect(res).toHaveProperty('steps', [])
       expect(res.steps).toHaveLength(0)
@@ -730,7 +730,7 @@ describe('ServiceClient', () => {
         }
       })
       const service = new ServiceClient({ userId, cozyClient })
-      const res = await service.getSteps(docId, localVersion)
+      const res = await service.getSteps(noteId, localVersion)
       expect(res).toHaveProperty('version', remoteVersion)
       expect(res).not.toHaveProperty('steps')
       expect(res).toHaveProperty('doc', serverDoc)
@@ -745,8 +745,8 @@ describe('ServiceClient', () => {
       })
       const callback = jest.fn()
       const service = new ServiceClient({ userId, cozyClient })
-      service.onTitleUpdated(docId, callback)
-      await service.getSteps(docId, localVersion)
+      service.onTitleUpdated(noteId, callback)
+      await service.getSteps(noteId, localVersion)
       expect(callback).toHaveBeenLastCalledWith(remoteTitle)
     })
   })
@@ -765,13 +765,13 @@ describe('ServiceClient', () => {
 
     it('should send data to the server', async () => {
       const service = new ServiceClient({ userId, cozyClient })
-      await service.pushTelepointer(docId, telepointerData)
+      await service.pushTelepointer(noteId, telepointerData)
       expect(cozyClient.stackClient.fetchJSON).toHaveBeenCalled()
       const fetchJSON = cozyClient.stackClient.fetchJSON
       const called = fetchJSON.mock.calls.length
       const lastCall = fetchJSON.mock.calls[called - 1]
       expect(lastCall[0]).toBe('PUT')
-      expect(lastCall[1]).toBe(`/notes/${docId}/telepointer`)
+      expect(lastCall[1]).toBe(`/notes/${noteId}/telepointer`)
       expect(lastCall[2]).toHaveProperty('data.type', telepointerEvent)
       expect(lastCall[2]).toHaveProperty('data.attributes.type', 'telepointer')
     })
@@ -784,10 +784,10 @@ describe('ServiceClient', () => {
 
     it('should call the server', async () => {
       const service = new ServiceClient({ userId, cozyClient })
-      await service.sync(docId)
+      await service.sync(noteId)
       expect(cozyClient.stackClient.fetchJSON).toHaveBeenCalledWith(
         'POST',
-        `/notes/${docId}/sync`
+        `/notes/${noteId}/sync`
       )
     })
   })

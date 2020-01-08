@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useState,
-  useEffect,
-  useMemo,
-  useContext
-} from 'react'
+import React, { useEffect, useContext } from 'react'
 
 import { withClient } from 'cozy-client'
 
@@ -13,199 +7,58 @@ import EditorLoading from 'components/notes/editor-loading'
 import EditorLoadingError from 'components/notes/editor-loading-error'
 import SharingWidget from 'components/notes/sharing'
 import BackFromEditing from 'components/notes/back_from_editing'
-
 import IsPublicContext from 'components/IsPublicContext'
 
-import CollabProvider from 'lib/collab/provider'
-import ServiceClient from 'lib/collab/stack-client'
-
-import {
-  getShortNameFromClient,
-  getParentFolderLink,
-  getAppFullName
-} from 'lib/utils.js'
+import useNote from 'hooks/useNote'
+import useServiceClient from 'hooks/useServiceClient'
+import useCollabProvider from 'hooks/useCollabProvider'
+import useTitleChanges from 'hooks/useTitleChanges'
+import useForceSync from 'hooks/useForceSync'
+import useReturnUrl from 'hooks/useReturnUrl'
+import useUser from 'hooks/useUser'
 
 import { translate } from 'cozy-ui/react/I18n'
 import useEventListener from 'cozy-ui/react/hooks/useEventListener'
 
-function setPageTitle(appFullName, title) {
-  document.title =
-    title && title != '' ? `${appFullName} - ${title}` : appFullName
-}
-
-async function loadNote(
-  serviceClient,
-  noteId,
-  loading,
-  setLoading,
-  setDoc,
-  setTitle
-) {
-  try {
-    if (!loading) {
-      setLoading(true)
-    }
-    const doc = await serviceClient.getDoc(noteId)
-    setTitle(doc.title || '')
-    setDoc(doc)
-  } catch (e) {
-    setTitle(false)
-    setDoc(false)
-  }
-  setLoading(false)
-}
-
-function getLocalTitleChangeCallback(serviceClient, noteId, title, setTitle) {
-  return e => {
-    const newTitle = e.target.value
-    const modifiedTitle = newTitle
-    if (title != modifiedTitle) {
-      setTitle(modifiedTitle)
-      serviceClient.setTitle(noteId, modifiedTitle)
-    }
-  }
-}
-
 const Editor = translate()(
   withClient(function(props) {
-    const { client, noteId, t } = props
-    const userName = useMemo(
-      () => props.userName || getShortNameFromClient(client),
-      [props.userName]
-    )
-    const appFullName = useMemo(getAppFullName)
-    const isPublic = useContext(IsPublicContext)
-
-    // alias for later shortcuts
-    const docId = noteId
-    const userId = userName
-    const cozyClient = client
-
-    // state
-    const [loading, setLoading] = useState(true)
-    const [doc, setDoc] = useState(undefined)
-    const [title, setTitle] = useState(undefined)
+    // base parameters
+    const { client: cozyClient, noteId, t } = props
 
     // plugins and config
-    const serviceClient = useMemo(
-      () => {
-        return new ServiceClient({ userId, userName, cozyClient })
-      },
-      [noteId]
-    )
-    const docVersion = doc && doc.version
-    //console.log("docVersion", doc, doc && doc.version, docVersion)
-    const collabProvider = useMemo(
-      () => {
-        //console.log("collab provider memo", docVersion)
-        if (docVersion !== undefined) {
-          //console.log('new collabProvider')
-          const provider = new CollabProvider(
-            { version: doc.version, docId },
-            serviceClient
-          )
-          // The following object is defined in an Atlassian API.
-          // `provider` expects a Promise, even if we wouldn't
-          //  need it ourselves.
-          return {
-            useNativePlugin: true,
-            provider: Promise.resolve(provider),
-            inviteToEditHandler: () => undefined,
-            isInviteToEditButtonSelected: false,
-            userId: serviceClient.getSessionId()
-          }
-        } else {
-          return null
-        }
-      },
-      [noteId, docVersion, userName, serviceClient]
-    )
-    //console.log("end collabProviderMemo", collabProvider)
-
-    // fetch the actual note on load
-    useEffect(
-      () => {
-        loadNote(serviceClient, noteId, loading, setLoading, setDoc, setTitle)
-      },
-      [noteId]
-    )
+    const isPublic = useContext(IsPublicContext)
+    const { userName, userId } = useUser({
+      userName: props.userName,
+      cozyClient
+    })
+    const serviceClient = useServiceClient({ userId, userName, cozyClient })
+    const { loading, title, doc, setTitle } = useNote({ serviceClient, noteId })
+    const returnUrl = useReturnUrl({
+      returnUrl: props.returnUrl,
+      cozyClient,
+      doc
+    })
+    const collabProvider = useCollabProvider({
+      noteId,
+      serviceClient,
+      docVersion: doc && doc.version
+    })
 
     // callbacks
-    const onContentChange = useCallback(() => null, [noteId])
-    const onLocalTitleChange = useCallback(
-      getLocalTitleChangeCallback(serviceClient, noteId, title, setTitle),
-      [noteId, setTitle, serviceClient]
-    )
-    const onRemoteTitleChange = useCallback(
-      modifiedTitle => {
-        if (title != modifiedTitle) {
-          setTitle(modifiedTitle)
-        }
-      },
-      [noteId, setTitle]
-    )
-    useMemo(
-      () => {
-        serviceClient.onTitleUpdated(noteId, onRemoteTitleChange)
-      },
-      [onRemoteTitleChange, serviceClient]
-    )
-
-    useEffect(
-      () => {
-        setPageTitle(appFullName, title)
-      },
-      [title]
-    )
-
-    const returnUrl = useMemo(
-      () => {
-        if (props.returnUrl !== undefined) {
-          return props.returnUrl
-        } else if (doc) {
-          return getParentFolderLink(client, doc.file)
-        } else if (!isPublic) {
-          return '/'
-        } else {
-          return undefined
-        }
-      },
-      [props.returnUrl, doc]
-    )
-
-    // Failure in loading the note ?
-    useEffect(
-      () => {
-        if (!loading && !doc) {
-          // eslint-disable-next-line no-console
-          console.warn(`Could not load note ${noteId}`)
-        }
-      },
-      [loading, doc]
-    )
-
-    // Be sure to save everything before leaving
-    // and force sync with the io.cozy.file
-    async function forceSync() {
-      if (doc) {
-        // wait for every event to finish
-        const provider = await collabProvider.provider
-        await provider.channel.ensureEmptyQueue()
-        // then force a server sync
-        await serviceClient.sync(docId)
-      }
-    }
-    useEffect(() => forceSync, [docId, doc])
-    // Sync on unload will probably be stopped by the browser,
-    // as most async code on unload, but let's try anyway
-    const emergencySync = useCallback(
-      function() {
-        if (doc && docId) {
-          serviceClient.sync(docId) // force a server sync
-        }
-      },
-      [doc, docId]
-    )
+    const { onLocalTitleChange } = useTitleChanges({
+      noteId,
+      title,
+      setTitle,
+      serviceClient
+    })
+    const { forceSync, emergencySync } = useForceSync({
+      doc,
+      serviceClient,
+      collabProvider
+    })
+    // when leaving the component or changing doc
+    useEffect(() => forceSync, [noteId, doc, forceSync])
+    // when quitting the webpage
     useEventListener(window, 'unload', emergencySync)
 
     // rendering
@@ -216,7 +69,6 @@ const Editor = translate()(
         <EditorView
           onTitleChange={onLocalTitleChange}
           onTitleBlur={emergencySync}
-          onContentChange={onContentChange}
           collabProvider={collabProvider}
           defaultTitle={t('Notes.Editor.title_placeholder')}
           defaultValue={{ ...doc.doc, version: doc.version }}

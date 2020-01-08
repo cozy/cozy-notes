@@ -116,26 +116,30 @@ export class ServiceClient {
 
   /**
    * Force the note to be written to the io.cozy.files now
-   * @param {uuid} docId - note id
+   * @param {uuid} noteId - note id
    */
-  async sync(docId) {
-    await this.stackClient.fetchJSON('POST', this.path(docId, 'sync'))
+  async sync(noteId) {
+    await this.stackClient.fetchJSON('POST', this.path(noteId, 'sync'))
   }
 
   /**
    * Change the title of a note
-   * @param {uuid} docId
+   * @param {uuid} noteId
    * @param {string} title
    */
-  async setTitle(docId, title) {
+  async setTitle(noteId, title) {
     const titleDoc = {
       data: {
         type: 'io.cozy.notes.documents',
-        id: docId,
+        id: noteId,
         attributes: this.client2server({ title: title })
       }
     }
-    await this.stackClient.fetchJSON('PUT', this.path(docId, 'title'), titleDoc)
+    await this.stackClient.fetchJSON(
+      'PUT',
+      this.path(noteId, 'title'),
+      titleDoc
+    )
   }
 
   /**
@@ -155,11 +159,11 @@ export class ServiceClient {
 
   /**
    * Join a doc - listen to realtime events for this doc
-   * @param {uui} docId
+   * @param {uui} noteId
    */
-  async join(docId) {
+  async join(noteId) {
     const onRealtimeCreated = function(doc) {
-      if (doc.id == docId) {
+      if (doc.id == noteId) {
         return this.onRealtimeEvent(doc)
       } else {
         return undefined
@@ -174,13 +178,13 @@ export class ServiceClient {
       this.realtime.subscribe(
         'updated',
         'io.cozy.notes.events',
-        docId,
+        noteId,
         this.onRealtimeEvent
       ),
       this.realtime.subscribe(
         'deleted',
         'io.cozy.notes.events',
-        docId,
+        noteId,
         this.onRealtimeEvent
       )
     ])
@@ -188,33 +192,33 @@ export class ServiceClient {
 
   /**
    * Listen for new steps from the server
-   * @param {uuid} docId
+   * @param {uuid} noteId
    * @param {Function} callback
    */
-  async onStepsCreated(docId, callback) {
-    this.setCallback('io.cozy.notes.steps', docId, data =>
+  async onStepsCreated(noteId, callback) {
+    this.setCallback('io.cozy.notes.steps', noteId, data =>
       callback(this.server2client(data))
     )
   }
 
   /**
    * Listen for new cursors positions from the server
-   * @param {uuid} docId
+   * @param {uuid} noteId
    * @param {Function} callback
    */
-  async onTelepointerUpdated(docId, callback) {
-    this.setCallback('io.cozy.notes.telepointers', docId, data =>
+  async onTelepointerUpdated(noteId, callback) {
+    this.setCallback('io.cozy.notes.telepointers', noteId, data =>
       callback(this.server2client(data))
     )
   }
 
   /**
    * Listen for title changes in the document
-   * @param {uuid} docId
+   * @param {uuid} noteId
    * @param {Function} callback - function that get a title as paramerer
    */
-  async onTitleUpdated(docId, callback) {
-    this.setCallback('io.cozy.notes.documents', docId, doc => {
+  async onTitleUpdated(noteId, callback) {
+    this.setCallback('io.cozy.notes.documents', noteId, doc => {
       return !doc.sessionID || doc.sessionID != this.sessionId
         ? callback(doc.title)
         : null
@@ -223,10 +227,10 @@ export class ServiceClient {
 
   /**
    * Get the full document for a note
-   * @param {uuid} docId
+   * @param {uuid} noteId
    */
-  async getDoc(docId) {
-    const res = await this.stackClient.fetchJSON('GET', this.path(docId))
+  async getDoc(noteId) {
+    const res = await this.stackClient.fetchJSON('GET', this.path(noteId))
     return {
       doc: res.data.attributes.metadata.content,
       version: res.data.attributes.metadata.version,
@@ -237,11 +241,11 @@ export class ServiceClient {
 
   /**
    * Push new local steps to the server
-   * @param {uuid} docId
+   * @param {uuid} noteId
    * @param {integer} version
    * @param {Object[]} steps
    */
-  async pushSteps(docId, version, steps) {
+  async pushSteps(noteId, version, steps) {
     const options = { headers: { 'if-match': version } }
     const stepsDoc = {
       data: steps.map(step => ({
@@ -253,7 +257,7 @@ export class ServiceClient {
     // which will occurs if the server has more versions than us
     await this.stackClient.fetchJSON(
       'PATCH',
-      this.path(docId),
+      this.path(noteId),
       stepsDoc,
       options
     )
@@ -262,17 +266,17 @@ export class ServiceClient {
 
   /**
    * Fetch steps from the server since the provided versions
-   * @param {uuid} docId
+   * @param {uuid} noteId
    * @param {integer} version
    * @returns {{version, steps}|{doc, version}}
    * If the server doesn't have all requested steps in memory,
    * it could returns the whole document in its current version
    */
-  async getSteps(docId, version) {
+  async getSteps(noteId, version) {
     try {
       const res = await this.stackClient.fetchJSON(
         'GET',
-        `${this.path(docId, 'steps')}?Version=${version}`
+        `${this.path(noteId, 'steps')}?Version=${version}`
       )
       if (res.data.length == 0) {
         return { steps: [], version }
@@ -292,13 +296,13 @@ export class ServiceClient {
         // it responds with a full document and a title
         const ev = 'io.cozy.notes.documents'
         const realtimeDoc = {
-          _id: docId,
+          _id: noteId,
           _type: 'io.cozy.notes.events',
           doctype: ev,
           title: meta.title
         }
-        if (this.callbacks[ev] && this.callbacks[ev][docId]) {
-          this.callbacks[ev][docId](realtimeDoc)
+        if (this.callbacks[ev] && this.callbacks[ev][noteId]) {
+          this.callbacks[ev][noteId](realtimeDoc)
         }
         return {
           doc: doc,
@@ -312,20 +316,20 @@ export class ServiceClient {
 
   /**
    * Push new local cursor position to the server
-   * @param {uuid} docId
+   * @param {uuid} noteId
    * @param {Object} data
    */
-  async pushTelepointer(docId, data) {
+  async pushTelepointer(noteId, data) {
     const telepointerDoc = {
       data: {
         type: 'io.cozy.notes.telepointers',
-        id: docId,
+        id: noteId,
         attributes: this.client2server(data)
       }
     }
     return this.stackClient.fetchJSON(
       'PUT',
-      this.path(docId, 'telepointer'),
+      this.path(noteId, 'telepointer'),
       telepointerDoc
     )
   }

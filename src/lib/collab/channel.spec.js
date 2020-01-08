@@ -5,8 +5,8 @@ jest.mock('prosemirror-collab', () => {
   return { getVersion: jest.fn(), sendableSteps: jest.fn() }
 })
 
-const docId = 'myDocId'
-const config = { docId }
+const noteId = 'myDocId'
+const config = { noteId }
 const service = {
   pushSteps: jest.fn(),
   onStepsCreated: jest.fn(),
@@ -370,13 +370,13 @@ describe('Channel', () => {
           await new Promise(resolve => window.setTimeout(resolve, 500))
           expect(service.pushSteps).toHaveBeenNthCalledWith(
             1,
-            docId,
+            noteId,
             firstVersion,
             steps.localSteps.steps
           )
           expect(service.pushSteps).toHaveBeenNthCalledWith(
             2,
-            docId,
+            noteId,
             lastVersion,
             lastSteps.steps
           )
@@ -400,7 +400,7 @@ describe('Channel', () => {
         version,
         doc
       )
-      expect(service.join).toHaveBeenCalledWith(docId)
+      expect(service.join).toHaveBeenCalledWith(noteId)
     })
 
     it('emits for new steps from the server', async done => {
