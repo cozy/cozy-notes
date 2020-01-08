@@ -198,11 +198,14 @@ const Editor = translate()(
     useEffect(() => forceSync, [docId, doc])
     // Sync on unload will probably be stopped by the browser,
     // as most async code on unload, but let's try anyway
-    const emergencySync = useCallback(function() {
-      if (doc && docId) {
-        serviceClient.sync(docId) // force a server sync
-      }
-    }, [])
+    const emergencySync = useCallback(
+      function() {
+        if (doc && docId) {
+          serviceClient.sync(docId) // force a server sync
+        }
+      },
+      [doc, docId]
+    )
     useEventListener(window, 'unload', emergencySync)
 
     // rendering
@@ -212,6 +215,7 @@ const Editor = translate()(
       return (
         <EditorView
           onTitleChange={onLocalTitleChange}
+          onTitleBlur={emergencySync}
           onContentChange={onContentChange}
           collabProvider={collabProvider}
           defaultTitle={t('Notes.Editor.title_placeholder')}
