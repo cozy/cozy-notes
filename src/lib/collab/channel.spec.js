@@ -5,7 +5,7 @@ jest.mock('prosemirror-collab', () => {
   return { getVersion: jest.fn(), sendableSteps: jest.fn() }
 })
 
-const noteId = 'myDocId'
+const noteId = 'myNoteId'
 const config = { noteId }
 const service = {
   pushSteps: jest.fn(),

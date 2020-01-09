@@ -33,13 +33,13 @@ function useNote({ serviceClient, noteId }) {
         setDocId(noteId)
       } else if (serviceClient) {
         // load the note if needed
-        if (!doc || doc.file.id != docId) loadNote()
+        if (!doc || doc.file.id !== docId) loadNote()
       }
     },
     [noteId, docId, setDocId, setLoading, serviceClient, setDoc, setTitle]
   )
 
-  if (docId == noteId) return { loading, title, doc, setTitle }
+  if (docId === noteId) return { loading, title, doc, setTitle }
   else return { loading: true, title: undefined, doc: undefined, setTitle }
 }
 
