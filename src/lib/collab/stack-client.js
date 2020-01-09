@@ -163,7 +163,7 @@ export class ServiceClient {
    */
   async join(noteId) {
     const onRealtimeCreated = function(doc) {
-      if (doc.id == noteId) {
+      if (doc.id === noteId) {
         return this.onRealtimeEvent(doc)
       } else {
         return undefined
