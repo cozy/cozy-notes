@@ -31,8 +31,8 @@ html {
     --note-title4-color: var(--coolGrey);
     --note-border-radius: 8px;
     --note-header-height: 3rem;
-    --note-header-margin-left: 5rem;
-    --note-header-margin-right: 5rem;
+    --note-header-margin-left: 7rem;
+    --note-header-margin-right: 10rem;
     color: var(--note-base-color);
 }
 @media (max-width: 800px) {
@@ -99,12 +99,19 @@ html .akEditor > div:first-child > div:first-child > div:first-child > div:first
     max-width: 100%;
     margin: auto;
 }
-@media (max-width: 810px) {
-    html .akEditor > div:first-child > div:first-child > div:first-child > div:first-child {
-        width: 480px; /* condensed view */
-    }
+@media (max-width: 1023px) {
+  html {
+    --useless: auto;
+   /* FIXME : without this block, the next rule is not taken into account */
+  }
 }
-/* FIXME : without this repetition, the rule is not taken into account */
+@media (max-width: 1023px) {
+  html {
+    --notes-share-button-label: none; /* do not display the label in sharing button */
+    --note-header-margin-left: 5rem; /* remove margin to leave space for the toolbar */
+    --note-header-margin-right: 5rem;
+  }
+}
 @media (max-width: 810px) {
     html .akEditor > div:first-child > div:first-child > div:first-child > div:first-child {
         width: 480px; /* condensed view */
