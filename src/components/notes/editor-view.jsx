@@ -4,11 +4,13 @@ import { Editor, WithEditorActions } from '@atlaskit/editor-core'
 
 import { MainTitle } from 'cozy-ui/react/Text'
 import Textarea from 'cozy-ui/react/Textarea'
+import { translate } from 'cozy-ui/react/I18n'
+import useEventListener from 'cozy-ui/react/hooks/useEventListener'
 
 import editorConfig from 'components/notes/editor_config'
 import HeaderMenu from 'components/header_menu'
-import { translate } from 'cozy-ui/react/I18n'
 import styles from 'components/notes/editor-view.styl'
+
 function updateTextareaHeight(target) {
   target.style.height = `${target.scrollHeight}px`
 }
@@ -17,6 +19,7 @@ function EditorView(props) {
   const {
     defaultValue,
     onTitleChange,
+    onTitleBlur,
     onContentChange,
     defaultTitle,
     title,
@@ -38,6 +41,8 @@ function EditorView(props) {
   )
 
   useEffect(() => updateTextareaHeight(titleEl.current), [])
+
+  useEventListener(titleEl.current, 'blur', onTitleBlur)
 
   return (
     <article className={styles['note-article']}>
