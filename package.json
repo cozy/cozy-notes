@@ -1,6 +1,6 @@
 {
   "name": "cozy-notes",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "scripts": {
     "tx": "tx pull --all || true",
     "lint": "yarn lint:js && yarn lint:styles",
@@ -46,7 +46,7 @@
     "stylint": "1.5.9"
   },
   "dependencies": {
-    "@atlaskit/editor-core": "^115.2.2",
+    "@atlaskit/editor-core": "^114.1.4",
     "@atlaskit/media-core": "^31.0.1",
     "@atlaskit/media-editor": "^37.0.3",
     "@atlaskit/smart-card": "^12.6.2",
