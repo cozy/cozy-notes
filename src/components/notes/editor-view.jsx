@@ -15,17 +15,19 @@ function updateTextareaHeight(target) {
   target.style.height = `${target.scrollHeight}px`
 }
 
+const nullCallback = () => {}
+
 function EditorView(props) {
   const {
     defaultValue,
     onTitleChange,
     onTitleBlur,
-    onContentChange,
     defaultTitle,
     title,
     collabProvider,
     leftComponent,
     rightComponent,
+    onContentChange,
     t
   } = props
 
@@ -55,7 +57,7 @@ function EditorView(props) {
       <section className="note-editor-container">
         <Editor
           collabEdit={collabProvider}
-          onChange={onContentChange}
+          onChange={onContentChange || nullCallback}
           defaultValue={defaultValue}
           {...editorConfig}
           appearance="full-page"

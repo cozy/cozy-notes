@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 import cloneDeep from 'lodash/cloneDeep'
 import get from 'lodash/get'
+
 const useFetchNotesByIds = client => {
   const [notes, setNotes] = useState([])
   const [fetchStatus, setFetchStatus] = useState('loading')
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -33,6 +35,7 @@ const useFetchNotesByIds = client => {
         setFetchStatus('loaded')
       } catch (error) {
         setFetchStatus('errored')
+        // eslint-disable-next-line no-console
         console.log({ error })
       }
     }

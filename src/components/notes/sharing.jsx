@@ -36,6 +36,7 @@ export default withClient(function SharingWidget(props) {
           )
           setParent(parent.data)
         } catch (e) {
+          // eslint-disable-next-line no-console
           console.warn(
             `Request failed when try to fetch the parent ${
               file.attributes.dir_id
@@ -53,13 +54,13 @@ export default withClient(function SharingWidget(props) {
   const [showModal, setShowModal] = useState(false)
   const onClick = useCallback(() => setShowModal(!showModal), [])
   const onClose = useCallback(() => setShowModal(false), [])
-  const docId = file.id
+  const noteId = file.id
   return (
     (parent && (
       <LocalizedSharingProvider doctype={file.type} documentType="Notes">
         <ShareButton
           theme="primary"
-          docId={docId}
+          docId={noteId}
           onClick={onClick}
           label=""
           extension="narrow"

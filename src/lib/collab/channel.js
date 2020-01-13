@@ -169,8 +169,8 @@ export class Channel {
     if (steps.length === 0) return
 
     try {
-      const { docId } = this.config
-      const response = await this.service.pushSteps(docId, version, steps)
+      const { noteId } = this.config
+      const response = await this.service.pushSteps(noteId, version, steps)
       this.rebaseStepsInQueue()
       this.resetBackoff()
       this.isSending = false
@@ -196,12 +196,12 @@ export class Channel {
    * Connect to pubsub to start receiving events
    */
   async connect(version, doc) {
-    const { docId } = this.config
-    this.service.join(docId)
-    this.service.onStepsCreated(docId, data => {
+    const { noteId } = this.config
+    this.service.join(noteId)
+    this.service.onStepsCreated(noteId, data => {
       this.emit('data', { version: data.version, steps: [data] })
     })
-    this.service.onTelepointerUpdated(docId, payload => {
+    this.service.onTelepointerUpdated(noteId, payload => {
       this.emit('telepointer', payload)
     })
     this.emit('connected', {
@@ -214,16 +214,16 @@ export class Channel {
    * Get steps from version x to latest
    */
   async getSteps(version) {
-    const { docId } = this.config
-    return await this.service.getSteps(docId, version)
+    const { noteId } = this.config
+    return await this.service.getSteps(noteId, version)
   }
 
   /**
    * Send telepointer
    */
   async sendTelepointer(data) {
-    const { docId } = this.config
-    return await this.service.pushTelepointer(docId, data)
+    const { noteId } = this.config
+    return await this.service.pushTelepointer(noteId, data)
   }
 
   /**
