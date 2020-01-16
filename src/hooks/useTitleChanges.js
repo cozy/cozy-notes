@@ -32,7 +32,7 @@ function useTitleChanges({ noteId, title, setTitle, serviceClient }) {
   useEffect(
     () => {
       document.title =
-        title && title != '' ? `${appFullName} - ${title}` : appFullName
+        title && title != '' ? `${title} - ${appFullName}` : appFullName
     },
     [title]
   )
