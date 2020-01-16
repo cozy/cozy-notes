@@ -51,7 +51,7 @@
     "@atlaskit/media-editor": "^37.0.3",
     "@atlaskit/smart-card": "^12.6.2",
     "cozy-bar": "^7.7.8",
-    "cozy-client": "^9.3.0",
+    "cozy-client": "^9.8.1",
     "cozy-device-helper": "^1.8.0",
     "cozy-doctypes": "^1.70.0",
     "cozy-realtime": "^3.2.3",
