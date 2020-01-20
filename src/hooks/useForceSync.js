@@ -1,21 +1,23 @@
 import { useCallback } from 'react'
 
-function useForceSync({ doc, serviceClient, collabProvider }) {
+function useForceSync({ doc, collabProvider }) {
   const noteId = doc && doc.file.id
+
+  const serviceClient = collabProvider && collabProvider.serviceClient
+  const channel = collabProvider && collabProvider.channel
 
   // Be sure to save everything before leaving
   // and force sync with the io.cozy.file
   const forceSync = useCallback(
     async function forceSync() {
-      if (doc && collabProvider && serviceClient) {
+      if (doc && channel && serviceClient) {
         // wait for every event to finish
-        const provider = await collabProvider.provider
-        await provider.channel.ensureEmptyQueue()
+        await channel.ensureEmptyQueue()
         // then force a server sync
         await serviceClient.sync(noteId)
       }
     },
-    [doc, collabProvider]
+    [doc, channel, serviceClient]
   )
 
   // Sync on unload will probably be stopped by the browser,

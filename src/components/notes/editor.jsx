@@ -38,7 +38,7 @@ const Editor = translate()(
       cozyClient,
       doc
     })
-    const collabProvider = useCollabProvider({
+    const { collabProvider, collabProviderPlugin } = useCollabProvider({
       noteId,
       serviceClient,
       docVersion: doc && doc.version
@@ -53,7 +53,6 @@ const Editor = translate()(
     })
     const { forceSync, emergencySync } = useForceSync({
       doc,
-      serviceClient,
       collabProvider
     })
     // when leaving the component or changing doc
@@ -69,7 +68,7 @@ const Editor = translate()(
         <EditorView
           onTitleChange={onLocalTitleChange}
           onTitleBlur={emergencySync}
-          collabProvider={collabProvider}
+          collabProvider={collabProviderPlugin}
           defaultTitle={t('Notes.Editor.title_placeholder')}
           defaultValue={{ ...doc.doc, version: doc.version }}
           title={title && title.length > 0 ? title : undefined}
