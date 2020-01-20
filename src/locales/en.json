@@ -3,6 +3,11 @@
     "Add": {
       "add_note": "Add a note"
     },
+    "Delete": {
+      "delete_note": "Delete",
+      "deleted": "The note has been deleted",
+      "failed": "The note could not be deleted, please try again"
+    },
     "EditorView": {
       "main_placeholder": "Write anything…"
     },
