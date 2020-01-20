@@ -16,9 +16,10 @@ import useTitleChanges from 'hooks/useTitleChanges'
 import useForceSync from 'hooks/useForceSync'
 import useReturnUrl from 'hooks/useReturnUrl'
 import useUser from 'hooks/useUser'
+import useCollaborationState from 'hooks/useCollaborationState'
 
 import { translate } from 'cozy-ui/react/I18n'
-import useEventListener from 'cozy-ui/react/hooks/useEventListener'
+import useConfirmExit from 'cozy-ui/react/hooks/useConfirmExit'
 
 const Editor = translate()(
   withClient(function(props) {
@@ -58,8 +59,11 @@ const Editor = translate()(
     // when leaving the component or changing doc
     useEffect(() => forceSync, [noteId, doc, forceSync])
     // when quitting the webpage
-    useEventListener(window, 'unload', emergencySync)
-
+    const { isDirty } = useCollaborationState(collabProvider)
+    useConfirmExit(
+      isDirty ? t('Notes.Editor.exit_confirmation') : false,
+      isDirty ? emergencySync : null
+    )
     // rendering
     if (loading) {
       return <EditorLoading />

@@ -7,7 +7,8 @@
       "main_placeholder": "Écrivez ce que vous souhaitez…"
     },
     "Editor": {
-      "title_placeholder": "Ici votre titre"
+      "title_placeholder": "Ici votre titre",
+      "exit_confirmation": "Des modifications n’ont pas encore encore pu être enregistrées sur cette note. Voulez-vous vraiment quitter et perdre ces modifications ?"
     },
     "List": {
       "my_notes": "Mes Notes",
