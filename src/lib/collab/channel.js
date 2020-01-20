@@ -137,6 +137,7 @@ export class Channel {
    * Atlaskit. I prefer not to remove it, in case we need it later.
    */
   async sendSteps(getState, state, localSteps) {
+    this.emit('enqueueSteps')
     this.enqueueSteps({ getState, state, localSteps })
     await this.processQueue()
   }
@@ -150,6 +151,7 @@ export class Channel {
     }
     if (!this.hasQueuedSteps()) {
       this.emptyQueuePromise.resolve()
+      this.emit('emptyQueue')
       return
     }
 
@@ -173,6 +175,7 @@ export class Channel {
       const response = await this.service.pushSteps(noteId, version, steps)
       this.rebaseStepsInQueue()
       this.resetBackoff()
+      this.emit('successfulPatch')
       this.isSending = false
       if (response && response.steps && response.steps.length > 0) {
         this.emit('data', response)
