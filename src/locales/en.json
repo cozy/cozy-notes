@@ -7,7 +7,8 @@
       "main_placeholder": "Write anything…"
     },
     "Editor": {
-      "title_placeholder": "Here is your title"
+      "title_placeholder": "Here is your title",
+      "exit_confirmation": "Some changes inside the note have not been saved yet. Do you want to quit and loose these changes?"
     },
     "List": {
       "my_notes": "My Notes",

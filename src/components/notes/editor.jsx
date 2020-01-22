@@ -16,9 +16,10 @@ import useTitleChanges from 'hooks/useTitleChanges'
 import useForceSync from 'hooks/useForceSync'
 import useReturnUrl from 'hooks/useReturnUrl'
 import useUser from 'hooks/useUser'
+import useCollaborationState from 'hooks/useCollaborationState'
 
 import { translate } from 'cozy-ui/react/I18n'
-import useEventListener from 'cozy-ui/react/hooks/useEventListener'
+import useConfirmExit from 'cozy-ui/react/hooks/useConfirmExit'
 
 const Editor = translate()(
   withClient(function(props) {
@@ -38,7 +39,7 @@ const Editor = translate()(
       cozyClient,
       doc
     })
-    const collabProvider = useCollabProvider({
+    const { collabProvider, collabProviderPlugin } = useCollabProvider({
       noteId,
       serviceClient,
       docVersion: doc && doc.version
@@ -53,14 +54,16 @@ const Editor = translate()(
     })
     const { forceSync, emergencySync } = useForceSync({
       doc,
-      serviceClient,
       collabProvider
     })
     // when leaving the component or changing doc
     useEffect(() => forceSync, [noteId, doc, forceSync])
     // when quitting the webpage
-    useEventListener(window, 'unload', emergencySync)
-
+    const { isDirty } = useCollaborationState(collabProvider)
+    useConfirmExit(
+      isDirty ? t('Notes.Editor.exit_confirmation') : false,
+      isDirty ? emergencySync : null
+    )
     // rendering
     if (loading) {
       return <EditorLoading />
@@ -69,7 +72,7 @@ const Editor = translate()(
         <EditorView
           onTitleChange={onLocalTitleChange}
           onTitleBlur={emergencySync}
-          collabProvider={collabProvider}
+          collabProvider={collabProviderPlugin}
           defaultTitle={t('Notes.Editor.title_placeholder')}
           defaultValue={{ ...doc.doc, version: doc.version }}
           title={title && title.length > 0 ? title : undefined}

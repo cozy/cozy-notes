@@ -5,20 +5,6 @@ const minimumBackoff = 128 // 128ms
 const maximumBackoff = 1000 * 60 * 5 // Max 5 minutes
 const failuresBeforeCatchup = 4
 
-const resolvablePromise = () => {
-  let resolveFunction
-  const promise = new Promise(resolve => {
-    resolveFunction = resolve
-  })
-  promise.resolved = false
-  promise.resolve = function() {
-    resolveFunction()
-    promise.resolved = true
-    return promise
-  }
-  return promise
-}
-
 export class Channel {
   constructor(config, serviceClient) {
     this.config = config
@@ -27,7 +13,6 @@ export class Channel {
     this.resetBackoff()
     this.initializeStepsQueue()
     this.isSending = false
-    this.emptyQueuePromise = resolvablePromise().resolve()
   }
 
   /**
@@ -76,10 +61,29 @@ export class Channel {
   }
 
   /**
+   * Check if something is not fully sent to the server
+   *
+   * @returns {bool}
+   */
+  isDirty() {
+    return this.hasQueuedSteps() || this.isSending
+  }
+
+  /**
    * Ensures all local steps are sent to the server
    */
   async ensureEmptyQueue() {
-    return this.emptyQueuePromise
+    return new Promise(resolve => {
+      function onEmptyQueue() {
+        this.off('emptyQueue', onEmptyQueue)
+        resolve()
+      }
+      if (this.isDirty()) {
+        this.on('emptyQueue', onEmptyQueue)
+      } else {
+        resolve()
+      }
+    })
   }
 
   /**
@@ -89,9 +93,6 @@ export class Channel {
    * @param {Object[]} localSteps - local steps to send
    */
   enqueueSteps({ getState, state, localSteps }) {
-    if (this.emptyQueuePromise.resolved) {
-      this.emptyQueuePromise = resolvablePromise()
-    }
     this.queuedStep = { getState, state, localSteps }
   }
 
@@ -137,6 +138,7 @@ export class Channel {
    * Atlaskit. I prefer not to remove it, in case we need it later.
    */
   async sendSteps(getState, state, localSteps) {
+    this.emit('enqueueSteps')
     this.enqueueSteps({ getState, state, localSteps })
     await this.processQueue()
   }
@@ -149,7 +151,7 @@ export class Channel {
       return
     }
     if (!this.hasQueuedSteps()) {
-      this.emptyQueuePromise.resolve()
+      this.emit('emptyQueue')
       return
     }
 
@@ -173,6 +175,7 @@ export class Channel {
       const response = await this.service.pushSteps(noteId, version, steps)
       this.rebaseStepsInQueue()
       this.resetBackoff()
+      this.emit('successfulPatch')
       this.isSending = false
       if (response && response.steps && response.steps.length > 0) {
         this.emit('data', response)

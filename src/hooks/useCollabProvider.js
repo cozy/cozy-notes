@@ -9,18 +9,21 @@ function useCollabProvider({ docVersion, noteId, serviceClient }) {
           { version: docVersion, noteId },
           serviceClient
         )
-        // The following object is defined in an Atlassian API.
-        // `provider` expects a Promise, even if we wouldn't
-        //  need it ourselves.
         return {
-          useNativePlugin: true,
-          provider: Promise.resolve(provider),
-          inviteToEditHandler: () => undefined,
-          isInviteToEditButtonSelected: false,
-          userId: serviceClient.getSessionId()
+          collabProvider: provider,
+          // The following `collabProviderPlugin` object is defined
+          // in an Atlassian API. The attribute `provider` is expected
+          // to be a Promise, even if we don't need one ourselves here.
+          collabProviderPlugin: {
+            useNativePlugin: true,
+            provider: Promise.resolve(provider),
+            inviteToEditHandler: () => undefined,
+            isInviteToEditButtonSelected: false,
+            userId: serviceClient.getSessionId()
+          }
         }
       } else {
-        return null
+        return {}
       }
     },
     [noteId, docVersion, serviceClient]
