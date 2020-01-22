@@ -6,7 +6,7 @@
   "categories": [
     "cozy"
   ],
-  "version": "1.5.3",
+  "version": "1.6.0",
   "licence": "AGPL-3.0",
   "editor": "Cozy",
   "source": "https://github.com/cozy/cozy-notes.git@build",
