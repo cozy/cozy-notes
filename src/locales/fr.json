@@ -15,7 +15,8 @@
       "name": "Nom",
       "updated_at": "Mise à jour",
       "location": "Emplacement",
-      "sharings": "Partage"
+      "sharings": "Partage",
+      "at": "%{date} à %{time}"
     },
     "Empty": {
       "welcome": "Bienvenue sur Cozy Notes",
