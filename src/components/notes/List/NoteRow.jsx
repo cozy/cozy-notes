@@ -10,7 +10,7 @@ import styles from 'components/notes/List/list.styl'
 import { generateReturnUrlToNotesIndex } from 'lib/utils'
 import NoteIcon from 'assets/icons/icon-note-32.svg'
 
-const NoteRow = ({ note, f, breakpoints: { isMobile } }) => {
+const NoteRow = ({ note, f, t, breakpoints: { isMobile } }) => {
   const { filename, extension } = CozyFile.splitFilename(note)
   return (
     <TableRow
@@ -31,7 +31,10 @@ const NoteRow = ({ note, f, breakpoints: { isMobile } }) => {
       {!isMobile && (
         <>
           <TableCell className={styles.tableCell}>
-            {f(note.updated_at, 'DD MMMM')}
+            {t('Notes.List.at', {
+              date: f(note.updated_at, 'DD MMMM'),
+              time: f(note.updated_at, 'hh:ss')
+            })}
           </TableCell>
           <TableCell className={styles.tableCell}>—</TableCell>
           <TableCell className={styles.tableCell}>—</TableCell>

@@ -16,7 +16,8 @@
       "name": "Name",
       "updated_at": "Updated at",
       "location": "Location",
-      "sharings": "Sharings"
+      "sharings": "Sharings",
+      "at": "%{date} at %{time}"
     },
     "Empty": {
       "welcome": "Welcome on Cozy Notes",
