@@ -8,7 +8,8 @@
     },
     "Editor": {
       "title_placeholder": "Here is your title",
-      "exit_confirmation": "Some changes inside the note have not been saved yet. Do you want to quit and loose these changes?"
+      "exit_confirmation_message": "Some changes inside the note have not been saved yet. Do you want to quit and lose these changes?",
+      "exit_confirmation_title": "Leave this note?"
     },
     "List": {
       "my_notes": "My Notes",

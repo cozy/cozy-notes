@@ -3,11 +3,13 @@ import { useState, useEffect, useRef } from 'react'
 let iterations = 0
 
 /**
- * The complete Triforce, or one or more components of the Triforce.
+ * Return value of  useCollaborationState
  * @typedef {CollabState}
  * @property {boolean} isDirty - Is there something local still waiting to be sync?
- * @property {Date} dirtySinc - Date of the older object waiting to be sync
+ * @property {Date} dirtySince - Date of the older object waiting to be sync, falsy when in sync
  * @property {Date} lastSave - Date of the earlier object that has been correctly sync
+ * @property {React.Reference} dirtyRef - React reference, which holds the most up to date
+ * value of dirtySince in `.current`
  */
 
 /**
@@ -85,7 +87,8 @@ function useCollaborationState(provider) {
   return {
     dirtySince: dirtySince.current,
     lastSave: lastSave.current,
-    isDirty: !!dirtySince.current
+    isDirty: !!dirtySince.current,
+    dirtyRef: dirtySince
   }
 }
 

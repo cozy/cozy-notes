@@ -8,7 +8,8 @@
     },
     "Editor": {
       "title_placeholder": "Ici votre titre",
-      "exit_confirmation": "Des modifications n’ont pas encore encore pu être enregistrées sur cette note. Voulez-vous vraiment quitter et perdre ces modifications ?"
+      "exit_confirmation_message": "Des modifications n’ont pas encore pu être enregistrées sur cette note. Voulez-vous vraiment quitter et perdre ces modifications ?",
+      "exit_confirmation_title": "Quitter cette note ?"
     },
     "List": {
       "my_notes": "Mes Notes",

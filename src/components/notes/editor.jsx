@@ -18,8 +18,8 @@ import useReturnUrl from 'hooks/useReturnUrl'
 import useUser from 'hooks/useUser'
 import useCollaborationState from 'hooks/useCollaborationState'
 
-import { translate } from 'cozy-ui/react/I18n'
 import useConfirmExit from 'cozy-ui/react/hooks/useConfirmExit'
+import { translate } from 'cozy-ui/react/I18n'
 
 const Editor = translate()(
   withClient(function(props) {
@@ -59,28 +59,37 @@ const Editor = translate()(
     // when leaving the component or changing doc
     useEffect(() => forceSync, [noteId, doc, forceSync])
     // when quitting the webpage
-    const { isDirty } = useCollaborationState(collabProvider)
-    useConfirmExit(
-      isDirty ? t('Notes.Editor.exit_confirmation') : false,
-      isDirty ? emergencySync : null
-    )
+    const { dirtyRef } = useCollaborationState(collabProvider)
+    const { exitConfirmationModal, requestToLeave } = useConfirmExit({
+      activate: () => dirtyRef.current,
+      onLeave: emergencySync,
+      title: t('Notes.Editor.exit_confirmation_title'),
+      message: t('Notes.Editor.exit_confirmation_message')
+    })
     // rendering
     if (loading) {
       return <EditorLoading />
     } else if (doc) {
       return (
-        <EditorView
-          onTitleChange={onLocalTitleChange}
-          onTitleBlur={emergencySync}
-          collabProvider={collabProviderPlugin}
-          defaultTitle={t('Notes.Editor.title_placeholder')}
-          defaultValue={{ ...doc.doc, version: doc.version }}
-          title={title && title.length > 0 ? title : undefined}
-          leftComponent={
-            <BackFromEditing returnUrl={returnUrl} file={doc.file} />
-          }
-          rightComponent={!isPublic && <SharingWidget file={doc.file} />}
-        />
+        <>
+          <EditorView
+            onTitleChange={onLocalTitleChange}
+            onTitleBlur={emergencySync}
+            collabProvider={collabProviderPlugin}
+            defaultTitle={t('Notes.Editor.title_placeholder')}
+            defaultValue={{ ...doc.doc, version: doc.version }}
+            title={title && title.length > 0 ? title : undefined}
+            leftComponent={
+              <BackFromEditing
+                returnUrl={returnUrl}
+                file={doc.file}
+                requestToLeave={requestToLeave}
+              />
+            }
+            rightComponent={!isPublic && <SharingWidget file={doc.file} />}
+          />
+          {exitConfirmationModal}
+        </>
       )
     } else {
       return <EditorLoadingError returnUrl={returnUrl} />
