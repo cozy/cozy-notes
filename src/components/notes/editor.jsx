@@ -8,7 +8,6 @@ import EditorLoadingError from 'components/notes/editor-loading-error'
 import SharingWidget from 'components/notes/sharing'
 import BackFromEditing from 'components/notes/back_from_editing'
 import IsPublicContext from 'components/IsPublicContext'
-
 import useNote from 'hooks/useNote'
 import useServiceClient from 'hooks/useServiceClient'
 import useCollabProvider from 'hooks/useCollabProvider'
@@ -17,6 +16,7 @@ import useForceSync from 'hooks/useForceSync'
 import useReturnUrl from 'hooks/useReturnUrl'
 import useUser from 'hooks/useUser'
 import useCollaborationState from 'hooks/useCollaborationState'
+import { useDebugValue } from 'lib/debug'
 
 import useConfirmExit from 'cozy-ui/react/hooks/useConfirmExit'
 import { translate } from 'cozy-ui/react/I18n'
@@ -66,6 +66,17 @@ const Editor = translate()(
       title: t('Notes.Editor.exit_confirmation_title'),
       message: t('Notes.Editor.exit_confirmation_message')
     })
+
+    useDebugValue('client', cozyClient)
+    useDebugValue('notes.service', serviceClient)
+    useDebugValue('notes.collabProvider', collabProvider)
+    useDebugValue('notes.channel', collabProvider && collabProvider.channel)
+    useDebugValue('notes.noteId', noteId)
+    useDebugValue('notes.doc', doc && { ...doc.doc, version: doc.version })
+    useDebugValue('notes.file', doc && doc.file)
+    useDebugValue('notes.returnUrl', returnUrl)
+    useDebugValue('notes.dirtyRef', dirtyRef)
+
     // rendering
     if (loading) {
       return <EditorLoading />
