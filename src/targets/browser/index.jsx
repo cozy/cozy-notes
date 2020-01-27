@@ -5,6 +5,7 @@ import 'cozy-sharing/dist/stylesheet.css'
 import 'styles'
 
 import React from 'react'
+import ReactDOM from 'react-dom'
 import { IntlProvider, addLocaleData } from 'react-intl'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { render } from 'react-dom'
@@ -94,6 +95,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!isPublic) {
     // initialize the bar, common of all applications, it allows
     // platform features like apps navigation without doing anything
+
+    // necessary to initialize the bar with the correct React instance
+    window.React = React
+    window.ReactDOM = ReactDOM
     cozy.bar.init({
       appName: appName,
       appNamePrefix: appNamePrefix,
