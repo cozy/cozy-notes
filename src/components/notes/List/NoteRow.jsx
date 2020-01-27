@@ -33,7 +33,7 @@ const NoteRow = ({ note, f, t, breakpoints: { isMobile } }) => {
           <TableCell className={styles.tableCell}>
             {t('Notes.List.at', {
               date: f(note.updated_at, 'DD MMMM'),
-              time: f(note.updated_at, 'hh:ss')
+              time: f(note.updated_at, 'HH:mm')
             })}
           </TableCell>
           <TableCell className={styles.tableCell}>—</TableCell>
