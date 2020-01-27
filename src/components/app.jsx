@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from 'react'
 import { hot } from 'react-hot-loader'
 import { Route, Switch, HashRouter, withRouter } from 'react-router-dom'
 import { withClient } from 'cozy-client'
+
 import { Alerter, withBreakpoints } from 'cozy-ui/react'
 import { Layout, Main, Content } from 'cozy-ui/react/Layout'
 import { Sprite as IconSprite } from 'cozy-ui/react/Icon'
@@ -12,7 +13,8 @@ import AppTitle from 'cozy-ui/react/AppTitle'
 
 const manifest = require('../../manifest.webapp')
 import { List, Editor, Unshared } from 'components/notes'
-import { getReturnUrl, getSharedDocument } from 'lib/utils.js'
+import { getReturnUrl, getSharedDocument } from 'lib/utils'
+import { useFlagSwitcher } from 'lib/debug'
 
 import { getDataOrDefault } from 'lib/initFromDom'
 
@@ -60,7 +62,7 @@ const App = ({ isPublic, breakpoints: { isMobile }, client }) => {
     appName = getDataOrDefault(data.cozyAppName, manifest.name)
   }
   const { BarCenter } = cozy.bar
-
+  const FlagSwitcher = useFlagSwitcher()
   return (
     <HashRouter>
       <Layout monoColumn={true}>
@@ -74,6 +76,7 @@ const App = ({ isPublic, breakpoints: { isMobile }, client }) => {
         </Main>
         <IconSprite />
         <Alerter />
+        <FlagSwitcher />
       </Layout>
     </HashRouter>
   )

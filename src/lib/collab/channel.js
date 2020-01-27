@@ -1,6 +1,9 @@
 import { EventEmitter2 } from 'eventemitter2'
 import { getVersion, sendableSteps } from 'prosemirror-collab'
 
+import flag from 'cozy-flags'
+import { setDebugValue } from '../debug'
+
 const minimumBackoff = 128 // 128ms
 const maximumBackoff = 1000 * 60 * 5 // Max 5 minutes
 const failuresBeforeCatchup = 4
@@ -181,6 +184,9 @@ export class Channel {
         this.emit('data', response)
       }
     } catch (err) {
+      if (flag('notes.lastPatchError')) {
+        setDebugValue('notes.lastPatchError', err)
+      }
       if (this.hasQueuedSteps()) {
         // will retry later with more steps
         this.rebaseStepsInQueue()
