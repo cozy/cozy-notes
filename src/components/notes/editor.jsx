@@ -19,97 +19,95 @@ import useUser from 'hooks/useUser'
 import { useDebugValue } from 'lib/debug'
 
 import useConfirmExit from 'cozy-ui/react/hooks/useConfirmExit'
-import { translate } from 'cozy-ui/react/I18n'
+import { useI18n } from 'cozy-ui/react/I18n'
 
-const Editor = translate()(
-  withClient(function(props) {
-    // base parameters
-    const { client: cozyClient, noteId, t } = props
+const Editor = withClient(function(props) {
+  // base parameters
+  const { client: cozyClient, noteId, readOnly } = props
+  const { t } = useI18n()
 
-    // plugins and config
-    const isPublic = useContext(IsPublicContext)
-    const { userName, userId } = useUser({
-      userName: props.userName,
-      cozyClient
-    })
-    const serviceClient = useServiceClient({ userId, userName, cozyClient })
-    const { loading, title, doc, setTitle } = useNote({ serviceClient, noteId })
-    const returnUrl = useReturnUrl({
-      returnUrl: props.returnUrl,
-      cozyClient,
-      doc
-    })
-    const { collabProvider, collabProviderPlugin } = useCollabProvider({
-      noteId,
-      serviceClient,
-      docVersion: doc && doc.version
-    })
-
-    // callbacks
-    const { onLocalTitleChange } = useTitleChanges({
-      noteId,
-      title,
-      setTitle,
-      serviceClient
-    })
-    const { forceSync, emergencySync } = useForceSync({
-      doc,
-      collabProvider
-    })
-    // when leaving the component or changing doc
-    useEffect(() => forceSync, [noteId, doc, forceSync])
-    // when quitting the webpage
-    const activate = useCallback(() => collabProvider.isDirty(), [
-      collabProvider
-    ])
-    const { exitConfirmationModal, requestToLeave } = useConfirmExit({
-      activate,
-      onLeave: emergencySync,
-      title: t('Notes.Editor.exit_confirmation_title'),
-      message: t('Notes.Editor.exit_confirmation_message'),
-      leaveLabel: t('Notes.Editor.exit_confirmation_leave'),
-      cancelLabel: t('Notes.Editor.exit_confirmation_cancel')
-    })
-
-    useDebugValue('client', cozyClient)
-    useDebugValue('notes.service', serviceClient)
-    useDebugValue('notes.collabProvider', collabProvider)
-    useDebugValue('notes.channel', collabProvider && collabProvider.channel)
-    useDebugValue('notes.noteId', noteId)
-    useDebugValue('notes.doc', doc && { ...doc.doc, version: doc.version })
-    useDebugValue('notes.file', doc && doc.file)
-    useDebugValue('notes.returnUrl', returnUrl)
-
-    // rendering
-    if (loading) {
-      return <EditorLoading />
-    } else if (doc) {
-      return (
-        <>
-          <EditorView
-            onTitleChange={onLocalTitleChange}
-            onTitleBlur={emergencySync}
-            collabProvider={collabProviderPlugin}
-            defaultTitle={t('Notes.Editor.title_placeholder')}
-            defaultValue={{ ...doc.doc, version: doc.version }}
-            title={title && title.length > 0 ? title : undefined}
-            leftComponent={
-              <BackFromEditing
-                returnUrl={returnUrl}
-                file={doc.file}
-                requestToLeave={requestToLeave}
-              />
-            }
-            rightComponent={!isPublic && <SharingWidget file={doc.file} />}
-          />
-          <SavingIndicator collabProvider={collabProvider} />
-          {exitConfirmationModal}
-        </>
-      )
-    } else {
-      return <EditorLoadingError returnUrl={returnUrl} />
-    }
+  // plugins and config
+  const isPublic = useContext(IsPublicContext)
+  const { userName, userId } = useUser({
+    userName: props.userName,
+    cozyClient
   })
-)
+  const serviceClient = useServiceClient({ userId, userName, cozyClient })
+  const { loading, title, doc, setTitle } = useNote({ serviceClient, noteId })
+  const returnUrl = useReturnUrl({
+    returnUrl: props.returnUrl,
+    cozyClient,
+    doc
+  })
+  const collabProvider = useCollabProvider({
+    noteId,
+    serviceClient,
+    docVersion: doc && doc.version
+  })
+
+  // callbacks
+  const { onLocalTitleChange } = useTitleChanges({
+    noteId,
+    title,
+    setTitle,
+    serviceClient
+  })
+  const { forceSync, emergencySync } = useForceSync({
+    doc,
+    collabProvider
+  })
+  // when leaving the component or changing doc
+  useEffect(() => forceSync, [noteId, doc, forceSync])
+  // when quitting the webpage
+  const activate = useCallback(() => collabProvider.isDirty(), [collabProvider])
+  const { exitConfirmationModal, requestToLeave } = useConfirmExit({
+    activate,
+    onLeave: emergencySync,
+    title: t('Notes.Editor.exit_confirmation_title'),
+    message: t('Notes.Editor.exit_confirmation_message'),
+    leaveLabel: t('Notes.Editor.exit_confirmation_leave'),
+    cancelLabel: t('Notes.Editor.exit_confirmation_cancel')
+  })
+
+  useDebugValue('client', cozyClient)
+  useDebugValue('notes.service', serviceClient)
+  useDebugValue('notes.collabProvider', collabProvider)
+  useDebugValue('notes.channel', collabProvider && collabProvider.channel)
+  useDebugValue('notes.noteId', noteId)
+  useDebugValue('notes.doc', doc && { ...doc.doc, version: doc.version })
+  useDebugValue('notes.file', doc && doc.file)
+  useDebugValue('notes.returnUrl', returnUrl)
+
+  // rendering
+  if (loading) {
+    return <EditorLoading />
+  } else if (doc) {
+    return (
+      <>
+        <EditorView
+          readOnly={readOnly}
+          onTitleChange={onLocalTitleChange}
+          onTitleBlur={emergencySync}
+          collabProvider={collabProvider}
+          defaultTitle={t('Notes.Editor.title_placeholder')}
+          defaultValue={{ ...doc.doc, version: doc.version }}
+          title={title && title.length > 0 ? title : undefined}
+          leftComponent={
+            <BackFromEditing
+              returnUrl={returnUrl}
+              file={doc.file}
+              requestToLeave={requestToLeave}
+            />
+          }
+          rightComponent={!isPublic && <SharingWidget file={doc.file} />}
+        />
+        <SavingIndicator collabProvider={collabProvider} />
+        {exitConfirmationModal}
+      </>
+    )
+  } else {
+    return <EditorLoadingError returnUrl={returnUrl} />
+  }
+})
 
 export default Editor
