@@ -64,7 +64,7 @@ export class Channel {
   }
 
   /**
-   * Check if something is not fully sent to the server
+   * Checks if something is not fully sent to the server
    *
    * @returns {bool}
    */
