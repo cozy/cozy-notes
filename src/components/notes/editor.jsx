@@ -64,7 +64,9 @@ const Editor = translate()(
       activate: () => dirtyRef.current,
       onLeave: emergencySync,
       title: t('Notes.Editor.exit_confirmation_title'),
-      message: t('Notes.Editor.exit_confirmation_message')
+      message: t('Notes.Editor.exit_confirmation_message'),
+      leaveLabel: t('Notes.Editor.exit_confirmation_leave'),
+      cancelLabel: t('Notes.Editor.exit_confirmation_cancel')
     })
 
     useDebugValue('client', cozyClient)
