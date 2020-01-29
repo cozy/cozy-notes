@@ -5,7 +5,7 @@
     },
     "Delete": {
       "delete_note": "Supprimer",
-      "deleted": "La note à été supprimée",
+      "deleted": "La note a été placée dans la corbeille de votre Drive",
       "failed": "La note n'a pas pu être supprimée, merci de re-essayer plus tard"
     },
     "EditorView": {
