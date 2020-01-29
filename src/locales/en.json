@@ -5,7 +5,7 @@
     },
     "Delete": {
       "delete_note": "Delete",
-      "deleted": "The note has been deleted",
+      "deleted": "The note has been moved to the trash of your Drive",
       "failed": "The note could not be deleted, please try again"
     },
     "EditorView": {
