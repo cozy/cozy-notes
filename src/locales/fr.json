@@ -29,6 +29,19 @@
     "Empty": {
       "welcome": "Bienvenue sur Cozy Notes",
       "after_created": "Une fois votre note créée, il vous est possible de la retrouver dans "
+    },
+    "SavingIndicator": {
+      "saved_just_now": "Enregistré à l'instant.",
+      "saved_secs_ago": "Enregistré il y a %{time} sec.",
+      "saved_min_ago": "Enregistré il y a %{time} min.",
+      "saved_mins_ago": "Enregistré il y a %{time} min.",
+      "saved_hour_ago": "Enregistré il y a %{time} heure.",
+      "saved_hours_ago": "Enregistré il y a %{time} heures.",
+      "saved_day_ago": "Enregistré il y a %{time} jour.",
+      "saved_days_ago": "Enregistré il y a %{time} jours.",
+      "saving": "Enregistrement en cours...",
+      "saving_impossible": "Enregistrement impossible.",
+      "new_attempt": "Nouvelle tentative..."
     }
   },
   "Error": {

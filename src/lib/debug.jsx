@@ -65,7 +65,6 @@ set(window, 'cozy.debug.notes.debugCollab', async function debugCollab() {
 
       data.noteId = get(window, 'cozy.debug.notes.noteId')
       data.initialVersion = get(window, 'cozy.debug.notes.initialVersion')
-      data.isDirty = get(window, 'cozy.debug.notes.dirtyRef.current')
       data.returnUrl = get(window, 'cozy.debug.notes.returnUrl')
 
       const state = collabProvider && collabProvider.getState()
@@ -91,6 +90,15 @@ set(window, 'cozy.debug.notes.debugCollab', async function debugCollab() {
         version: queuedVersion,
         steps: queuedSteps,
         length: queuedSteps && queuedSteps.length
+      }
+
+      const dirtySince = collabProvider.isDirty()
+      const lastRemoteSync = collabProvider.getLastRemoteSync()
+      const lastLocalSave = collabProvider.getLastLocalSave()
+      data.collabState = {
+        dirtySince,
+        lastRemoteSync,
+        lastLocalSave
       }
 
       let error = get(window, 'cozy.debug.notes.lastPatchError')

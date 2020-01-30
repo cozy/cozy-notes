@@ -37,6 +37,7 @@ export class CollabProvider {
   initialize(getState) {
     this.getState = getState
     this.channel.on('connected', ({ doc, version }) => {
+      this.listenStateEvents()
       const { sessionId } = this.config
       this.emit('init', { sid: sessionId, doc, version }) // Set initial document
       this.emit('connected', { sid: sessionId }) // Let the plugin know that we're connected an ready to go
@@ -312,6 +313,110 @@ export class CollabProvider {
    */
   unsubscribeAll(evt) {
     this.eventEmitter.removeAllListeners(evt)
+  }
+
+  /**
+   * Checks if something is not fully sent to the server
+   *
+   * @returns {bool}
+   */
+  isDirty() {
+    return !!this.dirtySince
+  }
+
+  /**
+   * Date since which something is waiting to be sent to the server
+   *
+   * @returns {Date|undefined} undefined if the state is not dirty
+   */
+  getDirtySince() {
+    return this.dirtySince
+  }
+
+  /**
+   * Date of the last save of local state to the server
+   *
+   * @returns {Date|undefined}
+   */
+  getLastLocalSave() {
+    return this.lastLocalSave
+  }
+
+  /**
+   * Date of the last sync with data from the server
+   *
+   * @returns {Date|undefined}
+   */
+  getLastRemoteSync() {
+    return this.lastRemoteSync
+  }
+
+  /**
+   * Date of last update with the server (both in or out)
+   *
+   * @returns {Date|undefined}
+   */
+  getLastSaveOrSync() {
+    return this.lastLocalSave > this.lastRemoteSync
+      ? this.lastRemoteSync
+      : this.lastLocalSave
+  }
+
+  /**
+   * When we successfuly save local changes to the server
+   *
+   * @private
+   */
+  onLocalSave() {
+    this.lastLocalSave = new Date()
+    this.emit('collab-state-change')
+  }
+
+  /**
+   * When we successfuly get remote changes from the server
+   *
+   * @private
+   */
+  onRemoteSync() {
+    this.lastRemoteSync = new Date()
+    this.emit('collab-state-change')
+  }
+
+  /**
+   * When we empty the queue of data to be sent to the server
+   * and none is being sent at the moment
+   *
+   * @private
+   */
+  onChannelEmptyQueue() {
+    this.dirtySince = undefined
+    this.emit('collab-state-change')
+  }
+
+  /**
+   * When we add  something to the queue of data to be sent to the server
+   *
+   * @private
+   */
+  onChannelEnqueue() {
+    if (!this.dirtySince) {
+      this.dirtySince = new Date()
+      this.emit('collab-state-change')
+    }
+  }
+
+  /**
+   * Listen to events from and to the server
+   * to update the current dirty state and last save dates
+   *
+   * @private
+   */
+  listenStateEvents() {
+    this.channel.on('emptyQueue', this.onChannelEmptyQueue.bind(this))
+    this.channel.on('enqueueSteps', this.onChannelEnqueue.bind(this))
+    this.channel.on('successfulPatch', this.onLocalSave.bind(this))
+    this.on('data', this.onRemoteSync.bind(this))
+    this.on('init', this.onRemoteSync.bind(this))
   }
 }
 
