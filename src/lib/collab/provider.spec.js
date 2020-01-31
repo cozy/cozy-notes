@@ -575,4 +575,93 @@ describe('CollabProvider', () => {
       })
     })
   })
+
+  describe('setReadOnly', () => {
+    const setup = (readOnly, callback) => {
+      const collab = new CollabProvider(config, service)
+      collab.initialize(getState)
+      callback && callback(collab)
+      collab.setReadOnly(readOnly)
+      return collab
+    }
+
+    describe('when true', () => {
+      it('does not send local steps to the channel', async () => {
+        const collab = setup(true)
+        collab.send({ steps }, { doc }, { doc })
+        expect(channel.sendSteps).not.toHaveBeenCalled()
+      })
+
+      it('does not send telepointers', async () => {
+        const collab = setup(true)
+        collab.sendMessage({ type: 'telepointer' })
+        expect(channel.sendTelepointer).not.toHaveBeenCalled()
+      })
+
+      it('cancels local steps when there are any', async () => {
+        const collab = setup(true, collab => {
+          collab.cancelLocalChanges = jest.fn()
+        })
+        expect(collab.cancelLocalChanges).toHaveBeenCalled()
+      })
+
+      it('should return true to isReadOnly', async () => {
+        const collab = setup(true)
+        expect(collab.isReadOnly()).toBeTruthy()
+      })
+    })
+
+    describe('when false', () => {
+      it('does send local steps to the channel', async () => {
+        const collab = setup(false)
+        collab.send({ steps }, { doc }, { doc })
+        expect(channel.sendSteps).toHaveBeenCalled()
+      })
+
+      it('does send telepointers', async () => {
+        const collab = setup(false)
+        collab.sendMessage({ type: 'telepointer' })
+        expect(channel.sendTelepointer).toHaveBeenCalled()
+      })
+
+      it('does not cancel local steps when there are any', async () => {
+        const collab = setup(false, collab => {
+          collab.cancelLocalChanges = jest.fn()
+        })
+        expect(collab.cancelLocalChanges).not.toHaveBeenCalled()
+      })
+
+      it('should not return true to isReadOnly', async () => {
+        const collab = setup(false)
+        expect(collab.isReadOnly()).toBeFalsy()
+      })
+    })
+
+    describe('cancelLocalChanges', () => {
+      it('re-init the document', async () => {
+        const collab = new CollabProvider(config, service)
+        collab.initialize(getState)
+
+        getState.mockImplementation(() => ({
+          collab$: {
+            version: 456,
+            unconfirmed: [
+              {
+                origin: {
+                  docs: [{ my: 'state', toJSON: jest.fn() }]
+                }
+              }
+            ]
+          }
+        }))
+
+        const init = jest.fn()
+        collab.on('init', init)
+
+        collab.cancelLocalChanges()
+        await wait(120)
+        expect(init).toHaveBeenCalled()
+      })
+    })
+  })
 })

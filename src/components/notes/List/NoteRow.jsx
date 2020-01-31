@@ -65,8 +65,8 @@ const NoteRow = ({ note, f, t, client, breakpoints: { isMobile } }) => {
             <TableCell className={styles.tableCell}>—</TableCell>
             <TableCell className={styles.tableCell}>
               <span ref={menuTriggerRef}>
-                <IconButton>
-                  <Icon onClick={openMenu} icon="dots" />
+                <IconButton onClick={openMenu}>
+                  <Icon icon="dots" />
                 </IconButton>
               </span>
             </TableCell>

@@ -3,6 +3,8 @@ import { getVersion, sendableSteps } from 'prosemirror-collab'
 import { JSONTransformer } from '@atlaskit/editor-json-transformer'
 import { Channel } from './channel'
 import { getParticipant } from './participant'
+import get from 'lodash/get'
+import debounce from 'lodash/debounce'
 
 const jsonTransformer = new JSONTransformer()
 
@@ -19,6 +21,11 @@ export class CollabProvider {
     this.config = { ...config }
     this.config['sessionId'] = serviceClient.getSessionId()
     this.config['userId'] = serviceClient.getUserId()
+    // this debounce is primary here to introduce a short delay so that
+    // the local step is definitively applied in the editor. The debounce
+    // is the optional additional value to avoid reseting the state too much
+    this.cancelLocalChanges = debounce(this.cancelLocalChanges.bind(this), 100)
+    this.setReadOnly(!!this.config['readOnly'])
     this.serviceClient = serviceClient
     this.channel = config.channel || new Channel(this.config, serviceClient)
     this.eventEmitter = new EventEmitter2()
@@ -63,7 +70,11 @@ export class CollabProvider {
    */
   send(tr, oldState, newState) {
     // Ignore transactions without steps
-    if (!tr.steps || !tr.steps.length) {
+    if (!tr.steps || !tr.steps.length) return
+
+    // cancel changes on a readonly document
+    if (this.isReadOnly()) {
+      this.cancelLocalChanges()
       return
     }
 
@@ -74,7 +85,7 @@ export class CollabProvider {
    * Send messages, such as telepointers, to other participants.
    */
   sendMessage(data) {
-    if (!data) {
+    if (!data || this.isReadOnly()) {
       return
     }
 
@@ -133,7 +144,7 @@ export class CollabProvider {
         // get local steps and re-emit them after reinit the whole document
         const { steps: localSteps = [] } = sendableSteps(this.getState()) || {}
         this.emit('init', { sid: sessionId, doc, version })
-        if (localSteps.length) {
+        if (localSteps.length && !this.isReadOnly()) {
           this.emit('local-steps', { steps: localSteps })
         }
       } else if (steps.length > 0) {
@@ -417,6 +428,41 @@ export class CollabProvider {
     this.channel.on('successfulPatch', this.onLocalSave.bind(this))
     this.on('data', this.onRemoteSync.bind(this))
     this.on('init', this.onRemoteSync.bind(this))
+  }
+
+  /**
+   * Checks if the editor should be readonly
+   *
+   * @returns {bool}
+   */
+  isReadOnly() {
+    return this.readOnly
+  }
+
+  /**
+   * Set the editor readonly or readwrite
+   *
+   * @param {bool} readOnly - true by default
+   */
+  setReadOnly(readOnly = true) {
+    this.readOnly = !!readOnly
+    if (this.readOnly) this.cancelLocalChanges()
+  }
+
+  /**
+   * Remove all local changes  and go back to the server state
+   */
+  cancelLocalChanges() {
+    const currentState = this.getState && this.getState()
+    if (currentState) {
+      const rawDoc = get(currentState, 'collab$.unconfirmed[0].origin.docs[0]')
+      const version = get(currentState, 'collab$.version')
+      const sid = this.config['sessionId']
+      if (rawDoc && version && sid) {
+        const doc = rawDoc.toJSON()
+        this.emit('init', { doc, version, sid })
+      }
+    }
   }
 }
 

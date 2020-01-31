@@ -1,6 +1,19 @@
 import { useMemo } from 'react'
 import CollabProvider from 'lib/collab/provider'
 
+/**
+ * @typedef {object} useCollabProviderParams
+ * @property {integer|undefined} docVersion - current version of the doc
+ * @property {string} noteId - uuid of the io.cozy.files for the note
+ * @property {ServiceClient|undefined} serviceClient - ServiceClient instance
+ */
+
+/**
+ * Initialize a CollabProvider
+ *
+ * @param {useCollabProviderParams} params
+ * @returns {CollabProvider|undefined}
+ */
 function useCollabProvider({ docVersion, noteId, serviceClient }) {
   return useMemo(
     () => {
@@ -9,21 +22,7 @@ function useCollabProvider({ docVersion, noteId, serviceClient }) {
           { version: docVersion, noteId },
           serviceClient
         )
-        return {
-          collabProvider: provider,
-          // The following `collabProviderPlugin` object is defined
-          // in an Atlassian API. The attribute `provider` is expected
-          // to be a Promise, even if we don't need one ourselves here.
-          collabProviderPlugin: {
-            useNativePlugin: true,
-            provider: Promise.resolve(provider),
-            inviteToEditHandler: () => undefined,
-            isInviteToEditButtonSelected: false,
-            userId: serviceClient.getSessionId()
-          }
-        }
-      } else {
-        return {}
+        return provider
       }
     },
     [noteId, docVersion, serviceClient]
