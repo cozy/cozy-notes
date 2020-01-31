@@ -20,9 +20,17 @@ const channel = {
 }
 const service = {
   getSessionId: jest.fn(),
-  getUserId: jest.fn()
+  getUserId: jest.fn(),
+  pushSteps: jest.fn(),
+  onStepsCreated: jest.fn(),
+  onTelepointerUpdated: jest.fn(),
+  join: jest.fn(),
+  getSteps: jest.fn(),
+  pushTelepointer: jest.fn()
 }
 const config = { noteId, version, channel }
+const configWithoutChannel = { noteId, version }
+
 const getState = jest.fn()
 const steps = [{ example: version + 1 }, { example: version + 2 }]
 
@@ -384,6 +392,187 @@ describe('CollabProvider', () => {
       collab.processQueue()
       expect(processSteps).not.toHaveBeenCalled()
       expect(collab.programCatchup).toHaveBeenCalled()
+    })
+  })
+
+  describe('Collab states', () => {
+    describe('getdirtySince', () => {
+      describe('when nothing is sent', () => {
+        it('should be falsy', () => {
+          const collab = new CollabProvider(configWithoutChannel, service)
+          collab.initialize(getState)
+          expect(collab.isDirty()).toBeFalsy()
+          expect(collab.getDirtySince()).toBeFalsy()
+        })
+      })
+
+      describe('when sending something to the server', () => {
+        it('should return a date', async () => {
+          let resolvePushSteps
+          const promise = new Promise(resolve => {
+            resolvePushSteps = resolve
+          })
+          service.pushSteps.mockImplementation(async () => promise)
+          const collab = new CollabProvider(configWithoutChannel, service)
+          collab.initialize(getState)
+          collab.send({ steps }, { doc })
+          await wait(10)
+          expect(collab.isDirty()).toBeTruthy()
+          expect(collab.getDirtySince()).toBeInstanceOf(Date)
+          resolvePushSteps()
+        })
+      })
+
+      describe('when sending multiple things to the server', () => {
+        it('should note change the date', async () => {
+          let resolvePushSteps
+          const promise = new Promise(resolve => {
+            resolvePushSteps = resolve
+          })
+          service.pushSteps.mockImplementation(async () => promise)
+          const collab = new CollabProvider(configWithoutChannel, service)
+          collab.initialize(getState)
+          collab.send({ steps }, { doc })
+          await wait(10)
+          const date = collab.getDirtySince()
+          collab.send({ steps }, { doc })
+          await wait(10)
+          expect(collab.getDirtySince()).toBe(date)
+          resolvePushSteps()
+        })
+      })
+
+      describe('after sending something to the server', () => {
+        it('should be falsy', async () => {
+          let resolvePushSteps
+          const promise = new Promise(resolve => {
+            resolvePushSteps = resolve
+          })
+          service.pushSteps.mockImplementation(async () => promise)
+          const collab = new CollabProvider(configWithoutChannel, service)
+          collab.initialize(getState)
+          collab.send({ steps }, { doc })
+          await wait(10)
+          resolvePushSteps()
+          await wait(10)
+          expect(collab.isDirty()).toBeFalsy()
+          expect(collab.getDirtySince()).toBeFalsy()
+        })
+      })
+
+      describe('when sending something back again to the server', () => {
+        it('should return a fresher date', async () => {
+          let resolvePushSteps
+          service.pushSteps.mockImplementation(
+            async () =>
+              new Promise(resolve => {
+                resolvePushSteps = resolve
+              })
+          )
+          const collab = new CollabProvider(configWithoutChannel, service)
+          collab.initialize(getState)
+          collab.send({ steps }, { doc })
+          await wait(10)
+          const time = collab.getDirtySince().getTime()
+          resolvePushSteps()
+          await wait(10)
+          collab.send({ steps }, { doc })
+          await wait(10)
+          expect(collab.getDirtySince().getTime()).toBeGreaterThan(time)
+          resolvePushSteps()
+        })
+      })
+    })
+
+    describe('getLastLocalSave', () => {
+      describe('after init', () => {
+        it('should be falsy', () => {
+          const collab = new CollabProvider(configWithoutChannel, service)
+          collab.initialize(getState)
+          expect(collab.getLastLocalSave()).toBeFalsy()
+        })
+
+        describe('before a complete save', () => {
+          it('should be falsy', async () => {
+            let resolvePushSteps
+            const promise = new Promise(resolve => {
+              resolvePushSteps = resolve
+            })
+            service.pushSteps.mockImplementation(async () => promise)
+            const collab = new CollabProvider(configWithoutChannel, service)
+            collab.initialize(getState)
+            collab.send({ steps }, { doc })
+            await wait(10)
+            expect(collab.getLastLocalSave()).toBeFalsy()
+            resolvePushSteps()
+          })
+        })
+      })
+
+      describe('after a successful save', () => {
+        it('should return a date', async () => {
+          let resolvePushSteps
+          const promise = new Promise(resolve => {
+            resolvePushSteps = resolve
+          })
+          service.pushSteps.mockImplementation(async () => promise)
+          const collab = new CollabProvider(configWithoutChannel, service)
+          collab.initialize(getState)
+          collab.send({ steps }, { doc })
+          await wait(10)
+          resolvePushSteps()
+          await wait(10)
+          expect(collab.getLastLocalSave()).toBeInstanceOf(Date)
+          resolvePushSteps()
+        })
+
+        describe('before a second complete save', () => {
+          it('should not change the date', async () => {
+            let resolvePushSteps
+            service.pushSteps.mockImplementation(
+              async () =>
+                new Promise(resolve => {
+                  resolvePushSteps = resolve
+                })
+            )
+            const collab = new CollabProvider(configWithoutChannel, service)
+            collab.initialize(getState)
+            collab.send({ steps }, { doc })
+            await wait(10)
+            resolvePushSteps()
+            await wait(10)
+            const date = collab.getLastLocalSave()
+            collab.send({ steps }, { doc })
+            await wait(10)
+            expect(collab.getLastLocalSave()).toBe(date)
+            resolvePushSteps()
+          })
+        })
+
+        describe('after a second save', () => {
+          it('should update the date', async () => {
+            let resolvePushSteps
+            service.pushSteps.mockImplementation(
+              async () =>
+                new Promise(resolve => {
+                  resolvePushSteps = resolve
+                })
+            )
+            const collab = new CollabProvider(configWithoutChannel, service)
+            collab.initialize(getState)
+            collab.send({ steps }, { doc })
+            await wait(10)
+            resolvePushSteps()
+            await wait(10)
+            const time = collab.getLastLocalSave().getTime()
+            collab.send({ steps }, { doc })
+            await wait(10)
+            resolvePushSteps()
+            await wait(10)
+            expect(collab.getLastLocalSave().getTime()).toBeGreaterThan(time)
+          })
+        })
+      })
     })
   })
 })

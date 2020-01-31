@@ -8,7 +8,7 @@ module.exports = {
     // identity-obj-proxy module is installed by cozy-scripts
     '\\.(css|styl)$': 'identity-obj-proxy',
     '^cozy-client$': 'cozy-client/dist/index.js',
-    'cozy-ui/react': 'cozy-ui/transpiled/react'
+    '^cozy-ui/react(.*)$': 'cozy-ui/transpiled/react$1'
   },
   transformIgnorePatterns: ['node_modules/(?!cozy-ui)'],
   transform: {

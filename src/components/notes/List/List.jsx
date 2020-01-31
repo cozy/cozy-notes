@@ -47,6 +47,7 @@ const List = ({ t, notes, fetchStatus }) => {
           <TableHeader className={styles.tableCell}>
             {t('Notes.List.sharings')}
           </TableHeader>
+          <TableHeader className={styles.tableCell} />
         </TableRow>
       </TableHead>
       <TableBody>

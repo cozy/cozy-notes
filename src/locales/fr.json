@@ -3,13 +3,20 @@
     "Add": {
       "add_note": "Ajouter une note"
     },
+    "Delete": {
+      "delete_note": "Supprimer",
+      "deleted": "La note a été placée dans la corbeille de votre Drive",
+      "failed": "La note n'a pas pu être supprimée, merci de re-essayer plus tard"
+    },
     "EditorView": {
       "main_placeholder": "Écrivez ce que vous souhaitez…"
     },
     "Editor": {
       "title_placeholder": "Ici votre titre",
-      "exit_confirmation_message": "Des modifications n’ont pas encore pu être enregistrées sur cette note. Voulez-vous vraiment quitter et perdre ces modifications ?",
-      "exit_confirmation_title": "Quitter cette note ?"
+      "exit_confirmation_message": "La sauvegarde automatique n'a pas encore pris en compte vos dernières modifications. Merci de retourner sur votre note pour ne pas les perdre.",
+      "exit_confirmation_title": "Abandonner les modifications ?",
+      "exit_confirmation_leave": "Quitter sans sauvegarder",
+      "exit_confirmation_cancel": "Retour"
     },
     "List": {
       "my_notes": "Mes Notes",
@@ -22,6 +29,19 @@
     "Empty": {
       "welcome": "Bienvenue sur Cozy Notes",
       "after_created": "Une fois votre note créée, il vous est possible de la retrouver dans "
+    },
+    "SavingIndicator": {
+      "saved_just_now": "Enregistré à l'instant.",
+      "saved_secs_ago": "Enregistré il y a %{time} sec.",
+      "saved_min_ago": "Enregistré il y a %{time} min.",
+      "saved_mins_ago": "Enregistré il y a %{time} min.",
+      "saved_hour_ago": "Enregistré il y a %{time} heure.",
+      "saved_hours_ago": "Enregistré il y a %{time} heures.",
+      "saved_day_ago": "Enregistré il y a %{time} jour.",
+      "saved_days_ago": "Enregistré il y a %{time} jours.",
+      "saving": "Enregistrement en cours...",
+      "saving_impossible": "Enregistrement impossible.",
+      "new_attempt": "Nouvelle tentative..."
     }
   },
   "Error": {

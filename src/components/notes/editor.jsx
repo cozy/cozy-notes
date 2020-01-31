@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect, useContext, useCallback } from 'react'
 
 import { withClient } from 'cozy-client'
 
@@ -6,6 +6,7 @@ import EditorView from 'components/notes/editor-view'
 import EditorLoading from 'components/notes/editor-loading'
 import EditorLoadingError from 'components/notes/editor-loading-error'
 import SharingWidget from 'components/notes/sharing'
+import SavingIndicator from 'components/notes/saving-indicator'
 import BackFromEditing from 'components/notes/back_from_editing'
 import IsPublicContext from 'components/IsPublicContext'
 import useNote from 'hooks/useNote'
@@ -15,7 +16,6 @@ import useTitleChanges from 'hooks/useTitleChanges'
 import useForceSync from 'hooks/useForceSync'
 import useReturnUrl from 'hooks/useReturnUrl'
 import useUser from 'hooks/useUser'
-import useCollaborationState from 'hooks/useCollaborationState'
 import { useDebugValue } from 'lib/debug'
 
 import useConfirmExit from 'cozy-ui/react/hooks/useConfirmExit'
@@ -59,12 +59,16 @@ const Editor = translate()(
     // when leaving the component or changing doc
     useEffect(() => forceSync, [noteId, doc, forceSync])
     // when quitting the webpage
-    const { dirtyRef } = useCollaborationState(collabProvider)
+    const activate = useCallback(() => collabProvider.isDirty(), [
+      collabProvider
+    ])
     const { exitConfirmationModal, requestToLeave } = useConfirmExit({
-      activate: () => dirtyRef.current,
+      activate,
       onLeave: emergencySync,
       title: t('Notes.Editor.exit_confirmation_title'),
-      message: t('Notes.Editor.exit_confirmation_message')
+      message: t('Notes.Editor.exit_confirmation_message'),
+      leaveLabel: t('Notes.Editor.exit_confirmation_leave'),
+      cancelLabel: t('Notes.Editor.exit_confirmation_cancel')
     })
 
     useDebugValue('client', cozyClient)
@@ -75,7 +79,6 @@ const Editor = translate()(
     useDebugValue('notes.doc', doc && { ...doc.doc, version: doc.version })
     useDebugValue('notes.file', doc && doc.file)
     useDebugValue('notes.returnUrl', returnUrl)
-    useDebugValue('notes.dirtyRef', dirtyRef)
 
     // rendering
     if (loading) {
@@ -99,6 +102,7 @@ const Editor = translate()(
             }
             rightComponent={!isPublic && <SharingWidget file={doc.file} />}
           />
+          <SavingIndicator collabProvider={collabProvider} />
           {exitConfirmationModal}
         </>
       )

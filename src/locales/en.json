@@ -3,13 +3,20 @@
     "Add": {
       "add_note": "Add a note"
     },
+    "Delete": {
+      "delete_note": "Delete",
+      "deleted": "The note has been moved to the trash of your Drive",
+      "failed": "The note could not be deleted, please try again"
+    },
     "EditorView": {
       "main_placeholder": "Write anything…"
     },
     "Editor": {
       "title_placeholder": "Here is your title",
-      "exit_confirmation_message": "Some changes inside the note have not been saved yet. Do you want to quit and lose these changes?",
-      "exit_confirmation_title": "Leave this note?"
+      "exit_confirmation_message": "Automatic saving has not taken into account the latest changes in your doc. Please stay on your current note if you want to keep them.",
+      "exit_confirmation_title": "Abandon your changes?",
+      "exit_confirmation_leave": "Leave without saving",
+      "exit_confirmation_cancel": "Cancel"
     },
     "List": {
       "my_notes": "My Notes",
@@ -22,6 +29,19 @@
     "Empty": {
       "welcome": "Welcome on Cozy Notes",
       "after_created": "Once your Note is created, you can find it in your "
+    },
+    "SavingIndicator": {
+      "saved_just_now": "Saved just now.",
+      "saved_secs_ago": "Saved %{time} sec ago.",
+      "saved_min_ago": "Saved %{time} min ago.",
+      "saved_mins_ago": "Saved %{time} min ago.",
+      "saved_hour_ago": "Saved %{time} hour ago.",
+      "saved_hours_ago": "Saved %{time} hours ago.",
+      "saved_day_ago": "Saved %{time} day ago.",
+      "saved_days_ago": "Saved %{time} days ago.",
+      "saving": "Saving...",
+      "saving_impossible": "Impossible to save.",
+      "new_attempt": "New attempt..."
     }
   },
   "Error": {
