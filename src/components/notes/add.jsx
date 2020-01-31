@@ -10,11 +10,14 @@ import { createNoteDocument, generateReturnUrlToNotesIndex } from 'lib/utils'
 
 const Add = ({ t, className, client }) => {
   const [isWorking, setIsWorking] = useState(false)
-  const handleClick = useCallback(async () => {
-    setIsWorking(true)
-    const { data: doc } = await createNoteDocument(client)
-    window.location.href = generateReturnUrlToNotesIndex(doc)
-  }, [])
+  const handleClick = useCallback(
+    async () => {
+      setIsWorking(true)
+      const { data: doc } = await createNoteDocument(client)
+      window.location.href = generateReturnUrlToNotesIndex(doc)
+    },
+    [client]
+  )
 
   return (
     <Button

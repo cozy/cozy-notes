@@ -25,7 +25,7 @@ function useTitleChanges({ noteId, title, setTitle, serviceClient }) {
           }
         })
     },
-    [title, setTitle, serviceClient]
+    [title, setTitle, serviceClient, noteId]
   )
   // whatever the change is, keep the tab title updated
   const appFullName = useMemo(getAppFullName, [])
@@ -34,7 +34,7 @@ function useTitleChanges({ noteId, title, setTitle, serviceClient }) {
       document.title =
         title && title != '' ? `${title} - ${appFullName}` : appFullName
     },
-    [title]
+    [appFullName, title]
   )
   return { onLocalTitleChange }
 }

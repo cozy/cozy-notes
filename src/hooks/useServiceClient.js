@@ -6,7 +6,7 @@ function useServiceClient({ userId, userName, cozyClient }) {
     () => {
       return new ServiceClient({ userId, userName, cozyClient })
     },
-    [userId, userName]
+    [cozyClient, userId, userName]
   )
 }
 

@@ -18,21 +18,27 @@ const NoteRow = ({ note, f, t, client, breakpoints: { isMobile } }) => {
   const { filename, extension } = CozyFile.splitFilename(note)
 
   const [isMenuOpen, setMenuOpen] = useState(false)
-  const openMenu = useCallback(e => {
-    setMenuOpen(true)
-    e.stopPropagation()
-  })
-  const closeMenu = useCallback(() => setMenuOpen(false))
+  const openMenu = useCallback(
+    e => {
+      setMenuOpen(true)
+      e.stopPropagation()
+    },
+    [setMenuOpen]
+  )
+  const closeMenu = useCallback(() => setMenuOpen(false), [setMenuOpen])
 
-  const deleteNote = useCallback(async () => {
-    try {
-      await client.destroy(note)
-      setMenuOpen(false)
-      Alerter.info(t('Notes.Delete.deleted'))
-    } catch (error) {
-      Alerter.error(t('Notes.Delete.failed'))
-    }
-  })
+  const deleteNote = useCallback(
+    async () => {
+      try {
+        await client.destroy(note)
+        setMenuOpen(false)
+        Alerter.info(t('Notes.Delete.deleted'))
+      } catch (error) {
+        Alerter.error(t('Notes.Delete.failed'))
+      }
+    },
+    [client, note, t, setMenuOpen]
+  )
 
   const menuTriggerRef = React.createRef()
 

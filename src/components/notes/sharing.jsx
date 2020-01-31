@@ -15,7 +15,7 @@ export default withClient(function SharingWidget(props) {
   const noteId = file && file.id
 
   const [showModal, setShowModal] = useState(false)
-  const onClick = useCallback(() => setShowModal(!showModal), [])
+  const onClick = useCallback(() => setShowModal(!showModal), [showModal])
   const onClose = useCallback(() => setShowModal(false), [])
 
   return (

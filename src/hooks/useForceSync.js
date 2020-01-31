@@ -17,7 +17,7 @@ function useForceSync({ doc, collabProvider }) {
         await serviceClient.sync(noteId)
       }
     },
-    [doc, channel, serviceClient]
+    [doc, channel, serviceClient, noteId]
   )
 
   // Sync on unload will probably be stopped by the browser,
