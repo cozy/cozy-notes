@@ -33,21 +33,32 @@ const PrivateContext = () => (
 
 const PublicContext = withClient(({ client }) => {
   const [sharedDocumentId, setSharedDocumentId] = useState(null)
+  const [readOnly, setReadOnly] = useState(false)
   const returnUrl = useMemo(() => getReturnUrl(), [])
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const id = await getSharedDocument(client)
-        setSharedDocumentId(id)
-      } catch {
-        setSharedDocumentId(false)
+  useEffect(
+    () => {
+      const fetchData = async () => {
+        try {
+          const { id, readOnly } = await getSharedDocument(client)
+          setReadOnly(readOnly)
+          setSharedDocumentId(id)
+        } catch {
+          setSharedDocumentId(false)
+        }
       }
-    }
-    fetchData()
-  }, [])
+      fetchData()
+    },
+    [client]
+  )
   if (sharedDocumentId) {
-    return <Editor noteId={sharedDocumentId} returnUrl={returnUrl || false} />
+    return (
+      <Editor
+        readOnly={readOnly}
+        noteId={sharedDocumentId}
+        returnUrl={returnUrl || false}
+      />
+    )
   } else if (sharedDocumentId !== null) {
     return <Unshared />
   } else {

@@ -28,16 +28,40 @@ export const generateReturnUrlToNotesIndex = doc => {
   url.hash = `#/n/${doc.id}`
   return url
 }
+
+/**
+ * Is this permission read only for a note?
+ *
+ * @param {object} perm - permission node in a io.cozy.permissions document
+ * @returns {bool} true if the note should be displayed read-only
+ */
+function isPermissionReadOnly(perm) {
+  //  PATCH is included by default, and in the ALL shortcut
+  return (
+    perm.verbs &&
+    perm.verbs &&
+    perm.verbs.length > 0 &&
+    !perm.verbs.includes('PATCH') &&
+    !perm.verbs.includes('ALL')
+  )
+}
+
+/**
+ * Get the first shared document for the current shared token
+ *
+ * @param {CozyClient} client
+ * @returns {{id, readOnly}} id of the document and the readOnly status
+ */
 export async function getSharedDocument(client) {
   const { data: permissionsData } = await client
     .collection('io.cozy.permissions')
     .getOwnPermissions()
-
   const permissions = permissionsData.attributes.permissions
   // permissions contains several named keys, but the one to use depends on the situation. Using the first one is what we want in all known cases.
-  const sharedDocumentId = get(Object.values(permissions), '0.values.0')
-
-  return sharedDocumentId
+  const perm = get(Object.values(permissions), '0')
+  const sharedDocumentId = perm && get(perm, 'values.0')
+  const readOnly = perm && isPermissionReadOnly(perm)
+  return { id: sharedDocumentId, readOnly }
 }
 
 export function getParentFolderId(file) {
