@@ -7,6 +7,24 @@ import get from 'lodash/get'
 import debounce from 'lodash/debounce'
 
 const jsonTransformer = new JSONTransformer()
+// Using the jsonTransformer directly introduce a bug for empty documents
+// with only one paragraph. The transformed document has no content
+// (not even the paragraph) and makes the Editor to always when think
+// it is as version=0. This would break the catchup logic.
+// This patch fixes this unique case, creating a correct empty document with
+// an empty paragraph
+const oldEncode = jsonTransformer.encode.bind(jsonTransformer)
+jsonTransformer.encode = function(doc) {
+  const transformed = oldEncode(doc)
+  if (transformed.content.length === 0 && doc.content.length != 0) {
+    return {
+      content: [{ type: 'paragraph', content: [] }],
+      type: 'doc'
+    }
+  } else {
+    return transformed
+  }
+}
 
 /**
  * The CollabProvider is called directly by the
