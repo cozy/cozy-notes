@@ -1,5 +1,4 @@
 /* global cozy */
-
 import React, { useState, useEffect, useMemo } from 'react'
 import { hot } from 'react-hot-loader'
 import { Route, Switch, HashRouter, withRouter } from 'react-router-dom'
@@ -17,6 +16,7 @@ import { getReturnUrl, getSharedDocument } from 'lib/utils'
 import { useFlagSwitcher } from 'lib/debug'
 
 import { getDataOrDefault } from 'lib/initFromDom'
+import { fetchIfIsNoteReadOnly } from '../lib/utils'
 
 const RoutedEditor = withRouter(props => {
   const returnUrl = getReturnUrl()
@@ -39,9 +39,24 @@ const PublicContext = withClient(({ client }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { id, readOnly } = await getSharedDocument(client)
-        setReadOnly(readOnly)
-        setSharedDocumentId(id)
+        const searchParams = new URLSearchParams(window.location.search)
+        if (searchParams.has('id')) {
+          // public route = /public/?sharecode=xxxx&id=xxxxx
+          // The id of the note is necessary because the sharecode
+          // may be about a folder and not a specific note.
+          const id = searchParams.get('id')
+          const readOnly = await fetchIfIsNoteReadOnly(client, id)
+          setReadOnly(readOnly)
+          setSharedDocumentId(id)
+        } else {
+          // public route = /public/?sharecode=xxxxx
+          // There is no id. It should be a sharecode
+          // dedicated to a unique note. We look into
+          // permissions and try to open the first file.
+          const { id, readOnly } = await getSharedDocument(client)
+          setReadOnly(readOnly)
+          setSharedDocumentId(id)
+        }
       } catch {
         setSharedDocumentId(false)
       }
