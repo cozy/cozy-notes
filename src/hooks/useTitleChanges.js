@@ -16,26 +16,20 @@ function useTitleChanges({ noteId, title, setTitle, serviceClient }) {
     [noteId, title, setTitle, serviceClient]
   )
   // Title change because of a remote change from the stack
-  useEffect(
-    () => {
-      serviceClient &&
-        serviceClient.onTitleUpdated(noteId, modifiedTitle => {
-          if (title != modifiedTitle) {
-            setTitle(modifiedTitle)
-          }
-        })
-    },
-    [title, setTitle, serviceClient, noteId]
-  )
+  useEffect(() => {
+    serviceClient &&
+      serviceClient.onTitleUpdated(noteId, modifiedTitle => {
+        if (title != modifiedTitle) {
+          setTitle(modifiedTitle)
+        }
+      })
+  }, [title, setTitle, serviceClient, noteId])
   // whatever the change is, keep the tab title updated
   const appFullName = useMemo(getAppFullName, [])
-  useEffect(
-    () => {
-      document.title =
-        title && title != '' ? `${title} - ${appFullName}` : appFullName
-    },
-    [appFullName, title]
-  )
+  useEffect(() => {
+    document.title =
+      title && title != '' ? `${title} - ${appFullName}` : appFullName
+  }, [appFullName, title])
   return { onLocalTitleChange }
 }
 

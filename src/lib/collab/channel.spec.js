@@ -396,10 +396,7 @@ describe('Channel', () => {
 
     it('join the server for this document', async () => {
       const channel = new Channel(config, service)
-      await channel.connect(
-        version,
-        doc
-      )
+      await channel.connect(version, doc)
       expect(service.join).toHaveBeenCalledWith(noteId)
     })
 
@@ -411,10 +408,7 @@ describe('Channel', () => {
         expect(data.version).toBe(version)
         done()
       })
-      await channel.connect(
-        version,
-        doc
-      )
+      await channel.connect(version, doc)
       expect(service.onStepsCreated).toHaveBeenCalledTimes(1)
       const callback = service.onStepsCreated.mock.calls[0][1]
       callback(step)
@@ -427,10 +421,7 @@ describe('Channel', () => {
         expect(data).toBe(payload)
         done()
       })
-      await channel.connect(
-        version,
-        doc
-      )
+      await channel.connect(version, doc)
       expect(service.onTelepointerUpdated).toHaveBeenCalledTimes(1)
       const callback = service.onTelepointerUpdated.mock.calls[0][1]
       callback(payload)
@@ -443,10 +434,7 @@ describe('Channel', () => {
         expect(data.version).toBe(version)
         done()
       })
-      await channel.connect(
-        version,
-        doc
-      )
+      await channel.connect(version, doc)
     })
   })
 

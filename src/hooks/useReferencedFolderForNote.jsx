@@ -10,23 +10,20 @@ const notesFolderDocument = {
 const useReferencedFolderForNote = client => {
   const [notesFolder, setNotesFolder] = useState(getDriveLink(client))
 
-  useEffect(
-    () => {
-      const fetchData = async () => {
-        try {
-          const referencedFolder = await CozyFolder.getReferencedFolders(
-            notesFolderDocument
-          )
-          const folderUrl = getDriveLink(client, referencedFolder[0]._id)
-          setNotesFolder(folderUrl)
-        } catch (error) {
-          setNotesFolder(getDriveLink(client))
-        }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const referencedFolder = await CozyFolder.getReferencedFolders(
+          notesFolderDocument
+        )
+        const folderUrl = getDriveLink(client, referencedFolder[0]._id)
+        setNotesFolder(folderUrl)
+      } catch (error) {
+        setNotesFolder(getDriveLink(client))
       }
-      fetchData()
-    },
-    [client]
-  )
+    }
+    fetchData()
+  }, [client])
 
   return {
     notesFolder

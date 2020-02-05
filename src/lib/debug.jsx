@@ -17,12 +17,9 @@ import { getVersion, sendableSteps } from 'prosemirror-collab'
  */
 export function useDebugValue(name, value) {
   const activated = useFlag(`debug.${name}`)
-  useEffect(
-    () => {
-      if (activated) setDebugValue(name, value)
-    },
-    [activated, name, value]
-  )
+  useEffect(() => {
+    if (activated) setDebugValue(name, value)
+  }, [activated, name, value])
 }
 
 /**

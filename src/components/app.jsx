@@ -36,21 +36,18 @@ const PublicContext = withClient(({ client }) => {
   const [readOnly, setReadOnly] = useState(false)
   const returnUrl = useMemo(() => getReturnUrl(), [])
 
-  useEffect(
-    () => {
-      const fetchData = async () => {
-        try {
-          const { id, readOnly } = await getSharedDocument(client)
-          setReadOnly(readOnly)
-          setSharedDocumentId(id)
-        } catch {
-          setSharedDocumentId(false)
-        }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { id, readOnly } = await getSharedDocument(client)
+        setReadOnly(readOnly)
+        setSharedDocumentId(id)
+      } catch {
+        setSharedDocumentId(false)
       }
-      fetchData()
-    },
-    [client]
-  )
+    }
+    fetchData()
+  }, [client])
   if (sharedDocumentId) {
     return (
       <Editor
