@@ -37,7 +37,7 @@ function useNote({ serviceClient, noteId }) {
       }
     },
     // `loading` and `doc` are willingly not included in the dependencies
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
     [noteId, docId, setDocId, setLoading, serviceClient, setDoc, setTitle]
   )
 
