@@ -5,7 +5,7 @@ import { getShortNameFromClient } from 'lib/utils.js'
 function useUser({ userName: providedUserName, cozyClient }) {
   const userName = useMemo(
     () => providedUserName || getShortNameFromClient(cozyClient),
-    [providedUserName]
+    [cozyClient, providedUserName]
   )
   const userId = userName
   return { userId, userName }

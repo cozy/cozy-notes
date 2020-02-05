@@ -28,7 +28,7 @@ function useFileWithPath({ cozyClient, file }) {
 
       getParent(file)
     },
-    [file.attributes.dir_id]
+    [cozyClient, file, file.attributes.dir_id]
   )
 
   if (fileWithPath && fileWithPath.id == file.id) {

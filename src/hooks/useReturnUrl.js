@@ -17,7 +17,7 @@ function useReturnUrl({ returnUrl, cozyClient, doc }) {
         return undefined
       }
     },
-    [returnUrl, doc, isPublic]
+    [returnUrl, doc, isPublic, cozyClient]
   )
 }
 
