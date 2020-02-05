@@ -88,12 +88,9 @@ function SavingIndicator(props) {
     throttle(() => setLastChange(new Date()), 200),
     [setLastChange]
   )
-  useEffect(
-    () => {
-      collabProvider.on('collab-state-change', onCollabStateChange)
-    },
-    [collabProvider, onCollabStateChange]
-  )
+  useEffect(() => {
+    collabProvider.on('collab-state-change', onCollabStateChange)
+  }, [collabProvider, onCollabStateChange])
   return <Text className={styles['saving-indicator']}>{message}</Text>
 }
 

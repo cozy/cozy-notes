@@ -20,9 +20,7 @@ const ListView = ({ breakpoints: { isMobile } }) => {
           <>
             <Stack className="u-mt-1 u-mt-0-m">
               <div
-                className={`${
-                  styles.appHeader
-                } u-flex u-flex-justify-between u-flex-items-center`}
+                className={`${styles.appHeader} u-flex u-flex-justify-between u-flex-items-center`}
               >
                 <AppTitle />
                 {!isMobile && shouldDisplayAddButton(fetchStatus, notes) && (

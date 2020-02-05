@@ -27,18 +27,15 @@ const NoteRow = ({ note, f, t, client, breakpoints: { isMobile } }) => {
   )
   const closeMenu = useCallback(() => setMenuOpen(false), [setMenuOpen])
 
-  const deleteNote = useCallback(
-    async () => {
-      try {
-        await client.destroy(note)
-        setMenuOpen(false)
-        Alerter.info(t('Notes.Delete.deleted'))
-      } catch (error) {
-        Alerter.error(t('Notes.Delete.failed'))
-      }
-    },
-    [client, note, t, setMenuOpen]
-  )
+  const deleteNote = useCallback(async () => {
+    try {
+      await client.destroy(note)
+      setMenuOpen(false)
+      Alerter.info(t('Notes.Delete.deleted'))
+    } catch (error) {
+      Alerter.error(t('Notes.Delete.failed'))
+    }
+  }, [client, note, t, setMenuOpen])
 
   const menuTriggerRef = React.createRef()
 
@@ -51,9 +48,7 @@ const NoteRow = ({ note, f, t, client, breakpoints: { isMobile } }) => {
         }
       >
         <TableCell
-          className={`${
-            styles.tableCellName
-          } u-flex u-flex-items-center u-ellipsis u-fz-medium`}
+          className={`${styles.tableCellName} u-flex u-flex-items-center u-ellipsis u-fz-medium`}
         >
           <Icon icon={NoteIcon} size={32} className="u-mr-1 u-flex-shrink-0" />
           <span className="u-charcoalGrey">{filename}</span>

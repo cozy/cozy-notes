@@ -57,10 +57,7 @@ export class CollabProvider {
     const usableVersion =
       this.initialVersion !== undefined ? this.initialVersion : doc.version
     const collabDoc = { ...doc, version: usableVersion }
-    this.channel.connect(
-      usableVersion,
-      collabDoc
-    )
+    this.channel.connect(usableVersion, collabDoc)
 
     return this
   }

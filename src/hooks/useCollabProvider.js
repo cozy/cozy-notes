@@ -15,18 +15,15 @@ import CollabProvider from 'lib/collab/provider'
  * @returns {CollabProvider|undefined}
  */
 function useCollabProvider({ docVersion, noteId, serviceClient }) {
-  return useMemo(
-    () => {
-      if (serviceClient && docVersion !== undefined) {
-        const provider = new CollabProvider(
-          { version: docVersion, noteId },
-          serviceClient
-        )
-        return provider
-      }
-    },
-    [noteId, docVersion, serviceClient]
-  )
+  return useMemo(() => {
+    if (serviceClient && docVersion !== undefined) {
+      const provider = new CollabProvider(
+        { version: docVersion, noteId },
+        serviceClient
+      )
+      return provider
+    }
+  }, [noteId, docVersion, serviceClient])
 }
 
 export default useCollabProvider
