@@ -69,7 +69,7 @@ export function getParentFolderId(file) {
 }
 
 export function getFolderLink(id) {
-  return `/folder/${id.replace(/-/g, '')}`
+  return `/folder/${id}`
 }
 
 export function getDriveLink(client, id = null) {

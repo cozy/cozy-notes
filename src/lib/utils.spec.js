@@ -1,4 +1,4 @@
-import { getSharedDocument } from './utils'
+import { getSharedDocument, getFolderLink } from './utils'
 
 describe('getSharedDocument', () => {
   function setupClient(verbs = []) {
@@ -62,6 +62,15 @@ describe('getSharedDocument', () => {
       const client = setupClient(['GET'])
       const { readOnly } = await getSharedDocument(client)
       expect(readOnly).toBeTruthy()
+    })
+  })
+})
+
+describe('getFolderLink', () => {
+  describe('when root-dir', () => {
+    it('should be #/folder/io.cozy.files.root-dir', () => {
+      const id = 'io.cozy.files.root-dir'
+      expect(getFolderLink(id)).toEqual('/folder/io.cozy.files.root-dir')
     })
   })
 })
