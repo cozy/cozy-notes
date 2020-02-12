@@ -2,6 +2,7 @@ import get from 'lodash/get'
 import { generateWebLink } from 'cozy-ui/transpiled/react/AppLinker'
 import { getDataset, getDataOrDefault } from './initFromDom'
 import { schemaOrdered } from 'lib/collab/schema'
+import { models } from 'cozy-client'
 
 import manifest from '../../manifest.webapp'
 
@@ -30,20 +31,49 @@ export const generateReturnUrlToNotesIndex = doc => {
 }
 
 /**
- * Is this permission read only for a note?
- *
- * @param {object} perm - permission node in a io.cozy.permissions document
- * @returns {bool} true if the note should be displayed read-only
+ * Get permissions on io.cozy.files for current context
+ * @private
+ * @param {CozyClient} client
+ * @returns {object}
  */
-function isPermissionReadOnly(perm) {
-  //  PATCH is included by default, and in the ALL shortcut
-  return (
-    perm.verbs &&
-    perm.verbs &&
-    perm.verbs.length > 0 &&
-    !perm.verbs.includes('PATCH') &&
-    !perm.verbs.includes('ALL')
+async function getFilesOwnPermissions(client) {
+  const permissionsData = await client
+    .collection('io.cozy.permissions')
+    .getOwnPermissions()
+  const permissionObject = get(permissionsData, 'data.attributes.permissions')
+  if (!permissionObject) throw `can't get self permissions`
+  const permissions = Object.values(permissionObject)
+  return permissions.filter(perm =>
+    models.permission.isForType(perm, 'io.cozy.files')
   )
+}
+
+/**
+ * Get a file by it's id
+ * @private
+ * @param {CozyClient} client
+ * @param {string} id
+ */
+async function getFile(client, id) {
+  return client
+    .query(client.find('io.cozy.files').getById(id))
+    .then(data => data && data.data)
+}
+
+/**
+ * Checks if the note is read-only or read-write
+ *
+ * @param {CozyClient} client
+ * @param {string} fileId - io.cozy.files id
+ * @returns {bool}
+ */
+export async function fetchIfIsNoteReadOnly(client, fileId) {
+  const document = await getFile(client, fileId)
+  return models.permission.isDocumentReadOnly({
+    document,
+    client,
+    writability: ['PATCH']
+  })
 }
 
 /**
@@ -53,19 +83,29 @@ function isPermissionReadOnly(perm) {
  * @returns {{id, readOnly}} id of the document and the readOnly status
  */
 export async function getSharedDocument(client) {
-  const { data: permissionsData } = await client
-    .collection('io.cozy.permissions')
-    .getOwnPermissions()
-  const permissions = permissionsData.attributes.permissions
-  // permissions contains several named keys, but the one to use depends on the situation. Using the first one is what we want in all known cases.
-  const perm = get(Object.values(permissions), '0')
-  const sharedDocumentId = perm && get(perm, 'values.0')
-  const readOnly = perm && isPermissionReadOnly(perm)
-  return { id: sharedDocumentId, readOnly }
-}
+  const permissions = (await getFilesOwnPermissions(client)).filter(
+    p =>
+      models.permission.isForType(p, 'io.cozy.files') &&
+      p.values &&
+      p.values.length > 0
+  )
 
-export function getParentFolderId(file) {
-  return file.relationships.parent.data.id
+  if (permissions.length < 1) {
+    throw new Error(
+      'No individual io.cozy.files permissions in current context'
+    )
+  } else if (permissions.length > 1 || permissions[0].values.length > 1) {
+    // eslint-disable-next-line no-console
+    console.warn(
+      `There are more than one permission for a file in current context. Let's take the first one, but it may not be the one you expect`
+    )
+  }
+  const perm = permissions[0]
+  const sharedDocumentId = perm.values[0]
+  const readOnly = models.permission.isReadOnly(perm, {
+    writability: ['PATCH']
+  })
+  return { id: sharedDocumentId, readOnly }
 }
 
 export function getFolderLink(id) {
@@ -89,7 +129,7 @@ export function getDriveLink(client, id = null) {
 }
 
 export function getParentFolderLink(client, file) {
-  return getDriveLink(client, getParentFolderId(file))
+  return getDriveLink(client, models.file.getParentFolderId(file))
 }
 
 export function getAppFullName() {
