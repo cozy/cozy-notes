@@ -2,7 +2,8 @@ import React, { useContext } from 'react'
 import { Button, ButtonLink } from 'cozy-ui/react/Button'
 import IsPublicContext from 'components/IsPublicContext'
 import AppLinker from 'cozy-ui/react/AppLinker'
-import { getFolderLink, getParentFolderId } from 'lib/utils'
+import { getFolderLink } from 'lib/utils'
+import { models } from 'cozy-client'
 
 /**
  * Simple fake event to detect if the handler
@@ -49,7 +50,8 @@ export default function BackFromEditing({ returnUrl, file, requestToLeave }) {
   const isPublic = useContext(IsPublicContext)
 
   if (returnUrl) {
-    const nativePath = getFolderLink(getParentFolderId(file))
+    const folderId = models.file.getParentFolderId(file)
+    const nativePath = getFolderLink(folderId)
     return (
       <AppLinker slug="drive" href={returnUrl} nativePath={nativePath}>
         {({ onClick, href }) => {
