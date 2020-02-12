@@ -98,6 +98,29 @@ set(window, 'cozy.debug.notes.debugCollab', async function debugCollab() {
         lastLocalSave
       }
 
+      const realtime = collabProvider && collabProvider.serviceClient
+      const socket = realtime && realtime._socket
+      const websocket = socket && socket._webSocket
+      data.realtime = {
+        hasRealtime: !!realtime,
+        hasSocket: !!socket,
+        hasWebsocket: !!websocket,
+        isOpen: socket && socket.isOpen(),
+        isConnecting: socket && socket.isConnecting(),
+        token: socket && socket._token,
+        readyState: websocket && websocket.readyState,
+        bufferedAmount: websocket && websocket.bufferedAmount,
+        url: websocket && websocket.url
+      }
+
+      const client = get(window, 'cozy.debug.client')
+      data.client = {
+        token: client.stackClient.token,
+        credentials: client.stackClient.getCredentials(),
+        authorization: client.stackClient.getAuthorizationHeader(),
+        uri: client.uri
+      }
+
       let error = get(window, 'cozy.debug.notes.lastPatchError')
       if (!error && isDirty) {
         while (channel.isSending) {
