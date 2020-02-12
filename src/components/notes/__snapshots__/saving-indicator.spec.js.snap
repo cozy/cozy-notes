@@ -1,24 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SavingIndicator when dirtySince is falsy when lastSave is 1 day ago should match snapshot 1`] = `"<div class=\\"u-text saving-indicator\\">Saved 1 day ago.</div>"`;
+exports[`SavingIndicator when dirtySince is falsy when lastSave is 1 day ago should match snapshot 1`] = `"<div class=\\"u-text saving-indicator\\">Saved 1 day ago</div>"`;
 
-exports[`SavingIndicator when dirtySince is falsy when lastSave is 1 hour ago should match snapshot 1`] = `"<div class=\\"u-text saving-indicator\\">Saved 1 hour ago.</div>"`;
+exports[`SavingIndicator when dirtySince is falsy when lastSave is 1 hour ago should match snapshot 1`] = `"<div class=\\"u-text saving-indicator\\">Saved 1 hour ago</div>"`;
 
-exports[`SavingIndicator when dirtySince is falsy when lastSave is 1 min ago should match snapshot 1`] = `"<div class=\\"u-text saving-indicator\\">Saved 1 min ago.</div>"`;
+exports[`SavingIndicator when dirtySince is falsy when lastSave is 1 min ago should match snapshot 1`] = `"<div class=\\"u-text saving-indicator\\">Saved 1 min ago</div>"`;
 
-exports[`SavingIndicator when dirtySince is falsy when lastSave is 3 hour ago should match snapshot 1`] = `"<div class=\\"u-text saving-indicator\\">Saved 3 hours ago.</div>"`;
+exports[`SavingIndicator when dirtySince is falsy when lastSave is 3 hour ago should match snapshot 1`] = `"<div class=\\"u-text saving-indicator\\">Saved 3 hours ago</div>"`;
 
-exports[`SavingIndicator when dirtySince is falsy when lastSave is 5 min ago should match snapshot 1`] = `"<div class=\\"u-text saving-indicator\\">Saved 5 min ago.</div>"`;
+exports[`SavingIndicator when dirtySince is falsy when lastSave is 5 min ago should match snapshot 1`] = `"<div class=\\"u-text saving-indicator\\">Saved 5 min ago</div>"`;
 
-exports[`SavingIndicator when dirtySince is falsy when lastSave is 10 day ago should match snapshot 1`] = `"<div class=\\"u-text saving-indicator\\">Saved 10 days ago.</div>"`;
+exports[`SavingIndicator when dirtySince is falsy when lastSave is 10 day ago should match snapshot 1`] = `"<div class=\\"u-text saving-indicator\\">Saved 10 days ago</div>"`;
 
-exports[`SavingIndicator when dirtySince is falsy when lastSave is 15 min ago should match snapshot 1`] = `"<div class=\\"u-text saving-indicator\\">Saved 15 min ago.</div>"`;
+exports[`SavingIndicator when dirtySince is falsy when lastSave is 15 min ago should match snapshot 1`] = `"<div class=\\"u-text saving-indicator\\">Saved 15 min ago</div>"`;
 
-exports[`SavingIndicator when dirtySince is falsy when lastSave is 28 min ago should match snapshot 1`] = `"<div class=\\"u-text saving-indicator\\">Saved 20 min ago.</div>"`;
+exports[`SavingIndicator when dirtySince is falsy when lastSave is 28 min ago should match snapshot 1`] = `"<div class=\\"u-text saving-indicator\\">Saved 20 min ago</div>"`;
 
-exports[`SavingIndicator when dirtySince is falsy when lastSave is 45 sec ago should match snapshot 1`] = `"<div class=\\"u-text saving-indicator\\">Saved 40 sec ago.</div>"`;
+exports[`SavingIndicator when dirtySince is falsy when lastSave is 45 sec ago should match snapshot 1`] = `"<div class=\\"u-text saving-indicator\\">Saved 40 sec ago</div>"`;
 
-exports[`SavingIndicator when dirtySince is falsy when lastSave is 50 min ago should match snapshot 1`] = `"<div class=\\"u-text saving-indicator\\">Saved 50 min ago.</div>"`;
+exports[`SavingIndicator when dirtySince is falsy when lastSave is 50 min ago should match snapshot 1`] = `"<div class=\\"u-text saving-indicator\\">Saved 50 min ago</div>"`;
 
 exports[`SavingIndicator when dirtySince is falsy when lastSave is few seconds ago should match snapshot 1`] = `"<div class=\\"u-text saving-indicator\\">Saved just now.</div>"`;
 

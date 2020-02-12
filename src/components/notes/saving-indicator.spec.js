@@ -73,7 +73,7 @@ describe('SavingIndicator', () => {
       describe(`when lastSave is ${key} ago`, () => {
         beforeEach(() => {
           getLastSaveOrSync.mockImplementation(
-            () => new Date(Date.now() - steps[key])
+            () => new Date(Date.now() - steps[key] - 500)
           )
         })
         itMatchSnapshot(collabProvider)
