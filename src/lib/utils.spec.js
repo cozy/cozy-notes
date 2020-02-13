@@ -2,6 +2,7 @@ import {
   getSharedDocument,
   fetchIfIsNoteReadOnly,
   getFolderLink,
+  relativeAge,
   getUserNameFromUrl
 } from './utils'
 
@@ -135,6 +136,30 @@ describe('getFolderLink', () => {
     it('should be #/folder/io.cozy.files.root-dir', () => {
       const id = 'io.cozy.files.root-dir'
       expect(getFolderLink(id)).toEqual('/folder/io.cozy.files.root-dir')
+    })
+  })
+})
+
+describe('relativeAge', () => {
+  // constants
+  const sec = 1000
+  const min = 60 * sec
+  it('should return the correct data for age=3s', () => {
+    expect(relativeAge(3 * sec)).toEqual({
+      key: 'just_now',
+      unit: sec,
+      coef: 1,
+      time: 3,
+      interval: sec
+    })
+  })
+  it('should return the correct data for age=53min', () => {
+    expect(relativeAge(53 * min)).toEqual({
+      key: 'mins_ago',
+      unit: min,
+      coef: 10,
+      time: 50,
+      interval: 10 * min
     })
   })
 })

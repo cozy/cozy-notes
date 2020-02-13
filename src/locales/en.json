@@ -31,17 +31,36 @@
       "after_created": "Once your Note is created, you can find it in your "
     },
     "SavingIndicator": {
-      "saved_just_now": "Saved just now.",
-      "saved_secs_ago": "Saved %{time} sec ago",
-      "saved_min_ago": "Saved %{time} min ago",
-      "saved_mins_ago": "Saved %{time} min ago",
-      "saved_hour_ago": "Saved %{time} hour ago",
-      "saved_hours_ago": "Saved %{time} hours ago",
-      "saved_day_ago": "Saved %{time} day ago",
-      "saved_days_ago": "Saved %{time} days ago",
+      "saved": {
+        "just_now": "Up to date",
+        "secs_ago": "Up to date (saved %{time} sec. ago)",
+        "min_ago": "Up to date (saved %{time} min. ago)",
+        "mins_ago": "Up to date (saved %{time} min. ago)",
+        "hour_ago": "Up to date (saved %{time} hour ago)",
+        "hours_ago": "Up to date (saved %{time} hours ago)",
+        "day_ago": "Up to date (saved %{time} day ago)",
+        "days_ago": "Up to date (saved %{time} days ago)",
+        "month_ago": "Up to date (saved %{time} month ago)",
+        "monthes_ago": "Up to date (saved %{time} monthes ago)",
+        "year_ago": "Up to date (saved %{time} year ago)",
+        "years_ago": "Up to date (saved %{time} years ago)"
+      },
       "saving": "Saving...",
-      "saving_impossible": "Impossible to save.",
-      "new_attempt": "New attempt..."
+      "still_saving": "Saving......",
+      "out_of_sync": {
+        "just_now": "Changes unsaved",
+        "secs_ago": "Changes unsaved (off-line for %{time} sec.)",
+        "min_ago": "Changes unsaved (off-line for %{time} min.)",
+        "mins_ago": "Changes unsaved (off-line for %{time} min.)",
+        "hour_ago": "Changes unsaved (off-line for %{time} hour)",
+        "hours_ago": "Changes unsaved (off-line for %{time} hours)",
+        "day_ago": "Changes unsaved (off-line for %{time} day)",
+        "days_ago": "Changes unsaved (off-line for %{time} days)",
+        "month_ago": "Changes unsaved (off-line for %{time} month)",
+        "monthes_ago": "Changes unsaved (off-line for %{time} monthes)",
+        "year_ago": "Changes unsaved (off-line for %{time} year)",
+        "years_ago": "Changes unsaved (off-line for %{time} years)"
+      }
     }
   },
   "Error": {

@@ -154,6 +154,67 @@ export function createNoteDocument(client) {
   })
 }
 
+// constants
+const sec = 1000
+const min = 60 * sec
+const hour = 60 * min
+const day = 24 * hour
+const month = 31 * day
+const year = 365 * day
+
+// differents steps for message formating
+// [age, key, unit, coef] :
+// - `age`: the line applies only if the last saved
+// was done less than this `age` ago
+// (only the first match will apply)
+// - `key` is the traduction key for the message
+// - `unit` is the unit in which we will send the time
+// to the translated message
+// - `coef` is  the granularity in which we will send
+// the time (`min, 5` is "by 5 minutes slices")
+const defaultSteps = [
+  [10 * sec, 'just_now', sec, 1],
+  [1 * min, 'secs_ago', sec, 10],
+  [2 * min, 'min_ago', min, 1],
+  [5 * min, 'mins_ago', min, 1],
+  [20 * min, 'mins_ago', min, 5],
+  [1 * hour, 'mins_ago', min, 10],
+  [2 * hour, 'hour_ago', hour, 1],
+  [1 * day, 'hours_ago', hour, 1],
+  [2 * day, 'day_ago', day, 1],
+  [1 * month, 'days_ago', day, 1],
+  [2 * month, 'month_ago', month, 1],
+  [1 * year, 'monthes_ago', month, 1],
+  [2 * year, 'year_ago', year, 1],
+  [Infinity, 'years_ago', year, 1]
+]
+
+/**
+ * @typedef {object} RelativeAge
+ * @property {string} key - translation (sub) key
+ * @property {unit} unit - unit (minute, second, hour…) in which the age will be displayed
+ * @property {integer} coef - in how much values of this unit do we count (like every 10 minutes)
+ * @property {integer} time - age to be inserted in the translation message
+ * @property {integer} interval - `unit * coef`: compute again in that timeframe (in milliseconds)
+ */
+/**
+ * Gets raw data to display a relative age in human words
+ * @param {integer} age - age in milliseconds
+ * @param {array} steps - array of [max_age, key, unit, coef]
+ * @returns {RelativeAge}
+ */
+export function relativeAge(age, steps) {
+  const step = (steps || defaultSteps).find(el => age < el[0])
+  const [, key, unit, coef] = step
+  return {
+    key,
+    unit,
+    coef,
+    time: Math.floor(age / unit / coef) * coef,
+    interval: unit * coef
+  }
+}
+
 /**
  * Gets the username defined by the current URL, if any
  *
