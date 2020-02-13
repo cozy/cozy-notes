@@ -1,7 +1,8 @@
 import {
   getSharedDocument,
   fetchIfIsNoteReadOnly,
-  getFolderLink
+  getFolderLink,
+  getUserNameFromUrl
 } from './utils'
 
 function setupClient(verbs = [], ids = ['first', 'other']) {
@@ -135,5 +136,20 @@ describe('getFolderLink', () => {
       const id = 'io.cozy.files.root-dir'
       expect(getFolderLink(id)).toEqual('/folder/io.cozy.files.root-dir')
     })
+  })
+})
+
+describe('getUserNameFromUrl', () => {
+  it('should return the url part', () => {
+    window.history.pushState(
+      {},
+      'Test Title',
+      '/test.html?username=hello+world'
+    )
+    expect(getUserNameFromUrl()).toEqual('hello world')
+  })
+  it('should return null when not present', () => {
+    window.history.pushState({}, 'Test Title', '/test.html')
+    expect(getUserNameFromUrl()).toBeNull()
   })
 })

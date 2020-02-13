@@ -153,3 +153,17 @@ export function createNoteDocument(client) {
     }
   })
 }
+
+/**
+ * Gets the username defined by the current URL, if any
+ *
+ * @returns {string|null} username
+ */
+export function getUserNameFromUrl() {
+  const searchParams = new URLSearchParams(window.location.search)
+  if (searchParams.has('username')) {
+    return searchParams.get('username')
+  } else {
+    return null
+  }
+}

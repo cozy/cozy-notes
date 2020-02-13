@@ -1,10 +1,13 @@
 import { useMemo } from 'react'
 
-import { getShortNameFromClient } from 'lib/utils.js'
+import { getShortNameFromClient, getUserNameFromUrl } from 'lib/utils.js'
 
 function useUser({ userName: providedUserName, cozyClient }) {
   const userName = useMemo(
-    () => providedUserName || getShortNameFromClient(cozyClient),
+    () =>
+      providedUserName ||
+      getUserNameFromUrl() ||
+      getShortNameFromClient(cozyClient),
     [cozyClient, providedUserName]
   )
   const userId = userName
