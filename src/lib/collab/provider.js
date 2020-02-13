@@ -384,8 +384,8 @@ export class CollabProvider {
    */
   getLastSaveOrSync() {
     return this.lastLocalSave > this.lastRemoteSync
-      ? this.lastRemoteSync
-      : this.lastLocalSave
+      ? this.lastLocalSave
+      : this.lastRemoteSync
   }
 
   /**
@@ -395,6 +395,7 @@ export class CollabProvider {
    */
   onLocalSave() {
     this.lastLocalSave = new Date()
+    console.log('onLocalSave', this.lastLocalSave)
     this.emit('collab-state-change')
   }
 
@@ -405,6 +406,7 @@ export class CollabProvider {
    */
   onRemoteSync() {
     this.lastRemoteSync = new Date()
+    console.log('onRemoteSync', this.lastRemoteSync)
     this.emit('collab-state-change')
   }
 

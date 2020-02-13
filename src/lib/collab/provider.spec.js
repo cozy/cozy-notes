@@ -484,6 +484,68 @@ describe('CollabProvider', () => {
       })
     })
 
+    describe('getLastSaveOrSync', () => {
+      describe('after a local save', () => {
+        it('shows the local save', async () => {
+          let resolvePushSteps
+          const promise = new Promise(resolve => {
+            resolvePushSteps = resolve
+          })
+          service.pushSteps.mockImplementation(async () => promise)
+          const collab = new CollabProvider(configWithoutChannel, service)
+          collab.initialize(getState)
+          const before = collab.getLastSaveOrSync()
+
+          // remote sync
+          collab.emit('data', { steps: [], version, userIds: [] })
+          await wait(50)
+          const afterSync = collab.getLastSaveOrSync()
+          expect(before).not.toEqual(afterSync)
+
+          // local save
+          collab.send({ steps }, { doc })
+          await wait(10)
+          resolvePushSteps()
+          await wait(10)
+          const afterSave = collab.getLastSaveOrSync()
+
+          expect(afterSave).not.toEqual(afterSync)
+          expect(afterSave.getTime()).toBeGreaterThan(afterSync.getTime())
+          resolvePushSteps()
+        })
+      })
+
+      describe('after a remote sync', () => {
+        it('shows the remote sync', async () => {
+          let resolvePushSteps
+          const promise = new Promise(resolve => {
+            resolvePushSteps = resolve
+          })
+          service.pushSteps.mockImplementation(async () => promise)
+          const collab = new CollabProvider(configWithoutChannel, service)
+          collab.initialize(getState)
+          const before = collab.getLastSaveOrSync()
+
+          // local save
+          collab.send({ steps }, { doc })
+          await wait(10)
+          resolvePushSteps()
+          await wait(10)
+          const afterSave = collab.getLastSaveOrSync()
+          expect(afterSave).not.toEqual(before)
+          await resolvePushSteps()
+
+          // remote sync
+          collab.emit('data', { steps: [], version, userIds: [] })
+          await wait(50)
+          const afterSync = collab.getLastSaveOrSync()
+          expect(afterSync).not.toEqual(afterSave)
+
+          expect(afterSync.getTime()).toBeGreaterThan(afterSave.getTime())
+        })
+      })
+    })
+
     describe('getLastLocalSave', () => {
       describe('after init', () => {
         it('should be falsy', () => {
