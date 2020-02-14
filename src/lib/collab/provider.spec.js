@@ -497,6 +497,7 @@ describe('CollabProvider', () => {
           const before = collab.getLastSaveOrSync()
 
           // remote sync
+          await wait(10)
           collab.emit('data', { steps: [], version, userIds: [] })
           await wait(50)
           const afterSync = collab.getLastSaveOrSync()

@@ -395,7 +395,6 @@ export class CollabProvider {
    */
   onLocalSave() {
     this.lastLocalSave = new Date()
-    console.log('onLocalSave', this.lastLocalSave)
     this.emit('collab-state-change')
   }
 
@@ -406,7 +405,6 @@ export class CollabProvider {
    */
   onRemoteSync() {
     this.lastRemoteSync = new Date()
-    console.log('onRemoteSync', this.lastRemoteSync)
     this.emit('collab-state-change')
   }
 
