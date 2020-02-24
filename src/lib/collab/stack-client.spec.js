@@ -370,11 +370,9 @@ describe('ServiceClient', () => {
     describe('onStepsCreated', () => {
       it('should receive steps events from the stack', async () => {
         let callback
-        realtime.subscribe.mockImplementation((verb, type, _, fn) => {
-          if (verb == 'updated' && type == eventType) {
-            callback = fn
-          }
-        })
+        realtime.subscribe.mockImplementation(
+          (verb, type, id, fn) => (callback = fn)
+        )
         const onSteps = jest.fn()
         const service = new ServiceClient({ userId, cozyClient, realtime })
         await service.join(noteId)
@@ -391,11 +389,9 @@ describe('ServiceClient', () => {
     describe('onTelepointerUpdated', () => {
       it('should receive telepointers events from the stack', async () => {
         let callback
-        realtime.subscribe.mockImplementation((verb, type, _, fn) => {
-          if (verb == 'updated' && type == eventType) {
-            callback = fn
-          }
-        })
+        realtime.subscribe.mockImplementation(
+          (verb, type, id, fn) => (callback = fn)
+        )
         const onTelepointer = jest.fn()
         const service = new ServiceClient({ userId, cozyClient, realtime })
         await service.join(noteId)
@@ -412,11 +408,9 @@ describe('ServiceClient', () => {
     describe('onTitleUpdated', () => {
       it('should receive new titles from the stack', async () => {
         let callback
-        realtime.subscribe.mockImplementation((verb, type, _, fn) => {
-          if (verb == 'updated' && type == eventType) {
-            callback = fn
-          }
-        })
+        realtime.subscribe.mockImplementation(
+          (verb, type, id, fn) => (callback = fn)
+        )
         const onTitle = jest.fn()
         const service = new ServiceClient({ userId, cozyClient, realtime })
         await service.join(noteId)
@@ -431,11 +425,9 @@ describe('ServiceClient', () => {
 
     it('should normalize `sessionId`', async () => {
       let callback
-      realtime.subscribe.mockImplementation((verb, type, _, fn) => {
-        if (verb == 'updated' && type == eventType) {
-          callback = fn
-        }
-      })
+      realtime.subscribe.mockImplementation(
+        (verb, type, id, fn) => (callback = fn)
+      )
       const onSteps = jest.fn()
       const service = new ServiceClient({ userId, cozyClient, realtime })
       await service.join(noteId)

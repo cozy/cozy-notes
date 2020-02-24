@@ -162,27 +162,9 @@ export class ServiceClient {
    * @param {uui} noteId
    */
   async join(noteId) {
-    const onRealtimeCreated = function(doc) {
-      if (doc.id === noteId) {
-        return this.onRealtimeEvent(doc)
-      } else {
-        return undefined
-      }
-    }
     await Promise.all([
       this.realtime.subscribe(
-        'created',
-        'io.cozy.notes.events',
-        onRealtimeCreated
-      ),
-      this.realtime.subscribe(
-        'updated',
-        'io.cozy.notes.events',
-        noteId,
-        this.onRealtimeEvent
-      ),
-      this.realtime.subscribe(
-        'deleted',
+        null, // all events
         'io.cozy.notes.events',
         noteId,
         this.onRealtimeEvent

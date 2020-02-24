@@ -98,19 +98,20 @@ set(window, 'cozy.debug.notes.debugCollab', async function debugCollab() {
         lastLocalSave
       }
 
-      const realtime = collabProvider && collabProvider.serviceClient
-      const socket = realtime && realtime._socket
-      const websocket = socket && socket._webSocket
+      const serviceClient = collabProvider && collabProvider.serviceClient
+      const realtime = serviceClient && serviceClient.realtime
+      const websocket = realtime && realtime.websocket
+      const retryManager = realtime && realtime.retryManager
       data.realtime = {
         hasRealtime: !!realtime,
-        hasSocket: !!socket,
-        hasWebsocket: !!websocket,
-        isOpen: socket && socket.isOpen(),
-        isConnecting: socket && socket.isConnecting(),
-        token: socket && socket._token,
+        started: realtime && realtime.isStarted,
+        hasWebsocket: realtime && realtime.hasWebSocket(),
+        isOpen: realtime && realtime.isWebSocketOpen(),
         readyState: websocket && websocket.readyState,
         bufferedAmount: websocket && websocket.bufferedAmount,
-        url: websocket && websocket.url
+        url: websocket && websocket.url,
+        retries: retryManager && retryManager.retries,
+        wait: retryManager && retryManager.wait
       }
 
       const client = get(window, 'cozy.debug.client')
