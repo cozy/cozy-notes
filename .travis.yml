@@ -29,14 +29,14 @@ deploy:
   - provider: script
     repo: cozy/cozy-notes
     skip-cleanup: true
-    # deploy the build on a build branch and publish to the Cozy registry
-    script: DEPLOY_BRANCH=ci-build && yarn deploy && yarn cozyPublish
+    # deploy the build on downcloud and publish to the Cozy registry
+    script: yarn cozyPublish
     on:
       branch: master
   - provider: script
     repo: cozy/cozy-notes
     skip-cleanup: true
     # publish stable or beta versions using Github Releases (git tag)
-    script: DEPLOY_BRANCH=ci-build && yarn deploy && yarn cozyPublish
+    script: yarn cozyPublish
     on:
       tags: true

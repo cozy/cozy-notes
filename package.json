@@ -16,8 +16,8 @@
     "watch:mobile": "cs watch --mobile",
     "start": "cs start --hot --browser",
     "deploy": "git-directory-deploy --directory build/ --branch ${DEPLOY_BRANCH:-build} --repo ${DEPLOY_REPOSITORY:-https://cozy-bot:$GITHUB_TOKEN@github.com/cozy/cozy-notes}",
-    "test": "cs test --verbose --coverage",
-    "cozyPublish": "cs publish --token $REGISTRY_TOKEN --build-commit $(git rev-parse ${DEPLOY_BRANCH:-build})"
+    "test": "cs test --verbose --coverage",   
+    "cozyPublish": "cozy-app-publish --token $REGISTRY_TOKEN --prepublish downcloud --space default --postpublish mattermost"
   },
   "repository": {
     "type": "git",
