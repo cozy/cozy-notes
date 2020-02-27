@@ -11,6 +11,7 @@ const version = 96
 const userId = 'myuser'
 const sessionId = `${userId}:1425`
 const doc = { content: [], type: 'doc', version }
+const updatedAt = new Date()
 const channel = {
   on: jest.fn(),
   connect: jest.fn(),
@@ -28,8 +29,8 @@ const service = {
   getSteps: jest.fn(),
   pushTelepointer: jest.fn()
 }
-const config = { noteId, version, channel }
-const configWithoutChannel = { noteId, version }
+const config = { noteId, version, channel, updatedAt }
+const configWithoutChannel = { noteId, version, updatedAt }
 
 const getState = jest.fn()
 const steps = [{ example: version + 1 }, { example: version + 2 }]
@@ -95,7 +96,7 @@ describe('CollabProvider', () => {
 
       collab.initialize(getState)
       expect(channel.connect).toHaveBeenCalledTimes(1)
-      expect(channel.connect).toHaveBeenCalledWith(version, doc)
+      expect(channel.connect).toHaveBeenCalledWith({ version, doc, updatedAt })
 
       callback({ doc, version })
       expect(onInit).toHaveBeenCalledTimes(1)
@@ -485,6 +486,16 @@ describe('CollabProvider', () => {
     })
 
     describe('getLastSaveOrSync', () => {
+      describe('at start', () => {
+        it('shows the last update date of the document', async () => {
+          const collab = new CollabProvider(configWithoutChannel, service)
+          collab.initialize(getState)
+          const before = collab.getLastSaveOrSync()
+
+          expect(before).toEqual(updatedAt)
+        })
+      })
+
       describe('after a local save', () => {
         it('shows the local save', async () => {
           let resolvePushSteps
@@ -495,7 +506,6 @@ describe('CollabProvider', () => {
           const collab = new CollabProvider(configWithoutChannel, service)
           collab.initialize(getState)
           const before = collab.getLastSaveOrSync()
-
           // remote sync
           await wait(10)
           collab.emit('data', { steps: [], version, userIds: [] })

@@ -42,7 +42,7 @@ const Editor = withClient(function(props) {
   const collabProvider = useCollabProvider({
     noteId,
     serviceClient,
-    docVersion: doc && doc.version
+    doc
   })
 
   // callbacks
