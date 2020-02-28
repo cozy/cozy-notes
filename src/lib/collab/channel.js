@@ -204,7 +204,7 @@ export class Channel {
   /**
    * Connect to pubsub to start receiving events
    */
-  async connect(version, doc) {
+  async connect({ version, doc, updatedAt }) {
     const { noteId } = this.config
     this.service.join(noteId)
     this.service.onStepsCreated(noteId, data => {
@@ -213,10 +213,7 @@ export class Channel {
     this.service.onTelepointerUpdated(noteId, payload => {
       this.emit('telepointer', payload)
     })
-    this.emit('connected', {
-      doc,
-      version
-    })
+    this.emit('connected', { version, doc, updatedAt })
   }
 
   /**

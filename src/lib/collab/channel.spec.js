@@ -434,7 +434,7 @@ describe('Channel', () => {
         expect(data.version).toBe(version)
         done()
       })
-      await channel.connect(version, doc)
+      await channel.connect({ version, doc })
     })
   })
 

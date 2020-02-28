@@ -52,6 +52,7 @@ export class CollabProvider {
     this.participants = new Map()
     this.pauseQueue = false
     this.initialVersion = config.version
+    this.initialDate = config.updatedAt || new Date()
     this.pauseQueue = false
   }
 
@@ -61,11 +62,11 @@ export class CollabProvider {
    */
   initialize(getState) {
     this.getState = getState
-    this.channel.on('connected', ({ doc, version }) => {
-      this.listenStateEvents()
+    this.channel.on('connected', ({ doc, version, updatedAt }) => {
       const { sessionId } = this.config
       this.emit('init', { sid: sessionId, doc, version }) // Set initial document
       this.emit('connected', { sid: sessionId }) // Let the plugin know that we're connected an ready to go
+      this.listenStateEvents({ lastRemoteSync: updatedAt })
     })
     this.channel.on('data', this.onReceiveData)
     this.channel.on('telepointer', this.onReceiveTelepointer)
@@ -75,8 +76,11 @@ export class CollabProvider {
     const usableVersion =
       this.initialVersion !== undefined ? this.initialVersion : doc.version
     const collabDoc = { ...doc, version: usableVersion }
-    this.channel.connect(usableVersion, collabDoc)
-
+    this.channel.connect({
+      version: usableVersion,
+      doc: collabDoc,
+      updatedAt: this.initialDate
+    })
     return this
   }
 
@@ -437,12 +441,13 @@ export class CollabProvider {
    *
    * @private
    */
-  listenStateEvents() {
+  listenStateEvents({ lastRemoteSync } = {}) {
     this.channel.on('emptyQueue', this.onChannelEmptyQueue.bind(this))
     this.channel.on('enqueueSteps', this.onChannelEnqueue.bind(this))
     this.channel.on('successfulPatch', this.onLocalSave.bind(this))
     this.on('data', this.onRemoteSync.bind(this))
     this.on('init', this.onRemoteSync.bind(this))
+    if (lastRemoteSync) this.lastRemoteSync = lastRemoteSync
   }
 
   /**

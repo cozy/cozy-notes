@@ -217,6 +217,7 @@ export class ServiceClient {
       doc: res.data.attributes.metadata.content,
       version: res.data.attributes.metadata.version,
       title: res.data.attributes.metadata.title,
+      updatedAt: new Date(res.data.attributes.updated_at),
       file: res.data
     }
   }
