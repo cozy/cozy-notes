@@ -5412,6 +5412,13 @@ cozy-device-helper@^1.9.0:
   dependencies:
     lodash "4.17.15"
 
+cozy-device-helper@^1.9.2:
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.9.2.tgz#cccddb08011c89620fefac96bb894708c1f27f7b"
+  integrity sha512-cHlECdha+xzomdpW4v6u79ui5/WMAWkvooFhSppnLMb8UC8JWM+7AAWIElfgTQEHFIOmkwPtqXr7OJP4hvmG7A==
+  dependencies:
+    lodash "4.17.15"
+
 cozy-doctypes@1.70.0:
   version "1.70.0"
   resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.70.0.tgz#22c031b2d0f50174a06bd9d7fd3d2e88cc8187ea"
@@ -5463,7 +5470,15 @@ cozy-realtime@3.2.1:
   dependencies:
     minilog "3.1.0"
 
-cozy-realtime@3.6.0, cozy-realtime@^3.6.0:
+cozy-realtime@3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-3.7.0.tgz#a66b9335a95189c60cfb97dc63c18aa0461969a3"
+  integrity sha512-yvNdrTQGeqSh2Phrw9XFcL80VHBRw99OdvkisjOAnrc+41EAryMbyE5yfwsmJ70cTDuwiF4hZiEg5ARygIh5Ug==
+  dependencies:
+    cozy-device-helper "^1.9.2"
+    minilog "https://github.com/cozy/minilog.git#master"
+
+cozy-realtime@^3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-3.6.0.tgz#a4a2b841c5f5178e2832f54df43b00f5cd9681f5"
   integrity sha512-7s3jyx73796v19jZTLbjCVY+uWDu8xhvxLeuX1xplx0NRcoZLbEYwT2TIO8evAqASze3dKD2YC5q3V1WDmGQQA==
@@ -10676,6 +10691,12 @@ minilog@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/minilog/-/minilog-3.1.0.tgz#d2d0f1887ca363d1acf0ea86d5c4df293b3fb675"
   integrity sha1-0tDxiHyjY9Gs8OqG1cTfKTs/tnU=
+  dependencies:
+    microee "0.0.6"
+
+"minilog@git+https://github.com/cozy/minilog.git#master":
+  version "3.1.0"
+  resolved "git+https://github.com/cozy/minilog.git#f01f7d9dfe20981177dd34b9662c2f077d818f82"
   dependencies:
     microee "0.0.6"
 
