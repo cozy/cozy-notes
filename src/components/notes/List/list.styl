@@ -1,7 +1,7 @@
 @require 'settings/breakpoints.styl'
 //Cozy UI table add 1rem padding to the first column
 //We want to aligne App Title and first column header
-$PADDING_TABLE_FIRST_COLUMN=1rem
+$PADDING_TABLE_FIRST_COLUMN=2rem
 .empty
     position: relative
     transform: translateZ(0)
@@ -26,6 +26,7 @@ $PADDING_TABLE_FIRST_COLUMN=1rem
 .tableCellEmpty
     flex-grow 1
 .tableCellName
+    padding-left $PADDING_TABLE_FIRST_COLUMN
     width 40%
     +small-screen()
         width 100%
