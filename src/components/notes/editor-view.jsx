@@ -28,7 +28,8 @@ function EditorView(props) {
     leftComponent,
     rightComponent,
     onContentChange,
-    readOnly
+    readOnly,
+    bannerRef
   } = props
   const { t } = useI18n()
 
@@ -86,18 +87,21 @@ function EditorView(props) {
           contentComponents={
             <WithEditorActions
               render={() => (
-                <MainTitle tag="h1" className="note-title">
-                  <Textarea
-                    ref={titleEl}
-                    rows="1"
-                    readOnly={!!readOnly}
-                    fullwidth={true}
-                    value={title}
-                    onChange={readOnly ? nullCallback : onTitleEvent}
-                    placeholder={defaultTitle}
-                    className="note-title-input"
-                  />
-                </MainTitle>
+                <>
+                  <aside ref={bannerRef} className={styles.banner}></aside>
+                  <MainTitle tag="h1" className={styles.title}>
+                    <Textarea
+                      ref={titleEl}
+                      rows="1"
+                      readOnly={!!readOnly}
+                      fullwidth={true}
+                      value={title}
+                      onChange={readOnly ? nullCallback : onTitleEvent}
+                      placeholder={defaultTitle}
+                      className={styles.titleInput}
+                    />
+                  </MainTitle>
+                </>
               )}
             />
           }

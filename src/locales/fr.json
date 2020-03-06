@@ -61,6 +61,9 @@
         "year_ago": "Non enregistré (hors ligne depuis %{time} an)",
         "years_ago": "Non enregistré (hors ligne depuis %{time} ans)"
       }
+    },
+    "OfflineIndicator": {
+      "message": "Vous n’êtes plus connecté à internet. Vos modifications seront enregistrées quand vous serez connecté à nouveau."
     }
   },
   "Error": {

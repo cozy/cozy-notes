@@ -1,8 +1,11 @@
 import React from 'react'
 import { I18n } from 'cozy-ui/react/I18n'
 import { mount } from 'enzyme'
+import useBreakpoints from 'cozy-ui/react/hooks/useBreakpoints'
 import SavingIndicator from './saving-indicator'
 import en from '../../locales/en.json'
+
+jest.mock('cozy-ui/react/hooks/useBreakpoints')
 
 const sec = 1000
 const min = 60 * sec
@@ -21,6 +24,19 @@ const collabProvider = {
   on
 }
 
+global.document.createRange = jest.fn()
+
+/**
+ * Removes the varying part in MUI class names,
+ * which otherwise changes at each run
+ *
+ * @param {string} html
+ * @returns {string}
+ */
+function normalizeMUI(html) {
+  return html.replace(/(mui-[a-z0-9-]+)-\d+"/g, '$1')
+}
+
 function itMatchSnapshot(collabProvider) {
   it('should match snapshot', () => {
     const component = mount(
@@ -33,12 +49,29 @@ function itMatchSnapshot(collabProvider) {
         }
       }
     )
-    expect(component.html()).toMatchSnapshot()
+    expect(normalizeMUI(component.html())).toMatchSnapshot()
   })
 }
 
 describe('SavingIndicator', () => {
-  afterEach(() => jest.resetAllMocks())
+  afterEach(() => {
+    jest.resetAllMocks()
+  })
+  beforeEach(() => {
+    useBreakpoints.mockImplementation(() => ({
+      isMobile: false
+    }))
+
+    // createRange is used by the MUI Tooltip for its placement
+    global.document.createRange.mockImplementation(() => ({
+      setStart: () => {},
+      setEnd: () => {},
+      commonAncestorContainer: {
+        nodeName: 'BODY',
+        ownerDocument: document
+      }
+    }))
+  })
 
   describe('when dirtySince is truthy', () => {
     describe('when dirtySince is a few minutes ago', () => {
@@ -79,5 +112,21 @@ describe('SavingIndicator', () => {
         itMatchSnapshot(collabProvider)
       })
     })
+  })
+
+  describe('when offline', () => {
+    beforeEach(() => {
+      jest.spyOn(global.navigator, 'onLine', 'get').mockReturnValue(false)
+    })
+    // tooltip should be here
+    itMatchSnapshot(collabProvider)
+  })
+
+  describe('when online', () => {
+    beforeEach(() => {
+      jest.spyOn(global.navigator, 'onLine', 'get').mockReturnValue(true)
+    })
+    // tooltip shouldn't be here
+    itMatchSnapshot(collabProvider)
   })
 })

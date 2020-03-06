@@ -9,6 +9,7 @@ import { Layout, Main, Content } from 'cozy-ui/react/Layout'
 import { Sprite as IconSprite } from 'cozy-ui/react/Icon'
 import Spinner from 'cozy-ui/react/Spinner'
 import AppTitle from 'cozy-ui/react/AppTitle'
+import { BreakpointsProvider } from 'cozy-ui/react/hooks/useBreakpoints'
 
 const manifest = require('../../manifest.webapp')
 import { List, Editor, Unshared } from 'components/notes'
@@ -87,21 +88,25 @@ const App = ({ isPublic, breakpoints: { isMobile }, client }) => {
   const { BarCenter } = cozy.bar
   const FlagSwitcher = useFlagSwitcher()
   return (
-    <HashRouter>
-      <Layout monoColumn={true}>
-        {!isPublic && isMobile && (
-          <BarCenter>
-            <AppTitle>{appName}</AppTitle>
-          </BarCenter>
-        )}
-        <Main>
-          <Content>{isPublic ? <PublicContext /> : <PrivateContext />}</Content>
-        </Main>
-        <IconSprite />
-        <Alerter />
-        <FlagSwitcher />
-      </Layout>
-    </HashRouter>
+    <BreakpointsProvider>
+      <HashRouter>
+        <Layout monoColumn={true}>
+          {!isPublic && isMobile && (
+            <BarCenter>
+              <AppTitle>{appName}</AppTitle>
+            </BarCenter>
+          )}
+          <Main>
+            <Content>
+              {isPublic ? <PublicContext /> : <PrivateContext />}
+            </Content>
+          </Main>
+          <IconSprite />
+          <Alerter />
+          <FlagSwitcher />
+        </Layout>
+      </HashRouter>
+    </BreakpointsProvider>
   )
 }
 
