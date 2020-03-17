@@ -12,6 +12,7 @@ import CozyClient, { CozyProvider } from 'cozy-client'
 import { render } from 'react-dom'
 import { I18n } from 'cozy-ui/react/I18n'
 import { Document } from 'cozy-doctypes'
+import SharingProvider from 'cozy-sharing'
 
 import IsPublicContext from 'components/IsPublicContext'
 import {
@@ -48,7 +49,9 @@ const renderApp = function(client, isPublic) {
         <CozyProvider client={client}>
           <MuiCozyTheme>
             <IsPublicContext.Provider value={isPublic}>
-              <App isPublic={isPublic} />
+              <SharingProvider doctype="io.cozy.files" documentType="Notes">
+                <App isPublic={isPublic} />
+              </SharingProvider>
             </IsPublicContext.Provider>
           </MuiCozyTheme>
         </CozyProvider>
