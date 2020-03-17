@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react'
 import { CozyFile } from 'cozy-doctypes'
 import { withClient } from 'cozy-client'
+import { SharedRecipients } from 'cozy-sharing'
 
 import { withBreakpoints } from 'cozy-ui/react'
 import { translate } from 'cozy-ui/react/I18n'
@@ -63,7 +64,9 @@ const NoteRow = ({ note, f, t, client, breakpoints: { isMobile } }) => {
               })}
             </TableCell>
             <TableCell className={styles.tableCell}>—</TableCell>
-            <TableCell className={styles.tableCell}>—</TableCell>
+            <TableCell className={styles.tableCell}>
+              <SharedRecipients docId={note._id} size="small" />
+            </TableCell>
             <TableCell className={styles.tableCell}>
               <span ref={menuTriggerRef}>
                 <IconButton onClick={openMenu}>
