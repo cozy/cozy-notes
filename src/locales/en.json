@@ -19,7 +19,7 @@
       "exit_confirmation_cancel": "Cancel"
     },
     "List": {
-      "my_notes": "My Notes",
+      "latest_notes": "Latest Notes",
       "name": "Name",
       "updated_at": "Updated at",
       "location": "Location",

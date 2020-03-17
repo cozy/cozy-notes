@@ -19,7 +19,7 @@
       "exit_confirmation_cancel": "Retour"
     },
     "List": {
-      "my_notes": "Mes Notes",
+      "latest_notes": "Notes récentes",
       "name": "Nom",
       "updated_at": "Mise à jour",
       "location": "Emplacement",
