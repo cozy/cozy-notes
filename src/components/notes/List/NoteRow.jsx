@@ -3,20 +3,21 @@ import { CozyFile } from 'cozy-doctypes'
 import { withClient } from 'cozy-client'
 import { SharedRecipients } from 'cozy-sharing'
 
-import { withBreakpoints } from 'cozy-ui/react'
 import { translate } from 'cozy-ui/react/I18n'
 import Icon from 'cozy-ui/react/Icon'
 import IconButton from 'cozy-ui/react/IconButton'
 import Alerter from 'cozy-ui/react/Alerter'
 import ActionMenu, { ActionMenuItem } from 'cozy-ui/react/ActionMenu'
 import { TableRow, TableCell } from 'cozy-ui/react/Table'
+import useBreakpoints from 'cozy-ui/react/hooks/useBreakpoints'
 
 import styles from 'components/notes/List/list.styl'
 import { generateReturnUrlToNotesIndex } from 'lib/utils'
 import NoteIcon from 'assets/icons/icon-note-32.svg'
 
-const NoteRow = ({ note, f, t, client, breakpoints: { isMobile } }) => {
+const NoteRow = ({ note, f, t, client }) => {
   const { filename, extension } = CozyFile.splitFilename(note)
+  const { isMobile } = useBreakpoints()
 
   const [isMenuOpen, setMenuOpen] = useState(false)
   const openMenu = useCallback(
@@ -49,11 +50,11 @@ const NoteRow = ({ note, f, t, client, breakpoints: { isMobile } }) => {
         }
       >
         <TableCell
-          className={`${styles.tableCellName} u-flex u-flex-items-center u-ellipsis u-fz-medium`}
+          className={`${styles.tableCellName} u-flex u-flex-items-center u-fz-medium`}
         >
           <Icon icon={NoteIcon} size={32} className="u-mr-1 u-flex-shrink-0" />
-          <span className="u-charcoalGrey">{filename}</span>
-          <span>{extension}</span>
+          <span className="u-charcoalGrey u-ellipsis">{filename}</span>
+          {!isMobile && <span className="u-ellipsis">{extension}</span>}
         </TableCell>
         {!isMobile && (
           <>
@@ -67,15 +68,15 @@ const NoteRow = ({ note, f, t, client, breakpoints: { isMobile } }) => {
             <TableCell className={styles.tableCell}>
               <SharedRecipients docId={note._id} size="small" />
             </TableCell>
-            <TableCell className={styles.tableCell}>
-              <span ref={menuTriggerRef}>
-                <IconButton onClick={openMenu}>
-                  <Icon icon="dots" />
-                </IconButton>
-              </span>
-            </TableCell>
           </>
         )}
+        <TableCell className={styles.tableCell}>
+          <span ref={menuTriggerRef}>
+            <IconButton onClick={openMenu}>
+              <Icon icon="dots" />
+            </IconButton>
+          </span>
+        </TableCell>
       </TableRow>
       {isMenuOpen && (
         <ActionMenu
@@ -92,4 +93,4 @@ const NoteRow = ({ note, f, t, client, breakpoints: { isMobile } }) => {
   )
 }
 
-export default withBreakpoints()(translate()(withClient(NoteRow)))
+export default translate()(withClient(NoteRow))
