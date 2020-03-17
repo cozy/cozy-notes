@@ -4,7 +4,7 @@ import Spinner from 'cozy-ui/react/Spinner'
 
 function EditorLoading() {
   return (
-    <div>
+    <div className="u-mv-3">
       <Spinner size="xxlarge" middle />
     </div>
   )
