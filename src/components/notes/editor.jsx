@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useCallback } from 'react'
+import React, { useEffect, useContext, useCallback, useRef } from 'react'
 
 import { withClient } from 'cozy-client'
 
@@ -25,6 +25,7 @@ const Editor = withClient(function(props) {
   // base parameters
   const { client: cozyClient, noteId, readOnly } = props
   const { t } = useI18n()
+  const bannerRef = useRef() // where to display banners
 
   // plugins and config
   const isPublic = useContext(IsPublicContext)
@@ -85,6 +86,7 @@ const Editor = withClient(function(props) {
     return (
       <>
         <EditorView
+          bannerRef={bannerRef}
           readOnly={readOnly}
           onTitleChange={onLocalTitleChange}
           onTitleBlur={emergencySync}
@@ -101,7 +103,10 @@ const Editor = withClient(function(props) {
           }
           rightComponent={!isPublic && <SharingWidget file={doc.file} />}
         />
-        <SavingIndicator collabProvider={collabProvider} />
+        <SavingIndicator
+          collabProvider={collabProvider}
+          bannerRef={bannerRef}
+        />
         {exitConfirmationModal}
       </>
     )

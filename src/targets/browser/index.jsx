@@ -1,4 +1,5 @@
 /* global cozy */
+import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
 import 'cozy-ui/dist/cozy-ui.utils.min.css'
 import 'cozy-ui/transpiled/react/stylesheet.css'
 import 'cozy-sharing/dist/stylesheet.css'
@@ -45,9 +46,11 @@ const renderApp = function(client, isPublic) {
     >
       <IntlProvider locale={appLocale} messages={locales[appLocale].atlaskit}>
         <CozyProvider client={client}>
-          <IsPublicContext.Provider value={isPublic}>
-            <App isPublic={isPublic} />
-          </IsPublicContext.Provider>
+          <MuiCozyTheme>
+            <IsPublicContext.Provider value={isPublic}>
+              <App isPublic={isPublic} />
+            </IsPublicContext.Provider>
+          </MuiCozyTheme>
         </CozyProvider>
       </IntlProvider>
     </I18n>,

@@ -180,41 +180,6 @@ html .akEditor > div:first-child > div:first-child > div:first-child > div:first
   align-items: center;
 }
 
-
-html .note-title {
-    flex-grow: 1;
-    align-items: center;
-    margin: 0 2rem calc(2 * var(--note-block-spacing)) 2rem;
-    text-align: center;
-    font-size: var(--note-title0-fs);
-    color: var(--charcoal-grey);
-    line-height: var(--note-title0-lh);
-    font-weight: 900;
-    font-family: var(--primaryFont);
-}
-html .note-title-input,
-html .note-title-input:focus,
-html .note-title-input:hover,
-html .note-title-input::placeholder {
-    border: none;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    overflow: visible;
-    text-align: center;
-    font-size: var(--note-title0-fs);
-    color: var(--charcoal-grey);
-    line-height: var(--note-title0-lh);
-    font-weight: 900;
-    font-family: Lato-Black, var(--primaryFont);
-    vertical-align: bottom;
-    resize: none;
-    min-height: min-content;
-}
-html .note-title-input::placeholder {
-    color: var(--coolGrey);
-}
-
 html .note-editor-container {
     position: relative;
     display: flex;
@@ -243,10 +208,6 @@ html body .note-editor-container .akEditor h1 {
     font-size: var(--note-title1-fs) !important;
     line-height: var(--note-title1-lh) !important;
     color: var(--note-title1-color);
-}
-html body .note-editor-container .akEditor h1.note-title {
-    border: none;
-    padding-top: 0;
 }
 html body .note-editor-container .akEditor h2 {
     font-size: var(--note-title2-fs) !important;
