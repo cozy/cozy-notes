@@ -44,6 +44,9 @@ const List = ({ t, notes, fetchStatus }) => {
           {!isMobile && (
             <>
               <TableHeader className={styles.tableCell}>
+                {t('Notes.List.updated_at')}
+              </TableHeader>
+              <TableHeader className={styles.tableCell}>
                 {t('Notes.List.location')}
               </TableHeader>
               <TableHeader className={styles.tableCell}>
