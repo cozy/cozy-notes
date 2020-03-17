@@ -40,7 +40,7 @@ const PublicContext = withClient(({ client }) => {
     const fetchData = async () => {
       try {
         const searchParams = new URLSearchParams(window.location.search)
-        if (searchParams.has('id')) {
+        if (searchParams.has('id') && !searchParams.has('sharecode')) {
           // public route = /public/?sharecode=xxxx&id=xxxxx
           // The id of the note is necessary because the sharecode
           // may be about a folder and not a specific note.
@@ -50,10 +50,10 @@ const PublicContext = withClient(({ client }) => {
           setSharedDocumentId(id)
         } else {
           // public route = /public/?sharecode=xxxxx
-          // There is no id. It should be a sharecode
-          // dedicated to a unique note. We look into
-          // permissions and try to open the first file.
-          const { id, readOnly } = await getSharedDocument(client)
+          // There is an id since the sharecode is for the
+          // folder.
+          const { readOnly } = await getSharedDocument(client)
+          const id = searchParams.get('id')
           setReadOnly(readOnly)
           setSharedDocumentId(id)
         }
