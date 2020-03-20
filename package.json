@@ -1,6 +1,6 @@
 {
   "name": "cozy-notes",
-  "version": "1.10.0",
+  "version": "1.10.1",
   "scripts": {
     "tx": "tx pull --all || true",
     "lint": "yarn lint:js && yarn lint:styles",
