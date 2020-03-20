@@ -13,7 +13,7 @@ const Add = ({ t, className, client }) => {
   const handleClick = useCallback(async () => {
     setIsWorking(true)
     const { data: doc } = await createNoteDocument(client)
-    window.location.href = generateReturnUrlToNotesIndex(doc)
+    window.location.href = await generateReturnUrlToNotesIndex(client, doc)
   }, [client])
 
   return (
@@ -33,7 +33,7 @@ export const AddMobile = withClient(({ client }) => (
   <BarButton
     onClick={async () => {
       const { data: doc } = await createNoteDocument(client)
-      window.location.href = generateReturnUrlToNotesIndex(doc)
+      window.location.href = await generateReturnUrlToNotesIndex(client, doc)
     }}
     icon="plus"
     className="u-c-pointer"
