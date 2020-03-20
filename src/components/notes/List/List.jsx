@@ -8,6 +8,7 @@ import {
   TableCell
 } from 'cozy-ui/react/Table'
 import Spinner from 'cozy-ui/react/Spinner'
+import useBreakpoints from 'cozy-ui/react/hooks/useBreakpoints'
 
 import { translate } from 'cozy-ui/react/I18n'
 import EmptyComponent from 'components/notes/List/EmptyComponent'
@@ -31,6 +32,8 @@ const LoadingTableRow = () => (
 )
 
 const List = ({ t, notes, fetchStatus }) => {
+  const { isMobile } = useBreakpoints()
+
   return (
     <Table>
       <TableHead>
@@ -38,15 +41,19 @@ const List = ({ t, notes, fetchStatus }) => {
           <TableHeader className={styles.tableCellName}>
             {t('Notes.List.name')}
           </TableHeader>
-          <TableHeader className={styles.tableCell}>
-            {t('Notes.List.updated_at')}
-          </TableHeader>
-          <TableHeader className={styles.tableCell}>
-            {t('Notes.List.location')}
-          </TableHeader>
-          <TableHeader className={styles.tableCell}>
-            {t('Notes.List.sharings')}
-          </TableHeader>
+          {!isMobile && (
+            <>
+              <TableHeader className={styles.tableCell}>
+                {t('Notes.List.updated_at')}
+              </TableHeader>
+              <TableHeader className={styles.tableCell}>
+                {t('Notes.List.location')}
+              </TableHeader>
+              <TableHeader className={styles.tableCell}>
+                {t('Notes.List.sharings')}
+              </TableHeader>
+            </>
+          )}
           <TableHeader className={styles.tableCell} />
         </TableRow>
       </TableHead>

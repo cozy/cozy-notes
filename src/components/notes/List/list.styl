@@ -26,10 +26,13 @@ $PADDING_TABLE_FIRST_COLUMN=2rem
 .tableCellEmpty
     flex-grow 1
 .tableCellName
-    padding-left $PADDING_TABLE_FIRST_COLUMN
     width 40%
+    overflow hidden
+    flex-shrink 0
+    +gt-mobile()
+        padding-left $PADDING_TABLE_FIRST_COLUMN
     +small-screen()
-        width 100%
+        width 80%
 .tableCell
     width 20%
 
