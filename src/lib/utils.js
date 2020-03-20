@@ -23,11 +23,19 @@ export function getReturnUrl() {
   return undefined
 }
 
-export const generateReturnUrlToNotesIndex = doc => {
-  const url = new URL(window.location)
-  url.searchParams.set(returnUrlKey, '#/')
-  url.hash = `#/n/${doc.id}`
-  return url
+/**
+ * Create the URL to be used to edit a note
+ *
+ * @param {CozyClient} client
+ * @param {object} doc - couchdb document for the note/file
+ * @return {string} URL where one can edit the note
+ */
+export async function generateReturnUrlToNotesIndex(client, doc) {
+  const rawUrl = models.note.fetchURL(client, doc)
+  const back = window.location.toString()
+  const dest = new URL(await rawUrl)
+  dest.searchParams.set(returnUrlKey, back)
+  return dest.toString()
 }
 
 /**

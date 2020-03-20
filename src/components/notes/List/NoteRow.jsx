@@ -45,9 +45,10 @@ const NoteRow = ({ note, f, t, client }) => {
     <>
       <TableRow
         className={`u-c-pointer ${styles.tableRow}`}
-        onClick={() =>
-          (window.location.href = generateReturnUrlToNotesIndex(note))
-        }
+        onClick={async () => {
+          const url = await generateReturnUrlToNotesIndex(client, note)
+          window.location.href = url
+        }}
       >
         <TableCell
           className={`${styles.tableCellName} u-flex u-flex-items-center u-fz-medium`}
