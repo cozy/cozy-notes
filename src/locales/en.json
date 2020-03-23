@@ -32,6 +32,7 @@
     },
     "SavingIndicator": {
       "saved": {
+        "default": "Up to date",
         "just_now": "Up to date",
         "secs_ago": "Up to date (saved %{time} sec. ago)",
         "min_ago": "Up to date (saved %{time} min. ago)",
@@ -48,10 +49,26 @@
       "saving": "Saving...",
       "still_saving": "Saving......",
       "out_of_sync": {
-        "just_now": "Changes unsaved",
-        "secs_ago": "Changes unsaved (off-line for %{time} sec.)",
-        "min_ago": "Changes unsaved (off-line for %{time} min.)",
-        "mins_ago": "Changes unsaved (off-line for %{time} min.)",
+        "default": "Saved (off-line)",
+        "just_now": "Saved (off-line)",
+        "secs_ago": "Saved (off-line for %{time} sec)",
+        "min_ago": "Saved (off-line for %{time} min)",
+        "mins_ago": "Saved (off-line for %{time} min)",
+        "hour_ago": "Saved (off-line for %{time} hour)",
+        "hours_ago": "Saved (off-line for %{time} hours)",
+        "day_ago": "Saved (off-line for %{time} day)",
+        "days_ago": "Saved (off-line for %{time} days)",
+        "month_ago": "Saved (off-line for %{time} month)",
+        "monthes_ago": "Saved (off-line for %{time} monthes)",
+        "year_ago": "Saved (off-line for %{time} year)",
+        "years_ago": "Saved (off-line for %{time} years)"
+      },
+      "saving_impossible": {
+        "default": "Changes unsaved (off-line)",
+        "just_now": "Changes unsaved (off-line)",
+        "secs_ago": "Changes unsaved (off-line for %{time} sec)",
+        "min_ago": "Changes unsaved (off-line for %{time} min)",
+        "mins_ago": "Changes unsaved (off-line for %{time} min)",
         "hour_ago": "Changes unsaved (off-line for %{time} hour)",
         "hours_ago": "Changes unsaved (off-line for %{time} hours)",
         "day_ago": "Changes unsaved (off-line for %{time} day)",

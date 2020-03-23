@@ -32,6 +32,7 @@
     },
     "SavingIndicator": {
       "saved": {
+        "default": "À jour",
         "just_now": "À jour",
         "secs_ago": "À jour (enregistré il y a %{time} sec.)",
         "min_ago": "À jour (enregistré il y a %{time} min.)",
@@ -48,6 +49,22 @@
       "saving": "Enregistrement en cours...",
       "still_saving": "Enregistrement en cours......",
       "out_of_sync": {
+        "default": "Enregistré (hors ligne)",
+        "just_now": "Enregistré (hors ligne)",
+        "secs_ago": "Enregistré (hors ligne depuis %{time} sec)",
+        "min_ago": "Enregistré (hors ligne depuis %{time} min)",
+        "mins_ago": "Enregistré (hors ligne depuis %{time} min)",
+        "hour_ago": "Enregistré (hors ligne depuis %{time} h)",
+        "hours_ago": "Enregistré (hors ligne depuis %{time} h)",
+        "day_ago": "Enregistré (hors ligne depuis %{time} jour)",
+        "days_ago": "Enregistré (hors ligne depuis %{time} jours)",
+        "month_ago": "Enregistré (hors ligne depuis %{time} mois)",
+        "monthes_ago": "Enregistré (hors ligne depuis %{time} mois)",
+        "year_ago": "Enregistré (hors ligne depuis %{time} an)",
+        "years_ago": "Enregistré (hors ligne depuis %{time} ans)"
+      },
+      "saving_impossible": {
+        "default": "Non enregistré (hors ligne)",
         "just_now": "Non enregistré (hors ligne)",
         "secs_ago": "Non enregistré (hors ligne depuis %{time} sec)",
         "min_ago": "Non enregistré (hors ligne depuis %{time} min)",
