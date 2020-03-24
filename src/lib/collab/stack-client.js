@@ -1,5 +1,3 @@
-import CozyRealtime from 'cozy-realtime'
-
 import { schemaOrdered as defaultSchema } from './schema'
 
 // Warning: sessionID on the server, sessionId on the client
@@ -19,7 +17,7 @@ export class ServiceClient {
     this.stackClient = cozyClient.getStackClient()
     this.schema = schema
     this.onRealtimeEvent = this.onRealtimeEvent.bind(this)
-    this.realtime = realtime || new CozyRealtime({ client: cozyClient })
+    this.realtime = realtime || cozyClient.plugins['realtime']
     this.resetCallbacks()
   }
 

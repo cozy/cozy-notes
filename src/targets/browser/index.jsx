@@ -9,6 +9,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { IntlProvider, addLocaleData } from 'react-intl'
 import CozyClient, { CozyProvider } from 'cozy-client'
+import { RealtimePlugin } from 'cozy-realtime'
 import { render } from 'react-dom'
 import { I18n } from 'cozy-ui/react/I18n'
 import { Document } from 'cozy-doctypes'
@@ -97,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!Document.cozyClient) {
     Document.registerClient(client)
   }
+  client.registerPlugin(RealtimePlugin)
 
   if (!isPublic) {
     // initialize the bar, common of all applications, it allows
