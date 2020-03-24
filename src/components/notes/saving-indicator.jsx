@@ -1,13 +1,14 @@
-import React, { useEffect, useCallback, useState } from 'react'
+import React, { useMemo } from 'react'
 import { useI18n } from 'cozy-ui/react/I18n'
 import { Text } from 'cozy-ui/react/Text'
 import usePeriodicRender from 'cozy-ui/react/hooks/usePeriodicRender'
-import useEventListener from 'cozy-ui/react/hooks/useEventListener'
+import useBrowserOffline from 'cozy-ui/react/hooks/useBrowserOffline'
 import useBreakpoints from 'cozy-ui/react/hooks/useBreakpoints'
 import styles from 'components/notes/saving-indicator.styl'
-import throttle from 'lodash/throttle'
 import { relativeAge } from 'lib/utils'
 import OfflineIndicator from 'components/notes/offline-indicator'
+import useCollabStateChange from 'hooks/useCollabStateChange'
+
 // constants
 const sec = 1000
 const keepOfflineOpenFor = 5 * sec
@@ -20,6 +21,55 @@ const outOfSyncAfter = 30 * sec
  */
 
 /**
+ * Checks if the server is out of sync
+ * (our changes were not successfully sent and accepted for too much time)
+ * @param {object} params
+ * @param {boolean} params.isDirty - if there are changes to be sent
+ * @param {integer} params.dirtyAge - number of milliseconds waiting
+ *                                    with changes to be sent
+ * @returns {boolean}
+ */
+function checksOutOfSync({ isDirty, dirtyAge }) {
+  return isDirty && dirtyAge && dirtyAge > outOfSyncAfter
+}
+
+/**
+ * Checks for disconnection (browser offline or out of sync)
+ *
+ * @param {object} params
+ * @param {boolean} params.isOutOfSync
+ * @returns {{isDisconnected, disconnectedAge}}
+ */
+function useDisconnection({ isOutOfSync }) {
+  const now = new Date()
+  const isBrowserOffline = useBrowserOffline()
+  const isDisconnected = isBrowserOffline || isOutOfSync
+  const disconnectedSince = useMemo(() => new Date(), [isDisconnected])
+  const disconnectedAge = isDisconnected ? now - disconnectedSince : 0
+  return { isDisconnected, disconnectedAge }
+}
+
+/**
+ * Should we open the offline indicator tooltip?
+ *
+ * We open it for a few seconds when we go offline
+ * then close it (it is still accessible when hovering over)
+ * @param {object} params
+ * @param {integer} params.disconnectedAge - milliseconds since when we are disconnected
+ * @param {boolean} params.isDisconnected
+ * @returns {boolean}
+ */
+function useOpenOfflineIndicator({ disconnectedAge, isDisconnected }) {
+  const isOpen = isDisconnected && disconnectedAge < keepOfflineOpenFor
+
+  // When open, rerender when the indicator should close again
+  const interval = keepOfflineOpenFor - disconnectedAge
+  usePeriodicRender(isOpen && interval)
+
+  return isOpen
+}
+
+/**
  * Displays a saving indicator in the bottom right
  * and an offline indicator if needed
  *
@@ -27,80 +77,61 @@ const outOfSyncAfter = 30 * sec
  */
 function SavingIndicator(props) {
   const { t } = useI18n()
-  const now = new Date()
   const { isMobile } = useBreakpoints()
+  const now = new Date()
 
-  const [, setLastChange] = useState(undefined)
-  const [offlineSince, setOfflineSince] = useState(undefined)
-  const [isNavigatorOffline, setIsNavigatorOffline] = useState(
-    window && window.navigator && window.navigator.onLine === false
-  )
-  const setNavigatorOffline = useCallback(() => setIsNavigatorOffline(true), [
-    setIsNavigatorOffline
-  ])
-  const setNavigatorOnline = useCallback(() => setIsNavigatorOffline(false), [
-    setIsNavigatorOffline
-  ])
-  useEventListener(window, 'online', setNavigatorOnline)
-  useEventListener(window, 'offline', setNavigatorOffline)
-
+  // collaboration state
   const { collabProvider } = props
+  const lastSave = collabProvider.getLastSaveOrSync()
+  const savedAge = now - (lastSave || now)
   const isDirty = collabProvider.isDirty()
   const dirtySince = collabProvider.getDirtySince()
-  const lastSave = collabProvider.getLastSaveOrSync()
-
-  let message
-
-  const savedAge = now - (lastSave || now)
   const dirtyAge = now - dirtySince
-  const outOfSync = isDirty && dirtyAge && dirtyAge > outOfSyncAfter
 
-  const { key, time, interval } = relativeAge(savedAge)
+  // trigger a rerender if collaboration state changes
+  useCollabStateChange(collabProvider)
 
+  // Disconnected state
+  const isOutOfSync = checksOutOfSync({ isDirty, dirtyAge })
+  const { isDisconnected, disconnectedAge } = useDisconnection({
+    isOutOfSync
+  })
+
+  // should we open the offline indicator?
+  const offlineIndicatorOpen = useOpenOfflineIndicator({
+    isDisconnected,
+    disconnectedAge
+  })
+
+  // display data
+  const age = isDisconnected ? disconnectedAge : isDirty ? dirtyAge : savedAge
+  const { key, time, interval } = relativeAge(age)
+  usePeriodicRender(interval)
+
+  // indicator message
+  let translation
   if (isDirty) {
-    if (outOfSync) {
-      message = t(`Notes.SavingIndicator.out_of_sync.${key}`, { time })
+    if (isDisconnected) {
+      translation = `saving_impossible.${key}`
     } else if (dirtyAge > 5 * sec) {
-      message = t('Notes.SavingIndicator.still_saving')
+      translation = 'still_saving'
     } else {
-      message = t('Notes.SavingIndicator.saving')
+      translation = 'saving'
     }
   } else {
-    message = t(`Notes.SavingIndicator.saved.${key}`, { time })
+    if (isDisconnected) {
+      translation = `out_of_sync.${key}`
+    } else {
+      translation = 'saved.default'
+    }
   }
+  const message = t(`Notes.SavingIndicator.${translation}`, { time })
 
-  const isOffline = isNavigatorOffline || outOfSync
-  useEffect(() => {
-    setOfflineSince(isOffline && now)
-  }, [isOffline])
-
-  const offlineAge = isOffline && offlineSince && now - offlineSince
-  const isOfflineIndicatorOpen =
-    !offlineSince || (offlineAge && offlineAge < keepOfflineOpenFor)
-  const offlineInterval =
-    isOfflineIndicatorOpen &&
-    offlineSince &&
-    offlineSince + keepOfflineOpenFor - now
-
-  usePeriodicRender(
-    (offlineInterval && Math.min(offlineInterval, interval)) || interval
-  )
-
-  const onCollabStateChange = useCallback(
-    throttle(() => setLastChange(new Date()), 200),
-    [setLastChange]
-  )
-  useEffect(() => {
-    collabProvider.on('collab-state-change', onCollabStateChange)
-  }, [collabProvider, onCollabStateChange])
-
+  // actual rendering
   const text = <Text className={styles['saving-indicator']}>{message}</Text>
-  if (isOffline) {
+  if (isDisconnected) {
     return (
-      <OfflineIndicator
-        open={isOfflineIndicatorOpen}
-        bannerRef={props.bannerRef}
-      >
+      <OfflineIndicator open={offlineIndicatorOpen} bannerRef={props.bannerRef}>
         {text}
       </OfflineIndicator>
     )
