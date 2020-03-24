@@ -1,14 +1,16 @@
 import React, { useState, useCallback } from 'react'
 
-import { withClient } from 'cozy-client'
+import { useClient } from 'cozy-client'
 
 import Button from 'cozy-ui/react/Button'
-import { translate } from 'cozy-ui/react/I18n'
+import { useI18n } from 'cozy-ui/react/I18n'
 import BarButton from 'cozy-ui/react/BarButton'
 
 import { createNoteDocument, generateReturnUrlToNotesIndex } from 'lib/utils'
 
-const Add = ({ t, className, client }) => {
+export default function Add({ className }) {
+  const { t } = useI18n()
+  const client = useClient()
   const [isWorking, setIsWorking] = useState(false)
   const handleClick = useCallback(async () => {
     setIsWorking(true)
@@ -29,14 +31,16 @@ const Add = ({ t, className, client }) => {
   )
 }
 
-export const AddMobile = withClient(({ client }) => (
-  <BarButton
-    onClick={async () => {
-      const { data: doc } = await createNoteDocument(client)
-      window.location.href = await generateReturnUrlToNotesIndex(client, doc)
-    }}
-    icon="plus"
-    className="u-c-pointer"
-  />
-))
-export default translate()(withClient(Add))
+export function AddMobile(props) {
+  const client = useClient() || props.client
+  return (
+    <BarButton
+      onClick={async () => {
+        const { data: doc } = await createNoteDocument(client)
+        window.location.href = await generateReturnUrlToNotesIndex(client, doc)
+      }}
+      icon="plus"
+      className="u-c-pointer"
+    />
+  )
+}

@@ -1,8 +1,8 @@
 /* global cozy */
 import React from 'react'
 import Stack from 'cozy-ui/react/Stack'
-import { withBreakpoints } from 'cozy-ui/react'
-import { Query, Q } from 'cozy-client'
+import { withBreakpoints, BarContextProvider, useI18n } from 'cozy-ui/react'
+import { Query, Q, useClient } from 'cozy-client'
 import AppTitle from 'components/notes/List/AppTitle'
 import List from 'components/notes/List/List'
 import Add, { AddMobile } from 'components/notes/add'
@@ -12,6 +12,8 @@ const shouldDisplayAddButton = (fetchStatus, notes) =>
 
 const ListView = ({ breakpoints: { isMobile } }) => {
   const { BarRight } = cozy.bar
+  const i18n = useI18n()
+  const client = useClient()
 
   return (
     <Query query={() => Q('io.cozy.notes')}>
@@ -31,7 +33,13 @@ const ListView = ({ breakpoints: { isMobile } }) => {
             </Stack>
             {isMobile && shouldDisplayAddButton(fetchStatus, notes) && (
               <BarRight>
-                <AddMobile />
+                <BarContextProvider
+                  store={client.store}
+                  client={client}
+                  {...i18n}
+                >
+                  <AddMobile />
+                </BarContextProvider>
               </BarRight>
             )}
           </>
