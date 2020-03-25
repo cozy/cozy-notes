@@ -37,8 +37,6 @@ function EditorView(props) {
 
   const onTitleEvent = useCallback(
     e => {
-      const target = e.target
-      updateTextareaHeight(target)
       if (onTitleChange) onTitleChange(e)
     },
     [onTitleChange]
@@ -62,7 +60,7 @@ function EditorView(props) {
     [collabProvider]
   )
 
-  useEffect(() => updateTextareaHeight(titleEl.current), [])
+  useEffect(() => updateTextareaHeight(titleEl.current), [title])
 
   useEventListener(titleEl.current, 'blur', onTitleBlur)
 
