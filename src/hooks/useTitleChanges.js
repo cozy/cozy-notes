@@ -6,7 +6,8 @@ function useTitleChanges({ noteId, title, setTitle, serviceClient }) {
   const onLocalTitleChange = useCallback(
     serviceClient
       ? e => {
-          const modifiedTitle = e.target.value
+          // forbid line feed and non standard spaces in title
+          const modifiedTitle = e.target.value.replace(/[\r\t\n\xa0]+/g, ' ')
           if (title != modifiedTitle) {
             setTitle(modifiedTitle)
             serviceClient.setTitle(noteId, modifiedTitle)

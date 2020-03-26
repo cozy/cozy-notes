@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useCallback, useRef } from 'react'
 
-import { withClient } from 'cozy-client'
+import { useClient } from 'cozy-client'
 
 import EditorView from 'components/notes/editor-view'
 import EditorLoading from 'components/notes/editor-loading'
@@ -21,9 +21,10 @@ import { useDebugValue } from 'lib/debug'
 import useConfirmExit from 'cozy-ui/react/hooks/useConfirmExit'
 import { useI18n } from 'cozy-ui/react/I18n'
 
-const Editor = withClient(function(props) {
+export default function Editor(props) {
   // base parameters
-  const { client: cozyClient, noteId, readOnly } = props
+  const cozyClient = useClient()
+  const { noteId, readOnly } = props
   const { t } = useI18n()
   const bannerRef = useRef() // where to display banners
 
@@ -113,6 +114,4 @@ const Editor = withClient(function(props) {
   } else {
     return <EditorLoadingError returnUrl={returnUrl} />
   }
-})
-
-export default Editor
+}
