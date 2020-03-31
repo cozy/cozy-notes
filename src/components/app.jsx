@@ -2,14 +2,16 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { hot } from 'react-hot-loader'
 import { Route, Switch, HashRouter, withRouter } from 'react-router-dom'
-import { withClient } from 'cozy-client'
+import { useClient } from 'cozy-client'
 
-import { Alerter, withBreakpoints } from 'cozy-ui/react'
+import Alerter from 'cozy-ui/react/Alerter'
 import { Layout, Main, Content } from 'cozy-ui/react/Layout'
 import { Sprite as IconSprite } from 'cozy-ui/react/Icon'
 import Spinner from 'cozy-ui/react/Spinner'
 import AppTitle from 'cozy-ui/react/AppTitle'
-import { BreakpointsProvider } from 'cozy-ui/react/hooks/useBreakpoints'
+import useBreakpoints, {
+  BreakpointsProvider
+} from 'cozy-ui/react/hooks/useBreakpoints'
 
 const manifest = require('../../manifest.webapp')
 import { List, Editor, Unshared } from 'components/notes'
@@ -32,7 +34,8 @@ const PrivateContext = () => (
   </Switch>
 )
 
-const PublicContext = withClient(({ client }) => {
+const PublicContext = () => {
+  const client = useClient()
   const [sharedDocumentId, setSharedDocumentId] = useState(null)
   const [readOnly, setReadOnly] = useState(false)
   const returnUrl = useMemo(() => getReturnUrl(), [])
@@ -77,9 +80,11 @@ const PublicContext = withClient(({ client }) => {
   } else {
     return <Spinner size="xxlarge" middle />
   }
-})
+}
 
-const App = ({ isPublic, breakpoints: { isMobile }, client }) => {
+const App = ({ isPublic }) => {
+  const client = useClient()
+  const { isMobile } = useBreakpoints
   let appName = ''
   if (isMobile) {
     const data = client.getInstanceOptions()
@@ -116,4 +121,4 @@ const App = ({ isPublic, breakpoints: { isMobile }, client }) => {
   No need to use it anywhere else, it sould work for all
   child components
 */
-export default hot(module)(withBreakpoints()(withClient(App)))
+export default hot(module)(App)
