@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { hot } from 'react-hot-loader'
 import { Route, Switch, HashRouter, withRouter } from 'react-router-dom'
-import { useClient } from 'cozy-client'
+import { useClient, useClientErrors } from 'cozy-client'
 
 import Alerter from 'cozy-ui/react/Alerter'
 import { Layout, Main, Content } from 'cozy-ui/react/Layout'
@@ -85,6 +85,8 @@ const PublicContext = () => {
 const App = ({ isPublic }) => {
   const client = useClient()
   const { isMobile } = useBreakpoints
+  const { ClientErrors } = useClientErrors()
+
   let appName = ''
   if (isMobile) {
     const data = client.getInstanceOptions()
@@ -111,6 +113,7 @@ const App = ({ isPublic }) => {
           <FlagSwitcher />
         </Layout>
       </HashRouter>
+      <ClientErrors />
     </BreakpointsProvider>
   )
 }
