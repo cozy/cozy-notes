@@ -50,9 +50,12 @@ const renderApp = function(client, isPublic) {
         <CozyProvider client={client}>
           <MuiCozyTheme>
             <IsPublicContext.Provider value={isPublic}>
-              <SharingProvider doctype="io.cozy.files" documentType="Notes">
-                <App isPublic={isPublic} />
-              </SharingProvider>
+              {!isPublic && (
+                <SharingProvider doctype="io.cozy.files" documentType="Notes">
+                  <App isPublic={isPublic} />
+                </SharingProvider>
+              )}
+              {isPublic && <App isPublic={isPublic} />}
             </IsPublicContext.Provider>
           </MuiCozyTheme>
         </CozyProvider>
