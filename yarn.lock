@@ -5471,13 +5471,6 @@ cozy-device-helper@1.8.0, cozy-device-helper@^1.7.3:
   dependencies:
     lodash "4.17.15"
 
-cozy-device-helper@^1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.9.0.tgz#de291c524893fe4f927b2262fb6bb71894913d6f"
-  integrity sha512-BK6ebCLb9v9GYIm/yOBZHrQ6WDttV3Mjmdm6ndZoVdsBIOCerqfxl5+pPCyUfSyvkfgk+01XDDNiOg0GGi07+A==
-  dependencies:
-    lodash "4.17.15"
-
 cozy-device-helper@^1.9.2:
   version "1.9.2"
   resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.9.2.tgz#cccddb08011c89620fefac96bb894708c1f27f7b"
@@ -5497,10 +5490,10 @@ cozy-doctypes@1.70.0:
     lodash "4.17.15"
     prop-types "^15.7.2"
 
-cozy-doctypes@^1.72.0:
-  version "1.72.0"
-  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.72.0.tgz#42f9a5823b37c181ef60f949532ba70066c4cedb"
-  integrity sha512-KFezh/TsOFed2SX1q+TNSaWBx2gfEdGwEfRQA9nka6P3Bn3DZCSk8SKIXGa9nnnHOJedGPtN/L55mvpu7wG4dg==
+cozy-doctypes@^1.72.2:
+  version "1.72.2"
+  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.72.2.tgz#ac3d6813780008e5a4115a70679a0f25cf7efd81"
+  integrity sha512-ITrfljuDBsRQ4AaDUup+0Weh7K+QlZfX38R1YFw9nsLWZMy8GCvUvaJ6vLk7UWj9SmoO/+A2Dwz2T/p9je+DZA==
   dependencies:
     "@babel/runtime" "7.5.5"
     cozy-logger "^1.6.0"
@@ -5544,12 +5537,12 @@ cozy-realtime@3.7.0:
     cozy-device-helper "^1.9.2"
     minilog "https://github.com/cozy/minilog.git#master"
 
-cozy-realtime@^3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-3.6.0.tgz#a4a2b841c5f5178e2832f54df43b00f5cd9681f5"
-  integrity sha512-7s3jyx73796v19jZTLbjCVY+uWDu8xhvxLeuX1xplx0NRcoZLbEYwT2TIO8evAqASze3dKD2YC5q3V1WDmGQQA==
+cozy-realtime@^3.8.0:
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-3.8.0.tgz#b161b105433d957f7cb68332ee3fe58e082d7cb4"
+  integrity sha512-VCgffHdMcqO8LRHnUZijR0UXE5FwdLGh9BOP0WKN6lP5eOEaRFL+OPfJuHJasgN5r1YfXautbze1wRQZByAcEg==
   dependencies:
-    cozy-device-helper "^1.9.0"
+    cozy-device-helper "^1.9.2"
     minilog "https://github.com/cozy/minilog.git#master"
 
 cozy-scripts@2.0.2:
@@ -5605,17 +5598,17 @@ cozy-scripts@2.0.2:
     webpack-dev-server "3.7.2"
     webpack-merge "4.2.1"
 
-cozy-sharing@1.8.5:
-  version "1.8.5"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-1.8.5.tgz#a891a31affbfa01e13904ebdeed79678797b9e3e"
-  integrity sha512-Z1gVwc9g/42y77g54LKGoGFSdhPfFwXO8rtnfKTqa4/nqA+65BpSCLYmFqBGVHhAt2eBdBUa6cVO8OqyvtniGQ==
+cozy-sharing@1.11.0:
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-1.11.0.tgz#de30fffa73c17f7e0c4d8c98824e77dd75622ac0"
+  integrity sha512-T92ST1OsGB/hC7ZS/fxWX14SIqqX16IMQptf6Oi63dQYDu+J2vMLj2W6/6KFgB9TDUqu98wP7pYWYM54DKnKOQ==
   dependencies:
     babel-plugin-inline-react-svg "^1.1.0"
     classnames "^2.2.6"
     copy-text-to-clipboard "^2.1.1"
-    cozy-device-helper "^1.9.0"
-    cozy-doctypes "^1.72.0"
-    cozy-realtime "^3.6.0"
+    cozy-device-helper "^1.9.2"
+    cozy-doctypes "^1.72.2"
+    cozy-realtime "^3.8.0"
     lodash "^4.17.15"
     minilog "https://github.com/cozy/minilog.git#master"
     react-autosuggest "^9.4.3"
@@ -10767,6 +10760,13 @@ minilog@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/minilog/-/minilog-3.1.0.tgz#d2d0f1887ca363d1acf0ea86d5c4df293b3fb675"
   integrity sha1-0tDxiHyjY9Gs8OqG1cTfKTs/tnU=
+  dependencies:
+    microee "0.0.6"
+
+"minilog@git+https://github.com/cozy/minilog.git#master":
+  version "3.1.0"
+  uid f01f7d9dfe20981177dd34b9662c2f077d818f82
+  resolved "git+https://github.com/cozy/minilog.git#f01f7d9dfe20981177dd34b9662c2f077d818f82"
   dependencies:
     microee "0.0.6"
 
