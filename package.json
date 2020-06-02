@@ -16,7 +16,7 @@
     "watch:mobile": "cs watch --mobile",
     "start": "cs start --hot --browser",
     "deploy": "git-directory-deploy --directory build/ --branch ${DEPLOY_BRANCH:-build} --repo ${DEPLOY_REPOSITORY:-https://cozy-bot:$GITHUB_TOKEN@github.com/cozy/cozy-notes}",
-    "test": "cs test --verbose",
+    "test": "env NODE_ENV='test' cs test --verbose",
     "cozyPublish": "cs publish --token $REGISTRY_TOKEN --build-commit $(git rev-parse ${DEPLOY_BRANCH:-build})"
   },
   "repository": {
