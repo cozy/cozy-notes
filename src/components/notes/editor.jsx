@@ -1,4 +1,5 @@
 import React, { useEffect, useContext, useCallback, useRef } from 'react'
+import PropTypes from 'prop-types'
 
 import { useClient } from 'cozy-client'
 
@@ -114,4 +115,11 @@ export default function Editor(props) {
   } else {
     return <EditorLoadingError returnUrl={returnUrl} />
   }
+}
+
+Editor.propTypes = {
+  noteId: PropTypes.string.isRequired,
+  readOnly: PropTypes.bool.isRequired,
+  userName: PropTypes.string,
+  returnUrl: PropTypes.string
 }
