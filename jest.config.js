@@ -10,7 +10,7 @@ module.exports = {
     '^cozy-client$': 'cozy-client/dist/index.js',
     '^cozy-ui/react(.*)$': 'cozy-ui/transpiled/react$1'
   },
-  transformIgnorePatterns: ['node_modules/(?!cozy-ui)'],
+  transformIgnorePatterns: ['node_modules/(?!cozy-(ui|sharing))'],
   transform: {
     '^.+\\.webapp$': '<rootDir>/test/jestLib/json-transformer.js',
     '^.+\\.(js|jsx)?$': '<rootDir>/test/jestLib/babel-transformer.js'
