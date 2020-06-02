@@ -4,9 +4,9 @@ import PropTypes from 'prop-types'
 import { useClient } from 'cozy-client'
 
 import EditorView from 'components/notes/editor-view'
+import EditorCorner from 'components/notes/EditorCorner'
 import EditorLoading from 'components/notes/editor-loading'
 import EditorLoadingError from 'components/notes/editor-loading-error'
-import SharingWidget from 'components/notes/sharing'
 import SavingIndicator from 'components/notes/saving-indicator'
 import BackFromEditing from 'components/notes/back_from_editing'
 import IsPublicContext from 'components/IsPublicContext'
@@ -103,7 +103,9 @@ export default function Editor(props) {
               requestToLeave={requestToLeave}
             />
           }
-          rightComponent={!isPublic && <SharingWidget file={doc.file} />}
+          rightComponent={
+            <EditorCorner doc={doc} isPublic={isPublic} isReadOnly={readOnly} />
+          }
         />
         <SavingIndicator
           collabProvider={collabProvider}
