@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from 'react'
 import { ShareButton, ShareModal } from 'cozy-sharing'
-import { withClient } from 'cozy-client'
+import { useClient } from 'cozy-client'
 
 import useFileWithPath from 'hooks/useFileWithPath'
 import styles from 'components/notes/sharing.styl'
 
-export default withClient(function SharingWidget(props) {
-  const { client } = props
+export default function SharingWidget(props) {
+  const client = useClient()
 
   const file = useFileWithPath({ cozyClient: client, file: props.file })
   const noteId = file && file.id
@@ -30,4 +30,4 @@ export default withClient(function SharingWidget(props) {
     )) ||
     null
   )
-})
+}
