@@ -16,7 +16,8 @@
       "exit_confirmation_message": "La sauvegarde automatique n'a pas encore pris en compte vos dernières modifications. Merci de retourner sur votre note pour ne pas les perdre.",
       "exit_confirmation_title": "Abandonner les modifications ?",
       "exit_confirmation_leave": "Quitter sans sauvegarder",
-      "exit_confirmation_cancel": "Retour"
+      "exit_confirmation_cancel": "Retour",
+      "read_only": "Cette note est en mode lecture-seule."
     },
     "List": {
       "latest_notes": "Notes récentes",
