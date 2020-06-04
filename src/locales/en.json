@@ -16,7 +16,8 @@
       "exit_confirmation_message": "Automatic saving has not taken into account the latest changes in your doc. Please stay on your current note if you want to keep them.",
       "exit_confirmation_title": "Abandon your changes?",
       "exit_confirmation_leave": "Leave without saving",
-      "exit_confirmation_cancel": "Cancel"
+      "exit_confirmation_cancel": "Cancel",
+      "read_only": "This note is in read-only mode."
     },
     "List": {
       "latest_notes": "Latest Notes",
