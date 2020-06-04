@@ -16,7 +16,7 @@ const EditorCorner = ({ doc, isPublic, isReadOnly }) => {
         <Icon icon="lock" color="var(--primaryTextColor)" />
       </Tooltip>
     )
-  } else return false
+  } else return null
 }
 
 EditorCorner.propTypes = {
