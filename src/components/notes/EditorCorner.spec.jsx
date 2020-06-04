@@ -1,5 +1,8 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
+
+import { I18n } from 'cozy-ui/react/I18n'
+import en from '../../locales/en.json'
 
 import SharingWidget from 'components/notes/sharing'
 import EditorCorner from './EditorCorner'
@@ -19,10 +22,17 @@ describe('EditorCorner', () => {
   })
 
   it('shows a read only indication on public views', () => {
-    const component = shallow(
-      <EditorCorner doc={mockDoc} isPublic={true} isReadOnly={true} />
+    const component = mount(
+      <EditorCorner doc={mockDoc} isPublic={true} isReadOnly={true} />,
+      {
+        wrappingComponent: I18n,
+        wrappingComponentProps: {
+          lang: 'en',
+          dictRequire: () => en
+        }
+      }
     )
-    expect(component.getElement()).toMatchInlineSnapshot(`
+    expect(component.children().getElement()).toMatchInlineSnapshot(`
       <WithStyles(WithStyles(Tooltip))
         title="This note is in read-only mode."
       >
