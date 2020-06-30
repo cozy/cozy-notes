@@ -49,7 +49,7 @@
   },
   "dependencies": {
     "@atlaskit/editor-core": "114.1.4",
-    "@atlaskit/media-core": "31.0.1",
+    "@atlaskit/media-core": "31.1.1",
     "@atlaskit/media-editor": "37.0.3",
     "@atlaskit/smart-card": "12.6.2",
     "@material-ui/core": "3.9.4",

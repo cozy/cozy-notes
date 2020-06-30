@@ -766,15 +766,14 @@
     uuid "^3.1.0"
     uuid-validate "^0.0.3"
 
-"@atlaskit/media-core@31.0.1":
-  version "31.0.1"
-  resolved "https://registry.yarnpkg.com/@atlaskit/media-core/-/media-core-31.0.1.tgz#b91c1a49f0719aa97b5c250af40665da2cddbcd2"
-  integrity sha512-KNWRpgmWnUi/z8EG1e4K4Bk7N3affQCc3MsVSK0Wrl3HsEC+0GerMh35Rik7ReKLU5O2Lep7j5AEnNH7mNKSTg==
+"@atlaskit/media-core@31.1.1":
+  version "31.1.1"
+  resolved "https://registry.yarnpkg.com/@atlaskit/media-core/-/media-core-31.1.1.tgz#77f48460560ab9dc4a0702eff7190d7d21bd1571"
+  integrity sha512-6mpzpcKzHxOm4rBM2HsH4BYe5ch5/1LoBKRS11oQrCf5wSmS/LWluXxLLG8WqTUWkcXxMAxeqf97XKh7vW1rJA==
   dependencies:
     eventemitter2 "^4.1.0"
     lru-fast "^0.2.2"
     tslib "^1.9.3"
-    uuid "^3.1.0"
 
 "@atlaskit/media-editor@37.0.3":
   version "37.0.3"
@@ -10760,13 +10759,6 @@ minilog@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/minilog/-/minilog-3.1.0.tgz#d2d0f1887ca363d1acf0ea86d5c4df293b3fb675"
   integrity sha1-0tDxiHyjY9Gs8OqG1cTfKTs/tnU=
-  dependencies:
-    microee "0.0.6"
-
-"minilog@git+https://github.com/cozy/minilog.git#master":
-  version "3.1.0"
-  uid f01f7d9dfe20981177dd34b9662c2f077d818f82
-  resolved "git+https://github.com/cozy/minilog.git#f01f7d9dfe20981177dd34b9662c2f077d818f82"
   dependencies:
     microee "0.0.6"
 
