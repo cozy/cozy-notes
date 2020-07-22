@@ -3,7 +3,7 @@ import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
 import 'cozy-ui/dist/cozy-ui.utils.min.css'
 import 'cozy-ui/transpiled/react/stylesheet.css'
 import 'cozy-sharing/dist/stylesheet.css'
-import 'styles'
+import 'styles/index.css'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -24,7 +24,6 @@ import {
 
 const manifest = require('../../../manifest.webapp')
 
-let appLocale
 const locales = {
   en: {
     react: require('react-intl/locale-data/en'),
@@ -35,10 +34,8 @@ const locales = {
     atlaskit: require('@atlaskit/editor-core/dist/cjs/i18n/fr').default
   }
 }
-addLocaleData(locales.en.react)
-addLocaleData(locales.fr.react)
 
-const renderApp = function(client, isPublic) {
+const renderApp = function(appLocale, client, isPublic) {
   const App = require('components/app').default
 
   render(
@@ -66,7 +63,7 @@ const renderApp = function(client, isPublic) {
 }
 
 // initial rendering of the application
-document.addEventListener('DOMContentLoaded', () => {
+export const initApp = () => {
   const data = getDataset()
 
   const appIcon = getDataOrDefault(
@@ -81,7 +78,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const appSlug = getDataOrDefault(data.cozyAppSlug, manifest.slug)
   const appVersion = getDataOrDefault(data.cozyAppVersion, manifest.version)
 
-  appLocale = getDataOrDefault(data.cozyLocale, 'en')
+  const supportedLocales = ['en', 'fr']
+
+  addLocaleData(locales.en.react)
+  addLocaleData(locales.fr.react)
+
+  const userLocale = getDataOrDefault(data.cozyLocale, 'en')
+  const appLocale = supportedLocales.includes(userLocale) ? userLocale : 'en'
 
   const protocol = window.location ? window.location.protocol : 'https:'
 
@@ -121,5 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   }
 
-  renderApp(client, isPublic)
-})
+  renderApp(appLocale, client, isPublic)
+}
+
+document.addEventListener('DOMContentLoaded', initApp)
