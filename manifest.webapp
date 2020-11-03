@@ -43,6 +43,11 @@
       "description": "Required by the cozy-bar to display Claudy and know which applications are coming soon",
       "type": "io.cozy.settings",
       "verbs": ["GET"]
-    }
+    },
+    "sharings": {
+      "description": "Required to have access to the sharings in realtime",
+      "type": "io.cozy.sharings",
+      "verbs": ["GET"]
+    }	
   }
 }
