@@ -1,7 +1,11 @@
 /* global cozy */
 import React from 'react'
-import Stack from 'cozy-ui/react/Stack'
-import { withBreakpoints, BarContextProvider, useI18n } from 'cozy-ui/react'
+import Stack from 'cozy-ui/transpiled/react/Stack'
+import {
+  withBreakpoints,
+  BarContextProvider,
+  useI18n
+} from 'cozy-ui/transpiled/react/'
 import { Query, Q, useClient } from 'cozy-client'
 import AppTitle from 'components/notes/List/AppTitle'
 import List from 'components/notes/List/List'

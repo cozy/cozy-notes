@@ -19,8 +19,8 @@ import useReturnUrl from 'hooks/useReturnUrl'
 import useUser from 'hooks/useUser'
 import { useDebugValue } from 'lib/debug'
 
-import useConfirmExit from 'cozy-ui/react/hooks/useConfirmExit'
-import { useI18n } from 'cozy-ui/react/I18n'
+import useConfirmExit from 'cozy-ui/transpiled/react/hooks/useConfirmExit'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
 export default function Editor(props) {
   // base parameters

@@ -1,5 +1,5 @@
 import React from 'react'
-import { I18n } from 'cozy-ui/react/I18n'
+import { I18n } from 'cozy-ui/transpiled/react/I18n'
 import { mount } from 'enzyme'
 import en from '../../locales/en.json'
 import BackFromEditing from './back_from_editing'

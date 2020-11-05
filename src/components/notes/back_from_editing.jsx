@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
-import { Button, ButtonLink } from 'cozy-ui/react/Button'
+import { Button, ButtonLink } from 'cozy-ui/transpiled/react/Button'
 import IsPublicContext from 'components/IsPublicContext'
-import AppLinker from 'cozy-ui/react/AppLinker'
+import AppLinker from 'cozy-ui/transpiled/react/AppLinker'
 import { getFolderLink } from 'lib/utils'
 import { models } from 'cozy-client'
 

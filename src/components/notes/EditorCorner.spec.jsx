@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 
-import { I18n } from 'cozy-ui/react/I18n'
+import { I18n } from 'cozy-ui/transpiled/react/I18n'
 import en from '../../locales/en.json'
 
 import SharingWidget from 'components/notes/sharing'

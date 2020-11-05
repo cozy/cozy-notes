@@ -2,10 +2,10 @@ import React, { useCallback, useRef, useEffect, useMemo } from 'react'
 
 import { Editor, WithEditorActions } from '@atlaskit/editor-core'
 
-import { MainTitle } from 'cozy-ui/react/Text'
-import Textarea from 'cozy-ui/react/Textarea'
-import { useI18n } from 'cozy-ui/react/I18n'
-import useEventListener from 'cozy-ui/react/hooks/useEventListener'
+import { MainTitle } from 'cozy-ui/transpiled/react/Text'
+import Textarea from 'cozy-ui/transpiled/react/Textarea'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import useEventListener from 'cozy-ui/transpiled/react/hooks/useEventListener'
 
 import editorConfig from 'components/notes/editor_config'
 import HeaderMenu from 'components/header_menu'

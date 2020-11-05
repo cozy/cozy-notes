@@ -6,11 +6,11 @@ import {
   TableRow,
   TableHeader,
   TableCell
-} from 'cozy-ui/react/Table'
-import Spinner from 'cozy-ui/react/Spinner'
-import useBreakpoints from 'cozy-ui/react/hooks/useBreakpoints'
+} from 'cozy-ui/transpiled/react/Table'
+import Spinner from 'cozy-ui/transpiled/react/Spinner'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
-import { translate } from 'cozy-ui/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
 import EmptyComponent from 'components/notes/List/EmptyComponent'
 import NoteRow from 'components/notes/List/NoteRow'
 
