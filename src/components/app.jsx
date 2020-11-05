@@ -4,14 +4,14 @@ import { hot } from 'react-hot-loader'
 import { Route, Switch, HashRouter, withRouter } from 'react-router-dom'
 import { useClient, useClientErrors } from 'cozy-client'
 
-import Alerter from 'cozy-ui/react/Alerter'
-import { Layout, Main, Content } from 'cozy-ui/react/Layout'
-import { Sprite as IconSprite } from 'cozy-ui/react/Icon'
-import Spinner from 'cozy-ui/react/Spinner'
-import AppTitle from 'cozy-ui/react/AppTitle'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import { Layout, Main, Content } from 'cozy-ui/transpiled/react/Layout'
+import { Sprite as IconSprite } from 'cozy-ui/transpiled/react/Icon'
+import Spinner from 'cozy-ui/transpiled/react/Spinner'
+import AppTitle from 'cozy-ui/transpiled/react/AppTitle'
 import useBreakpoints, {
   BreakpointsProvider
-} from 'cozy-ui/react/hooks/useBreakpoints'
+} from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 const manifest = require('../../manifest.webapp')
 import { List, Editor, Unshared } from 'components/notes'

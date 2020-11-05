@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Spinner from 'cozy-ui/react/Spinner'
+import Spinner from 'cozy-ui/transpiled/react/Spinner'
 
 function EditorLoading() {
   return (

@@ -11,7 +11,7 @@ import { IntlProvider, addLocaleData } from 'react-intl'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { RealtimePlugin } from 'cozy-realtime'
 import { render } from 'react-dom'
-import { I18n } from 'cozy-ui/react/I18n'
+import { I18n } from 'cozy-ui/transpiled/react/I18n'
 import { Document } from 'cozy-doctypes'
 import SharingProvider from 'cozy-sharing'
 

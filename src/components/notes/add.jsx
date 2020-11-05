@@ -2,9 +2,9 @@ import React, { useState, useCallback } from 'react'
 
 import { useClient } from 'cozy-client'
 
-import Button from 'cozy-ui/react/Button'
-import { useI18n } from 'cozy-ui/react/I18n'
-import BarButton from 'cozy-ui/react/BarButton'
+import Button from 'cozy-ui/transpiled/react/Button'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import BarButton from 'cozy-ui/transpiled/react/BarButton'
 
 import { createNoteDocument, generateReturnUrlToNotesIndex } from 'lib/utils'
 

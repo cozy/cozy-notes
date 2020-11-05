@@ -1,11 +1,11 @@
 import React from 'react'
-import { I18n } from 'cozy-ui/react/I18n'
+import { I18n } from 'cozy-ui/transpiled/react/I18n'
 import { mount } from 'enzyme'
-import useBreakpoints from 'cozy-ui/react/hooks/useBreakpoints'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import SavingIndicator from './saving-indicator'
 import en from '../../locales/en.json'
 
-jest.mock('cozy-ui/react/hooks/useBreakpoints')
+jest.mock('cozy-ui/transpiled/react/hooks/useBreakpoints')
 
 const sec = 1000
 const min = 60 * sec

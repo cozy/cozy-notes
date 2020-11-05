@@ -1,13 +1,13 @@
 import React from 'react'
-import { I18n } from 'cozy-ui/react/I18n'
+import { I18n } from 'cozy-ui/transpiled/react/I18n'
 import { mount } from 'enzyme'
 
 import EditorView from './editor-view'
 import CollabProvider from 'lib/collab/provider'
 import en from '../../locales/en.json'
 
-import { MainTitle } from 'cozy-ui/react/Text'
-import Textarea from 'cozy-ui/react/Textarea'
+import { MainTitle } from 'cozy-ui/transpiled/react/Text'
+import Textarea from 'cozy-ui/transpiled/react/Textarea'
 
 // eslint-disable-next-line no-unused-vars
 import { Editor, WithEditorActions } from '@atlaskit/editor-core'
