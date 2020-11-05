@@ -8,6 +8,8 @@ import 'styles/index.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { IntlProvider, addLocaleData } from 'react-intl'
+import memoize from 'lodash/memoize'
+
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { RealtimePlugin } from 'cozy-realtime'
 import { render } from 'react-dom'
@@ -123,8 +125,17 @@ export const initApp = () => {
       isPublic: isPublic
     })
   }
-
-  renderApp(appLocale, client, isPublic)
+  return { appLocale, client, isPublic }
 }
 
-document.addEventListener('DOMContentLoaded', initApp)
+const memoizedInit = memoize(initApp)
+const init = () => {
+  const { appLocale, client, isPublic } = memoizedInit()
+  renderApp(appLocale, client, isPublic)
+}
+document.addEventListener('DOMContentLoaded', init)
+
+if (module.hot) {
+  memoizedInit()
+  module.hot.accept()
+}
