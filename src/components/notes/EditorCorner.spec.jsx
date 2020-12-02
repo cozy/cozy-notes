@@ -1,22 +1,31 @@
 import React from 'react'
-import { shallow, mount } from 'enzyme'
+import { mount } from 'enzyme'
 
 import { I18n } from 'cozy-ui/transpiled/react/I18n'
-import en from '../../locales/en.json'
 
+jest.mock('components/notes/sharing', () => () => null)
+
+import en from '../../locales/en.json'
+import { AppLike } from '../../../test/Applike'
 import SharingWidget from 'components/notes/sharing'
 import EditorCorner from './EditorCorner'
 
 describe('EditorCorner', () => {
   const mockDoc = {}
   it('shows the sharing widget on private views', () => {
-    const readOnlyComponent = shallow(
-      <EditorCorner doc={mockDoc} isPublic={false} isReadOnly={true} />
+    const readOnlyComponent = mount(
+      <EditorCorner doc={mockDoc} isPublic={false} isReadOnly={true} />,
+      {
+        wrappingComponent: AppLike
+      }
     )
     expect(readOnlyComponent.find(SharingWidget).length).toBe(1)
 
-    const editableComponent = shallow(
-      <EditorCorner doc={mockDoc} isPublic={false} isReadOnly={false} />
+    const editableComponent = mount(
+      <EditorCorner doc={mockDoc} isPublic={false} isReadOnly={false} />,
+      {
+        wrappingComponent: AppLike
+      }
     )
     expect(editableComponent.find(SharingWidget).length).toBe(1)
   })
@@ -25,11 +34,7 @@ describe('EditorCorner', () => {
     const component = mount(
       <EditorCorner doc={mockDoc} isPublic={true} isReadOnly={true} />,
       {
-        wrappingComponent: I18n,
-        wrappingComponentProps: {
-          lang: 'en',
-          dictRequire: () => en
-        }
+        wrappingComponent: AppLike
       }
     )
     expect(component.children().getElement()).toMatchInlineSnapshot(`
@@ -46,10 +51,12 @@ describe('EditorCorner', () => {
   })
 
   it('renders nothing on a public view with write permissions', () => {
-    const component = shallow(
-      <EditorCorner doc={mockDoc} isPublic={true} isReadOnly={false} />
+    const component = mount(
+      <EditorCorner doc={mockDoc} isPublic={true} isReadOnly={false} />,
+      {
+        wrappingComponent: AppLike
+      }
     )
-
-    expect(component.getElement()).toBe(null)
+    expect(component.children().length).toBe(0)
   })
 })
