@@ -23,7 +23,13 @@ import { fetchIfIsNoteReadOnly } from '../lib/utils'
 const RoutedEditor = withRouter(props => {
   const returnUrl = getReturnUrl()
 
-  return <Editor noteId={props.match.params.id} returnUrl={returnUrl} />
+  return (
+    <Editor
+      noteId={props.match.params.id}
+      returnUrl={returnUrl}
+      readOnly={false}
+    />
+  )
 })
 
 const PrivateContext = () => (
