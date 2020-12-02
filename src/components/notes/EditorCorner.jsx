@@ -8,9 +8,9 @@ import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import SharingWidget from 'components/notes/sharing'
 
 const EditorCorner = ({ doc, isPublic, isReadOnly }) => {
+  const { t } = useI18n()
   if (!isPublic) return <SharingWidget file={doc.file} />
   else if (isReadOnly) {
-    const { t } = useI18n()
     return (
       <Tooltip title={t('Notes.Editor.read_only')}>
         <Icon icon="lock" color="var(--primaryTextColor)" />
