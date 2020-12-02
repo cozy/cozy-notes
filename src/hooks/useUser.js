@@ -9,7 +9,7 @@ function useUser({ userName: providedUserName, cozyClient }) {
       providedUserName ||
       getUserNameFromUrl() ||
       (isPublic ? '?' : getShortNameFromClient(cozyClient)),
-    [cozyClient, providedUserName]
+    [cozyClient, providedUserName, isPublic]
   )
   const userId = userName
   return { userId, userName }
