@@ -44,6 +44,7 @@ function useDisconnection({ isOutOfSync }) {
   const now = new Date()
   const isBrowserOffline = useBrowserOffline()
   const isDisconnected = isBrowserOffline || isOutOfSync
+  // eslint-disable-next-line
   const disconnectedSince = useMemo(() => new Date(), [isDisconnected])
   const disconnectedAge = isDisconnected ? now - disconnectedSince : 0
   return { isDisconnected, disconnectedAge }
