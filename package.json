@@ -61,7 +61,7 @@
     "cozy-realtime": "3.7.0",
     "cozy-scripts": "5.1.1",
     "cozy-sharing": "2.10.0",
-    "cozy-ui": "40.4.0",
+    "cozy-ui": "41.4.0",
     "eslint-config-cozy-app": "1.3.3",
     "lodash": "4.17.19",
     "prop-types": "^15.7.2",

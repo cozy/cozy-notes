@@ -1,9 +1,10 @@
 /* global cozy */
-import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
 import 'cozy-ui/dist/cozy-ui.utils.min.css'
 import 'cozy-ui/transpiled/react/stylesheet.css'
 import 'cozy-sharing/dist/stylesheet.css'
 import 'styles/index.css'
+
+import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
