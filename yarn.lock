@@ -4309,17 +4309,6 @@ babel-plugin-emotion@^10.0.22:
     find-root "^1.1.0"
     source-map "^0.5.7"
 
-babel-plugin-inline-react-svg@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-inline-react-svg/-/babel-plugin-inline-react-svg-1.1.0.tgz#b39519c78249b3fcf895b541c38b485a2b11b0be"
-  integrity sha512-Y/tBMi7Jh7Jh+DGcSNsY9/RW33nvcR067HFK0Dp+03jpidil1sJAffBdajK72xn3tbwMsgFLJubxW5xpQLJytA==
-  dependencies:
-    "@babel/helper-plugin-utils" "^7.0.0"
-    "@babel/parser" "^7.0.0"
-    lodash.isplainobject "^4.0.6"
-    resolve "^1.10.0"
-    svgo "^0.7.2"
-
 babel-plugin-istanbul@^5.1.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-istanbul/-/babel-plugin-istanbul-5.2.0.tgz#df4ade83d897a92df069c4d9a25cf2671293c854"
@@ -5204,13 +5193,6 @@ circular-json@^0.3.1:
   resolved "https://registry.yarnpkg.com/circular-json/-/circular-json-0.3.3.tgz#815c99ea84f6809529d2f45791bdf82711352d66"
   integrity sha512-UZK3NBx2Mca+b5LsG7bY183pHWt5Y1xts4P3Pz7ENTwGVnJOUWbRb3ocjvX7hx9tq/yTAdclXm9sZ38gNuem4A==
 
-clap@^1.0.9:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/clap/-/clap-1.2.3.tgz#4f36745b32008492557f46412d66d50cb99bce51"
-  integrity sha512-4CoL/A3hf90V3VIEjeuhSvlGFEHKzOz+Wfc2IVZc+FaUgU0ZQafJTP49fvnULipOPcAfqhyI2duwQyns6xqjYA==
-  dependencies:
-    chalk "^1.1.3"
-
 class-utils@^0.3.5:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/class-utils/-/class-utils-0.3.6.tgz#f93369ae8b9a7ce02fd41faad0ca83033190c463"
@@ -5331,13 +5313,6 @@ coa@^2.0.2:
     chalk "^2.4.1"
     q "^1.1.2"
 
-coa@~1.0.1:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/coa/-/coa-1.0.4.tgz#a9ef153660d6a86a8bdec0289a5c684d217432fd"
-  integrity sha1-qe8VNmDWqGqL3sAomlxoTSF0Mv0=
-  dependencies:
-    q "^1.1.2"
-
 code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
@@ -5415,11 +5390,6 @@ colors@^1.1.2:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/colors/-/colors-1.3.3.tgz#39e005d546afe01e01f9c4ca8fa50f686a01205d"
   integrity sha512-mmGt/1pZqYRjMxB1axhTo16/snVZ5krrKkcmMeVKxzECMMXoCgnvTPp10QgHfcbQZw8Dq2jMNG6je4JlWU0gWg==
-
-colors@~1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/colors/-/colors-1.1.2.tgz#168a4701756b6a7f51a12ce0c97bfa28c084ed63"
-  integrity sha1-FopHAXVran9RoSzgyXv6KMCE7WM=
 
 columnify@1.5.4:
   version "1.5.4"
@@ -5732,12 +5702,12 @@ cozy-device-helper@1.8.0, cozy-device-helper@^1.7.3:
   dependencies:
     lodash "4.17.15"
 
-cozy-device-helper@^1.10.3:
-  version "1.10.3"
-  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.10.3.tgz#c2ee5b9891b7865d97125ad7e71a1f7af9c639c6"
-  integrity sha512-n1GR1X6D00e6G0b4GD0PpMDbvbxltAboVLN2RWfYURg0bOlVb2QC7ay6WrIlGHc+rVVY8FPBvuV/87A3vEEuiQ==
+cozy-device-helper@^1.11.0:
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.11.0.tgz#1dc9441b23c9bfd1f62b947f65334334a2f78cdc"
+  integrity sha512-Xw9Zah3ML8ORnKzOTFj8CPXVjLKOvFwwy1ue8KoHzrdkraHctyQ6pdm0Jm8qLuxV6oa0BexOilqnq849OR7ZdA==
   dependencies:
-    lodash "4.17.19"
+    lodash "^4.17.19"
 
 cozy-device-helper@^1.9.2:
   version "1.9.2"
@@ -5758,12 +5728,11 @@ cozy-doctypes@1.70.0:
     lodash "4.17.15"
     prop-types "^15.7.2"
 
-cozy-doctypes@^1.74.7:
-  version "1.74.7"
-  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.74.7.tgz#c85833699aba6a547bbd643b141f851553584221"
-  integrity sha512-5cOUHWkYSF/7F0lUCkG056j+7vtToC1k1m8iNujLd19wRY1gfUJDMgduZUpwoYXIdtX3C6R10ijrOLSAj7J5Cw==
+cozy-doctypes@^1.75.1:
+  version "1.75.1"
+  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.75.1.tgz#76effe72fb233f03bb77be06dd82f88754d8efbd"
+  integrity sha512-9PX/Dv+jYVV4TfDfBpu4TbVudv8PIHzbLUNwY7FyZ4poyGvRSFE8YFvnHgO0ShREgCJ2Ivw3lVJuF6xpkJHv6g==
   dependencies:
-    "@babel/runtime" "7.5.5"
     cozy-logger "^1.6.0"
     date-fns "1.30.1"
     es6-promise-pool "2.5.0"
@@ -5809,14 +5778,6 @@ cozy-realtime@3.7.0:
   dependencies:
     cozy-device-helper "^1.9.2"
     minilog "https://github.com/cozy/minilog.git#master"
-
-cozy-realtime@^3.11.0:
-  version "3.11.0"
-  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-3.11.0.tgz#6d68137653aac0d815de30af038adf240b5ada2e"
-  integrity sha512-8YmP/pipVZwkLtkXrG2aSaAHxZNEc36bj3cuFAAGeuE3pw8c0+c/ClD/598+NXzBgtQ6cSExiDGMxVqynRnA3w==
-  dependencies:
-    "@cozy/minilog" "^1.0.0"
-    cozy-device-helper "^1.10.3"
 
 cozy-scripts@5.1.1:
   version "5.1.1"
@@ -5873,18 +5834,16 @@ cozy-scripts@5.1.1:
     webpack-dev-server "3.10.3"
     webpack-merge "4.2.2"
 
-cozy-sharing@2.5.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-2.5.1.tgz#c6b0d8338716acd054c3fcfd0740c820528d3e7a"
-  integrity sha512-gjFb3o1L8bGGQExzp0IDANQpDNWU3Wi/c/8kT1p95we+wGipgAaKPvZMhyLHQMahqs6ws5sciDexW3RkL1JaWg==
+cozy-sharing@2.10.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-2.10.0.tgz#abe4c66185dc269c1eb844452e56c665becb51af"
+  integrity sha512-7uQDi2V35nvFvzoQTRB/eqBIMjhbvEAE2Ox82Uel1PrgHT0hX4qdQhzqQwejXypVGkGKSgZkYm9co4YtD+Ua1w==
   dependencies:
     "@cozy/minilog" "^1.0.0"
-    babel-plugin-inline-react-svg "^1.1.0"
     classnames "^2.2.6"
     copy-text-to-clipboard "^2.1.1"
-    cozy-device-helper "^1.10.3"
-    cozy-doctypes "^1.74.7"
-    cozy-realtime "^3.11.0"
+    cozy-device-helper "^1.11.0"
+    cozy-doctypes "^1.75.1"
     lodash "^4.17.19"
     react-autosuggest "^9.4.3"
     react-tooltip "^3.11.1"
@@ -6302,14 +6261,6 @@ csso@^4.0.2:
   integrity sha512-h+6w/W1WqXaJA4tb1dk7r5tVbOm97MsKxzwnvOR04UQ6GILroryjMWu3pmCCtL2mLaEStQ0fZgeGiy99mo7iyg==
   dependencies:
     css-tree "^1.0.0"
-
-csso@~2.3.1:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/csso/-/csso-2.3.2.tgz#ddd52c587033f49e94b71fc55569f252e8ff5f85"
-  integrity sha1-3dUsWHAz9J6Utx/FVWnyUuj/X4U=
-  dependencies:
-    clap "^1.0.9"
-    source-map "^0.5.3"
 
 cssom@0.3.x, "cssom@>= 0.3.2 < 0.4.0":
   version "0.3.6"
@@ -7446,11 +7397,6 @@ espree@^5.0.1:
     acorn "^6.0.7"
     acorn-jsx "^5.0.0"
     eslint-visitor-keys "^1.0.0"
-
-esprima@^2.6.0:
-  version "2.7.3"
-  resolved "https://registry.yarnpkg.com/esprima/-/esprima-2.7.3.tgz#96e3b70d5779f6ad49cd032673d1c312767ba581"
-  integrity sha1-luO3DVd59q1JzQMmc9HDEnZ7pYE=
 
 esprima@^3.1.3:
   version "3.1.3"
@@ -10161,14 +10107,6 @@ js-yaml@^3.12.0, js-yaml@^3.9.0:
   dependencies:
     argparse "^1.0.7"
     esprima "^4.0.0"
-
-js-yaml@~3.7.0:
-  version "3.7.0"
-  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.7.0.tgz#5c967ddd837a9bfdca5f2de84253abe8a1c03b80"
-  integrity sha1-XJZ93YN6m/3KXy3oQlOr6KHAO4A=
-  dependencies:
-    argparse "^1.0.7"
-    esprima "^2.6.0"
 
 jsbn@~0.1.0:
   version "0.1.1"
@@ -14781,7 +14719,7 @@ sane@^4.0.3:
     minimist "^1.1.1"
     walker "~1.0.5"
 
-sax@^1.2.4, sax@~1.2.1, sax@~1.2.4:
+sax@^1.2.4, sax@~1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
@@ -15842,19 +15780,6 @@ svgo@1.3.2:
     stable "^0.1.8"
     unquote "~1.1.1"
     util.promisify "~1.0.0"
-
-svgo@^0.7.2:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/svgo/-/svgo-0.7.2.tgz#9f5772413952135c6fefbf40afe6a4faa88b4bb5"
-  integrity sha1-n1dyQTlSE1xv779Ar+ak+qiLS7U=
-  dependencies:
-    coa "~1.0.1"
-    colors "~1.1.2"
-    csso "~2.3.1"
-    js-yaml "~3.7.0"
-    mkdirp "~0.5.1"
-    sax "~1.2.1"
-    whet.extend "~0.9.9"
 
 svgo@^1.0.0, svgo@^1.2.2:
   version "1.3.0"
@@ -16992,11 +16917,6 @@ when@~3.6.x:
   version "3.6.4"
   resolved "https://registry.yarnpkg.com/when/-/when-3.6.4.tgz#473b517ec159e2b85005497a13983f095412e34e"
   integrity sha1-RztRfsFZ4rhQBUl6E5g/CVQS404=
-
-whet.extend@~0.9.9:
-  version "0.9.9"
-  resolved "https://registry.yarnpkg.com/whet.extend/-/whet.extend-0.9.9.tgz#f877d5bf648c97e5aa542fadc16d6a259b9c11a1"
-  integrity sha1-+HfVv2SMl+WqVC+twW1qJZucEaE=
 
 which-module@^2.0.0:
   version "2.0.0"
