@@ -1,26 +1,49 @@
 import { Schema } from 'prosemirror-model'
 
-// taken from a debug of @atlakit/editor/editor-core/create-editor/create-editor
-// L139 (new Schema({nodes ,marks}))
 // static because the @atlaskit code base requires a real navigator
 // TODO: either find and exclude plugins requiring interaction
 //       or running a JSDOM faking a navigator
+// @quentin: I don't understand yet why we need to do that, so if someone
+// knows, then update the comment ;)
 
-const nodes = [
+// To get the schema, we need to log the values from node_modules/@atlaskit/editor/editor-core/create-editor/create-schema
+// itself just before the call on new Schema({nodes, marks}) and then
+// console.log({node})
+// console.log({marks})
+// to be able to copy paste the value in this file, click right on the log -> store as global value
+// then copy(temp1) and then past it in the method written below.
+
+// const objectToArray = obj => {
+// const nodesArray = []
+//  Object.keys(obj).map(key => {
+//    nodesArray.push([key, obj[key]])
+//  })
+//  return nodesArray
+// }
+//
+// in order to convert it in Array.
+// It seems that Atlaskit is using Schema containing an Object but prosemissor an Array
+// Don't know yet why and if we can't reuse a code from atlaskit to do that transformation
+// since they have to do it somewhere I think
+
+//https://github.com/cozy/cozy-notes/pull/2/commits/202e529cdb1e71996c2cab43057984c9f885b61a
+
+export const nodes = [
   [
     'doc',
     {
       content: '(block)+',
-      marks: 'link'
+      marks: 'link unsupportedMark unsupportedNodeAttribute'
     }
   ],
   [
     'paragraph',
     {
+      selectable: false,
       content: 'inline*',
       group: 'block',
       marks:
-        'strong code em link strike subsup textColor typeAheadQuery underline',
+        'strong code em link strike subsup textColor typeAheadQuery underline unsupportedMark unsupportedNodeAttribute',
       parseDOM: [
         {
           tag: 'p'
@@ -39,11 +62,13 @@ const nodes = [
     {
       group: 'block',
       content: 'listItem+',
+      selectable: false,
       parseDOM: [
         {
           tag: 'ul'
         }
-      ]
+      ],
+      marks: 'unsupportedMark unsupportedNodeAttribute'
     }
   ],
   [
@@ -51,6 +76,8 @@ const nodes = [
     {
       group: 'block',
       content: 'listItem+',
+      marks: 'unsupportedMark unsupportedNodeAttribute',
+      selectable: false,
       parseDOM: [
         {
           tag: 'ol'
@@ -61,8 +88,11 @@ const nodes = [
   [
     'listItem',
     {
-      content: '(paragraph ) (paragraph | bulletList | orderedList )*',
+      content:
+        '(paragraph | codeBlock) (paragraph | bulletList | orderedList | codeBlock)*',
+      marks: 'link unsupportedMark unsupportedNodeAttribute',
       defining: true,
+      selectable: false,
       parseDOM: [
         {
           tag: 'li'
@@ -81,6 +111,7 @@ const nodes = [
       content: 'inline*',
       group: 'block',
       defining: true,
+      selectable: false,
       parseDOM: [
         {
           tag: 'h1',
@@ -136,6 +167,42 @@ const nodes = [
     }
   ],
   [
+    'codeBlock',
+    {
+      attrs: {
+        language: {
+          default: null
+        },
+        uniqueId: {
+          default: null
+        }
+      },
+      content: 'text*',
+      marks: 'unsupportedMark unsupportedNodeAttribute',
+      group: 'block',
+      code: true,
+      defining: true,
+      parseDOM: [
+        {
+          tag: 'pre',
+          preserveWhitespace: 'full'
+        },
+        {
+          tag: 'div[style]',
+          preserveWhitespace: 'full'
+        },
+        {
+          tag: 'table[style]',
+          preserveWhitespace: 'full'
+        },
+        {
+          tag: 'div.code-block',
+          preserveWhitespace: 'full'
+        }
+      ]
+    }
+  ],
+  [
     'rule',
     {
       group: 'block',
@@ -150,7 +217,8 @@ const nodes = [
     'panel',
     {
       group: 'block',
-      content: '(paragraph | heading | bulletList | orderedList)+',
+      content: '(paragraph | heading | bulletList | orderedList )+',
+      marks: 'unsupportedMark unsupportedNodeAttribute',
       attrs: {
         panelType: {
           default: 'info'
@@ -262,6 +330,7 @@ const nodes = [
           default: false
         }
       },
+      marks: 'unsupportedMark unsupportedNodeAttribute',
       tableRole: 'table',
       isolating: true,
       selectable: false,
@@ -276,8 +345,9 @@ const nodes = [
   [
     'tableHeader',
     {
+      selectable: false,
       content:
-        '(paragraph | panel | blockquote | orderedList | bulletList | rule | heading )+',
+        '(paragraph | panel | blockquote | orderedList | bulletList | rule | heading | codeBlock )+',
       attrs: {
         colspan: {
           default: 1
@@ -294,7 +364,7 @@ const nodes = [
       },
       tableRole: 'header_cell',
       isolating: true,
-      marks: '',
+      marks: 'link unsupportedMark unsupportedNodeAttribute',
       parseDOM: [
         {
           tag: 'th'
@@ -305,7 +375,9 @@ const nodes = [
   [
     'tableRow',
     {
+      selectable: false,
       content: '(tableCell | tableHeader)+',
+      marks: 'unsupportedMark unsupportedNodeAttribute',
       tableRole: 'row',
       parseDOM: [
         {
@@ -317,8 +389,9 @@ const nodes = [
   [
     'tableCell',
     {
+      selectable: false,
       content:
-        '(paragraph | panel | blockquote | orderedList | bulletList | rule | heading | unsupportedBlock)+',
+        '(paragraph | panel | blockquote | orderedList | bulletList | rule | heading | codeBlock | unsupportedBlock)+',
       attrs: {
         colspan: {
           default: 1
@@ -334,7 +407,7 @@ const nodes = [
         }
       },
       tableRole: 'cell',
-      marks: '',
+      marks: 'link unsupportedMark unsupportedNodeAttribute',
       isolating: true,
       parseDOM: [
         {
@@ -349,11 +422,11 @@ const nodes = [
   ]
 ]
 
-const marks = [
+export const marks = [
   [
     'link',
     {
-      excludes: 'color',
+      excludes: 'link color',
       group: 'link',
       attrs: {
         href: {},
@@ -363,6 +436,13 @@ const marks = [
       },
       inclusive: false,
       parseDOM: [
+        {
+          tag: '[data-block-link]'
+        },
+        {
+          tag: 'a[href]',
+          context: 'paragraph/|heading/|mediaSingle/'
+        },
         {
           tag: 'a[href]'
         }
@@ -400,7 +480,7 @@ const marks = [
           tag: 'b'
         },
         {
-          style: 'font-weight'
+          tag: 'span'
         }
       ]
     }
@@ -463,6 +543,14 @@ const marks = [
           attrs: {
             type: 'sup'
           }
+        },
+        {
+          tag: 'span',
+          style: 'vertical-align=super'
+        },
+        {
+          tag: 'span',
+          style: 'vertical-align=sub'
         }
       ]
     }
@@ -510,7 +598,6 @@ const marks = [
   [
     'typeAheadQuery',
     {
-      excludes: 'searchQuery',
       inclusive: true,
       group: 'searchQuery',
       parseDOM: [
@@ -522,6 +609,23 @@ const marks = [
         trigger: {
           default: ''
         }
+      }
+    }
+  ],
+  [
+    'unsupportedMark',
+    {
+      attrs: {
+        originalValue: {}
+      }
+    }
+  ],
+  [
+    'unsupportedNodeAttribute',
+    {
+      attrs: {
+        type: {},
+        unsupported: {}
       }
     }
   ]
