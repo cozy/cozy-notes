@@ -1,11 +1,8 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import { I18n } from 'cozy-ui/transpiled/react/I18n'
-
 jest.mock('components/notes/sharing', () => () => null)
 
-import en from '../../locales/en.json'
 import { AppLike } from '../../../test/Applike'
 import SharingWidget from 'components/notes/sharing'
 import EditorCorner from './EditorCorner'
