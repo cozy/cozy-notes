@@ -52,6 +52,13 @@
       "verbs": [
         "GET"
       ]
+    },
+    "sharings": {
+      "description": "Required to have access to the sharings in realtime",
+      "type": "io.cozy.sharings",
+      "verbs": [
+        "GET"
+      ]
     }
   },
   "locales": {
