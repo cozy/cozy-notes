@@ -26,7 +26,7 @@ $ cd cozy-notes
 $ yarn install
 ```
 
-:pushpin: If you use a node environment wrapper like [nvm] or [ndenv], don't forget to set your local node version before doing a `yarn install`.
+:pushpin: If you use a node environment wrapper like [nvm] or [ndenv], don't forget to set your local node version to >= 12 before doing a `yarn install`.
 
 Cozy's apps use a standard set of _npm scripts_ to run common tasks, like watch, lint, test, build…
 
