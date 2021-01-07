@@ -94,8 +94,8 @@ html .akEditor > div:first-child > div:first-child + div {
 
 
 /* auto size for the toolbar ... sizes for 5+5rem as margin */
-html .akEditor > div:first-child > div:first-child > div:first-child > div:first-child {
-    width: 565px; /* full toolbar */
+[data-testid="ak-editor-main-toolbar"] > div > div:nth-child(2) {
+    width: 730px; /* full toolbar */
     max-width: 100%;
     margin: auto;
 }
