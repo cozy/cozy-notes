@@ -3,5 +3,8 @@
     "fabric.editor.blockquote2": "Citation",
     "fabric.editor.remove": "Supprimer",
     "fabric.editor.linkPlaceholder": "Coller le lien",
-    "fabric.editor.linkAddress": "Adresse du lien"
+    "fabric.editor.linkAddress": "Adresse du lien",
+    "fabric.editor.layoutWide": "Élargir",
+    "fabric.editor.layoutFullWidth": "Pleine largeur",
+    "fabric.editor.layoutFixedWidth": "Retour au centre"
 }

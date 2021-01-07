@@ -6,20 +6,20 @@ import { Schema } from 'prosemirror-model'
 // @quentin: I don't understand yet why we need to do that, so if someone
 // knows, then update the comment ;)
 
-// To get the schema, we need to log the values from node_modules/@atlaskit/editor/editor-core/create-editor/create-schema
+// To get the schema, we need to log the values from node_modules/@atlaskit/editor-core/dist/esm/create-editor/create-schema
 // itself just before the call on new Schema({nodes, marks}) and then
-// console.log({node})
-// console.log({marks})
+//console.log({nodes})
+//console.log({marks})
 // to be able to copy paste the value in this file, click right on the log -> store as global value
 // then copy(temp1) and then past it in the method written below.
 
-// const objectToArray = obj => {
-// const nodesArray = []
-//  Object.keys(obj).map(key => {
-//    nodesArray.push([key, obj[key]])
-//  })
-//  return nodesArray
-// }
+/* const objectToArray = obj => {
+  const nodesArray = []
+  Object.keys(obj).map(key => {
+    nodesArray.push([key, obj[key]])
+  })
+  return nodesArray
+} */
 //
 // in order to convert it in Array.
 // It seems that Atlaskit is using Schema containing an Object but prosemissor an Array
@@ -30,10 +30,56 @@ import { Schema } from 'prosemirror-model'
 
 export const nodes = [
   [
+    'date',
+    {
+      inline: true,
+      group: 'inline',
+      selectable: true,
+      attrs: {
+        timestamp: {
+          default: ''
+        }
+      },
+      parseDOM: [
+        {
+          tag: 'span[data-node-type="date"]'
+        }
+      ]
+    }
+  ],
+  [
+    'status',
+    {
+      inline: true,
+      group: 'inline',
+      selectable: true,
+      attrs: {
+        text: {
+          default: ''
+        },
+        color: {
+          default: ''
+        },
+        localId: {
+          default: '046b16b8-790a-4097-881d-eb377338287b'
+        },
+        style: {
+          default: ''
+        }
+      },
+      parseDOM: [
+        {
+          tag: 'span[data-node-type="status"]'
+        }
+      ]
+    }
+  ],
+  [
     'doc',
     {
       content: '(block)+',
-      marks: 'link unsupportedMark unsupportedNodeAttribute'
+      marks:
+        'alignment breakout indentation link unsupportedMark unsupportedNodeAttribute'
     }
   ],
   [
@@ -364,7 +410,7 @@ export const nodes = [
       },
       tableRole: 'header_cell',
       isolating: true,
-      marks: 'link unsupportedMark unsupportedNodeAttribute',
+      marks: 'link alignment unsupportedMark unsupportedNodeAttribute',
       parseDOM: [
         {
           tag: 'th'
@@ -407,7 +453,7 @@ export const nodes = [
         }
       },
       tableRole: 'cell',
-      marks: 'link unsupportedMark unsupportedNodeAttribute',
+      marks: 'link alignment unsupportedMark unsupportedNodeAttribute',
       isolating: true,
       parseDOM: [
         {
@@ -610,6 +656,53 @@ export const marks = [
           default: ''
         }
       }
+    }
+  ],
+  [
+    'alignment',
+    {
+      excludes: 'alignment indentation',
+      group: 'alignment',
+      attrs: {
+        align: {}
+      },
+      parseDOM: [
+        {
+          tag: 'div.fabric-editor-block-mark'
+        }
+      ]
+    }
+  ],
+  [
+    'breakout',
+    {
+      spanning: false,
+      inclusive: false,
+      parseDOM: [
+        {
+          tag: 'div.fabric-editor-breakout-mark'
+        }
+      ],
+      attrs: {
+        mode: {
+          default: 'wide'
+        }
+      }
+    }
+  ],
+  [
+    'indentation',
+    {
+      excludes: 'indentation alignment',
+      group: 'indentation',
+      attrs: {
+        level: {}
+      },
+      parseDOM: [
+        {
+          tag: 'div.fabric-editor-indentation-mark'
+        }
+      ]
     }
   ],
   [
