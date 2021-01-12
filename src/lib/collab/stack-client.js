@@ -175,7 +175,10 @@ export class ServiceClient {
    */
   onRealtimeEvent(doc) {
     const id = doc.id || doc._id
-    const type = doc.doctype
+    let type = doc.doctype || doc.type
+    // Hack needed since realtime data from io.cozy.notes & io.cozy.files
+    // are not structured the same way
+    if (type === 'file') type = 'io.cozy.files'
     if (this.callbacks[type] && this.callbacks[type][id]) {
       return this.callbacks[type][id](doc)
     } else {
@@ -197,6 +200,15 @@ export class ServiceClient {
         this.onRealtimeEvent
       )
     ])
+    // Listen for an update to the file itself
+    // Needed to detect a schema changed in the note
+    // since there is no "Note specific event" for that
+    this.realtime.subscribe(
+      'UPDATED',
+      'io.cozy.files',
+      noteId,
+      this.onRealtimeEvent
+    )
   }
 
   /**
@@ -219,6 +231,21 @@ export class ServiceClient {
     this.setCallback('io.cozy.notes.telepointers', noteId, data =>
       callback(this.server2client(data))
     )
+  }
+  /**
+   *
+   * Called when a change is detected in the io.cozy.files
+   * and used to check if the schema has been updated
+   *
+   * @param {uuid} noteId
+   * @param {function} callback
+   */
+  async onSchemaUpdated(noteId, callback) {
+    this.setCallback('io.cozy.files', noteId, doc => {
+      if (doc.metadata.schema.version !== this.schemaVersion) {
+        return callback(doc)
+      }
+    })
   }
 
   /**

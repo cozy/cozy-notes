@@ -13,7 +13,8 @@ const service = {
   onTelepointerUpdated: jest.fn(),
   join: jest.fn(),
   getSteps: jest.fn(),
-  pushTelepointer: jest.fn()
+  pushTelepointer: jest.fn(),
+  onSchemaUpdated: jest.fn()
 }
 
 describe('Channel', () => {
@@ -425,6 +426,18 @@ describe('Channel', () => {
       expect(service.onTelepointerUpdated).toHaveBeenCalledTimes(1)
       const callback = service.onTelepointerUpdated.mock.calls[0][1]
       callback(payload)
+    })
+
+    it('emits "schemaupdated" if the schema has been updated on the server', async done => {
+      const channel = new Channel(config, service)
+      channel.on('schemaupdated', () => {
+        expect(true).toBe(true)
+        done()
+      })
+      await channel.connect(version, doc)
+      expect(service.onSchemaUpdated).toHaveBeenCalledTimes(1)
+      const callback = service.onSchemaUpdated.mock.calls[0][1]
+      callback()
     })
 
     it('emit "connected"', async done => {
