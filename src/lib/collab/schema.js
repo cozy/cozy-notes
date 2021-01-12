@@ -741,6 +741,8 @@ export const schemaObject = {
   marks: orderedToObject(marks)
 }
 
+export const schemaVersion = 1
+
 const schema = new Schema(schemaObject)
 
 export default schema
