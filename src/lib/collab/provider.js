@@ -70,6 +70,7 @@ export class CollabProvider {
     })
     this.channel.on('data', this.onReceiveData)
     this.channel.on('telepointer', this.onReceiveTelepointer)
+    this.channel.on('schemaupdated', this.onReceiveSchemaUpdated)
     this.channel.on('needcatchup', () => this.catchup())
     const state = getState()
     const doc = jsonTransformer.encode(state.doc)
@@ -285,7 +286,13 @@ export class CollabProvider {
     this.updateParticipant(sessionId, data.timestamp)
     this.emit('telepointer', data)
   }
-
+  /**
+   * We receive an update of the schema from the server
+   * We reload the page
+   */
+  onReceiveSchemaUpdated = () => {
+    window.location.reload(true)
+  }
   updateParticipant(sessionId, timestamp) {
     const userId = this.serviceClient.getUserId(sessionId)
     const participant = getParticipant({ userId, sessionId })

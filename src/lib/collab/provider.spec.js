@@ -27,7 +27,8 @@ const service = {
   onTelepointerUpdated: jest.fn(),
   join: jest.fn(),
   getSteps: jest.fn(),
-  pushTelepointer: jest.fn()
+  pushTelepointer: jest.fn(),
+  onSchemaUpdated: jest.fn()
 }
 const config = { noteId, version, channel, updatedAt }
 const configWithoutChannel = { noteId, version, updatedAt }

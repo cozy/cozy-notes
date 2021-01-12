@@ -213,6 +213,9 @@ export class Channel {
     this.service.onTelepointerUpdated(noteId, payload => {
       this.emit('telepointer', payload)
     })
+    this.service.onSchemaUpdated(noteId, () => {
+      this.emit('schemaupdated')
+    })
     this.emit('connected', { version, doc, updatedAt })
   }
 
