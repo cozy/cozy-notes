@@ -1,7 +1,7 @@
 import get from 'lodash/get'
 import { generateWebLink } from 'cozy-ui/transpiled/react/AppLinker'
 import { getDataset, getDataOrDefault } from './initFromDom'
-import { schemaOrdered } from 'lib/collab/schema'
+import { schemaOrdered, schemaVersion } from 'lib/collab/schema'
 import { models } from 'cozy-client'
 
 import manifest from '../../manifest.webapp'
@@ -156,7 +156,10 @@ export function createNoteDocument(client) {
       type: 'io.cozy.notes.documents',
       attributes: {
         title: '',
-        schema: schemaOrdered
+        schema: {
+          ...schemaOrdered,
+          version: schemaVersion
+        }
       }
     }
   })
