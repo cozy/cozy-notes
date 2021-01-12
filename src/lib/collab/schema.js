@@ -28,6 +28,14 @@ import { Schema } from 'prosemirror-model'
 
 //https://github.com/cozy/cozy-notes/pull/2/commits/202e529cdb1e71996c2cab43057984c9f885b61a
 
+// if you edit the schema, please upgrade this schemaVersion
+
+export const schemaVersion = 1
+
+export const getSchemaVersion = () => {
+  return schemaVersion
+}
+
 export const nodes = [
   [
     'date',
@@ -740,8 +748,6 @@ export const schemaObject = {
   nodes: orderedToObject(nodes),
   marks: orderedToObject(marks)
 }
-
-export const schemaVersion = 1
 
 const schema = new Schema(schemaObject)
 
