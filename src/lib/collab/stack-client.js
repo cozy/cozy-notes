@@ -1,4 +1,4 @@
-import { schemaOrdered as defaultSchema } from './schema'
+import { schemaOrdered as defaultSchema, schemaVersion } from './schema'
 
 // Warning: sessionID on the server, sessionId on the client
 
@@ -16,6 +16,7 @@ export class ServiceClient {
     this.cozyClient = cozyClient
     this.stackClient = cozyClient.getStackClient()
     this.schema = schema
+    this.schemaVersion = schemaVersion
     this.onRealtimeEvent = this.onRealtimeEvent.bind(this)
     this.realtime = realtime || cozyClient.plugins['realtime']
     this.resetCallbacks()
@@ -110,6 +111,34 @@ export class ServiceClient {
       }
     }
     return this.stackClient.fetchJSON('POST', this.path(), doc)
+  }
+
+  /**
+   *
+   * Update the schema for a note.
+   *
+   * @param {uuid} noteId
+   * @param {Schema} newSchema
+   */
+  async updateSchema(noteId, newSchema) {
+    const res = await this.stackClient.fetchJSON(
+      'PUT',
+      this.path(noteId, 'schema'),
+      {
+        data: {
+          type: 'io.cozy.notes.documents',
+          attributes: {
+            schema: {
+              ...newSchema,
+              version: schemaVersion
+            }
+          }
+        }
+      }
+    )
+    const formatedDoc = this.formatDoc(res)
+    this.schemaVersion = formatedDoc.schemaVersion
+    return formatedDoc
   }
 
   /**
@@ -211,12 +240,25 @@ export class ServiceClient {
    */
   async getDoc(noteId) {
     const res = await this.stackClient.fetchJSON('GET', this.path(noteId))
+    const formatedDoc = this.formatDoc(res)
+    this.schemaVersion = formatedDoc.schemaVersion
+    return formatedDoc
+  }
+
+  /**
+   * Returns a formated document with easier access
+   *
+   * @param {Note} Note document
+   * @return {Object} formated document
+   */
+  formatDoc(res) {
     return {
       doc: res.data.attributes.metadata.content,
       version: res.data.attributes.metadata.version,
       title: res.data.attributes.metadata.title,
       updatedAt: new Date(res.data.attributes.updated_at),
-      file: res.data
+      file: res.data,
+      schemaVersion: res.data.attributes.metadata.schema.version
     }
   }
 

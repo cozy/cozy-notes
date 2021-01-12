@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { getSchemaVersion, schemaOrdered } from 'lib/collab/schema'
 
 function useNote({ serviceClient, noteId }) {
   // `docId` is the id of the note for which we have a state.
@@ -13,7 +14,15 @@ function useNote({ serviceClient, noteId }) {
       async function loadNote() {
         try {
           if (!loading) setLoading(true)
-          const doc = await serviceClient.getDoc(docId)
+          let doc = await serviceClient.getDoc(docId)
+          // If the note's schema doesn't correspond to the App one
+          // that means that the App's schema has been updated but
+          // not the on for the Note. We need to update it in order
+          // to be able to use the latest features brought by
+          // the new schema
+          if (doc.schemaVersion !== getSchemaVersion()) {
+            doc = await serviceClient.updateSchema(docId, schemaOrdered)
+          }
           setTitle(doc.title || '')
           setDoc(doc)
         } catch (e) {
