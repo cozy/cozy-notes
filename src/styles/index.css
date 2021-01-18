@@ -249,10 +249,6 @@ html body .note-editor-container .akEditor > div:first-child  h5,
 html body .note-editor-container .akEditor > div:first-child  h6 {
     margin-bottom: 0;
 }
-.akEditor > div:first-child /* sc-bYwvMP */ > div:first-child > div:first-child > div:first-child /* sc-gmeYpB */ > span:first-child /* sc-kTUwUJ */ > div:first-child /* sc-kZmsYB */  div[role=group] > div:nth-child(6),
-.akEditor > div:first-child /* sc-bYwvMP */ > div:first-child > div:first-child > div:first-child /* sc-gmeYpB */ > span:first-child /* sc-kTUwUJ */ > div:first-child /* sc-kZmsYB */  div[role=group] > div:nth-child(7) {
-    display: none;
-}
 
 
 /* spacing between blocks */
