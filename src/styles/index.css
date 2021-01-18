@@ -336,7 +336,7 @@ html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=info
     background-color: #EEF5FD ; /* var(--dodgerBlue) * 0.8 */
 }
 html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=info] .ak-editor-panel__icon {
-    color: 3F7FE9;
+    color: #3F7FE9;
 }
 html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=success] {
     background-color: #F0FAF4 ; /* var(--emerald) * 0.8 */
