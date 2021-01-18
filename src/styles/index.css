@@ -19,16 +19,22 @@ html {
     --note-title2-fs: calc(1.333 * var(--note-base-size));
     --note-title3-fs: var(--note-base-size);
     --note-title4-fs: var(--note-base-size);
+    --note-title5-fs: calc((var(--note-base-size) * 0.89));
+    --note-title6-fs: calc((var(--note-base-size) * 0.78));
     --note-title0-lh: 1.2;
     --note-title1-lh: 1.3;
     --note-title2-lh: 1.4;
     --note-title3-lh: var(--note-base-lh);
     --note-title4-lh: var(--note-base-lh);
+    --note-title5-lh: 1.55;
+    --note-title6-lh: 1.6;
     --note-title0-color: var(--note-base-color);
     --note-title1-color: var(--note-base-color);
     --note-title2-color: var(--note-base-color);
     --note-title3-color: var(--note-base-color);
     --note-title4-color: var(--coolGrey);
+    --note-title5-color: var(--coolGrey);
+    --note-title6-color: var(--coolGrey);
     --note-border-radius: 8px;
     --note-header-height: 3rem;
     --note-header-margin-left: 7rem;
@@ -219,12 +225,22 @@ html body .note-editor-container .akEditor h3 {
     line-height: var(--note-title3-lh) !important;
     color: var(--note-title3-color);
 }
-html body .note-editor-container .akEditor h4,
-html body .note-editor-container .akEditor h5,
-html body .note-editor-container .akEditor h6 {
+html body .note-editor-container .akEditor h4 {
     font-size: var(--note-title4-fs) !important;
     line-height: var(--note-title4-lh) !important;
     color: var(--note-title4-color);
+}
+
+html body .note-editor-container .akEditor h5 {
+    font-size: var(--note-title5-fs) !important;
+    line-height: var(--note-title5-lh) !important;
+    color: var(--note-title5-color);
+}
+
+html body .note-editor-container .akEditor h6 {
+    font-size: var(--note-title6-fs) !important;
+    line-height: var(--note-title6-lh) !important;
+    color: var(--note-title6-color);
 }
 
 /* Titres dans la dropdown de la barre d'outils */
