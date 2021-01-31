@@ -47,7 +47,7 @@
     "stylint": "1.5.9"
   },
   "dependencies": {
-    "@atlaskit/editor-core": "134.0.1",
+    "@atlaskit/editor-core": "134.0.3",
     "@atlaskit/media-core": "32.1.2",
     "@atlaskit/media-editor": "38.1.4",
     "@atlaskit/smart-card": "14.6.1",
