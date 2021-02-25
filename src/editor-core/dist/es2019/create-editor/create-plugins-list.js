@@ -48,6 +48,7 @@ import {
 } from '../plugins/base/pm-plugins/frozen-editor'
 import { createDefaultPreset } from '../labs/next/presets/default'
 import { shouldForceTracking } from '@atlaskit/editor-common'
+import cozyImagePlugin from '../../../../plugins/images'
 const isCodeBlockAllowed = options => {
   const exclude =
     options && options.allowBlockType && options.allowBlockType.exclude
@@ -223,6 +224,10 @@ export default function createPluginsList(
   const preset = createDefaultPreset(
     getDefaultPresetOptionsFromEditorProps(props)
   )
+  if (props.cozyImage) {
+    console.log('plugin Cozy')
+    preset.add(cozyImagePlugin)
+  }
   if (props.allowAnalyticsGASV3) {
     const { performanceTracking, transactionTracking } = props
     preset.add([

@@ -1,13 +1,14 @@
 import React, { useCallback, useRef, useEffect, useMemo } from 'react'
 
-import { Editor, WithEditorActions } from '@atlaskit/editor-core'
-
+import { Editor, WithEditorActions, EditorContext } from '@atlaskit/editor-core'
 import { MainTitle } from 'cozy-ui/transpiled/react/Text'
 import Textarea from 'cozy-ui/transpiled/react/Textarea'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import useEventListener from 'cozy-ui/transpiled/react/hooks/useEventListener'
 
-import editorConfig from 'components/notes/editor_config'
+import editorConfig, {
+  imageUploadHandler
+} from 'components/notes/editor_config'
 import HeaderMenu from 'components/header_menu'
 import styles from 'components/notes/editor-view.styl'
 
@@ -15,6 +16,7 @@ function updateTextareaHeight(target) {
   if (target) target.style.height = `${target.scrollHeight}px`
 }
 
+const TestPlugin = <p>Plugin</p>
 const nullCallback = () => {}
 
 function EditorView(props) {
@@ -32,7 +34,6 @@ function EditorView(props) {
     bannerRef
   } = props
   const { t } = useI18n()
-
   const titleEl = useRef(null)
 
   const onTitleEvent = useCallback(
@@ -73,37 +74,57 @@ function EditorView(props) {
         right={rightComponent}
       />
       <section className="note-editor-container">
-        <Editor
-          disabled={collabProvider ? false : readOnly}
-          collabEdit={collabEdit}
-          onChange={onContentChange || nullCallback}
-          defaultValue={defaultValue}
-          {...editorConfig}
-          appearance="full-page"
-          placeholder={t('Notes.EditorView.main_placeholder')}
-          shouldFocus={!readOnly}
-          contentComponents={
-            <WithEditorActions
-              render={() => (
-                <>
-                  <aside ref={bannerRef} className={styles.banner}></aside>
-                  <MainTitle tag="h1" className={styles.title}>
-                    <Textarea
-                      ref={titleEl}
-                      rows="1"
-                      readOnly={!!readOnly}
-                      fullwidth={true}
-                      value={title}
-                      onChange={readOnly ? nullCallback : onTitleEvent}
-                      placeholder={defaultTitle}
-                      className={styles.titleInput}
+        <EditorContext>
+          <WithEditorActions
+            render={actions => {
+              console.log('actions', actions)
+              return (
+                <Editor
+                  disabled={collabProvider ? false : readOnly}
+                  collabEdit={collabEdit}
+                  onChange={onContentChange || nullCallback}
+                  defaultValue={defaultValue}
+                  legacyImageUploadProvider={Promise.resolve(
+                    imageUploadHandler
+                  )}
+                  {...editorConfig}
+                  appearance="full-page"
+                  placeholder={t('Notes.EditorView.main_placeholder')}
+                  shouldFocus={!readOnly}
+                  primaryToolbarComponents={[TestPlugin]}
+                  contentComponents={
+                    <WithEditorActions
+                      render={() => {
+                        return (
+                          <>
+                            <aside
+                              ref={bannerRef}
+                              className={styles.banner}
+                            ></aside>
+                            <MainTitle tag="h1" className={styles.title}>
+                              <Textarea
+                                ref={titleEl}
+                                rows="1"
+                                readOnly={!!readOnly}
+                                fullwidth={true}
+                                value={title}
+                                onChange={
+                                  readOnly ? nullCallback : onTitleEvent
+                                }
+                                placeholder={defaultTitle}
+                                className={styles.titleInput}
+                              />
+                            </MainTitle>
+                          </>
+                        )
+                      }}
                     />
-                  </MainTitle>
-                </>
-              )}
-            />
-          }
-        />
+                  }
+                />
+              )
+            }}
+          />
+        </EditorContext>
       </section>
     </article>
   )
