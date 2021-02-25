@@ -48,7 +48,7 @@ import {
 } from '../plugins/base/pm-plugins/frozen-editor'
 import { createDefaultPreset } from '../labs/next/presets/default'
 import { shouldForceTracking } from '@atlaskit/editor-common'
-import cozyImagePlugin from '../../../../plugins/images'
+import cozyImagePlugin from '../../../../plugins/images/index.jsx'
 const isCodeBlockAllowed = options => {
   const exclude =
     options && options.allowBlockType && options.allowBlockType.exclude
