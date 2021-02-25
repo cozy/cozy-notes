@@ -1,0 +1,15 @@
+import { EditorView } from 'prosemirror-view';
+import { EditorState } from 'prosemirror-state';
+import { Node, ResolvedPos } from 'prosemirror-model';
+import { ContentNodeWithPos } from 'prosemirror-utils';
+import { Side } from '../plugins/selection/gap-cursor/selection';
+export declare const setNodeSelection: (view: EditorView, pos: number) => void;
+export declare function setTextSelection(view: EditorView, anchor: number, head?: number): void;
+export declare function setAllSelection(view: EditorView): void;
+export declare function setGapCursorSelection(view: EditorView, pos: number, side: Side): void;
+export declare function setCellSelection(view: EditorView, anchor: number, head?: number): void;
+export declare const normaliseNestedLayout: (state: EditorState, node: Node) => Node<any>;
+export declare const isChromeWithSelectionBug: boolean;
+export declare const isSelectionAtStartOfNode: ($pos: ResolvedPos, parentNode?: ContentNodeWithPos | undefined) => boolean;
+export declare const isSelectionAtEndOfNode: ($pos: ResolvedPos, parentNode?: ContentNodeWithPos | undefined) => boolean;
+export declare const isValidPosition: (pos: number, state: EditorState) => boolean;

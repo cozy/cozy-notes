@@ -1,0 +1,3 @@
+import { Transaction } from 'prosemirror-state';
+import { InlineCommentPluginState } from './types';
+export declare const createPluginState: (dispatch: import("../../../event-dispatcher").Dispatch<any>, initialState: InlineCommentPluginState | ((state: import("prosemirror-state").EditorState<any>) => InlineCommentPluginState)) => import("prosemirror-state").StateField<InlineCommentPluginState, import("prosemirror-model").Schema<any, any>>, createCommand: <A = import("./types").InlineCommentAction>(action: A | ((state: Readonly<import("prosemirror-state").EditorState<any>>) => false | A), transform?: ((tr: Transaction<any>, state: import("prosemirror-state").EditorState<any>) => Transaction<any>) | undefined) => import("../../..").Command;

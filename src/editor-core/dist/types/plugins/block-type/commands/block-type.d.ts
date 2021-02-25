@@ -1,0 +1,13 @@
+import { Command } from '../../../types';
+import { HeadingLevelsAndNormalText } from '../types';
+import { INPUT_METHOD } from '../../analytics';
+export declare type InputMethod = INPUT_METHOD.TOOLBAR | INPUT_METHOD.INSERT_MENU | INPUT_METHOD.SHORTCUT | INPUT_METHOD.FORMATTING | INPUT_METHOD.KEYBOARD;
+export declare function setBlockType(name: string): Command;
+export declare function setBlockTypeWithAnalytics(name: string, inputMethod: InputMethod): Command;
+export declare function setNormalText(): Command;
+export declare function setNormalTextWithAnalytics(inputMethod: InputMethod): Command;
+export declare function setHeading(level: HeadingLevelsAndNormalText): Command;
+export declare const setHeadingWithAnalytics: (newHeadingLevel: HeadingLevelsAndNormalText, inputMethod: InputMethod) => Command;
+export declare function insertBlockType(name: string): Command;
+export declare const insertBlockTypesWithAnalytics: (name: string, inputMethod: InputMethod) => Command;
+export declare const cleanUpAtTheStartOfDocument: Command;

@@ -1,0 +1,12 @@
+import { EditorState } from 'prosemirror-state';
+import { Node as PMNode, NodeType } from 'prosemirror-model';
+import { Command } from '../../types';
+export declare const setExpandRef: (ref?: HTMLDivElement | null | undefined) => Command;
+export declare const deleteExpandAtPos: (expandNodePos: number, expandNode: PMNode) => Command;
+export declare const deleteExpand: () => Command;
+export declare const updateExpandTitle: (title: string, pos: number, nodeType: NodeType) => Command;
+export declare const toggleExpandExpanded: (pos: number, nodeType: NodeType) => Command;
+export declare const createExpandNode: (state: EditorState) => PMNode;
+export declare const insertExpand: Command;
+export declare const focusTitle: (pos: number) => Command;
+export declare const setSelectionInsideExpand: Command;

@@ -1,0 +1,28 @@
+import { Node as PMNode, Schema, Slice } from 'prosemirror-model';
+import { Transaction } from 'prosemirror-state';
+import { ContentNodeWithPos } from 'prosemirror-utils';
+import { EditorView } from 'prosemirror-view';
+import { Command } from '../../../types';
+export declare const setEditorFocus: (editorHasFocus: boolean) => Command;
+export declare const setTableRef: (ref?: HTMLTableElement | null | undefined) => Command;
+export declare const setCellAttr: (name: string, value: any) => Command;
+export declare const triggerUnlessTableHeader: (command: Command) => Command;
+export declare const transformSliceRemoveCellBackgroundColor: (slice: Slice, schema: Schema) => Slice;
+export declare const transformSliceToAddTableHeaders: (slice: Slice, schema: Schema) => Slice;
+export declare const transformSliceToRemoveColumnsWidths: (slice: Slice, schema: Schema) => Slice;
+export declare const deleteTable: Command;
+export declare const deleteTableIfSelected: Command;
+export declare const convertFirstRowToHeader: (schema: Schema) => (tr: Transaction) => Transaction;
+export declare const moveCursorBackward: Command;
+export declare const setMultipleCellAttrs: (attrs: Object, targetCellPosition?: number | undefined) => Command;
+export declare const selectColumn: (column: number, expand?: boolean | undefined) => Command;
+export declare const selectRow: (row: number, expand?: boolean | undefined) => Command;
+export declare const showInsertColumnButton: (columnIndex: number) => Command;
+export declare const showInsertRowButton: (rowIndex: number) => Command;
+export declare const hideInsertColumnOrRowButton: () => Command;
+export declare const addResizeHandleDecorations: (columnIndex: number) => Command;
+export declare const autoSizeTable: (view: EditorView, node: PMNode, table: HTMLTableElement, basePos: number, opts: {
+    dynamicTextSizing: boolean;
+    containerWidth: number;
+}) => boolean;
+export declare const addBoldInEmptyHeaderCells: (tableCellHeader: ContentNodeWithPos) => Command;

@@ -1,0 +1,10 @@
+import { Selection } from 'prosemirror-state';
+import { EditorView } from 'prosemirror-view';
+import { CollabEventInitData, CollabEventRemoteData, CollabEventConnectionData, CollabEventPresenceData, CollabEventTelepointerData, CollabSendableSelection, PrivateCollabEditOptions } from './types';
+export declare const handleInit: (initData: CollabEventInitData, view: EditorView, options?: PrivateCollabEditOptions | undefined) => void;
+export declare const handleConnection: (connectionData: CollabEventConnectionData, view: EditorView) => void;
+export declare const handlePresence: (presenceData: CollabEventPresenceData, view: EditorView) => void;
+export declare const applyRemoteData: (remoteData: CollabEventRemoteData, view: EditorView, options: PrivateCollabEditOptions) => void;
+export declare const applyRemoteSteps: (json: any[], userIds: string[] | undefined, view: EditorView, options?: PrivateCollabEditOptions | undefined) => void;
+export declare const handleTelePointer: (telepointerData: CollabEventTelepointerData, view: EditorView) => void;
+export declare const getSendableSelection: (selection: Selection) => CollabSendableSelection;

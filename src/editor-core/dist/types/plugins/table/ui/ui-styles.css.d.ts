@@ -1,0 +1,14 @@
+export declare const InsertMarker: (cssString?: string | undefined) => import("styled-components").FlattenInterpolation<import("styled-components").ThemedStyledProps<import("@atlaskit/theme").AtlaskitThemeProps | import("@atlaskit/theme").CustomThemeProps | import("@atlaskit/theme").NoThemeProps | undefined, any>>[];
+export declare const HeaderButton: (cssString?: string | undefined) => import("styled-components").FlattenInterpolation<import("styled-components").ThemedStyledProps<import("@atlaskit/theme").AtlaskitThemeProps | import("@atlaskit/theme").CustomThemeProps | import("@atlaskit/theme").NoThemeProps | undefined, any>>[];
+export declare const HeaderButtonHover: () => import("styled-components").InterpolationValue[];
+export declare const HeaderButtonDanger: () => import("styled-components").InterpolationValue[];
+export declare const insertColumnButtonWrapper: import("styled-components").InterpolationValue[];
+export declare const insertRowButtonWrapper: import("styled-components").InterpolationValue[];
+export declare const columnControlsLineMarker: import("styled-components").FlattenInterpolation<import("styled-components").ThemedStyledProps<import("@atlaskit/theme").AtlaskitThemeProps | import("@atlaskit/theme").CustomThemeProps | import("@atlaskit/theme").NoThemeProps | undefined, any>>[];
+export declare const DeleteButton: import("styled-components").InterpolationValue[];
+export declare const OverflowShadow: import("styled-components").FlattenInterpolation<import("styled-components").ThemedStyledProps<import("@atlaskit/theme").AtlaskitThemeProps | import("@atlaskit/theme").CustomThemeProps | import("@atlaskit/theme").NoThemeProps | undefined, any>>[];
+export declare const columnControlsDecoration: import("styled-components").FlattenInterpolation<import("styled-components").ThemedStyledProps<import("@atlaskit/theme").AtlaskitThemeProps | import("@atlaskit/theme").CustomThemeProps | import("@atlaskit/theme").NoThemeProps | undefined, any>>[];
+export declare const hoveredDeleteButton: import("styled-components").InterpolationValue[];
+export declare const hoveredCell: import("styled-components").InterpolationValue[];
+export declare const hoveredWarningCell: import("styled-components").InterpolationValue[];
+export declare const resizeHandle: import("styled-components").InterpolationValue[];

@@ -1,0 +1,30 @@
+export let PLATFORMS;
+
+(function (PLATFORMS) {
+  PLATFORMS["NATIVE"] = "mobileNative";
+  PLATFORMS["HYBRID"] = "mobileHybrid";
+  PLATFORMS["WEB"] = "web";
+})(PLATFORMS || (PLATFORMS = {}));
+
+export let MODE;
+
+(function (MODE) {
+  MODE["RENDERER"] = "renderer";
+  MODE["EDITOR"] = "editor";
+})(MODE || (MODE = {}));
+
+export let FULL_WIDTH_MODE;
+
+(function (FULL_WIDTH_MODE) {
+  FULL_WIDTH_MODE["FIXED_WIDTH"] = "fixedWidth";
+  FULL_WIDTH_MODE["FULL_WIDTH"] = "fullWidth";
+})(FULL_WIDTH_MODE || (FULL_WIDTH_MODE = {}));
+
+export let BROWSER_FREEZE_INTERACTION_TYPE;
+
+(function (BROWSER_FREEZE_INTERACTION_TYPE) {
+  BROWSER_FREEZE_INTERACTION_TYPE["LOADING"] = "loading";
+  BROWSER_FREEZE_INTERACTION_TYPE["TYPING"] = "typing";
+  BROWSER_FREEZE_INTERACTION_TYPE["CLICKING"] = "clicking";
+  BROWSER_FREEZE_INTERACTION_TYPE["PASTING"] = "pasting";
+})(BROWSER_FREEZE_INTERACTION_TYPE || (BROWSER_FREEZE_INTERACTION_TYPE = {}));

@@ -1,0 +1,7 @@
+{
+  "name": "@atlaskit/editor-core/messages",
+  "main": "../dist/cjs/messages.js",
+  "module": "../dist/esm/messages.js",
+  "module:es2019": "../dist/es2019/messages.js",
+  "types": "../dist/types/messages.d.ts"
+}

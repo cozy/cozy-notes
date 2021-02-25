@@ -1,0 +1,7 @@
+{
+  "name": "@atlaskit/editor-core/editor",
+  "main": "../dist/cjs/editor.js",
+  "module": "../dist/esm/editor.js",
+  "module:es2019": "../dist/es2019/editor.js",
+  "types": "../dist/types/editor.d.ts"
+}

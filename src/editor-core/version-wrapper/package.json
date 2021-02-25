@@ -1,0 +1,7 @@
+{
+  "name": "@atlaskit/editor-core/version-wrapper",
+  "main": "../dist/cjs/version-wrapper.js",
+  "module": "../dist/esm/version-wrapper.js",
+  "module:es2019": "../dist/es2019/version-wrapper.js",
+  "types": "../dist/types/version-wrapper.d.ts"
+}

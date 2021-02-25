@@ -1,0 +1,13 @@
+import { EditorState, Transaction } from 'prosemirror-state';
+import { EditorView } from 'prosemirror-view';
+export declare const handleBlur: (view: EditorView, event: Event) => boolean;
+export declare const handleFocus: (view: EditorView, event: Event) => boolean;
+export declare const handleClick: (view: EditorView, event: Event) => boolean;
+export declare const handleMouseOver: (view: EditorView, mouseEvent: Event) => boolean;
+export declare const handleMouseDown: (_: EditorView, event: Event) => boolean;
+export declare const handleMouseOut: (view: EditorView, mouseEvent: Event) => boolean;
+export declare const handleMouseLeave: (view: EditorView, event: Event) => boolean;
+export declare const handleMouseMove: (view: EditorView, event: Event) => boolean;
+export declare function handleTripleClick(view: EditorView, pos: number): boolean;
+export declare const handleCut: (oldTr: Transaction, oldState: EditorState, newState: EditorState) => Transaction;
+export declare const whenTableInFocus: (eventHandler: (view: EditorView, mouseEvent: Event) => boolean) => (view: EditorView, mouseEvent: Event) => boolean;

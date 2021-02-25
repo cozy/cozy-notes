@@ -1,0 +1,14 @@
+import { RESOLVE_METHOD } from './../../analytics/types/inline-comment-events';
+import { Command } from '../../../types';
+import { AnnotationTypes } from '@atlaskit/adf-schema';
+import { INPUT_METHOD } from '../../analytics';
+import { InlineCommentMap, InlineCommentMouseData } from '../pm-plugins/types';
+export declare const updateInlineCommentResolvedState: (partialNewState: InlineCommentMap, resolveMethod?: RESOLVE_METHOD | undefined) => Command;
+export declare const closeComponent: () => Command;
+export declare const clearDirtyMark: () => Command;
+export declare const removeInlineCommentNearSelection: (id: string) => Command;
+export declare const setInlineCommentDraftState: (drafting: boolean, inputMethod?: INPUT_METHOD.TOOLBAR | INPUT_METHOD.SHORTCUT) => Command;
+export declare const addInlineComment: (id: string) => Command;
+export declare const updateMouseState: (mouseData: InlineCommentMouseData) => Command;
+export declare const createAnnotation: (id: string, annotationType?: AnnotationTypes) => Command;
+export declare const setInlineCommentsVisibility: (isVisible: boolean) => Command;

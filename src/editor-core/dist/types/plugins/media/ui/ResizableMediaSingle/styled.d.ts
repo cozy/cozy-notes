@@ -1,0 +1,2 @@
+/// <reference types="react" />
+export declare const Wrapper: import("styled-components").StyledComponentClass<import("react").ClassAttributes<HTMLDivElement> & import("react").HTMLAttributes<HTMLDivElement> & import("@atlaskit/editor-common").MediaSingleDimensionHelperProps, any, import("react").ClassAttributes<HTMLDivElement> & import("react").HTMLAttributes<HTMLDivElement> & import("@atlaskit/editor-common").MediaSingleDimensionHelperProps>;

@@ -1,0 +1,10 @@
+import { Plugin } from 'prosemirror-state';
+import { ProviderFactory } from '@atlaskit/editor-common';
+import { Dispatch } from '../../event-dispatcher';
+import { PrivateCollabEditOptions, ProviderCallback } from './types';
+import { CollabEditProvider } from './provider';
+import { PluginState } from './plugin-state';
+import { pluginKey } from './plugin-key';
+export { PluginState, pluginKey };
+export type { CollabEditProvider };
+export declare const createPlugin: (dispatch: Dispatch, providerFactory: ProviderFactory, collabProviderCallback: ProviderCallback, options: PrivateCollabEditOptions) => Plugin<any, any>;

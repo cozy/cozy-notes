@@ -1,0 +1,13 @@
+import { Node as PmNode } from 'prosemirror-model';
+import { Selection, Transaction } from 'prosemirror-state';
+import { Decoration, DecorationSet } from 'prosemirror-view';
+import { Cell, CellColumnPositioning, TableDecorations } from '../types';
+export declare const findColumnControlSelectedDecoration: (decorationSet: DecorationSet) => Decoration[];
+export declare const findControlsHoverDecoration: (decorationSet: DecorationSet) => Decoration[];
+export declare const createCellHoverDecoration: (cells: Cell[], type: 'warning') => Decoration[];
+export declare const createControlsHoverDecoration: (cells: Cell[], type: 'row' | 'column' | 'table', danger?: boolean | undefined) => Decoration[];
+export declare const createColumnSelectedDecoration: (tr: Transaction) => Decoration[];
+export declare const createColumnControlsDecoration: (selection: Selection) => Decoration[];
+export declare const updateDecorations: (node: PmNode, decorationSet: DecorationSet, decorations: Decoration[], key: TableDecorations) => DecorationSet;
+export declare const createResizeHandleDecoration: (tr: Transaction, columnEndIndexTarget: Omit<CellColumnPositioning, 'left'>) => [Decoration[], Decoration[]];
+export declare const createColumnLineResize: (selection: Selection, cellColumnPositioning: Omit<CellColumnPositioning, 'left'>) => Decoration[];

@@ -1,0 +1,7 @@
+{
+  "name": "@atlaskit/editor-core/test-utils",
+  "main": "../dist/cjs/test-utils.js",
+  "module": "../dist/esm/test-utils.js",
+  "module:es2019": "../dist/es2019/test-utils.js",
+  "types": "../dist/types/test-utils.d.ts"
+}

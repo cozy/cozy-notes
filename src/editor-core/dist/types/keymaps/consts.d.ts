@@ -1,0 +1,12 @@
+export declare const LEFT = 37;
+export declare const RIGHT = 39;
+export declare const UP = 38;
+export declare const DOWN = 40;
+export declare const KEY_0 = 48;
+export declare const KEY_1 = 49;
+export declare const KEY_2 = 50;
+export declare const KEY_3 = 51;
+export declare const KEY_4 = 52;
+export declare const KEY_5 = 53;
+export declare const KEY_6 = 54;
+export declare const HEADING_KEYS: number[];

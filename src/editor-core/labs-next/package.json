@@ -1,0 +1,7 @@
+{
+  "name": "@atlaskit/editor-core/labs-next",
+  "main": "../dist/cjs/labs-next.js",
+  "module": "../dist/esm/labs-next.js",
+  "module:es2019": "../dist/es2019/labs-next.js",
+  "types": "../dist/types/labs-next.d.ts"
+}

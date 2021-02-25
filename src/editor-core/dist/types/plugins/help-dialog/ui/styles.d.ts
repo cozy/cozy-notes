@@ -1,0 +1,13 @@
+import { ComponentClass } from 'react';
+export declare const Header: any;
+export declare const Footer: any;
+export declare const ContentWrapper: ComponentClass;
+export declare const Line: ComponentClass;
+export declare const Content: ComponentClass;
+export declare const ColumnLeft: ComponentClass;
+export declare const ColumnRight: ComponentClass;
+export declare const Row: ComponentClass;
+export declare const Title: ComponentClass;
+export declare const CodeSm: ComponentClass;
+export declare const CodeMd: ComponentClass;
+export declare const CodeLg: ComponentClass;

@@ -1,0 +1,7 @@
+{
+  "name": "@atlaskit/editor-core/element-browser",
+  "main": "../dist/cjs/element-browser.js",
+  "module": "../dist/esm/element-browser.js",
+  "module:es2019": "../dist/es2019/element-browser.js",
+  "types": "../dist/types/element-browser.d.ts"
+}

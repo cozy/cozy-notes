@@ -1,0 +1,7 @@
+{
+  "name": "@atlaskit/editor-core/extensions",
+  "main": "../dist/cjs/extensions.js",
+  "module": "../dist/esm/extensions.js",
+  "module:es2019": "../dist/es2019/extensions.js",
+  "types": "../dist/types/extensions.d.ts"
+}

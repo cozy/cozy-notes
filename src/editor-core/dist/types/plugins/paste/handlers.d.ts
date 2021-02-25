@@ -1,0 +1,22 @@
+import { Schema, Slice } from 'prosemirror-model';
+import { EditorState, Transaction } from 'prosemirror-state';
+import { ExtensionAutoConvertHandler } from '@atlaskit/editor-common/extensions';
+import { Command } from '../../types';
+import { InputMethodInsertMedia } from '../analytics';
+import { CardOptions } from '../card/types';
+export declare function handleMention(slice: Slice, schema: Schema): Slice;
+export declare function handlePasteIntoTaskAndDecision(slice: Slice): Command;
+export declare function handlePasteAsPlainText(slice: Slice, _event: ClipboardEvent): Command;
+export declare function handlePastePreservingMarks(slice: Slice): Command;
+export declare function handleMacroAutoConvert(text: string, slice: Slice, cardsOptions?: CardOptions, extensionAutoConverter?: ExtensionAutoConvertHandler): Command;
+export declare function handleCodeBlock(text: string): Command;
+export declare function handleMediaSingle(inputMethod: InputMethodInsertMedia): (slice: Slice) => Command;
+export declare function handleExpand(slice: Slice): Command;
+export declare function handleMarkdown(markdownSlice: Slice): Command;
+export declare function insertSlice({ tr, slice }: {
+    tr: Transaction;
+    slice: Slice;
+}): void;
+export declare function handleParagraphBlockMarks(state: EditorState, slice: Slice): Slice<any>;
+export declare function handleRichText(slice: Slice): Command;
+export declare const handleSelectedTable: (slice: Slice) => Command;
