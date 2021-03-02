@@ -4,16 +4,18 @@ import 'cozy-ui/transpiled/react/stylesheet.css'
 import 'cozy-sharing/dist/stylesheet.css'
 import 'styles/index.css'
 
-import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
-
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM, { render } from 'react-dom'
 import { IntlProvider, addLocaleData } from 'react-intl'
 import memoize from 'lodash/memoize'
+import {
+  StylesProvider,
+  createGenerateClassName
+} from '@material-ui/core/styles'
 
+import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { RealtimePlugin } from 'cozy-realtime'
-import { render } from 'react-dom'
 import { I18n } from 'cozy-ui/transpiled/react/I18n'
 import { Document } from 'cozy-doctypes'
 import SharingProvider from 'cozy-sharing'
@@ -41,6 +43,17 @@ const locales = {
   }
 }
 
+/*
+With MUI V4, it is possible to generate deterministic class names.
+In the case of multiple react roots, it is necessary to disable this
+feature. Since we have the cozy-bar root, we need to disable the
+feature.
+https://material-ui.com/styles/api/#stylesprovider
+*/
+const generateClassName = createGenerateClassName({
+  disableGlobal: true
+})
+
 const renderApp = function(appLocale, client, isPublic) {
   const App = require('components/app').default
 
@@ -49,20 +62,22 @@ const renderApp = function(appLocale, client, isPublic) {
       lang={appLocale}
       dictRequire={appLocale => require(`locales/${appLocale}`)}
     >
-      <IntlProvider locale={appLocale} messages={locales[appLocale].atlaskit}>
-        <CozyProvider client={client}>
-          <MuiCozyTheme>
-            <IsPublicContext.Provider value={isPublic}>
-              {!isPublic && (
-                <SharingProvider doctype="io.cozy.files" documentType="Notes">
-                  <App isPublic={isPublic} />
-                </SharingProvider>
-              )}
-              {isPublic && <App isPublic={isPublic} />}
-            </IsPublicContext.Provider>
-          </MuiCozyTheme>
-        </CozyProvider>
-      </IntlProvider>
+      <StylesProvider generateClassName={generateClassName}>
+        <IntlProvider locale={appLocale} messages={locales[appLocale].atlaskit}>
+          <CozyProvider client={client}>
+            <MuiCozyTheme>
+              <IsPublicContext.Provider value={isPublic}>
+                {!isPublic && (
+                  <SharingProvider doctype="io.cozy.files" documentType="Notes">
+                    <App isPublic={isPublic} />
+                  </SharingProvider>
+                )}
+                {isPublic && <App isPublic={isPublic} />}
+              </IsPublicContext.Provider>
+            </MuiCozyTheme>
+          </CozyProvider>
+        </IntlProvider>
+      </StylesProvider>
     </I18n>,
     document.querySelector('[role=application]')
   )
