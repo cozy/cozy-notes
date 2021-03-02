@@ -83,7 +83,9 @@ const NoteRow = ({ note, f, t, client }) => {
         <ActionMenu
           onClose={closeMenu}
           anchorElRef={menuTriggerRef}
-          placement="bottom-end"
+          popperOptions={{
+            strategy: 'fixed'
+          }}
         >
           <ActionMenuItem onClick={deleteNote} left={<Icon icon="trash" />}>
             {t('Notes.Delete.delete_note')}
