@@ -35,7 +35,7 @@ describe('EditorCorner', () => {
       }
     )
     expect(component.children().getElement()).toMatchInlineSnapshot(`
-      <WithStyles(WithStyles(Tooltip))
+      <ForwardRef(WithStyles)
         title="This note is in read-only mode."
       >
         <Icon
@@ -43,7 +43,7 @@ describe('EditorCorner', () => {
           icon="lock"
           spin={false}
         />
-      </WithStyles(WithStyles(Tooltip))>
+      </ForwardRef(WithStyles)>
     `)
   })
 
