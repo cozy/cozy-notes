@@ -1,6 +1,4 @@
 // Used in products integration code
-alert('test')
-
 export { name, version } from './version-wrapper'
 export { clearEditorContent, insertRule } from './commands'
 export { default as Editor } from './editor'

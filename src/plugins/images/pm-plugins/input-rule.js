@@ -25,7 +25,7 @@ export function inputRulePlugin(schema) {
       return null
     }
   )
-  return instrumentedInputRule('cozy-image-upload', {
+  return instrumentedInputRule('image-upload', {
     rules: [imageRule]
   })
 }

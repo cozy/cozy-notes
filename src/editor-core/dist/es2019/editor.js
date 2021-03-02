@@ -302,8 +302,10 @@ export default class Editor extends React.Component {
       collabEdit,
       autoformattingProvider,
       searchProvider,
-      UNSAFE_cards
+      UNSAFE_cards,
+      cozyImageUploader
     } = props
+    console.error('cozyImageUploader props editor', cozyImageUploader)
     const { extensionProvider, quickInsertProvider } = this.state
     this.providerFactory.setProvider('emojiProvider', emojiProvider)
     this.providerFactory.setProvider('mentionProvider', mentionProvider)
@@ -319,6 +321,11 @@ export default class Editor extends React.Component {
     this.providerFactory.setProvider(
       'imageUploadProvider',
       legacyImageUploadProvider
+    )
+    console.error('setPRovider', cozyImageUploader)
+    this.providerFactory.setProvider(
+      'CozyImageUploadProvider',
+      cozyImageUploader
     )
     this.providerFactory.setProvider(
       'collabEditProvider',
@@ -353,6 +360,7 @@ export default class Editor extends React.Component {
         quickInsertProvider
       )
     }
+    console.error('this.providerFactory', this.providerFactory)
   }
 
   getBaseFontSize() {
@@ -370,6 +378,8 @@ export default class Editor extends React.Component {
       // noop all analytic events, even if a handler is still passed.
       analyticsHandler: undefined
     }
+    console.log('Compoenent', Component)
+    console.log('this.props', this.props)
     const editor = /*#__PURE__*/ React.createElement(
       FabricEditorAnalyticsContext,
       {

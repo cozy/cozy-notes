@@ -1,13 +1,11 @@
 export const imageUploadHandler = (e, fn) => {
   // ED-3294: we cannot insert base64 images so we just simulate inserting an image
-  console.log('fn', fn)
-  console.log('e', e)
-  const imageUrl = prompt('Enter the image URL to insert:')
-  if (imageUrl) {
-    fn({
-      src: imageUrl
-    })
-  }
+  console.error('fn', fn)
+  console.error('e', e)
+  //const imageUrl = prompt('Enter the image URL to insert:')
+  //if (imageUrl) {
+  fn()
+  //}
 }
 
 // if you change something here,

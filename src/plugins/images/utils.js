@@ -30,7 +30,7 @@ export const createExternalMediaNode = (url, schema) => {
   }
 
   const mediaNode = media.createChecked({
-    type: 'cozy-image',
+    type: 'cozy',
     url
   })
   return mediaSingle.createChecked({}, mediaNode)

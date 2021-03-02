@@ -44,7 +44,7 @@ export const createPlugin = ({ dispatch, providerFactory }) => {
         const newActive = isMediaSelected(newState)
         const newEnabled = canInsertMedia(newState)
         const newActiveUpload = getNewActiveUpload(tr, pluginState)
-
+        console.error('apply !', tr, pluginState, _oldState, newState)
         if (
           newActive !== pluginState.active ||
           newEnabled !== pluginState.enabled ||
@@ -68,18 +68,23 @@ export const createPlugin = ({ dispatch, providerFactory }) => {
       const handleProvider = async (name, provider) => {
         console.error('name', name)
         console.error('provider', provider)
-        if (name !== 'imageUploadProvider' || !provider) {
+        if (name !== 'CozyImageUploadProvider' || !provider) {
+          console.error('exit')
           return
         }
 
         try {
+          console.error('try ? ')
           uploadHandler = await provider
         } catch (e) {
           uploadHandler = undefined
         }
       }
-
-      providerFactory.subscribe('imageUploadProvider', handleProvider)
+      console.error('ici ?')
+      providerFactory.subscribe('CozyImageUploadProvider', (name, provider) => {
+        console.error('après subscription ?', name, provider)
+        return handleProvider(name, provider)
+      })
       return {
         update(view, prevState) {
           const { state: editorState } = view
@@ -92,14 +97,23 @@ export const createPlugin = ({ dispatch, providerFactory }) => {
             currentState.activeUpload &&
             uploadHandler
           ) {
-            uploadHandler(currentState.activeUpload.event, options =>
-              insertExternalImage(options)(view.state, view.dispatch)
-            )
+            console.error('uploadHandler', uploadHandler)
+            uploadHandler(currentState.activeUpload.event, options => {
+              console.error('insertExternalImage Ici ?')
+              console.error('options', options)
+              // Upload to Cozy backend
+              const o = {
+                ...options,
+                src:
+                  'https://media.routard.com/image/67/1/fb-canada-parcs.1473671.jpg'
+              }
+              return insertExternalImage(o)(view.state, view.dispatch)
+            })
           }
         },
 
         destroy() {
-          providerFactory.unsubscribe('imageUploadProvider', handleProvider)
+          providerFactory.unsubscribe('CozyImageUploadProvider', handleProvider)
         }
       }
     },

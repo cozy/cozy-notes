@@ -87,6 +87,7 @@ function EditorView(props) {
                   legacyImageUploadProvider={Promise.resolve(
                     imageUploadHandler
                   )}
+                  cozyImageUploader={Promise.resolve(imageUploadHandler)}
                   {...editorConfig}
                   appearance="full-page"
                   placeholder={t('Notes.EditorView.main_placeholder')}
