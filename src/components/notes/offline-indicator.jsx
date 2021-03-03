@@ -83,7 +83,7 @@ export default function OfflineIndicator(props) {
       direction="row"
       container
       wrap="nowrap"
-      spacing={16}
+      spacing={1}
       className={styles.grid}
     >
       <Grid item>
