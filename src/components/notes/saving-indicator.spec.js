@@ -27,14 +27,16 @@ const collabProvider = {
 global.document.createRange = jest.fn()
 
 /**
- * Removes the varying part in MUI class names,
+ * Removes the varying part in MUI IDs,
  * which otherwise changes at each run
+ *
+ * See https://github.com/mui-org/material-ui/issues/21293
  *
  * @param {string} html
  * @returns {string}
  */
 function normalizeMUI(html) {
-  return html.replace(/(mui-[a-z0-9-]+)-\d+"/g, '$1')
+  return html.replace(/(mui-[a-z0-9-]+)"/g, 'mui-"')
 }
 
 function itMatchSnapshot(collabProvider) {
