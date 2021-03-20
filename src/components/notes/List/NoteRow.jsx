@@ -41,14 +41,25 @@ const NoteRow = ({ note, f, t, client }) => {
 
   const menuTriggerRef = React.createRef()
 
+  const goToNote = async () => {
+    const url = await generateReturnUrlToNotesIndex(client, note)
+    window.location.href = url
+  }
+
+  const handleKeyDown = e => {
+    if (e.key === 'Enter') {
+      goToNote()
+    }
+  }
+
   return (
     <>
       <TableRow
         className={`u-c-pointer ${styles.tableRow}`}
-        onClick={async () => {
-          const url = await generateReturnUrlToNotesIndex(client, note)
-          window.location.href = url
-        }}
+        role="button"
+        tabIndex="0"
+        onKeyDown={handleKeyDown}
+        onClick={goToNote}
       >
         <TableCell
           className={`${styles.tableCellName} u-flex u-flex-items-center u-fz-medium`}
