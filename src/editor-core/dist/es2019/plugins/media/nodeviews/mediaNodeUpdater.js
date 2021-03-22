@@ -94,14 +94,16 @@ export class MediaNodeUpdater {
         node
       } = this.props;
       const mediaProvider = await this.props.mediaProvider;
-
+      console.log('uploadEXternalMedia')
       if (node && mediaProvider) {
+        console.log('node', node)
+        console.log('mediaProvider', mediaProvider)
         const uploadMediaClientConfig = mediaProvider.uploadMediaClientConfig;
 
         if (!uploadMediaClientConfig || !node.attrs.url) {
           return;
         }
-
+        
         const mediaClient = getMediaClient(uploadMediaClientConfig);
         const collection = mediaProvider.uploadParams && mediaProvider.uploadParams.collection;
 
@@ -256,7 +258,7 @@ export class MediaNodeUpdater {
         view
       } = this.props;
       const attrs = this.getAttrs();
-
+      console.log('copy Nopde', mediaProvider)
       if (!mediaProvider || !mediaProvider.uploadParams || !attrs || attrs.type !== 'file') {
         return;
       }
@@ -265,6 +267,7 @@ export class MediaNodeUpdater {
       const uploadMediaClientConfig = mediaProvider.uploadMediaClientConfig;
 
       if (uploadMediaClientConfig && uploadMediaClientConfig.getAuthFromContext && nodeContextId) {
+        console.log('passe ici ?')
         const mediaClient = getMediaClient(uploadMediaClientConfig);
         const auth = await uploadMediaClientConfig.getAuthFromContext(nodeContextId);
         const objectId = await this.getObjectId();
@@ -359,12 +362,15 @@ export class MediaNodeUpdater {
 
   async handleExternalMedia(getPos) {
     if (this.isMediaBlobUrl()) {
+      console.log('media blob ? ')
       try {
         await this.copyNodeFromBlobUrl(getPos);
       } catch (e) {
+        console.log('blob mais erreur')
         await this.uploadExternalMedia(getPos);
       }
     } else {
+      console.log('pas blob, va upploadé')
       await this.uploadExternalMedia(getPos);
     }
   }

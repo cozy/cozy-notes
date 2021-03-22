@@ -9,8 +9,8 @@ export const insertExternalImage = options => (state, dispatch) => {
   if (!pluginState.enabled || !options.src) {
     return false
   }
-
-  const mediaNode = createExternalMediaNode(options.src, state.schema)
+  console.log('options', options)
+  const mediaNode = createExternalMediaNode(options, state.schema)
   console.error({ mediaNode })
   if (!mediaNode) {
     return false

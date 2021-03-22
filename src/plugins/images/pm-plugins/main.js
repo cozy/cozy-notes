@@ -105,7 +105,8 @@ export const createPlugin = ({ dispatch, providerFactory }) => {
               const o = {
                 ...options,
                 src:
-                  'https://media.routard.com/image/67/1/fb-canada-parcs.1473671.jpg'
+                  'https://media.routard.com/image/67/1/fb-canada-parcs.1473671.jpg',
+                id: '1'
               }
               return insertExternalImage(o)(view.state, view.dispatch)
             })

@@ -22,16 +22,21 @@ export const canInsertMedia = state => {
 
   return false
 }
-export const createExternalMediaNode = (url, schema) => {
+export const createExternalMediaNode = (options, schema) => {
   const { media, mediaSingle } = schema.nodes
 
   if (!media || !mediaSingle) {
     return null
   }
-
+  console.log('media ***********', media)
   const mediaNode = media.createChecked({
-    type: 'cozy',
-    url
+    type: 'external',
+    url: options.src,
+    id: options.id,
+    collection: 'cozy'
   })
-  return mediaSingle.createChecked({}, mediaNode)
+  console.log('mediaNode', mediaNode)
+  const mediaSingleCreated = mediaSingle.createChecked({}, mediaNode)
+  console.log('mediaSingleCreated', mediaSingleCreated)
+  return mediaSingleCreated
 }

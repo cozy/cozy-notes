@@ -84,7 +84,7 @@ const mediaPlugin = options => ({
       name: 'mediaKeymap',
       plugin: () => keymapPlugin()
     }];
-
+    console.log('pmPlugins média', pmPlugins)
     if (options && options.allowMediaSingle) {
       pmPlugins.push({
         name: 'mediaSingleKeymap',

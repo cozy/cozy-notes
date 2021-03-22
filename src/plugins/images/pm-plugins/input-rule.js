@@ -13,10 +13,11 @@ export function inputRulePlugin(schema) {
     (state, match, start, end) => {
       const { schema } = state
       const attrs = {
+        id: match[3],
         src: match[2],
         alt: match[1]
       }
-      const node = createExternalMediaNode(attrs.src, schema)
+      const node = createExternalMediaNode(attrs, schema)
 
       if (node) {
         return state.tr.replaceWith(start, end, node)
