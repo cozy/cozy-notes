@@ -220,6 +220,8 @@ export default class MediaSingleNode extends Component {
   }
 
   fetchImage() {
+    if (this.isFetching) return
+    this.isFetching = true
     const { selected, getPos, node, mediaOptions, fullWidthMode } = this.props
 
     const childNode = node.firstChild
@@ -246,6 +248,7 @@ export default class MediaSingleNode extends Component {
       }
 
       this.updateMediaNodeAttributes(nextProps)
+      this.isFetching = false
     }, 100)
   }
   render() {
