@@ -36,7 +36,12 @@ export default function Editor(props) {
     cozyClient
   })
   const serviceClient = useServiceClient({ userId, userName, cozyClient })
-  const { loading, title, doc, setTitle } = useNote({ serviceClient, noteId })
+  const { loading, title, doc, setTitle } = useNote({
+    serviceClient,
+    noteId,
+    readOnly
+  })
+
   const returnUrl = useReturnUrl({
     returnUrl: props.returnUrl,
     cozyClient,
