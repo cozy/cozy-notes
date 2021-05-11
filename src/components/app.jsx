@@ -1,7 +1,8 @@
 /* global cozy */
 import React, { useState, useEffect, useMemo } from 'react'
 import { Route, Switch, HashRouter, withRouter } from 'react-router-dom'
-import { useClient, useClientErrors } from 'cozy-client'
+import { useClient } from 'cozy-client'
+import useClientErrors from 'cozy-client/dist/hooks/useClientErrors'
 
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { Layout, Main, Content } from 'cozy-ui/transpiled/react/Layout'
