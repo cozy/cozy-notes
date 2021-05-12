@@ -14,7 +14,7 @@ import useBreakpoints, {
 } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 const manifest = require('../../manifest.webapp')
-import { List, Editor, Unshared } from 'components/notes'
+import { List, Editor, Unshared, New } from 'components/notes'
 import { getReturnUrl, getSharedDocument } from 'lib/utils'
 import { useFlagSwitcher } from 'lib/debug'
 
@@ -35,6 +35,7 @@ const RoutedEditor = withRouter(props => {
 
 const PrivateContext = () => (
   <Switch>
+    <Route path="/n/new" component={New} />
     <Route path="/n/:id" component={RoutedEditor} />
     <Route path="/" component={List} />
   </Switch>
