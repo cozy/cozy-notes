@@ -642,10 +642,10 @@
   dependencies:
     "@babel/runtime" "^7.0.0"
 
-"@atlaskit/media-core@32.1.2":
-  version "32.1.2"
-  resolved "https://registry.yarnpkg.com/@atlaskit/media-core/-/media-core-32.1.2.tgz#1b3b5ff8e96f1f4e97afe114854e23a41e0c4e66"
-  integrity sha512-cjP1kbGT1JJrPwrNPl3aWrgFghN5WGsDYmRE/AAQNPFEuzrDKqigIrfm87OTBtMoD0e8OS2BuvkuLggSRzq+Jg==
+"@atlaskit/media-core@32.1.3":
+  version "32.1.3"
+  resolved "https://registry.yarnpkg.com/@atlaskit/media-core/-/media-core-32.1.3.tgz#8bbd09eb4c864ce862be32cd7e8e16523103a099"
+  integrity sha512-scnPJ6PvEbvkueq31r13lgYoaZfDFZ1N3UeTBEKpYWyik9sylDWp5iwwKqTOFmRLSimwx/m6bdYzSWJt5vj7pQ==
   dependencies:
     "@babel/runtime" "^7.0.0"
     eventemitter2 "^4.1.0"
