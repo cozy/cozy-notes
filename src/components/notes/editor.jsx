@@ -36,7 +36,7 @@ export default function Editor(props) {
     cozyClient
   })
   const serviceClient = useServiceClient({ userId, userName, cozyClient })
-  const { loading, title, doc, setTitle } = useNote({
+  const { loading, title, doc, setTitle, forceReadOnly } = useNote({
     serviceClient,
     noteId,
     readOnly
@@ -94,7 +94,7 @@ export default function Editor(props) {
       <>
         <EditorView
           bannerRef={bannerRef}
-          readOnly={readOnly}
+          readOnly={forceReadOnly ? forceReadOnly : readOnly}
           onTitleChange={onLocalTitleChange}
           onTitleBlur={emergencySync}
           collabProvider={collabProvider}

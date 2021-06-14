@@ -8,7 +8,7 @@ function useNote({ serviceClient, noteId, readOnly }) {
   const [loading, setLoading] = useState(true)
   const [doc, setDoc] = useState(undefined)
   const [title, setTitle] = useState(undefined)
-
+  const [forceReadOnly, setForceReadOnly] = useState(false)
   useEffect(
     () => {
       async function loadNote() {
@@ -25,6 +25,9 @@ function useNote({ serviceClient, noteId, readOnly }) {
           }
           setTitle(doc.title || '')
           setDoc(doc)
+          if (doc.path && doc.path.startsWith('/.cozy_trash')) {
+            setForceReadOnly(true)
+          }
         } catch (e) {
           setTitle(false)
           setDoc(false)
@@ -47,7 +50,7 @@ function useNote({ serviceClient, noteId, readOnly }) {
     },
     // `loading` and `doc` are willingly not included in the dependencies
     // eslint-disable-next-line
-    [noteId, docId, setDocId, setLoading, serviceClient, setDoc, setTitle]
+    [noteId, docId, setDocId, forceReadOnly, setForceReadOnly, setLoading, serviceClient, setDoc, setTitle]
   )
 
   if (docId === noteId) return { loading, title, doc, setTitle }
