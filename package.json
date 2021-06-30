@@ -75,6 +75,6 @@
     "utf-8-validate": "5.0.2"
   },
   "resolutions": {
-    "prosemirror-model": "1.11.0"
+    "prosemirror-model": "1.14.2"
   }
 }
