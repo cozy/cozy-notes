@@ -1,18 +1,17 @@
-import styled from 'styled-components';
-import { gridSize, borderRadius } from '@atlaskit/theme/constants';
-import { N60A, N400, P400 } from '@atlaskit/theme/colors';
+import styled from 'styled-components'
+import { gridSize, borderRadius } from '@atlaskit/theme/constants'
+import { N60A, N400, P400 } from '@atlaskit/theme/colors'
 export const ButtonContent = styled.span`
   display: flex;
   height: 24px;
   line-height: 24px;
   min-width: 70px;
-`;
+`
 export const Wrapper = styled.span`
   display: flex;
-  margin-right: ${({
-  width
-}) => !width || width === 'large' ? 0 : gridSize()}px;
-`;
+  margin-right: ${({ width }) =>
+    !width || width === 'large' ? 0 : gridSize()}px;
+`
 export const ConfirmationPopup = styled.div`
   background: #fff;
   border-radius: ${borderRadius()}px;
@@ -24,7 +23,7 @@ export const ConfirmationPopup = styled.div`
   max-height: none;
   height: 410px;
   width: 280px;
-`;
+`
 export const ConfirmationText = styled.div`
   font-size: 14px;
   word-spacing: 4px;
@@ -41,15 +40,15 @@ export const ConfirmationText = styled.div`
   & > div:nth-of-type(2) {
     margin-bottom: 20px;
   }
-`;
+`
 export const ConfirmationHeader = styled.div`
   background-color: ${P400};
   height: 100px;
   width: 100%;
   display: inline-block;
-`;
+`
 export const ConfirmationImg = styled.img`
   width: 100px;
   display: block;
   margin: 25px auto 0 auto;
-`;
+`

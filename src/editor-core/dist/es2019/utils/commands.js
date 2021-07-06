@@ -1,44 +1,46 @@
-import { TextSelection, NodeSelection } from 'prosemirror-state';
-import { CellSelection } from '@atlaskit/editor-tables/cell-selection';
-import { transformSmartCharsMentionsAndEmojis } from '../plugins/text-formatting/commands/transform-to-code';
-import { GapCursorSelection } from '../plugins/selection/gap-cursor-selection';
+import { TextSelection, NodeSelection } from 'prosemirror-state'
+import { CellSelection } from '@atlaskit/editor-tables/cell-selection'
+import { transformSmartCharsMentionsAndEmojis } from '../plugins/text-formatting/commands/transform-to-code'
+import { GapCursorSelection } from '../plugins/selection/gap-cursor-selection'
 
 const filter = (predicates, cmd) => {
-  return function (state, dispatch, view) {
+  return function(state, dispatch, view) {
     if (!Array.isArray(predicates)) {
-      predicates = [predicates];
+      predicates = [predicates]
     }
 
     if (predicates.some(pred => !pred(state, view))) {
-      return false;
+      return false
     }
 
-    return cmd(state, dispatch, view) || false;
-  };
-};
+    return cmd(state, dispatch, view) || false
+  }
+}
 
 const isEmptySelectionAtStart = state => {
-  const {
-    empty,
-    $from
-  } = state.selection;
-  return empty && ($from.parentOffset === 0 || state.selection instanceof GapCursorSelection);
-};
+  const { empty, $from } = state.selection
+  return (
+    empty &&
+    ($from.parentOffset === 0 || state.selection instanceof GapCursorSelection)
+  )
+}
 
 const isEmptySelectionAtEnd = state => {
-  const {
-    empty,
-    $from
-  } = state.selection;
-  return empty && ($from.end() === $from.pos || state.selection instanceof GapCursorSelection);
-};
+  const { empty, $from } = state.selection
+  return (
+    empty &&
+    ($from.end() === $from.pos || state.selection instanceof GapCursorSelection)
+  )
+}
 
 const isFirstChildOfParent = state => {
-  const {
-    $from
-  } = state.selection;
-  return $from.depth > 1 ? state.selection instanceof GapCursorSelection && $from.parentOffset === 0 || $from.index($from.depth - 1) === 0 : true;
-};
+  const { $from } = state.selection
+  return $from.depth > 1
+    ? (state.selection instanceof GapCursorSelection &&
+        $from.parentOffset === 0) ||
+        $from.index($from.depth - 1) === 0
+    : true
+}
 /**
  * Creates a filter that checks if the node at a given number of parents above the current
  * selection is of the correct node type.
@@ -48,22 +50,18 @@ const isFirstChildOfParent = state => {
  * is usually inside the text content.
  */
 
-
 const isNthParentOfType = (nodeType, depthAway) => {
   return state => {
-    const {
-      $from
-    } = state.selection;
-    const parent = $from.node($from.depth - depthAway);
-    return !!parent && parent.type === state.schema.nodes[nodeType];
-  };
-}; // https://github.com/ProseMirror/prosemirror-commands/blob/master/src/commands.js#L90
+    const { $from } = state.selection
+    const parent = $from.node($from.depth - depthAway)
+    return !!parent && parent.type === state.schema.nodes[nodeType]
+  }
+} // https://github.com/ProseMirror/prosemirror-commands/blob/master/src/commands.js#L90
 // Keep going left up the tree, without going across isolating boundaries, until we
 // can go along the tree at that same level
 //
 // You can think of this as, if you could construct each document like we do in the tests,
 // return the position of the first ) backwards from the current selection.
-
 
 function findCutBefore($pos) {
   // parent is non-isolating, so we can look across this boundary
@@ -73,102 +71,94 @@ function findCutBefore($pos) {
       // starting from the inner most node's parent, find out
       // if we're not its first child
       if ($pos.index(i) > 0) {
-        return $pos.doc.resolve($pos.before(i + 1));
+        return $pos.doc.resolve($pos.before(i + 1))
       }
 
       if ($pos.node(i).type.spec.isolating) {
-        break;
+        break
       }
     }
   }
 
-  return null;
+  return null
 }
 
 const applyMarkOnRange = (from, to, removeMark, mark, tr) => {
-  const {
-    schema
-  } = tr.doc.type;
-  const {
-    code
-  } = schema.marks;
+  const { schema } = tr.doc.type
+  const { code } = schema.marks
 
   if (mark.type === code) {
-    transformSmartCharsMentionsAndEmojis(from, to, tr);
+    transformSmartCharsMentionsAndEmojis(from, to, tr)
   }
 
   tr.doc.nodesBetween(tr.mapping.map(from), tr.mapping.map(to), (node, pos) => {
     if (!node.isText) {
-      return true;
+      return true
     } // This is an issue when the user selects some text.
     // We need to check if the current node position is less than the range selection from.
     // If it’s true, that means we should apply the mark using the range selection,
     // not the current node position.
 
-
-    const nodeBetweenFrom = Math.max(pos, tr.mapping.map(from));
-    const nodeBetweenTo = Math.min(pos + node.nodeSize, tr.mapping.map(to));
+    const nodeBetweenFrom = Math.max(pos, tr.mapping.map(from))
+    const nodeBetweenTo = Math.min(pos + node.nodeSize, tr.mapping.map(to))
 
     if (removeMark) {
-      tr.removeMark(nodeBetweenFrom, nodeBetweenTo, mark);
+      tr.removeMark(nodeBetweenFrom, nodeBetweenTo, mark)
     } else {
-      tr.addMark(nodeBetweenFrom, nodeBetweenTo, mark);
+      tr.addMark(nodeBetweenFrom, nodeBetweenTo, mark)
     }
 
-    return true;
-  });
-  return tr;
-};
+    return true
+  })
+  return tr
+}
 
 const toggleMarkInRange = mark => (state, dispatch) => {
-  const tr = state.tr;
+  const tr = state.tr
 
   if (state.selection instanceof CellSelection) {
-    let markInRange = false;
-    const cells = [];
+    let markInRange = false
+    const cells = []
     state.selection.forEachCell((cell, cellPos) => {
       cells.push({
         node: cell,
         pos: cellPos
-      });
-      const from = cellPos;
-      const to = cellPos + cell.nodeSize;
+      })
+      const from = cellPos
+      const to = cellPos + cell.nodeSize
 
       if (!markInRange) {
-        markInRange = state.doc.rangeHasMark(from, to, mark);
+        markInRange = state.doc.rangeHasMark(from, to, mark)
       }
-    });
+    })
 
     for (let i = cells.length - 1; i >= 0; i--) {
-      const cell = cells[i];
-      const from = cell.pos;
-      const to = from + cell.node.nodeSize;
-      applyMarkOnRange(from, to, markInRange, mark, tr);
+      const cell = cells[i]
+      const from = cell.pos
+      const to = from + cell.node.nodeSize
+      applyMarkOnRange(from, to, markInRange, mark, tr)
     }
   } else {
-    const {
-      $from,
-      $to
-    } = state.selection; // The type for `rangeHasMark` only accepts a `MarkType` as a third param,
+    const { $from, $to } = state.selection // The type for `rangeHasMark` only accepts a `MarkType` as a third param,
     // Yet the internals use a method that exists on both MarkType and Mark (one checks attributes the other doesnt)
     // For example, with our subsup mark: We use the same mark with different attributes to convert
     // different formatting but when using `MarkType.isInSet(marks)` it returns true for both.
     // Calling `Mark.isInSet(marks)` compares attributes as well.
 
-    const markInRange = state.doc.rangeHasMark($from.pos, $to.pos, mark);
-    applyMarkOnRange($from.pos, $to.pos, markInRange, mark, tr);
+    const markInRange = state.doc.rangeHasMark($from.pos, $to.pos, mark)
+    applyMarkOnRange($from.pos, $to.pos, markInRange, mark, tr)
   }
 
   if (tr.docChanged) {
     if (dispatch) {
-      dispatch(tr);
+      dispatch(tr)
     }
 
-    return true;
+    return true
   }
 
-  return false;
-};
+  return false
+}
 /**
  * A wrapper over the default toggleMark, except when we have a selection
  * we only toggle marks on text nodes rather than inline nodes.
@@ -176,37 +166,41 @@ const toggleMarkInRange = mark => (state, dispatch) => {
  * @param attrs
  */
 
-
 const toggleMark = (markType, attrs) => (state, dispatch) => {
-  const mark = markType.create(attrs); // For cursor selections we can use the default behaviour.
+  const mark = markType.create(attrs) // For cursor selections we can use the default behaviour.
 
   if (state.selection instanceof TextSelection && state.selection.$cursor) {
-    const tr = state.tr;
+    const tr = state.tr
 
     if (mark.isInSet(state.storedMarks || state.selection.$cursor.marks())) {
-      tr.removeStoredMark(mark);
+      tr.removeStoredMark(mark)
     } else {
-      tr.addStoredMark(mark);
+      tr.addStoredMark(mark)
     }
 
     if (dispatch) {
-      dispatch(tr);
-      return true;
+      dispatch(tr)
+      return true
     }
 
-    return false;
+    return false
   }
 
-  return toggleMarkInRange(mark)(state, dispatch);
-};
+  return toggleMarkInRange(mark)(state, dispatch)
+}
 
-const withScrollIntoView = command => (state, dispatch, view) => command(state, tr => {
-  tr.scrollIntoView();
+const withScrollIntoView = command => (state, dispatch, view) =>
+  command(
+    state,
+    tr => {
+      tr.scrollIntoView()
 
-  if (dispatch) {
-    dispatch(tr);
-  }
-}, view);
+      if (dispatch) {
+        dispatch(tr)
+      }
+    },
+    view
+  )
 
 /**
  * Walk forwards from a position until we encounter the (inside) start of
@@ -215,20 +209,23 @@ const withScrollIntoView = command => (state, dispatch, view) => command(state, 
  * @param $startPos Position to start walking from.
  */
 const walkNextNode = $startPos => {
-  let $pos = $startPos; // invariant 1: don't walk past the end of the document
+  let $pos = $startPos // invariant 1: don't walk past the end of the document
   // invariant 2: we are at the beginning or
   //              we haven't walked to the start of *any* node
   //              parentOffset includes textOffset.
 
-  while ($pos.pos < $pos.doc.nodeSize - 2 && ($pos.pos === $startPos.pos || $pos.parentOffset > 0)) {
-    $pos = $pos.doc.resolve($pos.pos + 1);
+  while (
+    $pos.pos < $pos.doc.nodeSize - 2 &&
+    ($pos.pos === $startPos.pos || $pos.parentOffset > 0)
+  ) {
+    $pos = $pos.doc.resolve($pos.pos + 1)
   }
 
   return {
     $pos: $pos,
     foundNode: $pos.pos < $pos.doc.nodeSize - 2
-  };
-};
+  }
+}
 /**
  * Walk backwards from a position until we encounter the (inside) end of
  * the previous node, or reach the start of the document.
@@ -236,19 +233,21 @@ const walkNextNode = $startPos => {
  * @param $startPos Position to start walking from.
  */
 
-
 const walkPrevNode = $startPos => {
-  let $pos = $startPos;
+  let $pos = $startPos
 
-  while ($pos.pos > 0 && ($pos.pos === $startPos.pos || $pos.parentOffset < $pos.parent.nodeSize - 2)) {
-    $pos = $pos.doc.resolve($pos.pos - 1);
+  while (
+    $pos.pos > 0 &&
+    ($pos.pos === $startPos.pos || $pos.parentOffset < $pos.parent.nodeSize - 2)
+  ) {
+    $pos = $pos.doc.resolve($pos.pos - 1)
   }
 
   return {
     $pos: $pos,
     foundNode: $pos.pos > 0
-  };
-};
+  }
+}
 /**
  * Insert content, delete a range and create a new selection
  * This function automatically handles the mapping of positions for insertion and deletion.
@@ -259,25 +258,43 @@ const walkPrevNode = $startPos => {
  * @param deletions the ranges to delete
  */
 
-
-const insertContentDeleteRange = (tr, getSelectionResolvedPos, insertions, deletions) => {
+const insertContentDeleteRange = (
+  tr,
+  getSelectionResolvedPos,
+  insertions,
+  deletions
+) => {
   insertions.forEach(contentInsert => {
-    let [content, pos] = contentInsert;
-    tr.insert(tr.mapping.map(pos), content);
-  });
+    let [content, pos] = contentInsert
+    tr.insert(tr.mapping.map(pos), content)
+  })
   deletions.forEach(deleteRange => {
-    let [firstPos, lastPos] = deleteRange;
-    tr.delete(tr.mapping.map(firstPos), tr.mapping.map(lastPos));
-  });
-  tr.setSelection(new TextSelection(getSelectionResolvedPos(tr)));
-};
+    let [firstPos, lastPos] = deleteRange
+    tr.delete(tr.mapping.map(firstPos), tr.mapping.map(lastPos))
+  })
+  tr.setSelection(new TextSelection(getSelectionResolvedPos(tr)))
+}
 
 const selectNode = pos => (state, dispatch) => {
   if (dispatch) {
-    dispatch(state.tr.setSelection(new NodeSelection(state.doc.resolve(pos))));
+    dispatch(state.tr.setSelection(new NodeSelection(state.doc.resolve(pos))))
   }
 
-  return true;
-};
+  return true
+}
 
-export { filter, isEmptySelectionAtStart, isEmptySelectionAtEnd, isFirstChildOfParent, isNthParentOfType, findCutBefore, toggleMark, applyMarkOnRange, withScrollIntoView, walkNextNode, walkPrevNode, insertContentDeleteRange, selectNode };
+export {
+  filter,
+  isEmptySelectionAtStart,
+  isEmptySelectionAtEnd,
+  isFirstChildOfParent,
+  isNthParentOfType,
+  findCutBefore,
+  toggleMark,
+  applyMarkOnRange,
+  withScrollIntoView,
+  walkNextNode,
+  walkPrevNode,
+  insertContentDeleteRange,
+  selectNode
+}

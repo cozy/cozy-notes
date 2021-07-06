@@ -1,173 +1,184 @@
-import { Selection } from 'prosemirror-state';
-import { findWrapping } from 'prosemirror-transform';
-import { CODE_BLOCK, BLOCK_QUOTE, PANEL, HEADINGS_BY_NAME, NORMAL_TEXT } from '../types';
-import { removeBlockMarks } from '../../../utils/mark';
-import { withAnalytics, ACTION, ACTION_SUBJECT, ACTION_SUBJECT_ID, EVENT_TYPE } from '../../analytics';
-import { filterChildrenBetween } from '../../../utils';
-import { PanelType } from '@atlaskit/adf-schema';
+import { Selection } from 'prosemirror-state'
+import { findWrapping } from 'prosemirror-transform'
+import {
+  CODE_BLOCK,
+  BLOCK_QUOTE,
+  PANEL,
+  HEADINGS_BY_NAME,
+  NORMAL_TEXT
+} from '../types'
+import { removeBlockMarks } from '../../../utils/mark'
+import {
+  withAnalytics,
+  ACTION,
+  ACTION_SUBJECT,
+  ACTION_SUBJECT_ID,
+  EVENT_TYPE
+} from '../../analytics'
+import { filterChildrenBetween } from '../../../utils'
+import { PanelType } from '@atlaskit/adf-schema'
 export function setBlockType(name) {
   return (state, dispatch) => {
-    const {
-      nodes
-    } = state.schema;
+    const { nodes } = state.schema
 
     if (name === NORMAL_TEXT.name && nodes.paragraph) {
-      return setNormalText()(state, dispatch);
+      return setNormalText()(state, dispatch)
     }
 
-    const headingBlockType = HEADINGS_BY_NAME[name];
+    const headingBlockType = HEADINGS_BY_NAME[name]
 
     if (headingBlockType && nodes.heading && headingBlockType.level) {
-      return setHeading(headingBlockType.level)(state, dispatch);
+      return setHeading(headingBlockType.level)(state, dispatch)
     }
 
-    return false;
-  };
+    return false
+  }
 }
 export function setBlockTypeWithAnalytics(name, inputMethod) {
   return (state, dispatch) => {
-    const {
-      nodes
-    } = state.schema;
+    const { nodes } = state.schema
 
     if (name === NORMAL_TEXT.name && nodes.paragraph) {
-      return setNormalTextWithAnalytics(inputMethod)(state, dispatch);
+      return setNormalTextWithAnalytics(inputMethod)(state, dispatch)
     }
 
-    const headingBlockType = HEADINGS_BY_NAME[name];
+    const headingBlockType = HEADINGS_BY_NAME[name]
 
     if (headingBlockType && nodes.heading && headingBlockType.level) {
-      return setHeadingWithAnalytics(headingBlockType.level, inputMethod)(state, dispatch);
+      return setHeadingWithAnalytics(headingBlockType.level, inputMethod)(
+        state,
+        dispatch
+      )
     }
 
-    return false;
-  };
+    return false
+  }
 }
 export function setNormalText() {
-  return function (state, dispatch) {
+  return function(state, dispatch) {
     const {
       tr,
-      selection: {
-        $from,
-        $to
-      },
+      selection: { $from, $to },
       schema
-    } = state;
+    } = state
 
     if (dispatch) {
-      dispatch(tr.setBlockType($from.pos, $to.pos, schema.nodes.paragraph));
+      dispatch(tr.setBlockType($from.pos, $to.pos, schema.nodes.paragraph))
     }
 
-    return true;
-  };
+    return true
+  }
 }
 
 function withCurrentHeadingLevel(fn) {
   return (state, dispatch, view) => {
     // Find all headings and paragraphs of text
-    const {
-      heading,
-      paragraph
-    } = state.schema.nodes;
-    const nodes = filterChildrenBetween(state.doc, state.selection.from, state.selection.to, node => {
-      return node.type === heading || node.type === paragraph;
-    }); // Check each paragraph and/or heading and check for consistent level
+    const { heading, paragraph } = state.schema.nodes
+    const nodes = filterChildrenBetween(
+      state.doc,
+      state.selection.from,
+      state.selection.to,
+      node => {
+        return node.type === heading || node.type === paragraph
+      }
+    ) // Check each paragraph and/or heading and check for consistent level
 
-    let level;
+    let level
 
     for (let node of nodes) {
-      const nodeLevel = node.node.type === heading ? node.node.attrs.level : 0;
+      const nodeLevel = node.node.type === heading ? node.node.attrs.level : 0
 
       if (!level) {
-        level = nodeLevel;
+        level = nodeLevel
       } else if (nodeLevel !== level) {
         // Conflict in level, therefore inconsistent and undefined
-        level = undefined;
-        break;
+        level = undefined
+        break
       }
     }
 
-    return fn(level)(state, dispatch, view);
-  };
+    return fn(level)(state, dispatch, view)
+  }
 }
 
 export function setNormalTextWithAnalytics(inputMethod) {
-  return withCurrentHeadingLevel(previousHeadingLevel => withAnalytics({
-    action: ACTION.FORMATTED,
-    actionSubject: ACTION_SUBJECT.TEXT,
-    eventType: EVENT_TYPE.TRACK,
-    actionSubjectId: ACTION_SUBJECT_ID.FORMAT_HEADING,
-    attributes: {
-      inputMethod,
-      newHeadingLevel: 0,
-      previousHeadingLevel
-    }
-  })(setNormalText()));
+  return withCurrentHeadingLevel(previousHeadingLevel =>
+    withAnalytics({
+      action: ACTION.FORMATTED,
+      actionSubject: ACTION_SUBJECT.TEXT,
+      eventType: EVENT_TYPE.TRACK,
+      actionSubjectId: ACTION_SUBJECT_ID.FORMAT_HEADING,
+      attributes: {
+        inputMethod,
+        newHeadingLevel: 0,
+        previousHeadingLevel
+      }
+    })(setNormalText())
+  )
 }
 export function setHeading(level) {
-  return function (state, dispatch) {
+  return function(state, dispatch) {
     const {
       tr,
-      selection: {
-        $from,
-        $to
-      },
+      selection: { $from, $to },
       schema
-    } = state;
+    } = state
 
     if (dispatch) {
-      dispatch(tr.setBlockType($from.pos, $to.pos, schema.nodes.heading, {
-        level
-      }));
+      dispatch(
+        tr.setBlockType($from.pos, $to.pos, schema.nodes.heading, {
+          level
+        })
+      )
     }
 
-    return true;
-  };
+    return true
+  }
 }
 export const setHeadingWithAnalytics = (newHeadingLevel, inputMethod) => {
-  return withCurrentHeadingLevel(previousHeadingLevel => withAnalytics({
-    action: ACTION.FORMATTED,
-    actionSubject: ACTION_SUBJECT.TEXT,
-    eventType: EVENT_TYPE.TRACK,
-    actionSubjectId: ACTION_SUBJECT_ID.FORMAT_HEADING,
-    attributes: {
-      inputMethod,
-      newHeadingLevel,
-      previousHeadingLevel
-    }
-  })(setHeading(newHeadingLevel)));
-};
+  return withCurrentHeadingLevel(previousHeadingLevel =>
+    withAnalytics({
+      action: ACTION.FORMATTED,
+      actionSubject: ACTION_SUBJECT.TEXT,
+      eventType: EVENT_TYPE.TRACK,
+      actionSubjectId: ACTION_SUBJECT_ID.FORMAT_HEADING,
+      attributes: {
+        inputMethod,
+        newHeadingLevel,
+        previousHeadingLevel
+      }
+    })(setHeading(newHeadingLevel))
+  )
+}
 export function insertBlockType(name) {
-  return function (state, dispatch) {
-    const {
-      nodes
-    } = state.schema;
+  return function(state, dispatch) {
+    const { nodes } = state.schema
 
     switch (name) {
       case BLOCK_QUOTE.name:
         if (nodes.paragraph && nodes.blockquote) {
-          return wrapSelectionIn(nodes.blockquote)(state, dispatch);
+          return wrapSelectionIn(nodes.blockquote)(state, dispatch)
         }
 
-        break;
+        break
 
       case CODE_BLOCK.name:
         if (nodes.codeBlock) {
-          return insertCodeBlock()(state, dispatch);
+          return insertCodeBlock()(state, dispatch)
         }
 
-        break;
+        break
 
       case PANEL.name:
         if (nodes.panel && nodes.paragraph) {
-          return wrapSelectionIn(nodes.panel)(state, dispatch);
+          return wrapSelectionIn(nodes.panel)(state, dispatch)
         }
 
-        break;
+        break
     }
 
-    return false;
-  };
+    return false
+  }
 }
 export const insertBlockTypesWithAnalytics = (name, inputMethod) => {
   switch (name) {
@@ -180,7 +191,7 @@ export const insertBlockTypesWithAnalytics = (name, inputMethod) => {
         attributes: {
           inputMethod
         }
-      })(insertBlockType(name));
+      })(insertBlockType(name))
 
     case CODE_BLOCK.name:
       return withAnalytics({
@@ -191,7 +202,7 @@ export const insertBlockTypesWithAnalytics = (name, inputMethod) => {
           inputMethod: inputMethod
         },
         eventType: EVENT_TYPE.TRACK
-      })(insertBlockType(name));
+      })(insertBlockType(name))
 
     case PANEL.name:
       return withAnalytics({
@@ -201,15 +212,14 @@ export const insertBlockTypesWithAnalytics = (name, inputMethod) => {
         attributes: {
           inputMethod: inputMethod,
           panelType: PanelType.INFO // only info panels can be inserted from toolbar
-
         },
         eventType: EVENT_TYPE.TRACK
-      })(insertBlockType(name));
+      })(insertBlockType(name))
 
     default:
-      return insertBlockType(name);
+      return insertBlockType(name)
   }
-};
+}
 /**
  * Function will add wrapping node.
  * 1. If currently selected blocks can be wrapped in the warpper type it will wrap them.
@@ -218,90 +228,77 @@ export const insertBlockTypesWithAnalytics = (name, inputMethod) => {
  */
 
 function wrapSelectionIn(type) {
-  return function (state, dispatch) {
-    let {
-      tr
-    } = state;
-    const {
-      $from,
-      $to
-    } = state.selection;
-    const {
-      paragraph
-    } = state.schema.nodes;
-    const {
-      alignment,
-      indentation
-    } = state.schema.marks;
+  return function(state, dispatch) {
+    let { tr } = state
+    const { $from, $to } = state.selection
+    const { paragraph } = state.schema.nodes
+    const { alignment, indentation } = state.schema.marks
     /** Alignment or Indentation is not valid inside block types */
 
-    const removeAlignTr = removeBlockMarks(state, [alignment, indentation]);
-    tr = removeAlignTr || tr;
-    const range = $from.blockRange($to);
-    const wrapping = range && findWrapping(range, type);
+    const removeAlignTr = removeBlockMarks(state, [alignment, indentation])
+    tr = removeAlignTr || tr
+    const range = $from.blockRange($to)
+    const wrapping = range && findWrapping(range, type)
 
     if (range && wrapping) {
-      tr.wrap(range, wrapping).scrollIntoView();
+      tr.wrap(range, wrapping).scrollIntoView()
     } else {
       /** We always want to append a block type */
-      tr.replaceRangeWith($to.pos + 1, $to.pos + 1, type.createAndFill({}, paragraph.create()));
-      tr.setSelection(Selection.near(tr.doc.resolve(state.selection.to + 1)));
+      tr.replaceRangeWith(
+        $to.pos + 1,
+        $to.pos + 1,
+        type.createAndFill({}, paragraph.create())
+      )
+      tr.setSelection(Selection.near(tr.doc.resolve(state.selection.to + 1)))
     }
 
     if (dispatch) {
-      dispatch(tr);
+      dispatch(tr)
     }
 
-    return true;
-  };
+    return true
+  }
 }
 /**
  * Function will insert code block at current selection if block is empty or below current selection and set focus on it.
  */
 
-
 function insertCodeBlock() {
-  return function (state, dispatch) {
-    const {
-      tr
-    } = state;
-    const {
-      $to
-    } = state.selection;
-    const {
-      codeBlock
-    } = state.schema.nodes;
-    const getNextNode = state.doc.nodeAt($to.pos + 1);
-    const addPos = getNextNode && getNextNode.isText ? 0 : 1;
+  return function(state, dispatch) {
+    const { tr } = state
+    const { $to } = state.selection
+    const { codeBlock } = state.schema.nodes
+    const getNextNode = state.doc.nodeAt($to.pos + 1)
+    const addPos = getNextNode && getNextNode.isText ? 0 : 1
     /** We always want to append a block type */
 
-    tr.replaceRangeWith($to.pos + addPos, $to.pos + addPos, codeBlock.createAndFill());
-    tr.setSelection(Selection.near(tr.doc.resolve(state.selection.to + addPos)));
+    tr.replaceRangeWith(
+      $to.pos + addPos,
+      $to.pos + addPos,
+      codeBlock.createAndFill()
+    )
+    tr.setSelection(Selection.near(tr.doc.resolve(state.selection.to + addPos)))
 
     if (dispatch) {
-      dispatch(tr);
+      dispatch(tr)
     }
 
-    return true;
-  };
+    return true
+  }
 }
 
 export const cleanUpAtTheStartOfDocument = (state, dispatch) => {
-  const {
-    $cursor
-  } = state.selection;
+  const { $cursor } = state.selection
 
-  if ($cursor && !$cursor.nodeBefore && !$cursor.nodeAfter && $cursor.pos === 1) {
-    const {
-      tr,
-      schema
-    } = state;
-    const {
-      paragraph
-    } = schema.nodes;
-    const {
-      parent
-    } = $cursor;
+  if (
+    $cursor &&
+    !$cursor.nodeBefore &&
+    !$cursor.nodeAfter &&
+    $cursor.pos === 1
+  ) {
+    const { tr, schema } = state
+    const { paragraph } = schema.nodes
+    const { parent } = $cursor
     /**
      * Use cases:
      * 1. Change `heading` to `paragraph`
@@ -310,14 +307,14 @@ export const cleanUpAtTheStartOfDocument = (state, dispatch) => {
      * NOTE: We already know it's an empty doc so it's safe to use 0
      */
 
-    tr.setNodeMarkup(0, paragraph, parent.attrs, []);
+    tr.setNodeMarkup(0, paragraph, parent.attrs, [])
 
     if (dispatch) {
-      dispatch(tr);
+      dispatch(tr)
     }
 
-    return true;
+    return true
   }
 
-  return false;
-};
+  return false
+}

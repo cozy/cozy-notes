@@ -1,37 +1,22 @@
-import { MediaLinkingActionsTypes } from './actions';
-export default ((state, action) => {
+import { MediaLinkingActionsTypes } from './actions'
+export default (state, action) => {
   switch (action.type) {
-    case MediaLinkingActionsTypes.showToolbar:
-      {
-        return { ...state,
-          visible: true
-        };
-      }
+    case MediaLinkingActionsTypes.showToolbar: {
+      return { ...state, visible: true }
+    }
 
-    case MediaLinkingActionsTypes.setUrl:
-      {
-        return { ...state,
-          editable: true,
-          link: action.payload
-        };
-      }
+    case MediaLinkingActionsTypes.setUrl: {
+      return { ...state, editable: true, link: action.payload }
+    }
 
-    case MediaLinkingActionsTypes.hideToolbar:
-      {
-        return { ...state,
-          visible: false
-        };
-      }
+    case MediaLinkingActionsTypes.hideToolbar: {
+      return { ...state, visible: false }
+    }
 
-    case MediaLinkingActionsTypes.unlink:
-      {
-        return { ...state,
-          link: '',
-          visible: false,
-          editable: false
-        };
-      }
+    case MediaLinkingActionsTypes.unlink: {
+      return { ...state, link: '', visible: false, editable: false }
+    }
   }
 
-  return state;
-});
+  return state
+}

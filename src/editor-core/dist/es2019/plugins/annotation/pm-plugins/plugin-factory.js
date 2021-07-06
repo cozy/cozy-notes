@@ -1,61 +1,62 @@
-import { pluginFactory } from '../../../utils/plugin-state-factory';
-import { findAnnotationsInSelection, inlineCommentPluginKey } from '../utils';
-import reducer from './reducer';
+import { pluginFactory } from '../../../utils/plugin-state-factory'
+import { findAnnotationsInSelection, inlineCommentPluginKey } from '../utils'
+import reducer from './reducer'
 
 const handleDocChanged = (tr, prevPluginState) => {
   if (!tr.getMeta('replaceDocument')) {
-    return handleSelectionChanged(tr, prevPluginState);
+    return handleSelectionChanged(tr, prevPluginState)
   }
 
-  return { ...prevPluginState,
-    dirtyAnnotations: true
-  };
-};
+  return { ...prevPluginState, dirtyAnnotations: true }
+}
 
 const handleSelectionChanged = (tr, pluginState) => {
-  const selectedAnnotations = findAnnotationsInSelection(tr.selection, tr.doc);
-  const changed = selectedAnnotations.length !== pluginState.selectedAnnotations.length || selectedAnnotations.some(annotationInfo => {
-    return !pluginState.selectedAnnotations.some(aInfo => aInfo.type === annotationInfo.id);
-  });
+  const selectedAnnotations = findAnnotationsInSelection(tr.selection, tr.doc)
+  const changed =
+    selectedAnnotations.length !== pluginState.selectedAnnotations.length ||
+    selectedAnnotations.some(annotationInfo => {
+      return !pluginState.selectedAnnotations.some(
+        aInfo => aInfo.type === annotationInfo.id
+      )
+    })
 
   if (changed) {
-    return { ...pluginState,
-      selectedAnnotations
-    };
+    return { ...pluginState, selectedAnnotations }
   }
 
-  return pluginState;
-};
+  return pluginState
+}
 
-export const {
-  createPluginState,
-  createCommand
-} = pluginFactory(inlineCommentPluginKey, reducer, {
-  onSelectionChanged: handleSelectionChanged,
-  onDocChanged: handleDocChanged,
-  mapping: (tr, pluginState) => {
-    let {
-      draftDecorationSet,
-      bookmark
-    } = pluginState;
-    let mappedDecorationSet, mappedBookmark;
+export const { createPluginState, createCommand } = pluginFactory(
+  inlineCommentPluginKey,
+  reducer,
+  {
+    onSelectionChanged: handleSelectionChanged,
+    onDocChanged: handleDocChanged,
+    mapping: (tr, pluginState) => {
+      let { draftDecorationSet, bookmark } = pluginState
+      let mappedDecorationSet, mappedBookmark
 
-    if (draftDecorationSet) {
-      mappedDecorationSet = draftDecorationSet.map(tr.mapping, tr.doc);
+      if (draftDecorationSet) {
+        mappedDecorationSet = draftDecorationSet.map(tr.mapping, tr.doc)
+      }
+
+      if (bookmark) {
+        mappedBookmark = bookmark.map(tr.mapping)
+      } // return same pluginState if mappings did not change
+
+      if (
+        mappedBookmark === bookmark &&
+        mappedDecorationSet === draftDecorationSet
+      ) {
+        return pluginState
+      }
+
+      return {
+        ...pluginState,
+        draftDecorationSet: mappedDecorationSet,
+        bookmark: mappedBookmark
+      }
     }
-
-    if (bookmark) {
-      mappedBookmark = bookmark.map(tr.mapping);
-    } // return same pluginState if mappings did not change
-
-
-    if (mappedBookmark === bookmark && mappedDecorationSet === draftDecorationSet) {
-      return pluginState;
-    }
-
-    return { ...pluginState,
-      draftDecorationSet: mappedDecorationSet,
-      bookmark: mappedBookmark
-    };
   }
-});
+)

@@ -1,11 +1,7 @@
-import { insertContentDeleteRange } from '../../../../utils/commands';
-import { isListNode } from '../../utils/node';
+import { insertContentDeleteRange } from '../../../../utils/commands'
+import { isListNode } from '../../utils/node'
 //Case for two adjacent list items with the first being of greater indentation
-export const joinListItemWithParentNestedList = ({
-  tr,
-  $next,
-  $head
-}) => {
+export const joinListItemWithParentNestedList = ({ tr, $next, $head }) => {
   /* CASE 4
    * Initial Structure:
    *
@@ -57,23 +53,41 @@ export const joinListItemWithParentNestedList = ({
    * }
    *
    */
-  const listItemK = $next.parent; //List must have at least one child
+  const listItemK = $next.parent //List must have at least one child
 
   if (!listItemK.firstChild || !listItemK.lastChild) {
-    return false;
+    return false
   }
 
-  const beforeListItemK = $next.before();
-  const afterListItemB = $next.before();
-  const afterListItemK = $next.after();
-  const containsChildrenO = isListNode(listItemK.lastChild);
-  const textInsertPos = $head.pos;
-  const childrenMInsertPos = $head.pos + 1;
-  const childrenOInsertPos = afterListItemB - 2;
-  const textContent = listItemK.firstChild.content;
-  const childrenMContent = containsChildrenO ? listItemK.content.cut(listItemK.firstChild.nodeSize, listItemK.nodeSize - listItemK.lastChild.nodeSize - 2 //Get the position before
-  ) : listItemK.content.cut(listItemK.firstChild.nodeSize);
-  const childrenOContent = listItemK.lastChild.content;
-  insertContentDeleteRange(tr, tr => tr.doc.resolve(textInsertPos), containsChildrenO ? [[textContent, textInsertPos], [childrenMContent, childrenMInsertPos], [childrenOContent, childrenOInsertPos]] : [[textContent, textInsertPos], [childrenMContent, childrenMInsertPos]], [[beforeListItemK, afterListItemK]]);
-  return true;
-};
+  const beforeListItemK = $next.before()
+  const afterListItemB = $next.before()
+  const afterListItemK = $next.after()
+  const containsChildrenO = isListNode(listItemK.lastChild)
+  const textInsertPos = $head.pos
+  const childrenMInsertPos = $head.pos + 1
+  const childrenOInsertPos = afterListItemB - 2
+  const textContent = listItemK.firstChild.content
+  const childrenMContent = containsChildrenO
+    ? listItemK.content.cut(
+        listItemK.firstChild.nodeSize,
+        listItemK.nodeSize - listItemK.lastChild.nodeSize - 2 //Get the position before
+      )
+    : listItemK.content.cut(listItemK.firstChild.nodeSize)
+  const childrenOContent = listItemK.lastChild.content
+  insertContentDeleteRange(
+    tr,
+    tr => tr.doc.resolve(textInsertPos),
+    containsChildrenO
+      ? [
+          [textContent, textInsertPos],
+          [childrenMContent, childrenMInsertPos],
+          [childrenOContent, childrenOInsertPos]
+        ]
+      : [
+          [textContent, textInsertPos],
+          [childrenMContent, childrenMInsertPos]
+        ],
+    [[beforeListItemK, afterListItemK]]
+  )
+  return true
+}

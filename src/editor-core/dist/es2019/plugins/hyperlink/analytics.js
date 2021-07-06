@@ -1,5 +1,10 @@
-import { ACTION, ACTION_SUBJECT, ACTION_SUBJECT_ID, EVENT_TYPE } from '../analytics';
-import { getLinkDomain, isFromCurrentDomain } from './utils';
+import {
+  ACTION,
+  ACTION_SUBJECT,
+  ACTION_SUBJECT_ID,
+  EVENT_TYPE
+} from '../analytics'
+import { getLinkDomain, isFromCurrentDomain } from './utils'
 export function getLinkCreationAnalyticsEvent(inputMethod, url) {
   return {
     action: ACTION.INSERTED,
@@ -13,5 +18,5 @@ export function getLinkCreationAnalyticsEvent(inputMethod, url) {
     nonPrivacySafeAttributes: {
       linkDomain: getLinkDomain(url)
     }
-  };
+  }
 }

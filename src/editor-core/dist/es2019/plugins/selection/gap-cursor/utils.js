@@ -1,125 +1,147 @@
-import { TableCssClassName } from '../../table/types';
-import { Side } from './selection';
-import { closestElement } from '../../../utils/dom';
-import { UnsupportedSharedCssClassName } from '../../unsupported-content/styles';
-export const isLeftCursor = side => side === Side.LEFT;
+import { TableCssClassName } from '../../table/types'
+import { Side } from './selection'
+import { closestElement } from '../../../utils/dom'
+import { UnsupportedSharedCssClassName } from '../../unsupported-content/styles'
+export const isLeftCursor = side => side === Side.LEFT
 export function getMediaNearPos(doc, $pos, schema, dir = -1) {
-  let $currentPos = $pos;
-  let currentNode = null;
-  const {
-    mediaSingle,
-    media,
-    mediaGroup
-  } = schema.nodes;
+  let $currentPos = $pos
+  let currentNode = null
+  const { mediaSingle, media, mediaGroup } = schema.nodes
 
   do {
-    $currentPos = doc.resolve(dir === -1 ? $currentPos.before() : $currentPos.after());
+    $currentPos = doc.resolve(
+      dir === -1 ? $currentPos.before() : $currentPos.after()
+    )
 
     if (!$currentPos) {
-      return null;
+      return null
     }
 
-    currentNode = (dir === -1 ? $currentPos.nodeBefore : $currentPos.nodeAfter) || $currentPos.parent;
+    currentNode =
+      (dir === -1 ? $currentPos.nodeBefore : $currentPos.nodeAfter) ||
+      $currentPos.parent
 
     if (!currentNode || currentNode.type === schema.nodes.doc) {
-      return null;
+      return null
     }
 
-    if (currentNode.type === mediaSingle || currentNode.type === media || currentNode.type === mediaGroup) {
-      return currentNode;
+    if (
+      currentNode.type === mediaSingle ||
+      currentNode.type === media ||
+      currentNode.type === mediaGroup
+    ) {
+      return currentNode
     }
-  } while ($currentPos.depth > 0);
+  } while ($currentPos.depth > 0)
 
-  return null;
+  return null
 }
 export const isTextBlockNearPos = (doc, schema, $pos, dir) => {
-  let $currentPos = $pos;
-  let currentNode = dir === -1 ? $currentPos.nodeBefore : $currentPos.nodeAfter; // If next node is a text or a text block bail out early.
+  let $currentPos = $pos
+  let currentNode = dir === -1 ? $currentPos.nodeBefore : $currentPos.nodeAfter // If next node is a text or a text block bail out early.
 
   if (currentNode && (currentNode.isTextblock || currentNode.isText)) {
-    return true;
+    return true
   }
 
   while ($currentPos.depth > 0) {
-    $currentPos = doc.resolve(dir === -1 ? $currentPos.before() : $currentPos.after());
+    $currentPos = doc.resolve(
+      dir === -1 ? $currentPos.before() : $currentPos.after()
+    )
 
     if (!$currentPos) {
-      return false;
+      return false
     }
 
-    currentNode = (dir === -1 ? $currentPos.nodeBefore : $currentPos.nodeAfter) || $currentPos.parent;
+    currentNode =
+      (dir === -1 ? $currentPos.nodeBefore : $currentPos.nodeAfter) ||
+      $currentPos.parent
 
     if (!currentNode || currentNode.type === schema.nodes.doc) {
-      return false;
+      return false
     }
 
     if (currentNode.isTextblock) {
-      return true;
+      return true
     }
   }
 
-  let childNode = currentNode;
+  let childNode = currentNode
 
   while (childNode && childNode.firstChild) {
-    childNode = childNode.firstChild;
+    childNode = childNode.firstChild
 
     if (childNode && (childNode.isTextblock || childNode.isText)) {
-      return true;
+      return true
     }
   }
 
-  return false;
-};
+  return false
+}
 export function getBreakoutModeFromTargetNode(node) {
-  let layout;
+  let layout
 
   if (node.attrs.layout) {
-    layout = node.attrs.layout;
+    layout = node.attrs.layout
   }
 
   if (node.marks && node.marks.length) {
-    layout = (node.marks.find(mark => mark.type.name === 'breakout') || {
-      attrs: {
-        mode: ''
+    layout = (
+      node.marks.find(mark => mark.type.name === 'breakout') || {
+        attrs: {
+          mode: ''
+        }
       }
-    }).attrs.mode;
+    ).attrs.mode
   }
 
   if (['wide', 'full-width'].indexOf(layout) === -1) {
-    return '';
+    return ''
   }
 
-  return layout;
+  return layout
 }
 export const isIgnoredClick = elem => {
   if (elem.nodeName === 'BUTTON' || closestElement(elem, 'button')) {
-    return true;
+    return true
   } // check if target node has a parent table node
 
-
-  let tableWrap;
-  let node = elem;
+  let tableWrap
+  let node = elem
 
   while (node) {
-    if (node.className && (node.getAttribute('class') || '').indexOf(TableCssClassName.TABLE_CONTAINER) > -1) {
-      tableWrap = node;
-      break;
+    if (
+      node.className &&
+      (node.getAttribute('class') || '').indexOf(
+        TableCssClassName.TABLE_CONTAINER
+      ) > -1
+    ) {
+      tableWrap = node
+      break
     }
 
-    node = node.parentNode;
+    node = node.parentNode
   }
 
   if (tableWrap) {
-    const rowControls = tableWrap.querySelector(`.${TableCssClassName.ROW_CONTROLS_WRAPPER}`);
-    const isColumnControlsDecoration = elem && elem.classList && elem.classList.contains(TableCssClassName.COLUMN_CONTROLS_DECORATIONS);
-    return rowControls && rowControls.contains(elem) || isColumnControlsDecoration;
+    const rowControls = tableWrap.querySelector(
+      `.${TableCssClassName.ROW_CONTROLS_WRAPPER}`
+    )
+    const isColumnControlsDecoration =
+      elem &&
+      elem.classList &&
+      elem.classList.contains(TableCssClassName.COLUMN_CONTROLS_DECORATIONS)
+    return (
+      (rowControls && rowControls.contains(elem)) || isColumnControlsDecoration
+    )
   } // Check if unsupported node selection
   // (without this, selection requires double clicking in FF due to posAtCoords differences)
 
-
-  if (closestElement(elem, `.${UnsupportedSharedCssClassName.BLOCK_CONTAINER}`)) {
-    return true;
+  if (
+    closestElement(elem, `.${UnsupportedSharedCssClassName.BLOCK_CONTAINER}`)
+  ) {
+    return true
   }
 
-  return false;
-};
+  return false
+}

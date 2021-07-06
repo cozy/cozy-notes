@@ -1,8 +1,8 @@
-import React from 'react';
-import { ToolbarInner } from './ToolbarInner';
-import { ToolbarSize } from './types';
+import React from 'react'
+import { ToolbarInner } from './ToolbarInner'
+import { ToolbarSize } from './types'
 export const Toolbar = props => {
-  return /*#__PURE__*/React.createElement(ToolbarInner, {
+  return /*#__PURE__*/ React.createElement(ToolbarInner, {
     items: props.items,
     editorView: props.editorView,
     editorActions: props.editorActions,
@@ -17,5 +17,5 @@ export const Toolbar = props => {
     toolbarSize: props.toolbarSize,
     isToolbarReducedSpacing: props.toolbarSize < ToolbarSize.XXL,
     containerElement: props.containerElement
-  });
-};
+  })
+}

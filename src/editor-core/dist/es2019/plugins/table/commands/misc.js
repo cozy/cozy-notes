@@ -1,403 +1,480 @@
 // #region Imports
-import { Selection, TextSelection } from 'prosemirror-state';
-import { TableMap } from '@atlaskit/editor-tables/table-map';
-import { CellSelection } from '@atlaskit/editor-tables/cell-selection';
-import { selectionCell, findCellClosestToPos, findTable, getCellsInColumn, getCellsInRow, getSelectionRect, isSelectionType, removeTable, selectColumn as selectColumnTransform, selectRow as selectRowTransform, setCellAttrs, isTableSelected } from '@atlaskit/editor-tables/utils';
-import { isNodeTypeParagraph, isTextSelection } from '../../../utils';
-import { closestElement } from '../../../utils/dom';
-import { mapSlice } from '../../../utils/slice';
-import { outdentList } from '../../lists/commands';
-import { getDecorations } from '../pm-plugins/decorations/plugin';
-import { buildColumnResizingDecorations } from '../pm-plugins/decorations/utils';
-import { createCommand, getPluginState } from '../pm-plugins/plugin-factory';
-import { fixAutoSizedTable } from '../transforms';
-import { TableCssClassName as ClassName, TableDecorations } from '../types';
-import { createColumnControlsDecoration, createColumnSelectedDecoration } from '../utils/decoration';
-import { checkIfHeaderColumnEnabled, checkIfHeaderRowEnabled, isIsolating } from '../utils/nodes';
-import { updatePluginStateDecorations } from '../utils/update-plugin-state-decorations'; // #endregion
+import { Selection, TextSelection } from 'prosemirror-state'
+import { TableMap } from '@atlaskit/editor-tables/table-map'
+import { CellSelection } from '@atlaskit/editor-tables/cell-selection'
+import {
+  selectionCell,
+  findCellClosestToPos,
+  findTable,
+  getCellsInColumn,
+  getCellsInRow,
+  getSelectionRect,
+  isSelectionType,
+  removeTable,
+  selectColumn as selectColumnTransform,
+  selectRow as selectRowTransform,
+  setCellAttrs,
+  isTableSelected
+} from '@atlaskit/editor-tables/utils'
+import { isNodeTypeParagraph, isTextSelection } from '../../../utils'
+import { closestElement } from '../../../utils/dom'
+import { mapSlice } from '../../../utils/slice'
+import { outdentList } from '../../lists/commands'
+import { getDecorations } from '../pm-plugins/decorations/plugin'
+import { buildColumnResizingDecorations } from '../pm-plugins/decorations/utils'
+import { createCommand, getPluginState } from '../pm-plugins/plugin-factory'
+import { fixAutoSizedTable } from '../transforms'
+import { TableCssClassName as ClassName, TableDecorations } from '../types'
+import {
+  createColumnControlsDecoration,
+  createColumnSelectedDecoration
+} from '../utils/decoration'
+import {
+  checkIfHeaderColumnEnabled,
+  checkIfHeaderRowEnabled,
+  isIsolating
+} from '../utils/nodes'
+import { updatePluginStateDecorations } from '../utils/update-plugin-state-decorations' // #endregion
 // #endregion
 // #region Commands
 
-export const setEditorFocus = editorHasFocus => createCommand({
-  type: 'SET_EDITOR_FOCUS',
-  data: {
-    editorHasFocus
-  }
-});
-export const setTableRef = ref => createCommand(state => {
-  const tableRef = ref || undefined;
-  const foundTable = findTable(state.selection);
-  const tableNode = ref && foundTable ? foundTable.node : undefined;
-  const tablePos = ref && foundTable ? foundTable.pos : undefined;
-  const tableWrapperTarget = closestElement(tableRef, `.${ClassName.TABLE_NODE_WRAPPER}`) || undefined;
-  const layout = tableNode ? tableNode.attrs.layout : undefined;
-  const decorationSet = updatePluginStateDecorations(state, createColumnControlsDecoration(state.selection), TableDecorations.COLUMN_CONTROLS_DECORATIONS);
-  return {
-    type: 'SET_TABLE_REF',
+export const setEditorFocus = editorHasFocus =>
+  createCommand({
+    type: 'SET_EDITOR_FOCUS',
     data: {
-      tableRef,
-      tableNode,
-      tablePos,
-      tableWrapperTarget,
-      layout: layout || 'default',
-      isHeaderRowEnabled: checkIfHeaderRowEnabled(state),
-      isHeaderColumnEnabled: checkIfHeaderColumnEnabled(state),
-      decorationSet,
-      resizeHandleColumnIndex: undefined
+      editorHasFocus
     }
-  };
-}, tr => tr.setMeta('addToHistory', false));
+  })
+export const setTableRef = ref =>
+  createCommand(
+    state => {
+      const tableRef = ref || undefined
+      const foundTable = findTable(state.selection)
+      const tableNode = ref && foundTable ? foundTable.node : undefined
+      const tablePos = ref && foundTable ? foundTable.pos : undefined
+      const tableWrapperTarget =
+        closestElement(tableRef, `.${ClassName.TABLE_NODE_WRAPPER}`) ||
+        undefined
+      const layout = tableNode ? tableNode.attrs.layout : undefined
+      const decorationSet = updatePluginStateDecorations(
+        state,
+        createColumnControlsDecoration(state.selection),
+        TableDecorations.COLUMN_CONTROLS_DECORATIONS
+      )
+      return {
+        type: 'SET_TABLE_REF',
+        data: {
+          tableRef,
+          tableNode,
+          tablePos,
+          tableWrapperTarget,
+          layout: layout || 'default',
+          isHeaderRowEnabled: checkIfHeaderRowEnabled(state),
+          isHeaderColumnEnabled: checkIfHeaderColumnEnabled(state),
+          decorationSet,
+          resizeHandleColumnIndex: undefined
+        }
+      }
+    },
+    tr => tr.setMeta('addToHistory', false)
+  )
 export const setCellAttr = (name, value) => (state, dispatch) => {
-  const {
-    tr,
-    selection
-  } = state;
+  const { tr, selection } = state
 
   if (selection instanceof CellSelection) {
-    let updated = false;
+    let updated = false
     selection.forEachCell((cell, pos) => {
       if (cell.attrs[name] !== value) {
-        tr.setNodeMarkup(pos, cell.type, { ...cell.attrs,
-          [name]: value
-        });
-        updated = true;
+        tr.setNodeMarkup(pos, cell.type, { ...cell.attrs, [name]: value })
+        updated = true
       }
-    });
+    })
 
     if (updated) {
       if (dispatch) {
-        dispatch(tr);
+        dispatch(tr)
       }
 
-      return true;
+      return true
     }
   } else {
-    const cell = selectionCell(state.selection);
+    const cell = selectionCell(state.selection)
 
     if (cell) {
       if (dispatch) {
-        var _cell$nodeAfter, _cell$nodeAfter2;
+        var _cell$nodeAfter, _cell$nodeAfter2
 
-        dispatch(tr.setNodeMarkup(cell.pos, (_cell$nodeAfter = cell.nodeAfter) === null || _cell$nodeAfter === void 0 ? void 0 : _cell$nodeAfter.type, { ...((_cell$nodeAfter2 = cell.nodeAfter) === null || _cell$nodeAfter2 === void 0 ? void 0 : _cell$nodeAfter2.attrs),
-          [name]: value
-        }));
+        dispatch(
+          tr.setNodeMarkup(
+            cell.pos,
+            (_cell$nodeAfter = cell.nodeAfter) === null ||
+              _cell$nodeAfter === void 0
+              ? void 0
+              : _cell$nodeAfter.type,
+            {
+              ...((_cell$nodeAfter2 = cell.nodeAfter) === null ||
+              _cell$nodeAfter2 === void 0
+                ? void 0
+                : _cell$nodeAfter2.attrs),
+              [name]: value
+            }
+          )
+        )
       }
 
-      return true;
+      return true
     }
   }
 
-  return false;
-};
+  return false
+}
 export const triggerUnlessTableHeader = command => (state, dispatch) => {
   const {
     selection,
     schema: {
-      nodes: {
-        tableHeader
-      }
+      nodes: { tableHeader }
     }
-  } = state;
+  } = state
 
   if (selection instanceof TextSelection) {
-    const cell = findCellClosestToPos(selection.$from);
+    const cell = findCellClosestToPos(selection.$from)
 
     if (cell && cell.node.type !== tableHeader) {
-      return command(state, dispatch);
+      return command(state, dispatch)
     }
   }
 
   if (selection instanceof CellSelection) {
-    const rect = getSelectionRect(selection);
+    const rect = getSelectionRect(selection)
 
-    if (!checkIfHeaderRowEnabled(state) || rect && rect.top > 0) {
-      return command(state, dispatch);
+    if (!checkIfHeaderRowEnabled(state) || (rect && rect.top > 0)) {
+      return command(state, dispatch)
     }
   }
 
-  return false;
-};
+  return false
+}
 export const transformSliceRemoveCellBackgroundColor = (slice, schema) => {
-  const {
-    tableCell,
-    tableHeader
-  } = schema.nodes;
+  const { tableCell, tableHeader } = schema.nodes
   return mapSlice(slice, maybeCell => {
     if (maybeCell.type === tableCell || maybeCell.type === tableHeader) {
-      const cellAttrs = { ...maybeCell.attrs
-      };
-      cellAttrs.background = undefined;
-      return maybeCell.type.createChecked(cellAttrs, maybeCell.content, maybeCell.marks);
+      const cellAttrs = { ...maybeCell.attrs }
+      cellAttrs.background = undefined
+      return maybeCell.type.createChecked(
+        cellAttrs,
+        maybeCell.content,
+        maybeCell.marks
+      )
     }
 
-    return maybeCell;
-  });
-};
+    return maybeCell
+  })
+}
 export const transformSliceToAddTableHeaders = (slice, schema) => {
-  const {
-    table,
-    tableHeader,
-    tableRow
-  } = schema.nodes;
+  const { table, tableHeader, tableRow } = schema.nodes
   return mapSlice(slice, maybeTable => {
     if (maybeTable.type === table) {
-      const firstRow = maybeTable.firstChild;
+      const firstRow = maybeTable.firstChild
 
       if (firstRow) {
-        const headerCols = [];
+        const headerCols = []
         firstRow.forEach(oldCol => {
-          headerCols.push(tableHeader.createChecked(oldCol.attrs, oldCol.content, oldCol.marks));
-        });
-        const headerRow = tableRow.createChecked(firstRow.attrs, headerCols, firstRow.marks);
-        return maybeTable.copy(maybeTable.content.replaceChild(0, headerRow));
+          headerCols.push(
+            tableHeader.createChecked(
+              oldCol.attrs,
+              oldCol.content,
+              oldCol.marks
+            )
+          )
+        })
+        const headerRow = tableRow.createChecked(
+          firstRow.attrs,
+          headerCols,
+          firstRow.marks
+        )
+        return maybeTable.copy(maybeTable.content.replaceChild(0, headerRow))
       }
     }
 
-    return maybeTable;
-  });
-};
+    return maybeTable
+  })
+}
 export const transformSliceToRemoveColumnsWidths = (slice, schema) => {
-  const {
-    tableHeader,
-    tableCell
-  } = schema.nodes;
+  const { tableHeader, tableCell } = schema.nodes
   return mapSlice(slice, maybeCell => {
     if (maybeCell.type === tableCell || maybeCell.type === tableHeader) {
       if (!maybeCell.attrs.colwidth) {
-        return maybeCell;
+        return maybeCell
       }
 
-      return maybeCell.type.createChecked({ ...maybeCell.attrs,
-        colwidth: undefined
-      }, maybeCell.content, maybeCell.marks);
+      return maybeCell.type.createChecked(
+        { ...maybeCell.attrs, colwidth: undefined },
+        maybeCell.content,
+        maybeCell.marks
+      )
     }
 
-    return maybeCell;
-  });
-};
+    return maybeCell
+  })
+}
 export const deleteTable = (state, dispatch) => {
   if (dispatch) {
-    dispatch(removeTable(state.tr));
+    dispatch(removeTable(state.tr))
   }
 
-  return true;
-};
+  return true
+}
 export const deleteTableIfSelected = (state, dispatch) => {
   if (isTableSelected(state.selection)) {
-    return deleteTable(state, dispatch);
+    return deleteTable(state, dispatch)
   }
 
-  return false;
-};
+  return false
+}
 export const convertFirstRowToHeader = schema => tr => {
-  const table = findTable(tr.selection);
-  const map = TableMap.get(table.node);
+  const table = findTable(tr.selection)
+  const map = TableMap.get(table.node)
 
   for (let i = 0; i < map.width; i++) {
-    const cell = table.node.child(0).child(i);
-    tr.setNodeMarkup(table.start + map.map[i], schema.nodes.tableHeader, cell.attrs);
+    const cell = table.node.child(0).child(i)
+    tr.setNodeMarkup(
+      table.start + map.map[i],
+      schema.nodes.tableHeader,
+      cell.attrs
+    )
   }
 
-  return tr;
-};
+  return tr
+}
 export const moveCursorBackward = (state, dispatch) => {
-  const {
-    $cursor
-  } = state.selection; // if cursor is in the middle of a text node, do nothing
+  const { $cursor } = state.selection // if cursor is in the middle of a text node, do nothing
 
   if (!$cursor || $cursor.parentOffset > 0) {
-    return false;
+    return false
   } // find the node before the cursor
 
-
-  let before;
-  let cut;
+  let before
+  let cut
 
   if (!isIsolating($cursor.parent)) {
     for (let i = $cursor.depth - 1; !before && i >= 0; i--) {
       if ($cursor.index(i) > 0) {
-        cut = $cursor.before(i + 1);
-        before = $cursor.node(i).child($cursor.index(i) - 1);
+        cut = $cursor.before(i + 1)
+        before = $cursor.node(i).child($cursor.index(i) - 1)
       }
 
       if (isIsolating($cursor.node(i))) {
-        break;
+        break
       }
     }
   } // if the node before is not a table node - do nothing
 
-
   if (!before || before.type !== state.schema.nodes.table) {
-    return false;
+    return false
   }
   /*
     ensure we're just at a top level paragraph
     otherwise, perform regular backspace behaviour
    */
 
+  const grandparent = $cursor.node($cursor.depth - 1)
+  const { listItem } = state.schema.nodes
 
-  const grandparent = $cursor.node($cursor.depth - 1);
-  const {
-    listItem
-  } = state.schema.nodes;
-
-  if ($cursor.parent.type !== state.schema.nodes.paragraph || grandparent && grandparent.type !== state.schema.nodes.doc) {
+  if (
+    $cursor.parent.type !== state.schema.nodes.paragraph ||
+    (grandparent && grandparent.type !== state.schema.nodes.doc)
+  ) {
     if (grandparent && grandparent.type === listItem) {
-      return outdentList()(state, dispatch);
+      return outdentList()(state, dispatch)
     } else {
-      return false;
+      return false
     }
   }
 
-  const {
-    tr
-  } = state;
-  const lastCellPos = (cut || 0) - 4; // need to move cursor inside the table to be able to calculate table's offset
+  const { tr } = state
+  const lastCellPos = (cut || 0) - 4 // need to move cursor inside the table to be able to calculate table's offset
 
-  tr.setSelection(new TextSelection(state.doc.resolve(lastCellPos)));
-  const {
-    $from
-  } = tr.selection;
-  const start = $from.start(-1);
-  const pos = start + $from.parent.nodeSize - 1; // move cursor to the last cell
+  tr.setSelection(new TextSelection(state.doc.resolve(lastCellPos)))
+  const { $from } = tr.selection
+  const start = $from.start(-1)
+  const pos = start + $from.parent.nodeSize - 1 // move cursor to the last cell
   // it doesn't join node before (last cell) with node after (content after the cursor)
   // due to ridiculous amount of PM code that would have been required to overwrite
 
   if (dispatch) {
-    dispatch(tr.setSelection(new TextSelection(state.doc.resolve(pos))));
+    dispatch(tr.setSelection(new TextSelection(state.doc.resolve(pos))))
   }
 
-  return true;
-};
-export const setMultipleCellAttrs = (attrs, targetCellPosition) => (state, dispatch) => {
-  let cursorPos;
-  let {
-    tr
-  } = state;
+  return true
+}
+export const setMultipleCellAttrs = (attrs, targetCellPosition) => (
+  state,
+  dispatch
+) => {
+  let cursorPos
+  let { tr } = state
 
   if (isSelectionType(tr.selection, 'cell')) {
-    const selection = tr.selection;
+    const selection = tr.selection
     selection.forEachCell((_cell, pos) => {
-      const $pos = tr.doc.resolve(tr.mapping.map(pos + 1));
-      tr = setCellAttrs(findCellClosestToPos($pos), attrs)(tr);
-    });
-    cursorPos = selection.$headCell.pos;
+      const $pos = tr.doc.resolve(tr.mapping.map(pos + 1))
+      tr = setCellAttrs(findCellClosestToPos($pos), attrs)(tr)
+    })
+    cursorPos = selection.$headCell.pos
   } else if (targetCellPosition) {
-    const cell = findCellClosestToPos(tr.doc.resolve(targetCellPosition + 1));
-    tr = setCellAttrs(cell, attrs)(tr);
-    cursorPos = cell.pos;
+    const cell = findCellClosestToPos(tr.doc.resolve(targetCellPosition + 1))
+    tr = setCellAttrs(cell, attrs)(tr)
+    cursorPos = cell.pos
   }
 
   if (tr.docChanged && cursorPos !== undefined) {
-    const $pos = tr.doc.resolve(tr.mapping.map(cursorPos));
+    const $pos = tr.doc.resolve(tr.mapping.map(cursorPos))
 
     if (dispatch) {
-      dispatch(tr.setSelection(Selection.near($pos)));
+      dispatch(tr.setSelection(Selection.near($pos)))
     }
 
-    return true;
+    return true
   }
 
-  return false;
-};
-export const selectColumn = (column, expand) => createCommand(state => {
-  const cells = getCellsInColumn(column)(state.tr.selection);
+  return false
+}
+export const selectColumn = (column, expand) =>
+  createCommand(
+    state => {
+      const cells = getCellsInColumn(column)(state.tr.selection)
 
-  if (!cells || !cells.length || typeof cells[0].pos !== 'number') {
-    return false;
-  }
+      if (!cells || !cells.length || typeof cells[0].pos !== 'number') {
+        return false
+      }
 
-  const decorations = createColumnSelectedDecoration(selectColumnTransform(column, expand)(state.tr));
-  const decorationSet = updatePluginStateDecorations(state, decorations, TableDecorations.COLUMN_SELECTED);
-  const targetCellPosition = cells[0].pos;
-  return {
-    type: 'SELECT_COLUMN',
-    data: {
-      targetCellPosition,
-      decorationSet
-    }
-  };
-}, tr => selectColumnTransform(column, expand)(tr).setMeta('addToHistory', false));
-export const selectRow = (row, expand) => createCommand(state => {
-  let targetCellPosition;
-  const cells = getCellsInRow(row)(state.tr.selection);
+      const decorations = createColumnSelectedDecoration(
+        selectColumnTransform(column, expand)(state.tr)
+      )
+      const decorationSet = updatePluginStateDecorations(
+        state,
+        decorations,
+        TableDecorations.COLUMN_SELECTED
+      )
+      const targetCellPosition = cells[0].pos
+      return {
+        type: 'SELECT_COLUMN',
+        data: {
+          targetCellPosition,
+          decorationSet
+        }
+      }
+    },
+    tr =>
+      selectColumnTransform(column, expand)(tr).setMeta('addToHistory', false)
+  )
+export const selectRow = (row, expand) =>
+  createCommand(
+    state => {
+      let targetCellPosition
+      const cells = getCellsInRow(row)(state.tr.selection)
 
-  if (cells && cells.length) {
-    targetCellPosition = cells[0].pos;
-  }
+      if (cells && cells.length) {
+        targetCellPosition = cells[0].pos
+      }
 
-  return {
-    type: 'SET_TARGET_CELL_POSITION',
-    data: {
-      targetCellPosition
-    }
-  };
-}, tr => selectRowTransform(row, expand)(tr).setMeta('addToHistory', false));
-export const showInsertColumnButton = columnIndex => createCommand(_ => columnIndex > -1 ? {
-  type: 'SHOW_INSERT_COLUMN_BUTTON',
-  data: {
-    insertColumnButtonIndex: columnIndex
-  }
-} : false, tr => tr.setMeta('addToHistory', false));
-export const showInsertRowButton = rowIndex => createCommand(_ => rowIndex > -1 ? {
-  type: 'SHOW_INSERT_ROW_BUTTON',
-  data: {
-    insertRowButtonIndex: rowIndex
-  }
-} : false, tr => tr.setMeta('addToHistory', false));
-export const hideInsertColumnOrRowButton = () => createCommand({
-  type: 'HIDE_INSERT_COLUMN_OR_ROW_BUTTON'
-}, tr => tr.setMeta('addToHistory', false));
-export const addResizeHandleDecorations = columnIndex => createCommand(state => {
-  const tableNode = findTable(state.selection);
-  const {
-    pluginConfig: {
-      allowColumnResizing
-    }
-  } = getPluginState(state);
+      return {
+        type: 'SET_TARGET_CELL_POSITION',
+        data: {
+          targetCellPosition
+        }
+      }
+    },
+    tr => selectRowTransform(row, expand)(tr).setMeta('addToHistory', false)
+  )
+export const showInsertColumnButton = columnIndex =>
+  createCommand(
+    _ =>
+      columnIndex > -1
+        ? {
+            type: 'SHOW_INSERT_COLUMN_BUTTON',
+            data: {
+              insertColumnButtonIndex: columnIndex
+            }
+          }
+        : false,
+    tr => tr.setMeta('addToHistory', false)
+  )
+export const showInsertRowButton = rowIndex =>
+  createCommand(
+    _ =>
+      rowIndex > -1
+        ? {
+            type: 'SHOW_INSERT_ROW_BUTTON',
+            data: {
+              insertRowButtonIndex: rowIndex
+            }
+          }
+        : false,
+    tr => tr.setMeta('addToHistory', false)
+  )
+export const hideInsertColumnOrRowButton = () =>
+  createCommand(
+    {
+      type: 'HIDE_INSERT_COLUMN_OR_ROW_BUTTON'
+    },
+    tr => tr.setMeta('addToHistory', false)
+  )
+export const addResizeHandleDecorations = columnIndex =>
+  createCommand(
+    state => {
+      const tableNode = findTable(state.selection)
+      const {
+        pluginConfig: { allowColumnResizing }
+      } = getPluginState(state)
 
-  if (!tableNode || !allowColumnResizing) {
-    return false;
-  }
+      if (!tableNode || !allowColumnResizing) {
+        return false
+      }
 
-  return {
-    type: 'ADD_RESIZE_HANDLE_DECORATIONS',
-    data: {
-      decorationSet: buildColumnResizingDecorations(columnIndex)({
-        tr: state.tr,
-        decorationSet: getDecorations(state)
-      }),
-      resizeHandleColumnIndex: columnIndex
-    }
-  };
-}, tr => tr.setMeta('addToHistory', false));
+      return {
+        type: 'ADD_RESIZE_HANDLE_DECORATIONS',
+        data: {
+          decorationSet: buildColumnResizingDecorations(columnIndex)({
+            tr: state.tr,
+            decorationSet: getDecorations(state)
+          }),
+          resizeHandleColumnIndex: columnIndex
+        }
+      }
+    },
+    tr => tr.setMeta('addToHistory', false)
+  )
 export const autoSizeTable = (view, node, table, basePos, opts) => {
-  view.dispatch(fixAutoSizedTable(view, node, table, basePos, opts));
-  return true;
-};
-export const addBoldInEmptyHeaderCells = tableCellHeader => (state, dispatch) => {
-  const {
-    tr
-  } = state;
+  view.dispatch(fixAutoSizedTable(view, node, table, basePos, opts))
+  return true
+}
+export const addBoldInEmptyHeaderCells = tableCellHeader => (
+  state,
+  dispatch
+) => {
+  const { tr } = state
 
-  if ( // Avoid infinite loop when the current selection is not a TextSelection
-  isTextSelection(tr.selection) && tr.selection.$cursor && // When storedMark is null that means this is the initial state
-  // if the user press to remove the mark storedMark will be an empty array
-  // and we shouldn't apply the strong mark
-  tr.storedMarks == null && // Check if the current node is a direct child from paragraph
-  tr.selection.$from.depth === tableCellHeader.depth + 1 && // this logic is applied only for empty paragraph
-  tableCellHeader.node.nodeSize === 4 && isNodeTypeParagraph(tableCellHeader.node.firstChild)) {
-    const {
-      strong
-    } = state.schema.marks;
-    tr.setStoredMarks([strong.create()]).setMeta('addToHistory', false);
+  if (
+    // Avoid infinite loop when the current selection is not a TextSelection
+    isTextSelection(tr.selection) &&
+    tr.selection.$cursor && // When storedMark is null that means this is the initial state
+    // if the user press to remove the mark storedMark will be an empty array
+    // and we shouldn't apply the strong mark
+    tr.storedMarks == null && // Check if the current node is a direct child from paragraph
+    tr.selection.$from.depth === tableCellHeader.depth + 1 && // this logic is applied only for empty paragraph
+    tableCellHeader.node.nodeSize === 4 &&
+    isNodeTypeParagraph(tableCellHeader.node.firstChild)
+  ) {
+    const { strong } = state.schema.marks
+    tr.setStoredMarks([strong.create()]).setMeta('addToHistory', false)
 
     if (dispatch) {
-      dispatch(tr);
+      dispatch(tr)
     }
 
-    return true;
+    return true
   }
 
-  return false;
-}; // #endregion
+  return false
+} // #endregion

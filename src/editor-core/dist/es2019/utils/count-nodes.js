@@ -1,13 +1,13 @@
 export function countNodes(state) {
-  const nodes = {};
+  const nodes = {}
   state.doc.descendants(node => {
     if (node.type.name in nodes) {
-      nodes[node.type.name]++;
+      nodes[node.type.name]++
     } else {
-      nodes[node.type.name] = 1;
+      nodes[node.type.name] = 1
     }
 
-    return true;
-  });
-  return nodes;
+    return true
+  })
+  return nodes
 }

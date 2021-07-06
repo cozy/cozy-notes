@@ -1,1 +1,1 @@
-export { FullPageEditor as default } from './FullPage';
+export { FullPageEditor as default } from './FullPage'

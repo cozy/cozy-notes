@@ -1,4 +1,4 @@
-import { keyframes } from 'styled-components';
+import { keyframes } from 'styled-components'
 const gapCursorBlink = keyframes`
   from, to {
     opacity: 0;
@@ -6,12 +6,12 @@ const gapCursorBlink = keyframes`
   50% {
     opacity: 1;
   }
-`;
-export const hideCaretModifier = 'ProseMirror-hide-gapcursor';
-const gapCursor = '.ProseMirror-gapcursor';
-const prosemirrorwidget = '.ProseMirror-widget';
-const wrapLeft = '[layout="wrap-left"]';
-const wrapRight = '[layout="wrap-right"]';
+`
+export const hideCaretModifier = 'ProseMirror-hide-gapcursor'
+const gapCursor = '.ProseMirror-gapcursor'
+const prosemirrorwidget = '.ProseMirror-widget'
+const wrapLeft = '[layout="wrap-left"]'
+const wrapRight = '[layout="wrap-right"]'
 export const gapCursorStyles = `
   /* =============== GAP CURSOR ================== */
   .ProseMirror {
@@ -140,4 +140,4 @@ export const gapCursorStyles = `
   ${prosemirrorwidget} + ${gapCursor} + span + * {
     margin-top: 0;
   }
-`;
+`

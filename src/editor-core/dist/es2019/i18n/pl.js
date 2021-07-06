@@ -11,20 +11,24 @@ export default {
   'fabric.editor.addAltText': 'Tekst alternatywny',
   'fabric.editor.alignment': 'Wyrównanie',
   'fabric.editor.altText': 'Tekst alternatywny',
-  'fabric.editor.alttext.validation': 'Usuń wszystkie znaki specjalne z tekstu alternatywnego.',
+  'fabric.editor.alttext.validation':
+    'Usuń wszystkie znaki specjalne z tekstu alternatywnego.',
   'fabric.editor.annotate': 'Dodaj adnotację',
   'fabric.editor.annotationToolbar': 'Pasek narzędzi adnotacji',
   'fabric.editor.backLink': 'Wróć',
-  'fabric.editor.blockCardUnavailable': 'Łącze w tekście jest wewnątrz węzła {node} i nie można zmienić jego widoku',
+  'fabric.editor.blockCardUnavailable':
+    'Łącze w tekście jest wewnątrz węzła {node} i nie można zmienić jego widoku',
   'fabric.editor.blockquote': 'Cytat',
   'fabric.editor.blockquote.description': 'Wstaw cytat',
   'fabric.editor.bold': 'Pogrubienie',
-  'fabric.editor.canNotSortTable': "⚠️ You can't sort a table with merged cells",
+  'fabric.editor.canNotSortTable':
+    "⚠️ You can't sort a table with merged cells",
   'fabric.editor.cardFloatingControls': 'Opcje kart',
   'fabric.editor.cellBackground': 'Tło komórki',
   'fabric.editor.cellOptions': 'Opcje komórki',
   'fabric.editor.clearAltTextEdit': 'Wyczyść tekst alternatywny',
-  'fabric.editor.clearCells': '{0, plural, one {Wyczyść komórkę} few {Wyczyść komórki} many {Wyczyść komórki} other {Wyczyść komórki}}',
+  'fabric.editor.clearCells':
+    '{0, plural, one {Wyczyść komórkę} few {Wyczyść komórki} many {Wyczyść komórki} other {Wyczyść komórki}}',
   'fabric.editor.clearFormatting': 'Wyczyść formatowanie',
   'fabric.editor.clearLink': 'Wyczyść łącze',
   'fabric.editor.clearLinkText': 'Wyczyść tekst',
@@ -35,19 +39,23 @@ export default {
   'fabric.editor.codeblock': 'Wstawka kodu',
   'fabric.editor.codeblock.description': 'Wyświetlaj kod z wyróżnioną składnią',
   'fabric.editor.columns': 'Układy',
-  'fabric.editor.columns.description': 'Uporządkuj swoją stronę, korzystając z sekcji',
+  'fabric.editor.columns.description':
+    'Uporządkuj swoją stronę, korzystając z sekcji',
   'fabric.editor.configPanel.cancel': 'Anuluj',
-  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio': 'Nie można połączyć isMultiple ze stylem: radio',
+  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio':
+    'Nie można połączyć isMultiple ze stylem: radio',
   'fabric.editor.configPanel.formType.addField': 'Dodaj pole',
   'fabric.editor.configPanel.formType.removeField': 'Usuń pole',
   'fabric.editor.configPanel.required': 'Pole wymagane',
   'fabric.editor.configPanel.submit': 'Wyślij',
   'fabric.editor.createComment': 'Utwórz komentarz',
-  'fabric.editor.createCommentInvalid': 'Komentarze są dozwolone tylko w przypadku tekstu i nagłówków',
+  'fabric.editor.createCommentInvalid':
+    'Komentarze są dozwolone tylko w przypadku tekstu i nagłówków',
   'fabric.editor.date': 'Data',
   'fabric.editor.date.description': 'Dodaj datę, korzystając z kalendarza',
   'fabric.editor.decision': 'Decyzja',
-  'fabric.editor.decision.description': 'Obserwuj decyzje, aby łatwo je śledzić',
+  'fabric.editor.decision.description':
+    'Obserwuj decyzje, aby łatwo je śledzić',
   'fabric.editor.decisionPlaceholder': 'Dodaj decyzję…',
   'fabric.editor.displayBlock': 'Wyświetl jako kartę',
   'fabric.editor.displayEmbed': 'Wyświetl jako osadzone',
@@ -58,16 +66,19 @@ export default {
   'fabric.editor.editAltText': 'Edytuj tekst alternatywny',
   'fabric.editor.editorHelp': 'Pomoc w edytorze',
   'fabric.editor.emoji': 'Emoji',
-  'fabric.editor.emoji.description': 'Używaj emoji, aby wyrażać pomysły 🎉 i emocje 😄',
+  'fabric.editor.emoji.description':
+    'Używaj emoji, aby wyrażać pomysły 🎉 i emocje 😄',
   'fabric.editor.error': 'Błąd',
   'fabric.editor.errorPanel': 'Panel błędów',
   'fabric.editor.errorPanel.description': 'Wyróżniaj błędy kolorem',
   'fabric.editor.expand': 'Sekcja rozwijana',
   'fabric.editor.expand.description': 'Wstaw sekcję rozwijaną',
   'fabric.editor.feedbackDialog': 'Prześlij opinię',
-  'fabric.editor.feedbackDialog.description': 'Opowiedz nam o swoich doświadczeniach podczas korzystania z nowego edytora',
+  'fabric.editor.feedbackDialog.description':
+    'Opowiedz nam o swoich doświadczeniach podczas korzystania z nowego edytora',
   'fabric.editor.filesAndImages': 'Pliki i obrazy',
-  'fabric.editor.filesAndImages.description': 'Dodaj obrazy i inne pliki do strony',
+  'fabric.editor.filesAndImages.description':
+    'Dodaj obrazy i inne pliki do strony',
   'fabric.editor.find': 'Znajdź',
   'fabric.editor.findNext': 'Znajdź następne',
   'fabric.editor.findPrevious': 'Znajdź poprzednie',
@@ -75,20 +86,25 @@ export default {
   'fabric.editor.headerColumn': 'Kolumna nagłówka',
   'fabric.editor.headerRow': 'Wiersz nagłówka',
   'fabric.editor.heading1': 'Nagłówek 1',
-  'fabric.editor.heading1Description': 'Użyj tego do nagłówka najwyższego poziomu',
+  'fabric.editor.heading1Description':
+    'Użyj tego do nagłówka najwyższego poziomu',
   'fabric.editor.heading2': 'Nagłówek 2',
   'fabric.editor.heading2Description': 'Użyj tego do kluczowych sekcji',
   'fabric.editor.heading3': 'Nagłówek 3',
-  'fabric.editor.heading3Description': 'Użyj tego do podsekcji i nagłówków grup',
+  'fabric.editor.heading3Description':
+    'Użyj tego do podsekcji i nagłówków grup',
   'fabric.editor.heading4': 'Nagłówek 4',
   'fabric.editor.heading4Description': 'Użyj tego do nagłówków głębokich',
   'fabric.editor.heading5': 'Nagłówek 5',
   'fabric.editor.heading5Description': 'Użyj tego do grupowania elementów list',
   'fabric.editor.heading6': 'Nagłówek 6',
-  'fabric.editor.heading6Description': 'Użyj tego do nagłówków niskiego poziomu',
+  'fabric.editor.heading6Description':
+    'Użyj tego do nagłówków niskiego poziomu',
   'fabric.editor.help': 'Pomoc',
-  'fabric.editor.help.description': 'Przeglądaj wszystkie skróty klawiszowe i opcje Markdown',
-  'fabric.editor.helpDialogTips': 'Naciśnij {keyMap}, aby szybko otworzyć okno dialogowe w dowolnym momencie',
+  'fabric.editor.help.description':
+    'Przeglądaj wszystkie skróty klawiszowe i opcje Markdown',
+  'fabric.editor.helpDialogTips':
+    'Naciśnij {keyMap}, aby szybko otworzyć okno dialogowe w dowolnym momencie',
   'fabric.editor.horizontalRule': 'Separator',
   'fabric.editor.horizontalRule.description': 'Oddziel treści linią poziomą',
   'fabric.editor.image': 'Obraz',
@@ -106,7 +122,8 @@ export default {
   'fabric.editor.lists': 'Listy',
   'fabric.editor.markdown': 'Markdown',
   'fabric.editor.mention': 'Wzmianka',
-  'fabric.editor.mention.description': 'Wspomnij o kimś, aby wysłać mu powiadomienie',
+  'fabric.editor.mention.description':
+    'Wspomnij o kimś, aby wysłać mu powiadomienie',
   'fabric.editor.mergeCells': 'Scal komórki',
   'fabric.editor.moreFormatting': 'Więcej opcji formatowania',
   'fabric.editor.noResultsFound': 'Brak wyników',
@@ -119,13 +136,16 @@ export default {
   'fabric.editor.orderedList.description': 'Utwórz uporządkowaną listę',
   'fabric.editor.other': 'Inne...',
   'fabric.editor.pastePlainText': 'Wklej zwykły tekst',
-  'fabric.editor.placeholderAltText': 'Opisz ten obraz przy użyciu tekstu alternatywnego',
+  'fabric.editor.placeholderAltText':
+    'Opisz ten obraz przy użyciu tekstu alternatywnego',
   'fabric.editor.placeholderText': 'Tekst zastępczy',
   'fabric.editor.placeholderTextPlaceholder': 'Dodaj tekst zastępczy',
   'fabric.editor.quickInsert': 'Szybkie wstawianie',
   'fabric.editor.redo': 'Ponów',
-  'fabric.editor.removeColumns': '{0, plural, one {Usuń kolumnę} few {Usuń kolumny} many {Usuń kolumny} other {Usuń kolumny}}',
-  'fabric.editor.removeRows': '{0, plural, one {Usuń wiersz} few {Usuń wiersze} many {Usuń wiersze} other {Usuń wiersze}}',
+  'fabric.editor.removeColumns':
+    '{0, plural, one {Usuń kolumnę} few {Usuń kolumny} many {Usuń kolumny} other {Usuń kolumny}}',
+  'fabric.editor.removeRows':
+    '{0, plural, one {Usuń wiersz} few {Usuń wiersze} many {Usuń wiersze} other {Usuń wiersze}}',
   'fabric.editor.replace': 'Zastąp',
   'fabric.editor.replaceAll': 'Zastąp wszystko',
   'fabric.editor.replaceWith': 'Zastąp tym',
@@ -144,11 +164,13 @@ export default {
   'fabric.editor.successPanel': 'Panel sukcesów',
   'fabric.editor.successPanel.description': 'Dodaj wskazówki w kolorze',
   'fabric.editor.superscript': 'Przypis górny',
-  'fabric.editor.supportAltText': 'Tekst alternatywny jest przydatny dla osób z zaburzeniami widzenia, korzystających z czytników ekranowych.',
+  'fabric.editor.supportAltText':
+    'Tekst alternatywny jest przydatny dla osób z zaburzeniami widzenia, korzystających z czytników ekranowych.',
   'fabric.editor.table': 'Tabela',
   'fabric.editor.table.description': 'Wstaw tabelę',
   'fabric.editor.tableOptions': 'Opcje tabeli',
-  'fabric.editor.taskPlaceholder': 'Wprowadź swoją akcję, użyj „@”, aby przypisać ją do użytkownika.',
+  'fabric.editor.taskPlaceholder':
+    'Wprowadź swoją akcję, użyj „@”, aby przypisać ją do użytkownika.',
   'fabric.editor.textColor': 'Kolor tekstu',
   'fabric.editor.textColor.lessColors': 'Mniej kolorów',
   'fabric.editor.textColor.moreColors': 'Więcej kolorów',
@@ -188,4 +210,4 @@ export default {
   'fabric.theme.teal': 'Teal',
   'fabric.theme.white': 'White',
   'fabric.theme.yellow': 'Yellow'
-};
+}

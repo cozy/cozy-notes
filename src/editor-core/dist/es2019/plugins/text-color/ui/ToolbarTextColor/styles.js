@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { borderRadius, gridSize } from '@atlaskit/theme/constants';
-import * as colors from '@atlaskit/theme/colors';
+import styled from 'styled-components'
+import { borderRadius, gridSize } from '@atlaskit/theme/constants'
+import * as colors from '@atlaskit/theme/colors'
 export const ShowMoreWrapper = styled.div`
   display: flex;
   margin-top: ${gridSize() / 2}px;
@@ -11,10 +11,10 @@ export const ShowMoreWrapper = styled.div`
   > button {
     flex-grow: 1;
   }
-`;
+`
 export const TextColorIconWrapper = styled.div`
   position: relative;
-`;
+`
 export const TextColorIconBar = styled.div`
   position: absolute;
   left: 0;
@@ -25,42 +25,51 @@ export const TextColorIconBar = styled.div`
   height: 3px;
   border-radius: ${borderRadius() + 'px'};
 
-  ${({
-  gradientColors,
-  selectedColor
-}) => {
-  if (selectedColor) {
-    return `background: ${selectedColor}`;
-  }
+  ${({ gradientColors, selectedColor }) => {
+    if (selectedColor) {
+      return `background: ${selectedColor}`
+    }
 
-  return `background: ${gradientColors}`;
-}};
-`;
+    return `background: ${gradientColors}`
+  }};
+`
 
 const createSteppedRainbow = colors => {
   return `
     linear-gradient(
       to right,
-      ${colors.map((color, i) => {
-    const inc = 100 / colors.length;
-    const pos = i + 1;
+      ${colors
+        .map((color, i) => {
+          const inc = 100 / colors.length
+          const pos = i + 1
 
-    if (i === 0) {
-      return `${color} ${pos * inc}%,`;
-    }
+          if (i === 0) {
+            return `${color} ${pos * inc}%,`
+          }
 
-    if (i === colors.length - 1) {
-      return `${color} ${(pos - 1) * inc}%`;
-    }
+          if (i === colors.length - 1) {
+            return `${color} ${(pos - 1) * inc}%`
+          }
 
-    return `
+          return `
             ${color} ${(pos - 1) * inc}%,
             ${color} ${pos * inc}%,
-          `;
-  }).join('\n')}
+          `
+        })
+        .join('\n')}
     );
-    `;
-};
+    `
+}
 
-export const rainbow = createSteppedRainbow([colors.P300, colors.T300, colors.Y400, colors.R400]);
-export const disabledRainbow = createSteppedRainbow([colors.N80, colors.N60, colors.N40, colors.N60]);
+export const rainbow = createSteppedRainbow([
+  colors.P300,
+  colors.T300,
+  colors.Y400,
+  colors.R400
+])
+export const disabledRainbow = createSteppedRainbow([
+  colors.N80,
+  colors.N60,
+  colors.N40,
+  colors.N60
+])

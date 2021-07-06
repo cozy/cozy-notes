@@ -1,2 +1,2 @@
-export { default as ReactNodeView } from './ReactNodeView';
-export { SelectionBasedNodeView } from './SelectionBasedNodeView';
+export { default as ReactNodeView } from './ReactNodeView'
+export { SelectionBasedNodeView } from './SelectionBasedNodeView'

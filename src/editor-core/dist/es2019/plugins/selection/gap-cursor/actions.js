@@ -1,12 +1,15 @@
-import { Selection, TextSelection, NodeSelection } from 'prosemirror-state';
-import { removeNodeBefore, findDomRefAtPos } from 'prosemirror-utils';
-import { ZERO_WIDTH_SPACE } from '@atlaskit/editor-common';
-import { Direction, isBackward, isForward } from './direction';
-import { GapCursorSelection, Side } from './selection';
-import { isTextBlockNearPos, getMediaNearPos } from './utils';
-import { isValidTargetNode } from './utils/is-valid-target-node';
-import { atTheBeginningOfDoc, atTheEndOfDoc } from '../../../utils/prosemirror/position';
-import { gapCursorPluginKey } from '../types';
+import { Selection, TextSelection, NodeSelection } from 'prosemirror-state'
+import { removeNodeBefore, findDomRefAtPos } from 'prosemirror-utils'
+import { ZERO_WIDTH_SPACE } from '@atlaskit/editor-common'
+import { Direction, isBackward, isForward } from './direction'
+import { GapCursorSelection, Side } from './selection'
+import { isTextBlockNearPos, getMediaNearPos } from './utils'
+import { isValidTargetNode } from './utils/is-valid-target-node'
+import {
+  atTheBeginningOfDoc,
+  atTheEndOfDoc
+} from '../../../utils/prosemirror/position'
+import { gapCursorPluginKey } from '../types'
 const mapDirection = {
   [Direction.LEFT]: -1,
   [Direction.RIGHT]: 1,
@@ -14,35 +17,36 @@ const mapDirection = {
   [Direction.DOWN]: 1,
   [Direction.BACKWARD]: -1,
   [Direction.FORWARD]: 1
-};
+}
 
 function shouldHandleMediaGapCursor(dir, state) {
-  const {
-    doc,
-    schema,
-    selection
-  } = state;
-  let $pos = isBackward(dir) ? selection.$from : selection.$to;
+  const { doc, schema, selection } = state
+  let $pos = isBackward(dir) ? selection.$from : selection.$to
 
   if (selection instanceof TextSelection) {
     // Should not use gap cursor if I am moving from a text selection into a media node
-    if (dir === Direction.UP && !atTheBeginningOfDoc(state) || dir === Direction.DOWN && !atTheEndOfDoc(state)) {
-      const media = getMediaNearPos(doc, $pos, schema, mapDirection[dir]);
+    if (
+      (dir === Direction.UP && !atTheBeginningOfDoc(state)) ||
+      (dir === Direction.DOWN && !atTheEndOfDoc(state))
+    ) {
+      const media = getMediaNearPos(doc, $pos, schema, mapDirection[dir])
 
       if (media) {
-        return false;
+        return false
       }
     } // Should not use gap cursor if I am moving from a text selection into a media node with layout wrap-right or wrap-left
 
-
     if (dir === Direction.LEFT || dir === Direction.RIGHT) {
-      const media = getMediaNearPos(doc, $pos, schema, mapDirection[dir]);
-      const {
-        mediaSingle
-      } = schema.nodes;
+      const media = getMediaNearPos(doc, $pos, schema, mapDirection[dir])
+      const { mediaSingle } = schema.nodes
 
-      if (media && media.type === mediaSingle && (media.attrs.layout === 'wrap-right' || media.attrs.layout === 'wrap-left')) {
-        return false;
+      if (
+        media &&
+        media.type === mediaSingle &&
+        (media.attrs.layout === 'wrap-right' ||
+          media.attrs.layout === 'wrap-left')
+      ) {
+        return false
       }
     }
   }
@@ -50,166 +54,204 @@ function shouldHandleMediaGapCursor(dir, state) {
   if (selection instanceof NodeSelection) {
     // Should not use gap cursor if I am moving left/right from media node with layout wrap right or wrap-left
     if (dir === Direction.LEFT || dir === Direction.RIGHT) {
-      const maybeMedia = doc.nodeAt(selection.$from.pos);
-      const {
-        mediaSingle
-      } = schema.nodes;
+      const maybeMedia = doc.nodeAt(selection.$from.pos)
+      const { mediaSingle } = schema.nodes
 
-      if (maybeMedia && maybeMedia.type === mediaSingle && (maybeMedia.attrs.layout === 'wrap-right' || maybeMedia.attrs.layout === 'wrap-left')) {
-        return false;
+      if (
+        maybeMedia &&
+        maybeMedia.type === mediaSingle &&
+        (maybeMedia.attrs.layout === 'wrap-right' ||
+          maybeMedia.attrs.layout === 'wrap-left')
+      ) {
+        return false
       }
     }
   }
 
-  return true;
+  return true
 }
 
 export const arrow = (dir, endOfTextblock) => (state, dispatch, view) => {
-  const {
-    doc,
-    schema,
-    selection,
-    tr
-  } = state;
-  let $pos = isBackward(dir) ? selection.$from : selection.$to;
-  let mustMove = selection.empty; // start from text selection
+  const { doc, schema, selection, tr } = state
+  let $pos = isBackward(dir) ? selection.$from : selection.$to
+  let mustMove = selection.empty // start from text selection
 
   if (selection instanceof TextSelection) {
     // if cursor is in the middle of a text node, do nothing
     if (!endOfTextblock || !endOfTextblock(dir.toString())) {
-      return false;
+      return false
     } // UP/DOWN jumps to the nearest texblock skipping gapcursor whenever possible
 
-
-    if (dir === Direction.UP && !atTheBeginningOfDoc(state) && isTextBlockNearPos(doc, schema, $pos, -1) || dir === Direction.DOWN && (atTheEndOfDoc(state) || isTextBlockNearPos(doc, schema, $pos, 1))) {
-      return false;
+    if (
+      (dir === Direction.UP &&
+        !atTheBeginningOfDoc(state) &&
+        isTextBlockNearPos(doc, schema, $pos, -1)) ||
+      (dir === Direction.DOWN &&
+        (atTheEndOfDoc(state) || isTextBlockNearPos(doc, schema, $pos, 1)))
+    ) {
+      return false
     } // otherwise resolve previous/next position
 
-
-    $pos = doc.resolve(isBackward(dir) ? $pos.before() : $pos.after());
-    mustMove = false;
+    $pos = doc.resolve(isBackward(dir) ? $pos.before() : $pos.after())
+    mustMove = false
   }
 
   if (selection instanceof NodeSelection) {
     if (selection.node.isInline) {
-      return false;
+      return false
     }
 
     if (dir === Direction.UP || dir === Direction.DOWN) {
       // We dont add gap cursor on node selections going up and down
-      return false;
+      return false
     }
   }
 
   if (!shouldHandleMediaGapCursor(dir, state)) {
-    return false;
+    return false
   } // when jumping between block nodes at the same depth, we need to reverse cursor without changing ProseMirror position
 
-
-  if (selection instanceof GapCursorSelection && // next node allow gap cursor position
-  isValidTargetNode(isBackward(dir) ? $pos.nodeBefore : $pos.nodeAfter) && ( // gap cursor changes block node
-  isBackward(dir) && selection.side === Side.LEFT || isForward(dir) && selection.side === Side.RIGHT)) {
+  if (
+    selection instanceof GapCursorSelection && // next node allow gap cursor position
+    isValidTargetNode(isBackward(dir) ? $pos.nodeBefore : $pos.nodeAfter) && // gap cursor changes block node
+    ((isBackward(dir) && selection.side === Side.LEFT) ||
+      (isForward(dir) && selection.side === Side.RIGHT))
+  ) {
     // reverse cursor position
     if (dispatch) {
-      dispatch(tr.setSelection(new GapCursorSelection($pos, selection.side === Side.RIGHT ? Side.LEFT : Side.RIGHT)).scrollIntoView());
+      dispatch(
+        tr
+          .setSelection(
+            new GapCursorSelection(
+              $pos,
+              selection.side === Side.RIGHT ? Side.LEFT : Side.RIGHT
+            )
+          )
+          .scrollIntoView()
+      )
     }
 
-    return true;
+    return true
   }
 
   if (view) {
-    const domAtPos = view.domAtPos.bind(view);
-    const target = findDomRefAtPos($pos.pos, domAtPos);
+    const domAtPos = view.domAtPos.bind(view)
+    const target = findDomRefAtPos($pos.pos, domAtPos)
 
     if (target && target.textContent === ZERO_WIDTH_SPACE) {
-      return false;
+      return false
     }
   }
 
-  const nextSelection = GapCursorSelection.findFrom($pos, isBackward(dir) ? -1 : 1, mustMove);
+  const nextSelection = GapCursorSelection.findFrom(
+    $pos,
+    isBackward(dir) ? -1 : 1,
+    mustMove
+  )
 
   if (!nextSelection) {
-    return false;
+    return false
   }
 
-  if (!isValidTargetNode(isForward(dir) ? nextSelection.$from.nodeBefore : nextSelection.$from.nodeAfter)) {
+  if (
+    !isValidTargetNode(
+      isForward(dir)
+        ? nextSelection.$from.nodeBefore
+        : nextSelection.$from.nodeAfter
+    )
+  ) {
     // reverse cursor position
     if (dispatch) {
-      dispatch(tr.setSelection(new GapCursorSelection(nextSelection.$from, isForward(dir) ? Side.LEFT : Side.RIGHT)).scrollIntoView());
+      dispatch(
+        tr
+          .setSelection(
+            new GapCursorSelection(
+              nextSelection.$from,
+              isForward(dir) ? Side.LEFT : Side.RIGHT
+            )
+          )
+          .scrollIntoView()
+      )
     }
 
-    return true;
+    return true
   }
 
   if (dispatch) {
-    dispatch(tr.setSelection(nextSelection).scrollIntoView());
+    dispatch(tr.setSelection(nextSelection).scrollIntoView())
   }
 
-  return true;
-};
+  return true
+}
 export const deleteNode = dir => (state, dispatch) => {
   if (state.selection instanceof GapCursorSelection) {
-    const {
-      $from,
-      $anchor
-    } = state.selection;
-    let {
-      tr
-    } = state;
+    const { $from, $anchor } = state.selection
+    let { tr } = state
 
     if (isBackward(dir)) {
       if (state.selection.side === 'left') {
-        tr.setSelection(new GapCursorSelection($anchor, Side.RIGHT));
+        tr.setSelection(new GapCursorSelection($anchor, Side.RIGHT))
 
         if (dispatch) {
-          dispatch(tr);
+          dispatch(tr)
         }
 
-        return true;
+        return true
       }
 
-      tr = removeNodeBefore(state.tr);
+      tr = removeNodeBefore(state.tr)
     } else if ($from.nodeAfter) {
-      tr = tr.delete($from.pos, $from.pos + $from.nodeAfter.nodeSize);
+      tr = tr.delete($from.pos, $from.pos + $from.nodeAfter.nodeSize)
     }
 
     if (dispatch) {
-      dispatch(tr.setSelection(Selection.near(tr.doc.resolve(tr.mapping.map(state.selection.$from.pos)))).scrollIntoView());
+      dispatch(
+        tr
+          .setSelection(
+            Selection.near(
+              tr.doc.resolve(tr.mapping.map(state.selection.$from.pos))
+            )
+          )
+          .scrollIntoView()
+      )
     }
 
-    return true;
+    return true
   }
 
-  return false;
-};
-export const setGapCursorAtPos = (position, side = Side.LEFT) => (state, dispatch) => {
+  return false
+}
+export const setGapCursorAtPos = (position, side = Side.LEFT) => (
+  state,
+  dispatch
+) => {
   // @see ED-6231
   if (position > state.doc.content.size) {
-    return false;
+    return false
   }
 
-  const $pos = state.doc.resolve(position);
+  const $pos = state.doc.resolve(position)
 
   if (GapCursorSelection.valid($pos)) {
     if (dispatch) {
-      dispatch(state.tr.setSelection(new GapCursorSelection($pos, side)));
+      dispatch(state.tr.setSelection(new GapCursorSelection($pos, side)))
     }
 
-    return true;
+    return true
   }
 
-  return false;
-}; // This function captures clicks outside of the ProseMirror contentEditable area
+  return false
+} // This function captures clicks outside of the ProseMirror contentEditable area
 // see also description of "handleClick" in gap-cursor pm-plugin
 
 const captureCursorCoords = (event, editorRef, posAtCoords, state) => {
-  const rect = editorRef.getBoundingClientRect(); // capture clicks before the first block element
+  const rect = editorRef.getBoundingClientRect() // capture clicks before the first block element
 
   if (event.clientY < rect.top) {
     return {
       position: 0,
       side: Side.LEFT
-    };
+    }
   }
 
   if (rect.left > 0) {
@@ -217,80 +259,97 @@ const captureCursorCoords = (event, editorRef, posAtCoords, state) => {
     const coords = posAtCoords({
       left: rect.left,
       top: event.clientY
-    });
+    })
 
     if (coords && coords.inside > -1) {
-      const $from = state.doc.resolve(coords.inside);
-      const start = $from.before(1);
-      const side = event.clientX < rect.left ? Side.LEFT : Side.RIGHT;
-      let position;
+      const $from = state.doc.resolve(coords.inside)
+      const start = $from.before(1)
+      const side = event.clientX < rect.left ? Side.LEFT : Side.RIGHT
+      let position
 
       if (side === Side.LEFT) {
-        position = start;
+        position = start
       } else {
-        const node = state.doc.nodeAt(start);
+        const node = state.doc.nodeAt(start)
 
         if (node) {
-          position = start + node.nodeSize;
+          position = start + node.nodeSize
         }
       }
 
       return {
         position,
         side
-      };
+      }
     }
   }
 
-  return null;
-};
+  return null
+}
 
-export const setCursorForTopLevelBlocks = (event, editorRef, posAtCoords, editorFocused) => (state, dispatch) => {
+export const setCursorForTopLevelBlocks = (
+  event,
+  editorRef,
+  posAtCoords,
+  editorFocused
+) => (state, dispatch) => {
   // plugin is disabled
   if (!gapCursorPluginKey.get(state)) {
-    return false;
+    return false
   }
 
-  const cursorCoords = captureCursorCoords(event, editorRef, posAtCoords, state);
+  const cursorCoords = captureCursorCoords(event, editorRef, posAtCoords, state)
 
   if (!cursorCoords) {
-    return false;
+    return false
   }
 
-  const $pos = cursorCoords.position !== undefined ? state.doc.resolve(cursorCoords.position) : null;
+  const $pos =
+    cursorCoords.position !== undefined
+      ? state.doc.resolve(cursorCoords.position)
+      : null
 
   if ($pos === null) {
-    return false;
+    return false
   }
 
-  const isGapCursorAllowed = cursorCoords.side === Side.LEFT ? isValidTargetNode($pos.nodeAfter) : isValidTargetNode($pos.nodeBefore);
+  const isGapCursorAllowed =
+    cursorCoords.side === Side.LEFT
+      ? isValidTargetNode($pos.nodeAfter)
+      : isValidTargetNode($pos.nodeBefore)
 
   if (isGapCursorAllowed && GapCursorSelection.valid($pos)) {
     // this forces PM to re-render the decoration node if we change the side of the gap cursor, it doesn't do it by default
     if (state.selection instanceof GapCursorSelection) {
       if (dispatch) {
-        dispatch(state.tr.setSelection(Selection.near($pos)));
+        dispatch(state.tr.setSelection(Selection.near($pos)))
       }
     }
 
     if (dispatch) {
-      dispatch(state.tr.setSelection(new GapCursorSelection($pos, cursorCoords.side)));
+      dispatch(
+        state.tr.setSelection(new GapCursorSelection($pos, cursorCoords.side))
+      )
     }
 
-    return true;
+    return true
   } // try to set text selection if the editor isnt focused
   // if the editor is focused, we are most likely dragging a selection outside.
   else if (editorFocused === false) {
-      const selection = Selection.findFrom($pos, cursorCoords.side === Side.LEFT ? 1 : -1, true);
+    const selection = Selection.findFrom(
+      $pos,
+      cursorCoords.side === Side.LEFT ? 1 : -1,
+      true
+    )
 
-      if (selection) {
-        if (dispatch) {
-          dispatch(state.tr.setSelection(selection));
-        }
-
-        return true;
+    if (selection) {
+      if (dispatch) {
+        dispatch(state.tr.setSelection(selection))
       }
-    }
 
-  return false;
-};
+      return true
+    }
+  }
+
+  return false
+}

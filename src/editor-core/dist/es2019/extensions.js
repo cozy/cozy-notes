@@ -1,1 +1,1 @@
-export { editSelectedExtension } from './plugins/extension/actions';
+export { editSelectedExtension } from './plugins/extension/actions'

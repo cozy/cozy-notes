@@ -1,5 +1,11 @@
-import { insertTypeAheadQuery } from '../../type-ahead/commands/insert-query';
-import { ACTION, ACTION_SUBJECT, EVENT_TYPE, ACTION_SUBJECT_ID, withAnalytics } from '../../analytics';
+import { insertTypeAheadQuery } from '../../type-ahead/commands/insert-query'
+import {
+  ACTION,
+  ACTION_SUBJECT,
+  EVENT_TYPE,
+  ACTION_SUBJECT_ID,
+  withAnalytics
+} from '../../analytics'
 export function insertMentionQuery(inputMethod) {
   return withAnalytics({
     action: ACTION.INVOKED,
@@ -9,5 +15,5 @@ export function insertMentionQuery(inputMethod) {
       inputMethod
     },
     eventType: EVENT_TYPE.UI
-  })(insertTypeAheadQuery('@'));
+  })(insertTypeAheadQuery('@'))
 }

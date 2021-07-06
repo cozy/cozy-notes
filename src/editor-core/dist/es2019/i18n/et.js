@@ -15,16 +15,19 @@ export default {
   'fabric.editor.annotate': 'Lisa märge',
   'fabric.editor.annotationToolbar': 'Annotatsioonide tööriistariba',
   'fabric.editor.backLink': 'Mine tagasi',
-  'fabric.editor.blockCardUnavailable': 'Sisemine link on sõlmes {node} ja selle vaadet ei saa muuta',
+  'fabric.editor.blockCardUnavailable':
+    'Sisemine link on sõlmes {node} ja selle vaadet ei saa muuta',
   'fabric.editor.blockquote': 'Tsitaat',
   'fabric.editor.blockquote.description': 'Sisesta tsitaat või osund',
   'fabric.editor.bold': 'Rasvane kiri',
-  'fabric.editor.canNotSortTable': "⚠️ You can't sort a table with merged cells",
+  'fabric.editor.canNotSortTable':
+    "⚠️ You can't sort a table with merged cells",
   'fabric.editor.cardFloatingControls': 'Kaardi valikud',
   'fabric.editor.cellBackground': 'Lahtri tagataust',
   'fabric.editor.cellOptions': 'Lahtri valikud',
   'fabric.editor.clearAltTextEdit': 'Eemalda asetekst',
-  'fabric.editor.clearCells': '{0, plural, one {Lahtri tühjendamine} other {Lahtrite tühjendamine}}',
+  'fabric.editor.clearCells':
+    '{0, plural, one {Lahtri tühjendamine} other {Lahtrite tühjendamine}}',
   'fabric.editor.clearFormatting': 'Tühista vorming',
   'fabric.editor.clearLink': 'Tühjenda link',
   'fabric.editor.clearLinkText': 'Tühjenda tekst',
@@ -37,17 +40,20 @@ export default {
   'fabric.editor.columns': 'Kujundused',
   'fabric.editor.columns.description': 'Loo lehte jaotiste abil',
   'fabric.editor.configPanel.cancel': 'Tühista',
-  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio': 'Valikut isMultiple ei saa kombineerida stiiliga: radio',
+  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio':
+    'Valikut isMultiple ei saa kombineerida stiiliga: radio',
   'fabric.editor.configPanel.formType.addField': 'Lisa väli',
   'fabric.editor.configPanel.formType.removeField': 'Eemalda väli',
   'fabric.editor.configPanel.required': 'Kohustuslik väli',
   'fabric.editor.configPanel.submit': 'Esita',
   'fabric.editor.createComment': 'Kommentaari loomine',
-  'fabric.editor.createCommentInvalid': 'Kommentaarid on lubatud ainult teksti ja pealkirja kohta',
+  'fabric.editor.createCommentInvalid':
+    'Kommentaarid on lubatud ainult teksti ja pealkirja kohta',
   'fabric.editor.date': 'Kuupäev',
   'fabric.editor.date.description': 'Lisa kuupäev kalendri abil',
   'fabric.editor.decision': 'Otsus',
-  'fabric.editor.decision.description': 'Saa otsustest ülevaade, et nende jälgimine oleks hõlpsam',
+  'fabric.editor.decision.description':
+    'Saa otsustest ülevaade, et nende jälgimine oleks hõlpsam',
   'fabric.editor.decisionPlaceholder': 'Lisa otsus…',
   'fabric.editor.displayBlock': 'Näita kaardina',
   'fabric.editor.displayEmbed': 'Manustatult kuvamine',
@@ -58,16 +64,19 @@ export default {
   'fabric.editor.editAltText': 'Muuda aseteksti',
   'fabric.editor.editorHelp': 'Toimetaja abi',
   'fabric.editor.emoji': 'Emoji',
-  'fabric.editor.emoji.description': 'Mõtete 🎉 ja tunnete 😄 väljendamiseks kasuta emotikone',
+  'fabric.editor.emoji.description':
+    'Mõtete 🎉 ja tunnete 😄 väljendamiseks kasuta emotikone',
   'fabric.editor.error': 'Viga',
   'fabric.editor.errorPanel': 'Vea paneel',
   'fabric.editor.errorPanel.description': 'Näita vigu värvilises paneelis',
   'fabric.editor.expand': 'Laienda',
   'fabric.editor.expand.description': 'Sisesta laiendus',
   'fabric.editor.feedbackDialog': 'Anna tagasisidet',
-  'fabric.editor.feedbackDialog.description': 'Räägi meile oma uue muutja kasutamise kogemusest',
+  'fabric.editor.feedbackDialog.description':
+    'Räägi meile oma uue muutja kasutamise kogemusest',
   'fabric.editor.filesAndImages': 'Failid ja pildid',
-  'fabric.editor.filesAndImages.description': 'Lisa lehele pilte või muid faile',
+  'fabric.editor.filesAndImages.description':
+    'Lisa lehele pilte või muid faile',
   'fabric.editor.find': 'Otsi',
   'fabric.editor.findNext': 'Järgmise leidmine',
   'fabric.editor.findPrevious': 'Eelmise leidmine',
@@ -79,22 +88,28 @@ export default {
   'fabric.editor.heading2': '2. pealkiri',
   'fabric.editor.heading2Description': 'Kasuta seda peamiste jaotiste jaoks',
   'fabric.editor.heading3': '3. pealkiri',
-  'fabric.editor.heading3Description': 'Kasuta seda alamjaotiste ja rühma pealkirjade jaoks',
+  'fabric.editor.heading3Description':
+    'Kasuta seda alamjaotiste ja rühma pealkirjade jaoks',
   'fabric.editor.heading4': '4. pealkiri',
   'fabric.editor.heading4Description': 'Kasuta seda sügavate pealkirjade jaoks',
   'fabric.editor.heading5': '5. pealkiri',
-  'fabric.editor.heading5Description': 'Kasuta seda loendi esemete grupeerimiseks',
+  'fabric.editor.heading5Description':
+    'Kasuta seda loendi esemete grupeerimiseks',
   'fabric.editor.heading6': '6. pealkiri',
   'fabric.editor.heading6Description': 'Kasuta seda alumise päiste puhul',
   'fabric.editor.help': 'Spikker',
-  'fabric.editor.help.description': 'Sirvige kõiki klaviatuuri otseteid ja markdowni suvandeid',
-  'fabric.editor.helpDialogTips': 'Vajuta {keyMap} dialoogi kiireks avamiseks igal ajal',
+  'fabric.editor.help.description':
+    'Sirvige kõiki klaviatuuri otseteid ja markdowni suvandeid',
+  'fabric.editor.helpDialogTips':
+    'Vajuta {keyMap} dialoogi kiireks avamiseks igal ajal',
   'fabric.editor.horizontalRule': 'Jagaja',
-  'fabric.editor.horizontalRule.description': 'Eralda sisu horisontaalse joonega',
+  'fabric.editor.horizontalRule.description':
+    'Eralda sisu horisontaalse joonega',
   'fabric.editor.image': 'Pilt',
   'fabric.editor.info': 'Info',
   'fabric.editor.infoPanel': 'Teabepaneel',
-  'fabric.editor.infoPanel.description': 'Tõsta teave esile värvilises paneelis',
+  'fabric.editor.infoPanel.description':
+    'Tõsta teave esile värvilises paneelis',
   'fabric.editor.insertColumn': 'Sisesta veerg',
   'fabric.editor.insertMenu': 'Sisesta',
   'fabric.editor.insertRow': 'Sisesta rida',
@@ -124,8 +139,10 @@ export default {
   'fabric.editor.placeholderTextPlaceholder': 'Lisa kohatäitja tekst',
   'fabric.editor.quickInsert': 'Kiire sisestamine',
   'fabric.editor.redo': 'Tee uuesti',
-  'fabric.editor.removeColumns': '{0, plural, one {Tulba eemaldamine} other {Tulpade eemaldamine}}',
-  'fabric.editor.removeRows': '{0, plural, one {Rea eemaldamine} other {Ridade eemaldamine}}',
+  'fabric.editor.removeColumns':
+    '{0, plural, one {Tulba eemaldamine} other {Tulpade eemaldamine}}',
+  'fabric.editor.removeRows':
+    '{0, plural, one {Rea eemaldamine} other {Ridade eemaldamine}}',
   'fabric.editor.replace': 'Asendamine',
   'fabric.editor.replaceAll': 'Asenda kõik',
   'fabric.editor.replaceWith': 'Asenda',
@@ -144,11 +161,13 @@ export default {
   'fabric.editor.successPanel': 'Õnnestumise paneel',
   'fabric.editor.successPanel.description': 'Lisa värvilisse paneeli nõuandeid',
   'fabric.editor.superscript': 'Ülemindeks',
-  'fabric.editor.supportAltText': 'Visuaalsete piirangute tõttu on asetekst kasulik ekraanilugereid kasutavate inimeste jaoks.',
+  'fabric.editor.supportAltText':
+    'Visuaalsete piirangute tõttu on asetekst kasulik ekraanilugereid kasutavate inimeste jaoks.',
   'fabric.editor.table': 'Tabel',
   'fabric.editor.table.description': 'Sisesta tabel',
   'fabric.editor.tableOptions': 'Tabeli valikud',
-  'fabric.editor.taskPlaceholder': "Sisesta oma toiming, kasuta kellelegi määramiseks märki '@'.",
+  'fabric.editor.taskPlaceholder':
+    "Sisesta oma toiming, kasuta kellelegi määramiseks märki '@'.",
   'fabric.editor.textColor': 'Teksti värv',
   'fabric.editor.textColor.lessColors': 'Vähem värve',
   'fabric.editor.textColor.moreColors': 'Rohkem värve',
@@ -163,7 +182,8 @@ export default {
   'fabric.editor.viewMore': 'Näita rohkem',
   'fabric.editor.warning': 'Hoiatus',
   'fabric.editor.warningPanel': 'Hoiatuse paneel',
-  'fabric.editor.warningPanel.description': 'Lisa värvilisse paneeli ettevaatlikusele viitav märkus',
+  'fabric.editor.warningPanel.description':
+    'Lisa värvilisse paneeli ettevaatlikusele viitav märkus',
   'fabric.editor.wrapLeft': 'Aseta vasakule',
   'fabric.editor.wrapRight': 'Aseta paremale',
   'fabric.theme.blue': 'Blue',
@@ -188,4 +208,4 @@ export default {
   'fabric.theme.teal': 'Teal',
   'fabric.theme.white': 'White',
   'fabric.theme.yellow': 'Yellow'
-};
+}

@@ -1,26 +1,29 @@
-import { Plugin } from 'prosemirror-state';
-import { Decoration, DecorationSet } from 'prosemirror-view';
-import { findPositionOfNodeBefore } from 'prosemirror-utils';
-import { CellSelection } from '@atlaskit/editor-tables/cell-selection';
-import { gapCursorPluginKey } from '../types';
-import { hideCaretModifier } from '../gap-cursor/styles';
-import { GapCursorSelection, JSON_ID, Side } from '../gap-cursor/selection';
-import { getBreakoutModeFromTargetNode, isIgnoredClick } from '../gap-cursor/utils';
-import { toDOM } from '../gap-cursor/utils/place-gap-cursor';
-import { deleteNode, setGapCursorAtPos } from '../gap-cursor/actions';
-import { Direction } from '../gap-cursor/direction';
+import { Plugin } from 'prosemirror-state'
+import { Decoration, DecorationSet } from 'prosemirror-view'
+import { findPositionOfNodeBefore } from 'prosemirror-utils'
+import { CellSelection } from '@atlaskit/editor-tables/cell-selection'
+import { gapCursorPluginKey } from '../types'
+import { hideCaretModifier } from '../gap-cursor/styles'
+import { GapCursorSelection, JSON_ID, Side } from '../gap-cursor/selection'
+import {
+  getBreakoutModeFromTargetNode,
+  isIgnoredClick
+} from '../gap-cursor/utils'
+import { toDOM } from '../gap-cursor/utils/place-gap-cursor'
+import { deleteNode, setGapCursorAtPos } from '../gap-cursor/actions'
+import { Direction } from '../gap-cursor/direction'
 const plugin = new Plugin({
   key: gapCursorPluginKey,
   state: {
     init: () => false,
     apply: (_tr, _pluginState, _oldState, newState) => {
-      return newState.selection instanceof GapCursorSelection;
+      return newState.selection instanceof GapCursorSelection
     }
   },
   view: () => {
     return {
       update(view, state) {
-        const pluginState = gapCursorPluginKey.getState(state);
+        const pluginState = gapCursorPluginKey.getState(state)
         /**
          * Starting with prosemirror-view 1.19.4, cursor wrapper that previousely was hiding cursor doesn't exist:
          * https://github.com/ProseMirror/prosemirror-view/commit/4a56bc7b7e61e96ef879d1dae1014ede0fc09e43
@@ -33,57 +36,52 @@ const plugin = new Plugin({
          * Browser support is pretty good: https://caniuse.com/#feat=css-caret-color
          */
 
-        view.dom.classList.toggle(hideCaretModifier, pluginState);
+        view.dom.classList.toggle(hideCaretModifier, pluginState)
       }
-
-    };
+    }
   },
   props: {
-    decorations: ({
-      doc,
-      selection
-    }) => {
+    decorations: ({ doc, selection }) => {
       if (selection instanceof GapCursorSelection) {
-        const {
-          $from,
-          side
-        } = selection; // render decoration DOM node always to the left of the target node even if selection points to the right
+        const { $from, side } = selection // render decoration DOM node always to the left of the target node even if selection points to the right
         // otherwise positioning of the right gap cursor is a nightmare when the target node has a nodeView with vertical margins
 
-        let position = selection.head;
-        const isRightCursor = side === Side.RIGHT;
+        let position = selection.head
+        const isRightCursor = side === Side.RIGHT
 
         if (isRightCursor && $from.nodeBefore) {
-          const nodeBeforeStart = findPositionOfNodeBefore(selection);
+          const nodeBeforeStart = findPositionOfNodeBefore(selection)
 
           if (typeof nodeBeforeStart === 'number') {
-            position = nodeBeforeStart;
+            position = nodeBeforeStart
           }
         }
 
-        const node = isRightCursor ? $from.nodeBefore : $from.nodeAfter;
-        const breakoutMode = node && getBreakoutModeFromTargetNode(node);
-        return DecorationSet.create(doc, [Decoration.widget(position, toDOM, {
-          key: `${JSON_ID}-${side}-${breakoutMode}`,
-          side: breakoutMode ? -1 : 0
-        })]);
+        const node = isRightCursor ? $from.nodeBefore : $from.nodeAfter
+        const breakoutMode = node && getBreakoutModeFromTargetNode(node)
+        return DecorationSet.create(doc, [
+          Decoration.widget(position, toDOM, {
+            key: `${JSON_ID}-${side}-${breakoutMode}`,
+            side: breakoutMode ? -1 : 0
+          })
+        ])
       }
 
-      return null;
+      return null
     },
 
     // render gap cursor only when its valid
     createSelectionBetween(view, $anchor, $head) {
       if (view && view.state && view.state.selection instanceof CellSelection) {
         // Do not show GapCursor when there is a CellSection happening
-        return;
+        return
       }
 
       if ($anchor.pos === $head.pos && GapCursorSelection.valid($head)) {
-        return new GapCursorSelection($head);
+        return new GapCursorSelection($head)
       }
 
-      return;
+      return
     },
 
     // there's no space between top level nodes and the wrapping ProseMirror contenteditable area and handleClick won't capture clicks, there's nothing to click on
@@ -93,17 +91,21 @@ const plugin = new Plugin({
       const posAtCoords = view.posAtCoords({
         left: event.clientX,
         top: event.clientY
-      }); // this helps to ignore all of the clicks outside of the parent (e.g. nodeView controls)
+      }) // this helps to ignore all of the clicks outside of the parent (e.g. nodeView controls)
 
-      if (posAtCoords && posAtCoords.inside !== position && !isIgnoredClick(event.target)) {
+      if (
+        posAtCoords &&
+        posAtCoords.inside !== position &&
+        !isIgnoredClick(event.target)
+      ) {
         // max available space between parent and child from the left side in px
         // this ensures the correct side of the gap cursor in case of clicking in between two block nodes
-        const leftSideOffsetX = 20;
-        const side = event.offsetX > leftSideOffsetX ? Side.RIGHT : Side.LEFT;
-        return setGapCursorAtPos(position, side)(view.state, view.dispatch);
+        const leftSideOffsetX = 20
+        const side = event.offsetX > leftSideOffsetX ? Side.RIGHT : Side.LEFT
+        return setGapCursorAtPos(position, side)(view.state, view.dispatch)
       }
 
-      return false;
+      return false
     },
 
     handleDOMEvents: {
@@ -114,14 +116,17 @@ const plugin = new Plugin({
        * @see https://github.com/ProseMirror/prosemirror/issues/543
        */
       beforeinput: (view, event) => {
-        if (event.inputType === 'deleteContentBackward' && view.state.selection instanceof GapCursorSelection) {
-          event.preventDefault();
-          return deleteNode(Direction.BACKWARD)(view.state, view.dispatch);
+        if (
+          event.inputType === 'deleteContentBackward' &&
+          view.state.selection instanceof GapCursorSelection
+        ) {
+          event.preventDefault()
+          return deleteNode(Direction.BACKWARD)(view.state, view.dispatch)
         }
 
-        return false;
+        return false
       }
     }
   }
-});
-export default plugin;
+})
+export default plugin

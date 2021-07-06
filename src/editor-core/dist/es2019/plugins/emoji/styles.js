@@ -1,6 +1,10 @@
-import { css } from 'styled-components';
-import { EmojiSharedCssClassName } from '@atlaskit/editor-common';
-import { SelectionStyle, getSelectionStyles, akEditorSelectedNodeClassName } from '@atlaskit/editor-shared-styles';
+import { css } from 'styled-components'
+import { EmojiSharedCssClassName } from '@atlaskit/editor-common'
+import {
+  SelectionStyle,
+  getSelectionStyles,
+  akEditorSelectedNodeClassName
+} from '@atlaskit/editor-shared-styles'
 export const emojiStyles = css`
   .${EmojiSharedCssClassName.EMOJI_CONTAINER} {
     .${EmojiSharedCssClassName.EMOJI_NODE} {
@@ -17,8 +21,11 @@ export const emojiStyles = css`
         .${EmojiSharedCssClassName.EMOJI_IMAGE}
         > span {
         border-radius: 2px;
-        ${getSelectionStyles([SelectionStyle.Blanket, SelectionStyle.BoxShadow])}
+        ${getSelectionStyles([
+          SelectionStyle.Blanket,
+          SelectionStyle.BoxShadow
+        ])}
       }
     }
   }
-`;
+`

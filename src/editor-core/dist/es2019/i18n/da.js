@@ -15,11 +15,13 @@ export default {
   'fabric.editor.annotate': 'Annotér',
   'fabric.editor.annotationToolbar': 'Værktøjslinje til annotationer',
   'fabric.editor.backLink': 'Gå tilbage',
-  'fabric.editor.blockCardUnavailable': 'Det indbyggede link er inden i {node}, og dets visning kan ikke ændres',
+  'fabric.editor.blockCardUnavailable':
+    'Det indbyggede link er inden i {node}, og dets visning kan ikke ændres',
   'fabric.editor.blockquote': 'Citat',
   'fabric.editor.blockquote.description': 'Indsæt citat',
   'fabric.editor.bold': 'Fed',
-  'fabric.editor.canNotSortTable': "⚠️ You can't sort a table with merged cells",
+  'fabric.editor.canNotSortTable':
+    "⚠️ You can't sort a table with merged cells",
   'fabric.editor.cardFloatingControls': 'Muligheder for kort',
   'fabric.editor.cellBackground': 'Baggrundsfarve i celle',
   'fabric.editor.cellOptions': 'Egenskaber for celle',
@@ -37,17 +39,20 @@ export default {
   'fabric.editor.columns': 'Layout',
   'fabric.editor.columns.description': 'Opdel din side i afsnit',
   'fabric.editor.configPanel.cancel': 'Annuller',
-  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio': 'Kunne ikke kombinere isMultiple med stilen: alternativknap',
+  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio':
+    'Kunne ikke kombinere isMultiple med stilen: alternativknap',
   'fabric.editor.configPanel.formType.addField': 'Tilføj felt',
   'fabric.editor.configPanel.formType.removeField': 'Fjern felt',
   'fabric.editor.configPanel.required': 'Påkrævet felt',
   'fabric.editor.configPanel.submit': 'Send',
   'fabric.editor.createComment': 'Opret kommentar',
-  'fabric.editor.createCommentInvalid': 'Kommentarer er kun aktiveret for tekst og overskrifter',
+  'fabric.editor.createCommentInvalid':
+    'Kommentarer er kun aktiveret for tekst og overskrifter',
   'fabric.editor.date': 'Dato',
   'fabric.editor.date.description': 'Tilføj en dato med en kalender',
   'fabric.editor.decision': 'Beslutning',
-  'fabric.editor.decision.description': 'Registrér beslutninger, så de er lette at finde igen',
+  'fabric.editor.decision.description':
+    'Registrér beslutninger, så de er lette at finde igen',
   'fabric.editor.decisionPlaceholder': 'Tilføj en beslutning ...',
   'fabric.editor.displayBlock': 'Vis som kort',
   'fabric.editor.displayEmbed': 'Vis som indlejret',
@@ -58,16 +63,19 @@ export default {
   'fabric.editor.editAltText': 'Rediger alternativ tekst',
   'fabric.editor.editorHelp': 'Hjælp til redigering',
   'fabric.editor.emoji': 'Emoji',
-  'fabric.editor.emoji.description': 'Brug humørikoner for at udtrykke idéer 🎉 og følelser 😄',
+  'fabric.editor.emoji.description':
+    'Brug humørikoner for at udtrykke idéer 🎉 og følelser 😄',
   'fabric.editor.error': 'Fejl',
   'fabric.editor.errorPanel': 'Fejlpanel',
   'fabric.editor.errorPanel.description': 'Vis fejl i et farvel panel',
   'fabric.editor.expand': 'Udvid',
   'fabric.editor.expand.description': 'Indsæt en udvidelse',
   'fabric.editor.feedbackDialog': 'Giv feedback',
-  'fabric.editor.feedbackDialog.description': 'Fortæl os om din oplevelse med den nye editor.',
+  'fabric.editor.feedbackDialog.description':
+    'Fortæl os om din oplevelse med den nye editor.',
   'fabric.editor.filesAndImages': 'Filer og billeder',
-  'fabric.editor.filesAndImages.description': 'Tilføj billeder eller andre filer til din side',
+  'fabric.editor.filesAndImages.description':
+    'Tilføj billeder eller andre filer til din side',
   'fabric.editor.find': 'Find',
   'fabric.editor.findNext': 'Find næste',
   'fabric.editor.findPrevious': 'Find forrige',
@@ -75,26 +83,34 @@ export default {
   'fabric.editor.headerColumn': 'Overskriftskolonne',
   'fabric.editor.headerRow': 'Overskriftsrække',
   'fabric.editor.heading1': 'Overskrift 1',
-  'fabric.editor.heading1Description': 'Brug denne til overskrift på øverste niveau',
+  'fabric.editor.heading1Description':
+    'Brug denne til overskrift på øverste niveau',
   'fabric.editor.heading2': 'Overskrift 2',
   'fabric.editor.heading2Description': 'Brug denne til hovedafsnit',
   'fabric.editor.heading3': 'Overskrift 3',
-  'fabric.editor.heading3Description': 'Brug denne til underafsnit og mindre overskrifter',
+  'fabric.editor.heading3Description':
+    'Brug denne til underafsnit og mindre overskrifter',
   'fabric.editor.heading4': 'Overskrift 4',
   'fabric.editor.heading4Description': 'Brug denne til dybe overskrifter',
   'fabric.editor.heading5': 'Overskrift 5',
-  'fabric.editor.heading5Description': 'Brug denne til at gruppere listeelementer',
+  'fabric.editor.heading5Description':
+    'Brug denne til at gruppere listeelementer',
   'fabric.editor.heading6': 'Overskrift 6',
-  'fabric.editor.heading6Description': 'Brug denne til overskrift på lavt niveau',
+  'fabric.editor.heading6Description':
+    'Brug denne til overskrift på lavt niveau',
   'fabric.editor.help': 'Hjælp',
-  'fabric.editor.help.description': 'Se alle tastaturgenveje og Markdown-muligheder',
-  'fabric.editor.helpDialogTips': 'Tryk på {keyMap} for at få hurtig adgang til denne dialogboks',
+  'fabric.editor.help.description':
+    'Se alle tastaturgenveje og Markdown-muligheder',
+  'fabric.editor.helpDialogTips':
+    'Tryk på {keyMap} for at få hurtig adgang til denne dialogboks',
   'fabric.editor.horizontalRule': 'Rumdeler',
-  'fabric.editor.horizontalRule.description': 'Adskil indhold med en vandret linje',
+  'fabric.editor.horizontalRule.description':
+    'Adskil indhold med en vandret linje',
   'fabric.editor.image': 'Billeder',
   'fabric.editor.info': 'Info',
   'fabric.editor.infoPanel': 'Informationspanel',
-  'fabric.editor.infoPanel.description': 'Fremhæv information i et farvet panel',
+  'fabric.editor.infoPanel.description':
+    'Fremhæv information i et farvet panel',
   'fabric.editor.insertColumn': 'Indsæt kolonne',
   'fabric.editor.insertMenu': 'Indsæt',
   'fabric.editor.insertRow': 'Indsæt række',
@@ -106,7 +122,8 @@ export default {
   'fabric.editor.lists': 'Liste',
   'fabric.editor.markdown': 'Markdown',
   'fabric.editor.mention': 'Benævnelse',
-  'fabric.editor.mention.description': 'Omtal nogen for at sende dem en notifikation',
+  'fabric.editor.mention.description':
+    'Omtal nogen for at sende dem en notifikation',
   'fabric.editor.mergeCells': 'Flet celler',
   'fabric.editor.moreFormatting': 'Mere formatering',
   'fabric.editor.noResultsFound': 'Ingen resultater fundet',
@@ -124,8 +141,10 @@ export default {
   'fabric.editor.placeholderTextPlaceholder': 'Tilføj midlertidig tekst',
   'fabric.editor.quickInsert': 'Hurtig indsætning',
   'fabric.editor.redo': 'Gentag',
-  'fabric.editor.removeColumns': '{0, plural, one {Fjern kolonne} other {Fjern kolonner}}',
-  'fabric.editor.removeRows': '{0, plural, one {Fjern række} other {Fjern rækker}}',
+  'fabric.editor.removeColumns':
+    '{0, plural, one {Fjern kolonne} other {Fjern kolonner}}',
+  'fabric.editor.removeRows':
+    '{0, plural, one {Fjern række} other {Fjern rækker}}',
   'fabric.editor.replace': 'Erstat',
   'fabric.editor.replaceAll': 'Erstat alle',
   'fabric.editor.replaceWith': 'Erstat med',
@@ -144,11 +163,13 @@ export default {
   'fabric.editor.successPanel': 'Succespanel',
   'fabric.editor.successPanel.description': 'Tilføj tip i et farvet panel',
   'fabric.editor.superscript': 'Hævet skrift',
-  'fabric.editor.supportAltText': 'Alternativ tekst er nyttig, når folk bruger skærmlæsere pga. synshandicap.',
+  'fabric.editor.supportAltText':
+    'Alternativ tekst er nyttig, når folk bruger skærmlæsere pga. synshandicap.',
   'fabric.editor.table': 'Tabel',
   'fabric.editor.table.description': 'Indsæt en tabel',
   'fabric.editor.tableOptions': 'Egenskaber for tabel',
-  'fabric.editor.taskPlaceholder': 'Indtast din handling, og brug "@" for at tildele til nogen.',
+  'fabric.editor.taskPlaceholder':
+    'Indtast din handling, og brug "@" for at tildele til nogen.',
   'fabric.editor.textColor': 'Tekstfarve',
   'fabric.editor.textColor.lessColors': 'Færre farver',
   'fabric.editor.textColor.moreColors': 'Flere farver',
@@ -163,7 +184,8 @@ export default {
   'fabric.editor.viewMore': 'Vis mere',
   'fabric.editor.warning': 'Advarsel',
   'fabric.editor.warningPanel': 'Advarselspanel',
-  'fabric.editor.warningPanel.description': 'Tilføj en advarselsnote i et farvet panel',
+  'fabric.editor.warningPanel.description':
+    'Tilføj en advarselsnote i et farvet panel',
   'fabric.editor.wrapLeft': 'Skub til venstre',
   'fabric.editor.wrapRight': 'Skub til højre',
   'fabric.theme.blue': 'Blue',
@@ -188,4 +210,4 @@ export default {
   'fabric.theme.teal': 'Teal',
   'fabric.theme.white': 'White',
   'fabric.theme.yellow': 'Yellow'
-};
+}

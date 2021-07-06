@@ -1,196 +1,206 @@
-import { TextSelection } from 'prosemirror-state';
-import { NodeRange } from 'prosemirror-model';
-import { findWrapping } from 'prosemirror-transform';
-import { findParentNodeClosestToPos } from 'prosemirror-utils';
-import { isListNode, joinSiblingLists } from '../utils/node';
-import { isEmptyParagraph } from '../../../utils';
-export function convertListType({
-  tr,
-  nextListNodeType
-}) {
+import { TextSelection } from 'prosemirror-state'
+import { NodeRange } from 'prosemirror-model'
+import { findWrapping } from 'prosemirror-transform'
+import { findParentNodeClosestToPos } from 'prosemirror-utils'
+import { isListNode, joinSiblingLists } from '../utils/node'
+import { isEmptyParagraph } from '../../../utils'
+export function convertListType({ tr, nextListNodeType }) {
   const {
     doc,
-    selection: {
-      $from,
-      $to
-    }
-  } = tr;
-  const listRange = $from.blockRange($to, isListNode);
+    selection: { $from, $to }
+  } = tr
+  const listRange = $from.blockRange($to, isListNode)
 
   if (listRange) {
     return convertSelectedList({
       tr,
       nextListNodeType
-    });
+    })
   }
 
-  const nodeRangeAroundList = $from.blockRange($to);
+  const nodeRangeAroundList = $from.blockRange($to)
 
   if (!nodeRangeAroundList) {
-    return;
+    return
   }
 
-  const parentNode = nodeRangeAroundList.parent;
-  const {
-    startIndex,
-    endIndex,
-    depth
-  } = nodeRangeAroundList;
+  const parentNode = nodeRangeAroundList.parent
+  const { startIndex, endIndex, depth } = nodeRangeAroundList
   const before = {
-    from: !isListNode(parentNode.child(startIndex)) ? // @ts-ignore
-    doc.resolve(nodeRangeAroundList.$from.posAtIndex(startIndex, depth) + 1) : null,
+    from: !isListNode(parentNode.child(startIndex)) // @ts-ignore
+      ? doc.resolve(nodeRangeAroundList.$from.posAtIndex(startIndex, depth) + 1)
+      : null,
     to: null
-  };
+  }
   const after = {
     from: null,
-    to: !isListNode(parentNode.child(endIndex - 1)) ? doc.resolve( // @ts-ignore
-    nodeRangeAroundList.$from.posAtIndex(endIndex - 1, depth) + 1) : null
-  };
-  let isListNodeFound = false;
-  let firstEmptyParagraphAfterListFound = false;
+    to: !isListNode(parentNode.child(endIndex - 1))
+      ? doc.resolve(
+          // @ts-ignore
+          nodeRangeAroundList.$from.posAtIndex(endIndex - 1, depth) + 1
+        )
+      : null
+  }
+  let isListNodeFound = false
+  let firstEmptyParagraphAfterListFound = false
 
   for (let i = startIndex; i < endIndex; i++) {
     // @ts-ignore posAtIndex is a public API but has no type yet
-    const position = nodeRangeAroundList.$from.posAtIndex(i, depth);
-    const resolvedPosition = doc.resolve(position);
+    const position = nodeRangeAroundList.$from.posAtIndex(i, depth)
+    const resolvedPosition = doc.resolve(position)
 
     if (isEmptyParagraph(parentNode.child(i)) && !isListNodeFound) {
-      before.from = doc.resolve( // @ts-ignore posAtIndex is a public API but has no type yet
-      nodeRangeAroundList.$from.posAtIndex(i, depth) + 2);
+      before.from = doc.resolve(
+        // @ts-ignore posAtIndex is a public API but has no type yet
+        nodeRangeAroundList.$from.posAtIndex(i, depth) + 2
+      )
     }
 
-    if (isEmptyParagraph(parentNode.child(i)) && isListNodeFound && !firstEmptyParagraphAfterListFound) {
-      after.to = resolvedPosition;
-      firstEmptyParagraphAfterListFound = true;
+    if (
+      isEmptyParagraph(parentNode.child(i)) &&
+      isListNodeFound &&
+      !firstEmptyParagraphAfterListFound
+    ) {
+      after.to = resolvedPosition
+      firstEmptyParagraphAfterListFound = true
     }
 
     if (!isListNode(parentNode.child(i)) && !isListNodeFound) {
-      before.to = doc.resolve(resolvedPosition.pos + 1);
+      before.to = doc.resolve(resolvedPosition.pos + 1)
     } else if (!isListNodeFound) {
-      isListNodeFound = true;
-      const endNodePosition = doc.resolve(resolvedPosition.pos + 1).end() + 1;
+      isListNodeFound = true
+      const endNodePosition = doc.resolve(resolvedPosition.pos + 1).end() + 1
 
       if (doc.resolve(endNodePosition).nodeAfter) {
-        after.from = doc.resolve(endNodePosition + 1);
+        after.from = doc.resolve(endNodePosition + 1)
       }
     }
   }
 
-  let beforeConversionArgs, beforeRange, afterConversionArgs, afterRange;
+  let beforeConversionArgs, beforeRange, afterConversionArgs, afterRange
 
   if (after.from && after.to) {
-    const mappedFrom = tr.mapping.map(after.from.pos);
-    const mappedTo = tr.mapping.map(after.to.pos);
-    afterRange = new NodeRange(tr.doc.resolve(mappedFrom), tr.doc.resolve(mappedTo), nodeRangeAroundList.depth);
+    const mappedFrom = tr.mapping.map(after.from.pos)
+    const mappedTo = tr.mapping.map(after.to.pos)
+    afterRange = new NodeRange(
+      tr.doc.resolve(mappedFrom),
+      tr.doc.resolve(mappedTo),
+      nodeRangeAroundList.depth
+    )
     afterConversionArgs = {
       tr,
       nextListNodeType,
       nodeRange: afterRange
-    };
+    }
   }
 
   if (before.from && before.to) {
-    const mappedFrom = tr.mapping.map(before.from.pos);
-    const mappedTo = tr.mapping.map(before.to.pos);
-    beforeRange = new NodeRange(tr.doc.resolve(mappedFrom), tr.doc.resolve(mappedTo), nodeRangeAroundList.depth);
+    const mappedFrom = tr.mapping.map(before.from.pos)
+    const mappedTo = tr.mapping.map(before.to.pos)
+    beforeRange = new NodeRange(
+      tr.doc.resolve(mappedFrom),
+      tr.doc.resolve(mappedTo),
+      nodeRangeAroundList.depth
+    )
     beforeConversionArgs = {
       tr,
       nextListNodeType,
       nodeRange: beforeRange
-    };
+    }
   }
 
-  if (!afterRange && !beforeRange || afterRange && !findWrapping(afterRange, nextListNodeType) || beforeRange && !findWrapping(beforeRange, nextListNodeType)) {
-    return;
+  if (
+    (!afterRange && !beforeRange) ||
+    (afterRange && !findWrapping(afterRange, nextListNodeType)) ||
+    (beforeRange && !findWrapping(beforeRange, nextListNodeType))
+  ) {
+    return
   }
 
   if (afterConversionArgs) {
-    convertAroundList(afterConversionArgs);
+    convertAroundList(afterConversionArgs)
   }
 
   if (beforeConversionArgs) {
-    convertAroundList(beforeConversionArgs);
+    convertAroundList(beforeConversionArgs)
   }
 
   if (tr.docChanged) {
     joinSiblingLists({
       tr,
       forceListType: nextListNodeType
-    });
+    })
   }
 }
 
-const convertSelectedList = ({
-  tr,
-  nextListNodeType
-}) => {
+const convertSelectedList = ({ tr, nextListNodeType }) => {
   const {
     selection,
-    selection: {
-      from,
-      to
-    }
-  } = tr; // get the positions of all the leaf nodes within the selection
+    selection: { from, to }
+  } = tr // get the positions of all the leaf nodes within the selection
 
-  const nodePositions = [];
+  const nodePositions = []
 
   if (selection instanceof TextSelection && selection.$cursor) {
-    nodePositions.push(from);
+    nodePositions.push(from)
   } else {
     // nodesBetween doesn't return leaf nodes that are outside of from and to
     tr.doc.nodesBetween(from, to, (node, pos) => {
       if (!node.isLeaf) {
-        return true;
+        return true
       }
 
-      nodePositions.push(pos);
-    });
+      nodePositions.push(pos)
+    })
   } // use those positions to get the closest parent list nodes
 
+  nodePositions
+    .reduce((acc, pos) => {
+      const closestParentListNode = findParentNodeClosestToPos(
+        tr.doc.resolve(pos),
+        isListNode
+      )
 
-  nodePositions.reduce((acc, pos) => {
-    const closestParentListNode = findParentNodeClosestToPos(tr.doc.resolve(pos), isListNode);
+      if (!closestParentListNode) {
+        return acc
+      } // don't add duplicates if the parent has already been added into the array
 
-    if (!closestParentListNode) {
-      return acc;
-    } // don't add duplicates if the parent has already been added into the array
+      const existingParent = acc.find(node => {
+        return (
+          node.pos === closestParentListNode.pos &&
+          node.start === closestParentListNode.start &&
+          node.depth === closestParentListNode.depth
+        )
+      })
 
+      if (!existingParent) {
+        acc.push(closestParentListNode)
+      }
 
-    const existingParent = acc.find(node => {
-      return node.pos === closestParentListNode.pos && node.start === closestParentListNode.start && node.depth === closestParentListNode.depth;
-    });
+      return acc
+    }, [])
+    .forEach(item => {
+      tr.setNodeMarkup(item.pos, nextListNodeType)
+    })
+}
 
-    if (!existingParent) {
-      acc.push(closestParentListNode);
-    }
-
-    return acc;
-  }, []).forEach(item => {
-    tr.setNodeMarkup(item.pos, nextListNodeType);
-  });
-};
-
-const convertAroundList = ({
-  tr,
-  nextListNodeType,
-  nodeRange
-}) => {
+const convertAroundList = ({ tr, nextListNodeType, nodeRange }) => {
   for (let i = nodeRange.endIndex - 1; i >= nodeRange.startIndex; i--) {
     // @ts-ignore posAtIndex is a public API but has no type yet
-    const position = nodeRange.$from.posAtIndex(i, nodeRange.depth);
-    const resolvedPos = tr.doc.resolve(position + 1);
-    const range = resolvedPos.blockRange(resolvedPos);
+    const position = nodeRange.$from.posAtIndex(i, nodeRange.depth)
+    const resolvedPos = tr.doc.resolve(position + 1)
+    const range = resolvedPos.blockRange(resolvedPos)
 
     if (!range) {
-      return;
+      return
     }
 
-    const wrappings = findWrapping(range, nextListNodeType);
+    const wrappings = findWrapping(range, nextListNodeType)
 
     if (!range || !wrappings) {
-      return;
+      return
     }
 
-    tr.wrap(range, wrappings);
+    tr.wrap(range, wrappings)
   }
-};
+}

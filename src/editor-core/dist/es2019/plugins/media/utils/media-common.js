@@ -1,259 +1,270 @@
-import { deleteSelection, splitBlock } from 'prosemirror-commands';
-import { Fragment } from 'prosemirror-model';
-import { NodeSelection } from 'prosemirror-state';
-import { findPositionOfNodeBefore } from 'prosemirror-utils';
-import { createParagraphNear, createNewParagraphBelow } from '../../../commands';
-import { isTemporary } from '../../../utils';
-import { mapSlice } from '../../../utils/slice';
-import { walkUpTreeUntil, removeNestedEmptyEls, unwrap } from '../../../utils/dom';
-import { isImage } from './is-image';
-import { atTheBeginningOfBlock, atTheBeginningOfDoc, atTheEndOfBlock, endPositionOfParent, startPositionOfParent } from '../../../utils/prosemirror/position';
-import { GapCursorSelection } from '../../selection/gap-cursor/selection';
-import { isMediaBlobUrl } from '@atlaskit/media-client';
+import { deleteSelection, splitBlock } from 'prosemirror-commands'
+import { Fragment } from 'prosemirror-model'
+import { NodeSelection } from 'prosemirror-state'
+import { findPositionOfNodeBefore } from 'prosemirror-utils'
+import { createParagraphNear, createNewParagraphBelow } from '../../../commands'
+import { isTemporary } from '../../../utils'
+import { mapSlice } from '../../../utils/slice'
+import {
+  walkUpTreeUntil,
+  removeNestedEmptyEls,
+  unwrap
+} from '../../../utils/dom'
+import { isImage } from './is-image'
+import {
+  atTheBeginningOfBlock,
+  atTheBeginningOfDoc,
+  atTheEndOfBlock,
+  endPositionOfParent,
+  startPositionOfParent
+} from '../../../utils/prosemirror/position'
+import { GapCursorSelection } from '../../selection/gap-cursor/selection'
+import { isMediaBlobUrl } from '@atlaskit/media-client'
 export const isMediaBlobUrlFromAttrs = attrs => {
-  return !!(attrs && attrs.type === 'external' && isMediaBlobUrl(attrs.url));
-};
+  return !!(attrs && attrs.type === 'external' && isMediaBlobUrl(attrs.url))
+}
 export const posOfMediaGroupNearby = state => {
-  return posOfParentMediaGroup(state) || posOfFollowingMediaGroup(state) || posOfPrecedingMediaGroup(state) || posOfMediaGroupNextToGapCursor(state);
-};
+  return (
+    posOfParentMediaGroup(state) ||
+    posOfFollowingMediaGroup(state) ||
+    posOfPrecedingMediaGroup(state) ||
+    posOfMediaGroupNextToGapCursor(state)
+  )
+}
 export const isSelectionNonMediaBlockNode = state => {
-  const {
-    node
-  } = state.selection;
-  return node && node.type !== state.schema.nodes.media && node.isBlock;
-};
+  const { node } = state.selection
+  return node && node.type !== state.schema.nodes.media && node.isBlock
+}
 export const isSelectionMediaSingleNode = state => {
-  const {
-    node
-  } = state.selection;
-  return node && node.type === state.schema.nodes.mediaSingle;
-};
+  const { node } = state.selection
+  return node && node.type === state.schema.nodes.mediaSingle
+}
 export const posOfPrecedingMediaGroup = state => {
   if (!atTheBeginningOfBlock(state)) {
-    return;
+    return
   }
 
-  return posOfMediaGroupAbove(state, state.selection.$from);
-};
+  return posOfMediaGroupAbove(state, state.selection.$from)
+}
 
 const posOfMediaGroupNextToGapCursor = state => {
-  const {
-    selection
-  } = state;
+  const { selection } = state
 
   if (selection instanceof GapCursorSelection) {
-    const $pos = state.selection.$from;
-    const mediaGroupType = state.schema.nodes.mediaGroup;
-    return posOfImmediatePrecedingMediaGroup($pos, mediaGroupType) || posOfImmediateFollowingMediaGroup($pos, mediaGroupType);
+    const $pos = state.selection.$from
+    const mediaGroupType = state.schema.nodes.mediaGroup
+    return (
+      posOfImmediatePrecedingMediaGroup($pos, mediaGroupType) ||
+      posOfImmediateFollowingMediaGroup($pos, mediaGroupType)
+    )
   }
-};
+}
 
 const posOfImmediatePrecedingMediaGroup = ($pos, mediaGroupType) => {
   if ($pos.nodeBefore && $pos.nodeBefore.type === mediaGroupType) {
-    return $pos.pos - $pos.nodeBefore.nodeSize + 1;
+    return $pos.pos - $pos.nodeBefore.nodeSize + 1
   }
-};
+}
 
 const posOfImmediateFollowingMediaGroup = ($pos, mediaGroupType) => {
   if ($pos.nodeAfter && $pos.nodeAfter.type === mediaGroupType) {
-    return $pos.pos + 1;
+    return $pos.pos + 1
   }
-};
+}
 
 const posOfFollowingMediaGroup = state => {
   if (!atTheEndOfBlock(state)) {
-    return;
+    return
   }
 
-  return posOfMediaGroupBelow(state, state.selection.$to);
-};
+  return posOfMediaGroupBelow(state, state.selection.$to)
+}
 
 const posOfMediaGroupAbove = (state, $pos) => {
-  let adjacentPos;
-  let adjacentNode;
+  let adjacentPos
+  let adjacentNode
 
   if (isSelectionNonMediaBlockNode(state)) {
-    adjacentPos = $pos.pos;
-    adjacentNode = $pos.nodeBefore;
+    adjacentPos = $pos.pos
+    adjacentNode = $pos.nodeBefore
   } else {
-    adjacentPos = startPositionOfParent($pos) - 1;
-    adjacentNode = state.doc.resolve(adjacentPos).nodeBefore;
+    adjacentPos = startPositionOfParent($pos) - 1
+    adjacentNode = state.doc.resolve(adjacentPos).nodeBefore
   }
 
   if (adjacentNode && adjacentNode.type === state.schema.nodes.mediaGroup) {
-    return adjacentPos - adjacentNode.nodeSize + 1;
+    return adjacentPos - adjacentNode.nodeSize + 1
   }
 
-  return;
-};
+  return
+}
 /**
  * Determine whether the cursor is inside empty paragraph
  * or the selection is the entire paragraph
  */
 
-
 export const isInsidePotentialEmptyParagraph = state => {
-  const {
-    $from
-  } = state.selection;
-  return $from.parent.type === state.schema.nodes.paragraph && atTheBeginningOfBlock(state) && atTheEndOfBlock(state);
-};
+  const { $from } = state.selection
+  return (
+    $from.parent.type === state.schema.nodes.paragraph &&
+    atTheBeginningOfBlock(state) &&
+    atTheEndOfBlock(state)
+  )
+}
 export const posOfMediaGroupBelow = (state, $pos, prepend = true) => {
-  let adjacentPos;
-  let adjacentNode;
+  let adjacentPos
+  let adjacentNode
 
   if (isSelectionNonMediaBlockNode(state)) {
-    adjacentPos = $pos.pos;
-    adjacentNode = $pos.nodeAfter;
+    adjacentPos = $pos.pos
+    adjacentNode = $pos.nodeAfter
   } else {
-    adjacentPos = endPositionOfParent($pos);
-    adjacentNode = state.doc.nodeAt(adjacentPos);
+    adjacentPos = endPositionOfParent($pos)
+    adjacentNode = state.doc.nodeAt(adjacentPos)
   }
 
   if (adjacentNode && adjacentNode.type === state.schema.nodes.mediaGroup) {
-    return prepend ? adjacentPos + 1 : adjacentPos + adjacentNode.nodeSize - 1;
+    return prepend ? adjacentPos + 1 : adjacentPos + adjacentNode.nodeSize - 1
   }
 
-  return;
-};
+  return
+}
 export const posOfParentMediaGroup = (state, $pos, prepend = false) => {
-  const {
-    $from
-  } = state.selection;
-  $pos = $pos || $from;
+  const { $from } = state.selection
+  $pos = $pos || $from
 
   if ($pos.parent.type === state.schema.nodes.mediaGroup) {
-    return prepend ? startPositionOfParent($pos) : endPositionOfParent($pos) - 1;
+    return prepend ? startPositionOfParent($pos) : endPositionOfParent($pos) - 1
   }
 
-  return;
-};
+  return
+}
 /**
  * The function will return the position after current selection where mediaGroup can be inserted.
  */
 
 export function endPositionForMedia(state, resolvedPos) {
-  const {
-    mediaGroup
-  } = state.schema.nodes;
-  let i = resolvedPos.depth;
+  const { mediaGroup } = state.schema.nodes
+  let i = resolvedPos.depth
 
   for (; i > 1; i--) {
-    const nodeType = resolvedPos.node(i).type;
+    const nodeType = resolvedPos.node(i).type
 
     if (nodeType.validContent(Fragment.from(mediaGroup.create()))) {
-      break;
+      break
     }
   }
 
-  return resolvedPos.end(i) + 1;
+  return resolvedPos.end(i) + 1
 }
 export const removeMediaNode = (view, node, getPos) => {
-  const {
-    id
-  } = node.attrs;
-  const {
-    state
-  } = view;
-  const {
-    tr,
-    selection,
-    doc
-  } = state;
-  const currentMediaNodePos = getPos();
-  tr.deleteRange(currentMediaNodePos, currentMediaNodePos + node.nodeSize);
+  const { id } = node.attrs
+  const { state } = view
+  const { tr, selection, doc } = state
+  const currentMediaNodePos = getPos()
+  tr.deleteRange(currentMediaNodePos, currentMediaNodePos + node.nodeSize)
 
   if (isTemporary(id)) {
-    tr.setMeta('addToHistory', false);
+    tr.setMeta('addToHistory', false)
   }
 
-  const $currentMediaNodePos = doc.resolve(currentMediaNodePos);
-  const {
-    nodeBefore,
-    parent
-  } = $currentMediaNodePos;
-  const isLastMediaNode = $currentMediaNodePos.index() === parent.childCount - 1; // If deleting a selected media node, we need to tell where the cursor to go next.
+  const $currentMediaNodePos = doc.resolve(currentMediaNodePos)
+  const { nodeBefore, parent } = $currentMediaNodePos
+  const isLastMediaNode = $currentMediaNodePos.index() === parent.childCount - 1 // If deleting a selected media node, we need to tell where the cursor to go next.
   // Prosemirror didn't gave us the behaviour of moving left if the media node is not the last one.
   // So we handle it ourselves.
 
-  if (selection.from === currentMediaNodePos && !isLastMediaNode && !atTheBeginningOfDoc(state) && nodeBefore && nodeBefore.type.name === 'media') {
-    const nodeBefore = findPositionOfNodeBefore(tr.selection);
+  if (
+    selection.from === currentMediaNodePos &&
+    !isLastMediaNode &&
+    !atTheBeginningOfDoc(state) &&
+    nodeBefore &&
+    nodeBefore.type.name === 'media'
+  ) {
+    const nodeBefore = findPositionOfNodeBefore(tr.selection)
 
     if (nodeBefore) {
-      tr.setSelection(NodeSelection.create(tr.doc, nodeBefore));
+      tr.setSelection(NodeSelection.create(tr.doc, nodeBefore))
     }
   }
 
-  view.dispatch(tr);
-};
+  view.dispatch(tr)
+}
 export const splitMediaGroup = view => {
-  const {
-    selection
-  } = view.state; // if selection is not a media node, do nothing.
+  const { selection } = view.state // if selection is not a media node, do nothing.
 
-  if (!(selection instanceof NodeSelection) || selection.node.type !== view.state.schema.nodes.media) {
-    return false;
+  if (
+    !(selection instanceof NodeSelection) ||
+    selection.node.type !== view.state.schema.nodes.media
+  ) {
+    return false
   }
 
-  deleteSelection(view.state, view.dispatch);
+  deleteSelection(view.state, view.dispatch)
 
   if (selection.$to.nodeAfter) {
-    splitBlock(view.state, view.dispatch);
-    createParagraphNear(false)(view.state, view.dispatch);
+    splitBlock(view.state, view.dispatch)
+    createParagraphNear(false)(view.state, view.dispatch)
   } else {
-    createNewParagraphBelow(view.state, view.dispatch);
+    createNewParagraphBelow(view.state, view.dispatch)
   }
 
-  return true;
-};
+  return true
+}
 
-const isOptionalAttr = attr => attr.length > 1 && attr[0] === '_' && attr[1] === '_';
+const isOptionalAttr = attr =>
+  attr.length > 1 && attr[0] === '_' && attr[1] === '_'
 
 export const copyOptionalAttrsFromMediaState = (mediaState, node) => {
-  Object.keys(node.attrs).filter(isOptionalAttr).forEach(key => {
-    const mediaStateKey = key.substring(2);
-    const attrValue = mediaState[mediaStateKey];
+  Object.keys(node.attrs)
+    .filter(isOptionalAttr)
+    .forEach(key => {
+      const mediaStateKey = key.substring(2)
+      const attrValue = mediaState[mediaStateKey]
 
-    if (attrValue !== undefined) {
-      node.attrs[key] = attrValue;
-    }
-  });
-};
+      if (attrValue !== undefined) {
+        node.attrs[key] = attrValue
+      }
+    })
+}
 export const transformSliceToCorrectMediaWrapper = (slice, schema) => {
-  const {
-    mediaGroup,
-    mediaSingle,
-    media
-  } = schema.nodes;
+  const { mediaGroup, mediaSingle, media } = schema.nodes
   return mapSlice(slice, (node, parent) => {
     if (!parent && node.type === media) {
-      if (mediaSingle && (isImage(node.attrs.__fileMimeType) || node.attrs.type === 'external')) {
-        return mediaSingle.createChecked({}, node);
+      if (
+        mediaSingle &&
+        (isImage(node.attrs.__fileMimeType) || node.attrs.type === 'external')
+      ) {
+        return mediaSingle.createChecked({}, node)
       } else {
-        return mediaGroup.createChecked({}, [node]);
+        return mediaGroup.createChecked({}, [node])
       }
     }
 
-    return node;
-  });
-};
+    return node
+  })
+}
 /**
  * Check base styles to see if an element will be invisible when rendered in a document.
  * @param element
  */
 
 const isElementInvisible = element => {
-  return element.style.opacity === '0' || element.style.display === 'none' || element.style.visibility === 'hidden';
-};
+  return (
+    element.style.opacity === '0' ||
+    element.style.display === 'none' ||
+    element.style.visibility === 'hidden'
+  )
+}
 
-const VALID_TAGS_CONTAINER = ['DIV', 'TD'];
+const VALID_TAGS_CONTAINER = ['DIV', 'TD']
 
 function canContainImage(element) {
   if (!element) {
-    return false;
+    return false
   }
 
-  return VALID_TAGS_CONTAINER.indexOf(element.tagName) !== -1;
+  return VALID_TAGS_CONTAINER.indexOf(element.tagName) !== -1
 }
 /**
  * Given a html string, we attempt to hoist any nested `<img>` tags,
@@ -261,85 +272,84 @@ function canContainImage(element) {
  * @param html
  */
 
-
 export const unwrapNestedMediaElements = html => {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, 'text/html');
-  const wrapper = doc.body; // Remove Google Doc's wrapper <b> el
+  const parser = new DOMParser()
+  const doc = parser.parseFromString(html, 'text/html')
+  const wrapper = doc.body // Remove Google Doc's wrapper <b> el
 
-  const docsWrapper = wrapper.querySelector('b[id^="docs-internal-guid-"]');
+  const docsWrapper = wrapper.querySelector('b[id^="docs-internal-guid-"]')
 
   if (docsWrapper) {
-    unwrap(wrapper, docsWrapper);
+    unwrap(wrapper, docsWrapper)
   }
 
-  const imageTags = wrapper.querySelectorAll('img');
+  const imageTags = wrapper.querySelectorAll('img')
 
   if (!imageTags.length) {
-    return html;
+    return html
   }
 
   imageTags.forEach(imageTag => {
     // Capture the immediate parent, we may remove the media from here later.
-    const mediaParent = imageTag.parentElement;
+    const mediaParent = imageTag.parentElement
 
     if (!mediaParent) {
-      return;
+      return
     } // If either the parent or the image itself contains styles that would make
     // them invisible on copy, dont paste them.
 
-
     if (isElementInvisible(mediaParent) || isElementInvisible(imageTag)) {
-      mediaParent.removeChild(imageTag);
-      return;
+      mediaParent.removeChild(imageTag)
+      return
     } // If its wrapped by a div we assume its safe to bypass.
     // ProseMirror should handle this case properly.
 
-
     if (mediaParent instanceof HTMLDivElement) {
-      return;
+      return
     } // Find the top most element that the parent has a valid container for the image.
     // Stop just before found the wrapper
-
 
     const insertBeforeElement = walkUpTreeUntil(mediaParent, element => {
       // If is at the top just use this element as reference
       if (element.parentElement === wrapper) {
-        return true;
+        return true
       }
 
-      return canContainImage(element.parentElement);
-    }); // Here we try to insert the media right after its top most valid parent element
+      return canContainImage(element.parentElement)
+    }) // Here we try to insert the media right after its top most valid parent element
     // Unless its the last element in our structure then we will insert above it.
 
     if (insertBeforeElement && insertBeforeElement.parentElement) {
       // Insert as close as possible to the most closest valid element index in the tree.
-      insertBeforeElement.parentElement.insertBefore(imageTag, insertBeforeElement.nextElementSibling || insertBeforeElement); // Attempt to clean up lines left behind by the image
+      insertBeforeElement.parentElement.insertBefore(
+        imageTag,
+        insertBeforeElement.nextElementSibling || insertBeforeElement
+      ) // Attempt to clean up lines left behind by the image
 
-      mediaParent.innerText = mediaParent.innerText.trim(); // Walk up and delete empty elements left over after removing the image tag
+      mediaParent.innerText = mediaParent.innerText.trim() // Walk up and delete empty elements left over after removing the image tag
 
-      removeNestedEmptyEls(mediaParent);
+      removeNestedEmptyEls(mediaParent)
     }
-  }); // If last child is a hardbreak we don't want it
+  }) // If last child is a hardbreak we don't want it
 
   if (wrapper.lastElementChild && wrapper.lastElementChild.tagName === 'BR') {
-    wrapper.removeChild(wrapper.lastElementChild);
+    wrapper.removeChild(wrapper.lastElementChild)
   }
 
-  return wrapper.innerHTML;
-};
+  return wrapper.innerHTML
+}
 export const getMediaNodeFromSelection = state => {
   if (!isSelectionMediaSingleNode(state)) {
-    return null;
+    return null
   }
 
-  const tr = state.tr;
-  const pos = tr.selection.from + 1;
-  const mediaNode = tr.doc.nodeAt(pos);
+  const tr = state.tr
+  const pos = tr.selection.from + 1
+  const mediaNode = tr.doc.nodeAt(pos)
 
   if (mediaNode && mediaNode.type === state.schema.nodes.media) {
-    return mediaNode;
+    return mediaNode
   }
 
-  return null;
-};
+  return null
+}

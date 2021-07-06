@@ -11,15 +11,18 @@ export default {
   'fabric.editor.addAltText': 'Văn bản thay thế',
   'fabric.editor.alignment': 'Căn chỉnh',
   'fabric.editor.altText': 'Văn bản thay thế',
-  'fabric.editor.alttext.validation': 'Vui lòng xóa tất cả các ký tự đặc biệt trong văn bản thay thế.',
+  'fabric.editor.alttext.validation':
+    'Vui lòng xóa tất cả các ký tự đặc biệt trong văn bản thay thế.',
   'fabric.editor.annotate': 'Chú thích',
   'fabric.editor.annotationToolbar': 'Thanh công cụ chú thích',
   'fabric.editor.backLink': 'Quay lại',
-  'fabric.editor.blockCardUnavailable': 'Liên kết nội tuyến nằm trong {node} và không thể thay đổi chế độ xem liên kết',
+  'fabric.editor.blockCardUnavailable':
+    'Liên kết nội tuyến nằm trong {node} và không thể thay đổi chế độ xem liên kết',
   'fabric.editor.blockquote': 'Trích dẫn',
   'fabric.editor.blockquote.description': 'Chèn trích dẫn hoặc tham chiếu',
   'fabric.editor.bold': 'In đậm',
-  'fabric.editor.canNotSortTable': '⚠️ Bạn không thể sắp xếp bảng có các ô đã hợp nhất',
+  'fabric.editor.canNotSortTable':
+    '⚠️ Bạn không thể sắp xếp bảng có các ô đã hợp nhất',
   'fabric.editor.cardFloatingControls': 'Tùy chọn thẻ',
   'fabric.editor.cellBackground': 'Nền ô',
   'fabric.editor.cellOptions': 'Tùy chọn ô',
@@ -35,19 +38,23 @@ export default {
   'fabric.editor.codeblock': 'Đoạn mã',
   'fabric.editor.codeblock.description': 'Hiển thị mã có bôi đậm cú pháp',
   'fabric.editor.columns': 'Bố cục',
-  'fabric.editor.columns.description': 'Thiết lập cấu trúc trang của bạn bằng cách sử dụng các mục',
+  'fabric.editor.columns.description':
+    'Thiết lập cấu trúc trang của bạn bằng cách sử dụng các mục',
   'fabric.editor.configPanel.cancel': 'Hủy',
-  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio': 'Không thể kết hợp isMultiple với kiểu: radio',
+  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio':
+    'Không thể kết hợp isMultiple với kiểu: radio',
   'fabric.editor.configPanel.formType.addField': 'Thêm trường',
   'fabric.editor.configPanel.formType.removeField': 'Xóa trường',
   'fabric.editor.configPanel.required': 'Trường bắt buộc',
   'fabric.editor.configPanel.submit': 'Gửi',
   'fabric.editor.createComment': 'Tạo bình luận',
-  'fabric.editor.createCommentInvalid': 'Bình luận chỉ bật cho văn bản và tiêu đề',
+  'fabric.editor.createCommentInvalid':
+    'Bình luận chỉ bật cho văn bản và tiêu đề',
   'fabric.editor.date': 'Ngày',
   'fabric.editor.date.description': 'Thêm ngày bằng cách sử dụng lịch',
   'fabric.editor.decision': 'Quyết định',
-  'fabric.editor.decision.description': 'Thu thập các quyết định để dễ dàng theo dõi',
+  'fabric.editor.decision.description':
+    'Thu thập các quyết định để dễ dàng theo dõi',
   'fabric.editor.decisionPlaceholder': 'Thêm quyết định…',
   'fabric.editor.displayBlock': 'Hiển thị dưới dạng thẻ',
   'fabric.editor.displayEmbed': 'Hiển thị dưới dạng nhúng',
@@ -58,16 +65,19 @@ export default {
   'fabric.editor.editAltText': 'Chỉnh sửa văn bản thay thế',
   'fabric.editor.editorHelp': 'Hỗ trợ chỉnh sửa',
   'fabric.editor.emoji': 'Biểu tượng cảm xúc',
-  'fabric.editor.emoji.description': 'Sử dụng biểu tượng cảm xúc để thể hiện ý kiến 🎉 và cảm xúc 😄',
+  'fabric.editor.emoji.description':
+    'Sử dụng biểu tượng cảm xúc để thể hiện ý kiến 🎉 và cảm xúc 😄',
   'fabric.editor.error': 'Lỗi',
   'fabric.editor.errorPanel': 'Ô lỗi',
   'fabric.editor.errorPanel.description': 'Chỉ ra lỗi bằng ô màu',
   'fabric.editor.expand': 'Mở rộng',
   'fabric.editor.expand.description': 'Chèn đoạn mở rộng',
   'fabric.editor.feedbackDialog': 'Đưa ra phản hồi',
-  'fabric.editor.feedbackDialog.description': 'Cho chúng tôi biết về trải nghiệm của bạn khi sử dụng trình chỉnh sửa mới',
+  'fabric.editor.feedbackDialog.description':
+    'Cho chúng tôi biết về trải nghiệm của bạn khi sử dụng trình chỉnh sửa mới',
   'fabric.editor.filesAndImages': 'Tập tin & hình ảnh',
-  'fabric.editor.filesAndImages.description': 'Thêm hình ảnh và các tập tin khác vào trang của bạn',
+  'fabric.editor.filesAndImages.description':
+    'Thêm hình ảnh và các tập tin khác vào trang của bạn',
   'fabric.editor.find': 'Tìm kiếm',
   'fabric.editor.findNext': 'Tìm tiếp theo',
   'fabric.editor.findPrevious': 'Tìm trước đó',
@@ -77,20 +87,28 @@ export default {
   'fabric.editor.heading1': 'Heading 1',
   'fabric.editor.heading1Description': 'Sử dụng kiểu chữ này cho tiêu đề chính',
   'fabric.editor.heading2': 'Heading 2',
-  'fabric.editor.heading2Description': 'Sử dụng kiểu chữ này cho những phần quan trọng',
+  'fabric.editor.heading2Description':
+    'Sử dụng kiểu chữ này cho những phần quan trọng',
   'fabric.editor.heading3': 'Heading 3',
-  'fabric.editor.heading3Description': 'Sử dụng kiểu chữ này cho những phần phụ và tiêu đề nhóm',
+  'fabric.editor.heading3Description':
+    'Sử dụng kiểu chữ này cho những phần phụ và tiêu đề nhóm',
   'fabric.editor.heading4': 'Heading 4',
-  'fabric.editor.heading4Description': 'Sử dụng kiểu chữ này cho những tiêu đề ẩn',
+  'fabric.editor.heading4Description':
+    'Sử dụng kiểu chữ này cho những tiêu đề ẩn',
   'fabric.editor.heading5': 'Heading 5',
-  'fabric.editor.heading5Description': 'Sử dụng kiểu chữ này để phân loại các danh mục',
+  'fabric.editor.heading5Description':
+    'Sử dụng kiểu chữ này để phân loại các danh mục',
   'fabric.editor.heading6': 'Heading 6',
-  'fabric.editor.heading6Description': 'Sử dụng kiểu chữ này cho những tiêu đề phụ phía dưới',
+  'fabric.editor.heading6Description':
+    'Sử dụng kiểu chữ này cho những tiêu đề phụ phía dưới',
   'fabric.editor.help': 'Trợ giúp',
-  'fabric.editor.help.description': 'Duyệt qua tất cả các phím tắt trên bàn phím và các tùy chọn đánh dấu',
-  'fabric.editor.helpDialogTips': 'Nhấn {keyMap} để mở nhanh hộp thoại này bất kỳ lúc nào',
+  'fabric.editor.help.description':
+    'Duyệt qua tất cả các phím tắt trên bàn phím và các tùy chọn đánh dấu',
+  'fabric.editor.helpDialogTips':
+    'Nhấn {keyMap} để mở nhanh hộp thoại này bất kỳ lúc nào',
   'fabric.editor.horizontalRule': 'Trình phân chia',
-  'fabric.editor.horizontalRule.description': 'Chia tách nội dung bằng một đường ngang',
+  'fabric.editor.horizontalRule.description':
+    'Chia tách nội dung bằng một đường ngang',
   'fabric.editor.image': 'hình ảnh',
   'fabric.editor.info': 'Thông tin',
   'fabric.editor.infoPanel': 'Ô thông tin',
@@ -106,7 +124,8 @@ export default {
   'fabric.editor.lists': 'Danh sách',
   'fabric.editor.markdown': 'Ngôn ngữ đánh dấu',
   'fabric.editor.mention': 'Đề cập',
-  'fabric.editor.mention.description': 'Đề cập đến ai đó để gửi thông báo cho họ',
+  'fabric.editor.mention.description':
+    'Đề cập đến ai đó để gửi thông báo cho họ',
   'fabric.editor.mergeCells': 'Hợp nhất ô',
   'fabric.editor.moreFormatting': 'Thêm định dạng',
   'fabric.editor.noResultsFound': 'Không tìm thấy kết quả',
@@ -119,7 +138,8 @@ export default {
   'fabric.editor.orderedList.description': 'Tạo một danh sách kiểu sắp xếp',
   'fabric.editor.other': 'Khác...',
   'fabric.editor.pastePlainText': 'Dán văn bản thuần túy',
-  'fabric.editor.placeholderAltText': 'Mô tả hình ảnh này bằng văn bản thay thế',
+  'fabric.editor.placeholderAltText':
+    'Mô tả hình ảnh này bằng văn bản thay thế',
   'fabric.editor.placeholderText': 'Văn bản giữ chỗ',
   'fabric.editor.placeholderTextPlaceholder': 'Thêm văn bản giữ chỗ',
   'fabric.editor.quickInsert': 'Chèn nhanh',
@@ -144,11 +164,13 @@ export default {
   'fabric.editor.successPanel': 'Ô thành công',
   'fabric.editor.successPanel.description': 'Thêm mẹo bằng ô màu',
   'fabric.editor.superscript': 'Chỉ số trên',
-  'fabric.editor.supportAltText': 'Văn bản thay thế là tính năng hữu ích cho những người sử dụng trình đọc màn hình do suy giảm thị lực.',
+  'fabric.editor.supportAltText':
+    'Văn bản thay thế là tính năng hữu ích cho những người sử dụng trình đọc màn hình do suy giảm thị lực.',
   'fabric.editor.table': 'Bảng',
   'fabric.editor.table.description': 'Chèn bảng',
   'fabric.editor.tableOptions': 'Tùy chọn bảng',
-  'fabric.editor.taskPlaceholder': "Nhập thao tác của bạn, sử dụng '@' để chỉ định cho người nào đó.",
+  'fabric.editor.taskPlaceholder':
+    "Nhập thao tác của bạn, sử dụng '@' để chỉ định cho người nào đó.",
   'fabric.editor.textColor': 'Màu văn bản',
   'fabric.editor.textColor.lessColors': 'Ít màu hơn',
   'fabric.editor.textColor.moreColors': 'Hiển thị nhiều màu hơn',
@@ -159,11 +181,13 @@ export default {
   'fabric.editor.underline': 'Gạch dưới',
   'fabric.editor.undo': 'Hoàn tác',
   'fabric.editor.unorderedList': 'Danh sách dấu đầu dòng',
-  'fabric.editor.unorderedList.description': 'Tạo một danh sách kiểu không sắp xếp',
+  'fabric.editor.unorderedList.description':
+    'Tạo một danh sách kiểu không sắp xếp',
   'fabric.editor.viewMore': 'Xem thêm',
   'fabric.editor.warning': 'Cảnh báo',
   'fabric.editor.warningPanel': 'Ô cảnh báo',
-  'fabric.editor.warningPanel.description': 'Thêm ghi chú thận trọng bằng ô màu',
+  'fabric.editor.warningPanel.description':
+    'Thêm ghi chú thận trọng bằng ô màu',
   'fabric.editor.wrapLeft': 'Cuộn sang trái',
   'fabric.editor.wrapRight': 'Cuộn sang phải',
   'fabric.theme.blue': 'Xanh lam',
@@ -188,4 +212,4 @@ export default {
   'fabric.theme.teal': 'Xanh mòng két',
   'fabric.theme.white': 'Trắng',
   'fabric.theme.yellow': 'Vàng'
-};
+}

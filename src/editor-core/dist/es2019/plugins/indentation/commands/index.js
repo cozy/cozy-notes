@@ -1,60 +1,62 @@
-import { toggleBlockMark } from '../../../commands';
-import { createAnalyticsDispatch } from './utils';
-import { INDENT_DIRECTION } from '../../analytics';
-import getAttrsWithChangesRecorder from '../../../utils/getAttrsWithChangesRecorder';
-const MAX_INDENTATION_LEVEL = 6;
+import { toggleBlockMark } from '../../../commands'
+import { createAnalyticsDispatch } from './utils'
+import { INDENT_DIRECTION } from '../../analytics'
+import getAttrsWithChangesRecorder from '../../../utils/getAttrsWithChangesRecorder'
+const MAX_INDENTATION_LEVEL = 6
 
 const isIndentationAllowed = (schema, node) => {
   const {
-    nodes: {
-      paragraph,
-      heading
-    },
-    marks: {
-      alignment
-    }
-  } = schema;
+    nodes: { paragraph, heading },
+    marks: { alignment }
+  } = schema
 
   if ([paragraph, heading].indexOf(node.type) > -1) {
     if (alignment) {
-      const hasAlignment = node.marks.filter(mark => mark.type === alignment)[0];
-      return !hasAlignment;
+      const hasAlignment = node.marks.filter(mark => mark.type === alignment)[0]
+      return !hasAlignment
     }
 
-    return true;
+    return true
   }
 
-  return false;
-};
+  return false
+}
 /**
  * Create new indentation command (Either indent or outdent depend of getArgsFn)
  * @param getNewIndentationAttrs Function to handle new indentation level
  */
 
-
 function createIndentationCommand(getNewIndentationAttrs) {
   return (state, dispatch) => {
-    const {
-      indentation
-    } = state.schema.marks;
-    return toggleBlockMark(indentation, getNewIndentationAttrs, isIndentationAllowed)(state, dispatch);
-  };
+    const { indentation } = state.schema.marks
+    return toggleBlockMark(
+      indentation,
+      getNewIndentationAttrs,
+      isIndentationAllowed
+    )(state, dispatch)
+  }
 }
 
-function createIndentationCommandWithAnalytics(getNewIndentationAttrs, direction) {
+function createIndentationCommandWithAnalytics(
+  getNewIndentationAttrs,
+  direction
+) {
   // Create a new getAttrs function to record the changes
-  const {
-    getAttrs,
-    getAndResetAttrsChanges
-  } = getAttrsWithChangesRecorder(getNewIndentationAttrs, {
-    direction
-  }); // Use new getAttrs wrapper
+  const { getAttrs, getAndResetAttrsChanges } = getAttrsWithChangesRecorder(
+    getNewIndentationAttrs,
+    {
+      direction
+    }
+  ) // Use new getAttrs wrapper
 
-  const indentationCommand = createIndentationCommand(getAttrs); // Return a new command where we change dispatch for our analytics dispatch
+  const indentationCommand = createIndentationCommand(getAttrs) // Return a new command where we change dispatch for our analytics dispatch
 
   return (state, dispatch) => {
-    return indentationCommand(state, createAnalyticsDispatch(getAndResetAttrsChanges, state, dispatch));
-  };
+    return indentationCommand(
+      state,
+      createAnalyticsDispatch(getAndResetAttrsChanges, state, dispatch)
+    )
+  }
 }
 /**
  * Get new level for outdent
@@ -64,28 +66,28 @@ function createIndentationCommandWithAnalytics(getNewIndentationAttrs, direction
  *           - object; Update attributes
  */
 
-
 const getIndentAttrs = oldAttr => {
   if (!oldAttr) {
     return {
       level: 1
-    }; // No mark exist, create a new one with level 1
+    } // No mark exist, create a new one with level 1
   }
 
-  const {
-    level
-  } = oldAttr;
+  const { level } = oldAttr
 
   if (level >= MAX_INDENTATION_LEVEL) {
-    return undefined; // Max indentation level reached, do nothing.
+    return undefined // Max indentation level reached, do nothing.
   }
 
   return {
     level: level + 1
-  }; // Otherwise, increase the level by one
-};
+  } // Otherwise, increase the level by one
+}
 
-export const indent = createIndentationCommandWithAnalytics(getIndentAttrs, INDENT_DIRECTION.INDENT);
+export const indent = createIndentationCommandWithAnalytics(
+  getIndentAttrs,
+  INDENT_DIRECTION.INDENT
+)
 /**
  * Get new level for outdent
  * @param oldAttr Old attributes for the mark, undefined if the mark doesn't exit
@@ -96,21 +98,23 @@ export const indent = createIndentationCommandWithAnalytics(getIndentAttrs, INDE
 
 const getOutdentAttrs = oldAttr => {
   if (!oldAttr) {
-    return undefined; // Do nothing;
+    return undefined // Do nothing;
   }
 
-  const {
-    level
-  } = oldAttr;
+  const { level } = oldAttr
 
   if (level <= 1) {
-    return false; // Remove the mark
+    return false // Remove the mark
   }
 
   return {
     level: level - 1
-  }; // Decrease the level on other cases
-};
+  } // Decrease the level on other cases
+}
 
-export const outdent = createIndentationCommandWithAnalytics(getOutdentAttrs, INDENT_DIRECTION.OUTDENT);
-export const removeIndentation = (state, dispatch) => toggleBlockMark(state.schema.marks.indentation, () => false)(state, dispatch);
+export const outdent = createIndentationCommandWithAnalytics(
+  getOutdentAttrs,
+  INDENT_DIRECTION.OUTDENT
+)
+export const removeIndentation = (state, dispatch) =>
+  toggleBlockMark(state.schema.marks.indentation, () => false)(state, dispatch)

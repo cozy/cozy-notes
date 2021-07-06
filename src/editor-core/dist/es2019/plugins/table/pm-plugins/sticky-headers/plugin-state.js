@@ -1,47 +1,44 @@
-import { pluginFactory } from '../../../../utils/plugin-state-factory';
-import { pluginKey } from './plugin-key';
+import { pluginFactory } from '../../../../utils/plugin-state-factory'
+import { pluginKey } from './plugin-key'
 
 const reducer = (pluginState, action) => {
   if (action.name === 'UPDATE') {
-    let updated = false;
+    let updated = false
     const updatedState = pluginState.map(oldTableState => {
-      const replace = oldTableState.pos === action.state.pos;
+      const replace = oldTableState.pos === action.state.pos
 
       if (replace) {
-        updated = true;
+        updated = true
       }
 
-      return replace ? action.state : oldTableState;
-    });
+      return replace ? action.state : oldTableState
+    })
 
     if (!updated) {
       // new, add it
-      updatedState.push(action.state);
+      updatedState.push(action.state)
     }
 
-    return updatedState;
+    return updatedState
   } else if (action.name === 'REMOVE') {
-    return pluginState.filter(rowState => rowState.pos !== action.pos);
+    return pluginState.filter(rowState => rowState.pos !== action.pos)
   }
 
-  return pluginState;
-};
+  return pluginState
+}
 
-const {
-  createPluginState,
-  createCommand
-} = pluginFactory(pluginKey, reducer, {
+const { createPluginState, createCommand } = pluginFactory(pluginKey, reducer, {
   mapping: (tr, pluginState) => {
     if (tr.docChanged) {
-      return pluginState.map(rowInfo => {
-        const remapped = tr.mapping.mapResult(rowInfo.pos);
-        return remapped ? { ...rowInfo,
-          pos: remapped.pos
-        } : undefined;
-      }).filter(f => f !== undefined);
+      return pluginState
+        .map(rowInfo => {
+          const remapped = tr.mapping.mapResult(rowInfo.pos)
+          return remapped ? { ...rowInfo, pos: remapped.pos } : undefined
+        })
+        .filter(f => f !== undefined)
     }
 
-    return pluginState;
+    return pluginState
   }
-});
-export { createPluginState, createCommand };
+})
+export { createPluginState, createCommand }

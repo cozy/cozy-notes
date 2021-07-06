@@ -1,17 +1,14 @@
-import React from 'react';
+import React from 'react'
 export class AnnotationViewWrapper extends React.PureComponent {
   componentDidMount() {
-    const {
-      onViewed
-    } = this.props;
+    const { onViewed } = this.props
 
     if (onViewed) {
-      onViewed();
+      onViewed()
     }
   }
 
   render() {
-    return this.props.children;
+    return this.props.children
   }
-
 }

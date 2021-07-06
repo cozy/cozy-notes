@@ -1,12 +1,20 @@
-import styled from 'styled-components';
-import { N30 } from '@atlaskit/theme/colors';
-import { gridSize } from '@atlaskit/theme/constants';
-import { akEditorMenuZIndex, akEditorSwoopCubicBezier, akEditorToolbarKeylineHeight, akEditorMobileMaxWidth } from '@atlaskit/editor-shared-styles';
-const toolbarLineHeight = 56;
+import styled from 'styled-components'
+import { N30 } from '@atlaskit/theme/colors'
+import { gridSize } from '@atlaskit/theme/constants'
+import {
+  akEditorMenuZIndex,
+  akEditorSwoopCubicBezier,
+  akEditorToolbarKeylineHeight,
+  akEditorMobileMaxWidth
+} from '@atlaskit/editor-shared-styles'
+const toolbarLineHeight = 56
 export const MainToolbar = styled.div`
   position: relative;
   align-items: center;
-  box-shadow: ${props => props.showKeyline ? `0 ${akEditorToolbarKeylineHeight}px 0 0 ${N30}` : 'none'};
+  box-shadow: ${props =>
+    props.showKeyline
+      ? `0 ${akEditorToolbarKeylineHeight}px 0 0 ${N30}`
+      : 'none'};
   transition: box-shadow 200ms ${akEditorSwoopCubicBezier};
   z-index: ${akEditorMenuZIndex};
   display: flex;
@@ -22,8 +30,8 @@ export const MainToolbar = styled.div`
     display: grid;
     height: calc(${toolbarLineHeight}px * 2);
   }
-`;
-MainToolbar.displayName = 'MainToolbar';
+`
+MainToolbar.displayName = 'MainToolbar'
 export const MainToolbarIconBefore = styled.div`
   margin: ${gridSize() * 2}px;
   height: ${gridSize() * 4}px;
@@ -32,8 +40,8 @@ export const MainToolbarIconBefore = styled.div`
     grid-column: 1;
     grid-row: 1;
   }
-`;
-MainToolbarIconBefore.displayName = 'MainToolbarIconBefore';
+`
+MainToolbarIconBefore.displayName = 'MainToolbarIconBefore'
 export const MainToolbarCustomComponentsSlot = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -47,8 +55,8 @@ export const MainToolbarCustomComponentsSlot = styled.div`
     grid-column: 1;
     grid-row: 1;
   }
-`;
-MainToolbarCustomComponentsSlot.displayName = 'MainToolbar';
+`
+MainToolbarCustomComponentsSlot.displayName = 'MainToolbar'
 export const SecondaryToolbar = styled.div`
   box-sizing: border-box;
   justify-content: flex-end;
@@ -56,5 +64,5 @@ export const SecondaryToolbar = styled.div`
   flex-shrink: 0;
   display: flex;
   padding: 24px 0;
-`;
-SecondaryToolbar.displayName = 'SecondaryToolbar';
+`
+SecondaryToolbar.displayName = 'SecondaryToolbar'

@@ -1,33 +1,33 @@
-import { toggleMark } from '../../../utils/commands';
-import { ACTIONS, pluginKey } from '../pm-plugins/main';
-import { getDisabledState } from '../utils/disabled';
+import { toggleMark } from '../../../utils/commands'
+import { ACTIONS, pluginKey } from '../pm-plugins/main'
+import { getDisabledState } from '../utils/disabled'
 export const toggleColor = color => (state, dispatch) => {
-  const {
-    textColor
-  } = state.schema.marks;
-  let tr = state.tr;
-  const disabledState = getDisabledState(state);
+  const { textColor } = state.schema.marks
+  let tr = state.tr
+  const disabledState = getDisabledState(state)
 
   if (disabledState) {
     if (dispatch) {
-      dispatch(tr.setMeta(pluginKey, {
-        action: ACTIONS.DISABLE
-      }));
+      dispatch(
+        tr.setMeta(pluginKey, {
+          action: ACTIONS.DISABLE
+        })
+      )
     }
 
-    return false;
+    return false
   }
 
   if (dispatch) {
     state.tr.setMeta(pluginKey, {
       action: ACTIONS.SET_COLOR,
       color
-    });
-    state.tr.scrollIntoView();
+    })
+    state.tr.scrollIntoView()
     toggleMark(textColor, {
       color
-    })(state, dispatch);
+    })(state, dispatch)
   }
 
-  return true;
-};
+  return true
+}

@@ -15,11 +15,13 @@ export default {
   'fabric.editor.annotate': 'Kommenter',
   'fabric.editor.annotationToolbar': 'Verktøylinje for kommentarer',
   'fabric.editor.backLink': 'Gå tilbake',
-  'fabric.editor.blockCardUnavailable': 'Inline-koblingen er inne i {node}, og visningen kan ikke endres',
+  'fabric.editor.blockCardUnavailable':
+    'Inline-koblingen er inne i {node}, og visningen kan ikke endres',
   'fabric.editor.blockquote': 'Sitat',
   'fabric.editor.blockquote.description': 'Sett inn et sitat',
   'fabric.editor.bold': 'Fet',
-  'fabric.editor.canNotSortTable': "⚠️ You can't sort a table with merged cells",
+  'fabric.editor.canNotSortTable':
+    "⚠️ You can't sort a table with merged cells",
   'fabric.editor.cardFloatingControls': 'Kortalternativer',
   'fabric.editor.cellBackground': 'Cellebakgrunn',
   'fabric.editor.cellOptions': 'Cellealternativer',
@@ -37,17 +39,20 @@ export default {
   'fabric.editor.columns': 'Oppsett',
   'fabric.editor.columns.description': 'Konstruer siden med seksjoner',
   'fabric.editor.configPanel.cancel': 'Avbryt',
-  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio': 'Kan ikke kombinere isMultiple med stil: radio',
+  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio':
+    'Kan ikke kombinere isMultiple med stil: radio',
   'fabric.editor.configPanel.formType.addField': 'Legg til felt',
   'fabric.editor.configPanel.formType.removeField': 'Fjern felt',
   'fabric.editor.configPanel.required': 'Obligatorisk felt',
   'fabric.editor.configPanel.submit': 'Send inn',
   'fabric.editor.createComment': 'Opprett kommentar',
-  'fabric.editor.createCommentInvalid': 'Kommentarer er kun aktivert for tekst og overskrifter',
+  'fabric.editor.createCommentInvalid':
+    'Kommentarer er kun aktivert for tekst og overskrifter',
   'fabric.editor.date': 'Dato',
   'fabric.editor.date.description': 'Legg til en dato med en kalender',
   'fabric.editor.decision': 'Beslutning',
-  'fabric.editor.decision.description': 'Registrer beslutninger slik at det er lett å spore dem',
+  'fabric.editor.decision.description':
+    'Registrer beslutninger slik at det er lett å spore dem',
   'fabric.editor.decisionPlaceholder': 'Legg til en beslutning …',
   'fabric.editor.displayBlock': 'Vis som et kort',
   'fabric.editor.displayEmbed': 'Vis som innebygget',
@@ -58,16 +63,19 @@ export default {
   'fabric.editor.editAltText': 'Rediger alternativ tekst',
   'fabric.editor.editorHelp': 'Editorhjelp',
   'fabric.editor.emoji': 'Emoji',
-  'fabric.editor.emoji.description': 'Bruk emojier for å uttrykke tanker 🎉 og følelser 😄',
+  'fabric.editor.emoji.description':
+    'Bruk emojier for å uttrykke tanker 🎉 og følelser 😄',
   'fabric.editor.error': 'Feil',
   'fabric.editor.errorPanel': 'Feilpanel',
   'fabric.editor.errorPanel.description': 'Trekk frem feil i et farget panel',
   'fabric.editor.expand': 'Utvidelse',
   'fabric.editor.expand.description': 'Sett inn en utvidelse',
   'fabric.editor.feedbackDialog': 'Gi en tilbakemelding',
-  'fabric.editor.feedbackDialog.description': 'Fortell oss hvordan du opplevde det nye redigeringsprogrammet',
+  'fabric.editor.feedbackDialog.description':
+    'Fortell oss hvordan du opplevde det nye redigeringsprogrammet',
   'fabric.editor.filesAndImages': 'Filer og bilder',
-  'fabric.editor.filesAndImages.description': 'Legg til bilder og andre filer på siden',
+  'fabric.editor.filesAndImages.description':
+    'Legg til bilder og andre filer på siden',
   'fabric.editor.find': 'Finn',
   'fabric.editor.findNext': 'Finn neste',
   'fabric.editor.findPrevious': 'Finn forrige',
@@ -75,26 +83,33 @@ export default {
   'fabric.editor.headerColumn': 'Overskriftskolonne',
   'fabric.editor.headerRow': 'Overskriftsrad',
   'fabric.editor.heading1': '1. overskrift',
-  'fabric.editor.heading1Description': 'Bruk dette for en overskrift på toppnivå',
+  'fabric.editor.heading1Description':
+    'Bruk dette for en overskrift på toppnivå',
   'fabric.editor.heading2': '2. overskrift',
   'fabric.editor.heading2Description': 'Bruk dette til viktige avsnitt',
   'fabric.editor.heading3': '3. overskrift',
-  'fabric.editor.heading3Description': 'Bruk dette til underavsnitt og overskrifter for grupper',
+  'fabric.editor.heading3Description':
+    'Bruk dette til underavsnitt og overskrifter for grupper',
   'fabric.editor.heading4': '4. overskrift',
   'fabric.editor.heading4Description': 'Bruk dette til dype overskrifter',
   'fabric.editor.heading5': '5. overskrift',
-  'fabric.editor.heading5Description': 'Bruk dette til å gruppere listeelementer',
+  'fabric.editor.heading5Description':
+    'Bruk dette til å gruppere listeelementer',
   'fabric.editor.heading6': '6. overskrift',
-  'fabric.editor.heading6Description': 'Bruk dette for en overskrift på nedre nivå',
+  'fabric.editor.heading6Description':
+    'Bruk dette for en overskrift på nedre nivå',
   'fabric.editor.help': 'Hjelp',
-  'fabric.editor.help.description': 'Se gjennom alle tastatursnarveier og Markdown-alternativer',
+  'fabric.editor.help.description':
+    'Se gjennom alle tastatursnarveier og Markdown-alternativer',
   'fabric.editor.helpDialogTips': 'Trykk på {keyMap} for å åpne denne dialogen',
   'fabric.editor.horizontalRule': 'Deler',
-  'fabric.editor.horizontalRule.description': 'Atskill innhold med en horisontal linje',
+  'fabric.editor.horizontalRule.description':
+    'Atskill innhold med en horisontal linje',
   'fabric.editor.image': 'Bilde',
   'fabric.editor.info': 'Informasjon',
   'fabric.editor.infoPanel': 'Informasjonspanel',
-  'fabric.editor.infoPanel.description': 'Uthev informasjonen i et farget panel',
+  'fabric.editor.infoPanel.description':
+    'Uthev informasjonen i et farget panel',
   'fabric.editor.insertColumn': 'Sett inn kolonne',
   'fabric.editor.insertMenu': 'Sett inn',
   'fabric.editor.insertRow': 'Sett inn rad',
@@ -113,19 +128,23 @@ export default {
   'fabric.editor.normal': 'Normal tekst',
   'fabric.editor.note': 'Merknad',
   'fabric.editor.notePanel': 'Kommentarpanel',
-  'fabric.editor.notePanel.description': 'Legg til en merknad i et farget panel',
+  'fabric.editor.notePanel.description':
+    'Legg til en merknad i et farget panel',
   'fabric.editor.numberedColumn': 'Nummert kolonne',
   'fabric.editor.orderedList': 'Nummerert liste',
   'fabric.editor.orderedList.description': 'Opprett en sortert liste',
   'fabric.editor.other': 'Andre …',
   'fabric.editor.pastePlainText': 'Lim inn ren tekst',
-  'fabric.editor.placeholderAltText': 'Beskriv dette bildet med alternativ tekst',
+  'fabric.editor.placeholderAltText':
+    'Beskriv dette bildet med alternativ tekst',
   'fabric.editor.placeholderText': 'Plassholdertekst',
   'fabric.editor.placeholderTextPlaceholder': 'Legg til plassholdertekst',
   'fabric.editor.quickInsert': 'Hurtiginnsetting',
   'fabric.editor.redo': 'Gjør om',
-  'fabric.editor.removeColumns': '{0, plural, one {Fjern kolonne} other {Fjern kolonner}}',
-  'fabric.editor.removeRows': '{0, plural, one {Fjern rad} other {Fjern rader}}',
+  'fabric.editor.removeColumns':
+    '{0, plural, one {Fjern kolonne} other {Fjern kolonner}}',
+  'fabric.editor.removeRows':
+    '{0, plural, one {Fjern rad} other {Fjern rader}}',
   'fabric.editor.replace': 'Erstatt',
   'fabric.editor.replaceAll': 'Erstatt alle',
   'fabric.editor.replaceWith': 'Erstatt med',
@@ -144,11 +163,13 @@ export default {
   'fabric.editor.successPanel': 'Utførtpanel',
   'fabric.editor.successPanel.description': 'Legg til tips i et farget panel',
   'fabric.editor.superscript': 'Hevet skrift',
-  'fabric.editor.supportAltText': 'Alternativ tekst er nyttig for folk som bruker skjermlesere på grunn av redusert synsfunksjon.',
+  'fabric.editor.supportAltText':
+    'Alternativ tekst er nyttig for folk som bruker skjermlesere på grunn av redusert synsfunksjon.',
   'fabric.editor.table': 'Tabell',
   'fabric.editor.table.description': 'Sett inn en tavle',
   'fabric.editor.tableOptions': 'Tabellalternativer',
-  'fabric.editor.taskPlaceholder': 'Skriv inn handlingen. Bruk @ for å tilordne den til noen.',
+  'fabric.editor.taskPlaceholder':
+    'Skriv inn handlingen. Bruk @ for å tilordne den til noen.',
   'fabric.editor.textColor': 'Tekstfarge',
   'fabric.editor.textColor.lessColors': 'Færre farger',
   'fabric.editor.textColor.moreColors': 'Flere farger',
@@ -163,7 +184,8 @@ export default {
   'fabric.editor.viewMore': 'Vis mer',
   'fabric.editor.warning': 'Advarsel',
   'fabric.editor.warningPanel': 'Advarselspanel',
-  'fabric.editor.warningPanel.description': 'Legg til en advarsel i et farget panel',
+  'fabric.editor.warningPanel.description':
+    'Legg til en advarsel i et farget panel',
   'fabric.editor.wrapLeft': 'Juster til venstre',
   'fabric.editor.wrapRight': 'Juster til høyre',
   'fabric.theme.blue': 'Blue',
@@ -188,4 +210,4 @@ export default {
   'fabric.theme.teal': 'Teal',
   'fabric.theme.white': 'White',
   'fabric.theme.yellow': 'Yellow'
-};
+}

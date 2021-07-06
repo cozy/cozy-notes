@@ -1,6 +1,17 @@
-import { Selection } from 'prosemirror-state';
-import { createInputRule, instrumentedInputRule } from '../../../utils/input-rules';
-import { ACTION, ACTION_SUBJECT, ACTION_SUBJECT_ID, EVENT_TYPE, PUNC, ruleWithAnalytics, SYMBOL } from '../../analytics';
+import { Selection } from 'prosemirror-state'
+import {
+  createInputRule,
+  instrumentedInputRule
+} from '../../../utils/input-rules'
+import {
+  ACTION,
+  ACTION_SUBJECT,
+  ACTION_SUBJECT_ID,
+  EVENT_TYPE,
+  PUNC,
+  ruleWithAnalytics,
+  SYMBOL
+} from '../../analytics'
 /**
  * Creates an InputRuleHandler that will match on a regular expression of the
  * form `(prefix, content, suffix?)`, and replace it with some given text,
@@ -11,22 +22,20 @@ import { ACTION, ACTION_SUBJECT, ACTION_SUBJECT_ID, EVENT_TYPE, PUNC, ruleWithAn
 
 function replaceTextUsingCaptureGroup(text) {
   return (state, match, start, end) => {
-    const [, prefix,, suffix] = match;
-    const replacement = (prefix || '') + text + (suffix || '');
+    const [, prefix, , suffix] = match
+    const replacement = (prefix || '') + text + (suffix || '')
     let {
       tr,
-      selection: {
-        $to
-      }
-    } = state;
-    tr.replaceWith(start, end, state.schema.text(replacement, $to.marks()));
-    tr.setSelection(Selection.near(tr.doc.resolve(tr.selection.to)));
-    return tr;
-  };
+      selection: { $to }
+    } = state
+    tr.replaceWith(start, end, state.schema.text(replacement, $to.marks()))
+    tr.setSelection(Selection.near(tr.doc.resolve(tr.selection.to)))
+    return tr
+  }
 }
 
 function createReplacementRule(to, from) {
-  return createInputRule(from, replaceTextUsingCaptureGroup(to));
+  return createInputRule(from, replaceTextUsingCaptureGroup(to))
 }
 /**
  * Create replacement rules fiven a replacement map
@@ -35,89 +44,94 @@ function createReplacementRule(to, from) {
  * @param replacementRuleWithAnalytics - Analytics GAS V3 middleware for replacement and rules.
  */
 
-
 function createReplacementRules(replMap, replacementRuleWithAnalytics) {
   return Object.keys(replMap).map(replacement => {
-    const regex = replMap[replacement];
-    const rule = createReplacementRule(replacement, regex);
+    const regex = replMap[replacement]
+    const rule = createReplacementRule(replacement, regex)
 
     if (replacementRuleWithAnalytics) {
-      return replacementRuleWithAnalytics(replacement)(rule);
+      return replacementRuleWithAnalytics(replacement)(rule)
     }
 
-    return rule;
-  });
+    return rule
+  })
 } // We don't agressively upgrade single quotes to smart quotes because
 // they may clash with an emoji. Only do that when we have a matching
 // single quote, or a contraction.
 
-
 function createSingleQuotesRules() {
-  return [// wrapped text
-  createInputRule(/(\s+|^)'(\S+.*\S+)'$/, (state, match, start, end) => {
-    const [, spacing, innerContent] = match;
-    const replacement = spacing + '‘' + innerContent + '’';
-    return state.tr.insertText(replacement, start, end);
-  }), // apostrophe
-  createReplacementRule('’', /(\w+)(')(\w+)$/)];
+  return [
+    // wrapped text
+    createInputRule(/(\s+|^)'(\S+.*\S+)'$/, (state, match, start, end) => {
+      const [, spacing, innerContent] = match
+      const replacement = spacing + '‘' + innerContent + '’'
+      return state.tr.insertText(replacement, start, end)
+    }), // apostrophe
+    createReplacementRule('’', /(\w+)(')(\w+)$/)
+  ]
 }
 /**
  * Get replacement rules related to product
  */
 
-
 function getProductRules() {
-  const productRuleWithAnalytics = product => ruleWithAnalytics((_state, match) => ({
-    action: ACTION.SUBSTITUTED,
-    actionSubject: ACTION_SUBJECT.TEXT,
-    actionSubjectId: ACTION_SUBJECT_ID.PRODUCT_NAME,
-    eventType: EVENT_TYPE.TRACK,
-    attributes: {
-      product,
-      originalSpelling: match[2]
-    }
-  }));
+  const productRuleWithAnalytics = product =>
+    ruleWithAnalytics((_state, match) => ({
+      action: ACTION.SUBSTITUTED,
+      actionSubject: ACTION_SUBJECT.TEXT,
+      actionSubjectId: ACTION_SUBJECT_ID.PRODUCT_NAME,
+      eventType: EVENT_TYPE.TRACK,
+      attributes: {
+        product,
+        originalSpelling: match[2]
+      }
+    }))
 
-  return createReplacementRules({
-    Atlassian: /(\s+|^)(atlassian)(\s)$/,
-    Jira: /(\s+|^)(jira|JIRA)(\s)$/,
-    Bitbucket: /(\s+|^)(bitbucket|BitBucket)(\s)$/,
-    Hipchat: /(\s+|^)(hipchat|HipChat)(\s)$/,
-    Trello: /(\s+|^)(trello)(\s)$/
-  }, productRuleWithAnalytics);
+  return createReplacementRules(
+    {
+      Atlassian: /(\s+|^)(atlassian)(\s)$/,
+      Jira: /(\s+|^)(jira|JIRA)(\s)$/,
+      Bitbucket: /(\s+|^)(bitbucket|BitBucket)(\s)$/,
+      Hipchat: /(\s+|^)(hipchat|HipChat)(\s)$/,
+      Trello: /(\s+|^)(trello)(\s)$/
+    },
+    productRuleWithAnalytics
+  )
 }
 /**
  * Get replacement rules related to symbol
  */
-
 
 function getSymbolRules() {
   const symbolToString = {
     '→': SYMBOL.ARROW_RIGHT,
     '←': SYMBOL.ARROW_LEFT,
     '↔︎': SYMBOL.ARROW_DOUBLE
-  };
+  }
 
-  const symbolRuleWithAnalytics = symbol => ruleWithAnalytics(() => ({
-    action: ACTION.SUBSTITUTED,
-    actionSubject: ACTION_SUBJECT.TEXT,
-    actionSubjectId: ACTION_SUBJECT_ID.SYMBOL,
-    eventType: EVENT_TYPE.TRACK,
-    attributes: {
-      symbol: symbolToString[symbol]
-    }
-  }));
+  const symbolRuleWithAnalytics = symbol =>
+    ruleWithAnalytics(() => ({
+      action: ACTION.SUBSTITUTED,
+      actionSubject: ACTION_SUBJECT.TEXT,
+      actionSubjectId: ACTION_SUBJECT_ID.SYMBOL,
+      eventType: EVENT_TYPE.TRACK,
+      attributes: {
+        symbol: symbolToString[symbol]
+      }
+    }))
 
-  return createReplacementRules({
-    '→': /(\s+|^)(--?>)(\s)$/,
-    '←': /(\s+|^)(<--?)(\s)$/,
-    '↔︎': /(\s+|^)(<->?)(\s)$/
-  }, symbolRuleWithAnalytics);
+  return createReplacementRules(
+    {
+      '→': /(\s+|^)(--?>)(\s)$/,
+      '←': /(\s+|^)(<--?)(\s)$/,
+      '↔︎': /(\s+|^)(<->?)(\s)$/
+    },
+    symbolRuleWithAnalytics
+  )
 }
 /**
  * Get replacement rules related to punctuation
  */
-
 
 function getPunctuationRules() {
   const punctuationToString = {
@@ -126,30 +140,43 @@ function getPunctuationRules() {
     '“': PUNC.QUOTE_DOUBLE,
     '”': PUNC.QUOTE_DOUBLE,
     [PUNC.QUOTE_SINGLE]: PUNC.QUOTE_SINGLE
-  };
+  }
 
-  const punctuationRuleWithAnalytics = punctuation => ruleWithAnalytics(() => ({
-    action: ACTION.SUBSTITUTED,
-    actionSubject: ACTION_SUBJECT.TEXT,
-    actionSubjectId: ACTION_SUBJECT_ID.PUNC,
-    eventType: EVENT_TYPE.TRACK,
-    attributes: {
-      punctuation: punctuationToString[punctuation]
-    }
-  }));
+  const punctuationRuleWithAnalytics = punctuation =>
+    ruleWithAnalytics(() => ({
+      action: ACTION.SUBSTITUTED,
+      actionSubject: ACTION_SUBJECT.TEXT,
+      actionSubjectId: ACTION_SUBJECT_ID.PUNC,
+      eventType: EVENT_TYPE.TRACK,
+      attributes: {
+        punctuation: punctuationToString[punctuation]
+      }
+    }))
 
-  const dashEllipsisRules = createReplacementRules({
-    '–': /(\s+|^)(--)(\s)$/,
-    '…': /()(\.\.\.)$/
-  }, punctuationRuleWithAnalytics);
-  const doubleQuoteRules = createReplacementRules({
-    '“': /((?:^|[\s\{\[\(\<'"\u2018\u201C]))(")$/,
-    '”': /"$/
-  }, punctuationRuleWithAnalytics);
-  const singleQuoteRules = createSingleQuotesRules();
-  return [...dashEllipsisRules, ...doubleQuoteRules, ...singleQuoteRules.map(rule => punctuationRuleWithAnalytics(PUNC.QUOTE_SINGLE)(rule))];
+  const dashEllipsisRules = createReplacementRules(
+    {
+      '–': /(\s+|^)(--)(\s)$/,
+      '…': /()(\.\.\.)$/
+    },
+    punctuationRuleWithAnalytics
+  )
+  const doubleQuoteRules = createReplacementRules(
+    {
+      '“': /((?:^|[\s\{\[\(\<'"\u2018\u201C]))(")$/,
+      '”': /"$/
+    },
+    punctuationRuleWithAnalytics
+  )
+  const singleQuoteRules = createSingleQuotesRules()
+  return [
+    ...dashEllipsisRules,
+    ...doubleQuoteRules,
+    ...singleQuoteRules.map(rule =>
+      punctuationRuleWithAnalytics(PUNC.QUOTE_SINGLE)(rule)
+    )
+  ]
 }
 
 export default instrumentedInputRule('text-formatting:smart-input', {
   rules: [...getProductRules(), ...getSymbolRules(), ...getPunctuationRules()]
-});
+})

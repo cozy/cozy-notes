@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { N400, N800 } from '@atlaskit/theme/colors'; // Normal .className gets overridden by input[type=text] hence this hack to produce input.className
+import styled from 'styled-components'
+import { N400, N800 } from '@atlaskit/theme/colors' // Normal .className gets overridden by input[type=text] hence this hack to produce input.className
 
 export const Input = styled.input`
   input& {
@@ -12,7 +12,7 @@ export const Input = styled.input`
     font-size: 13px;
     line-height: 20px;
     padding: 0;
-    ${props => props.width ? `width: ${props.width}px` : ''};
+    ${props => (props.width ? `width: ${props.width}px` : '')};
     min-width: 145px;
 
     /* Hides IE10+ built-in [x] clear input button */
@@ -29,4 +29,4 @@ export const Input = styled.input`
       opacity: 0.5;
     }
   }
-`;
+`

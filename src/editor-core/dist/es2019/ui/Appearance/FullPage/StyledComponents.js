@@ -1,20 +1,25 @@
-import styled from 'styled-components';
-import { akEditorFullWidthLayoutWidth, akEditorGutterPadding, akEditorSwoopCubicBezier, akLayoutGutterOffset } from '@atlaskit/editor-shared-styles';
-import { taskListSelector, decisionListSelector } from '@atlaskit/adf-schema';
-import ContentStyles from '../../ContentStyles';
-import { tableFullPageEditorStyles } from '../../../plugins/table/ui/common-styles.css';
-import { tableMarginFullWidthMode } from '../../../plugins/table/ui/consts';
-import { scrollbarStyles } from '../../styles';
-const SWOOP_ANIMATION = `0.5s ${akEditorSwoopCubicBezier}`;
-const TOTAL_PADDING = akEditorGutterPadding * 2;
+import styled from 'styled-components'
+import {
+  akEditorFullWidthLayoutWidth,
+  akEditorGutterPadding,
+  akEditorSwoopCubicBezier,
+  akLayoutGutterOffset
+} from '@atlaskit/editor-shared-styles'
+import { taskListSelector, decisionListSelector } from '@atlaskit/adf-schema'
+import ContentStyles from '../../ContentStyles'
+import { tableFullPageEditorStyles } from '../../../plugins/table/ui/common-styles.css'
+import { tableMarginFullWidthMode } from '../../../plugins/table/ui/consts'
+import { scrollbarStyles } from '../../styles'
+const SWOOP_ANIMATION = `0.5s ${akEditorSwoopCubicBezier}`
+const TOTAL_PADDING = akEditorGutterPadding * 2
 export const FullPageEditorWrapper = styled.div`
   min-width: 340px;
   height: 100%;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-`;
-FullPageEditorWrapper.displayName = 'FullPageEditorWrapper';
+`
+FullPageEditorWrapper.displayName = 'FullPageEditorWrapper'
 export const ScrollContainer = styled(ContentStyles)`
   flex-grow: 1;
   height: 100%;
@@ -24,21 +29,21 @@ export const ScrollContainer = styled(ContentStyles)`
   flex-direction: column;
   scroll-behavior: smooth;
   ${scrollbarStyles};
-`;
-ScrollContainer.displayName = 'ScrollContainer';
+`
+ScrollContainer.displayName = 'ScrollContainer'
 export const ContentArea = styled.div`
   display: flex;
   flex-direction: row;
   height: calc(100% - 80px);
   box-sizing: border-box;
-`;
-ContentArea.displayName = 'ContentArea';
+`
+ContentArea.displayName = 'ContentArea'
 export const SidebarArea = styled.div`
   height: 100%;
   box-sizing: border-box;
   align-self: flex-end;
-`;
-SidebarArea.displayName = 'SidebarArea';
+`
+SidebarArea.displayName = 'SidebarArea'
 export const EditorContentArea = styled.div`
   line-height: 24px;
   padding-top: 50px;
@@ -51,10 +56,9 @@ export const EditorContentArea = styled.div`
   flex-direction: column;
   flex-grow: 1;
 
-  max-width: ${({
-  theme,
-  fullWidthMode
-}) => (fullWidthMode ? akEditorFullWidthLayoutWidth : theme.layoutMaxWidth) + TOTAL_PADDING}px;
+  max-width: ${({ theme, fullWidthMode }) =>
+    (fullWidthMode ? akEditorFullWidthLayoutWidth : theme.layoutMaxWidth) +
+    TOTAL_PADDING}px;
   transition: max-width ${SWOOP_ANIMATION};
 
   & .ProseMirror {
@@ -101,38 +105,40 @@ export const EditorContentArea = styled.div`
     }
 
     /* Prevent horizontal scroll on page in full width mode */
-    ${({
-  containerWidth
-}) => {
-  if (!containerWidth) {
-    // initially hide until we have a containerWidth and can properly size them,
-    // otherwise they can cause the editor width to extend which is non-recoverable
-    return `
+    ${({ containerWidth }) => {
+      if (!containerWidth) {
+        // initially hide until we have a containerWidth and can properly size them,
+        // otherwise they can cause the editor width to extend which is non-recoverable
+        return `
           .pm-table-container,
           .code-block,
           .extension-container {
             display: none;
           }
-        `;
-  }
+        `
+      }
 
-  return `
+      return `
         .pm-table-container,
         .code-block,
         .extension-container {
-          max-width: ${containerWidth - TOTAL_PADDING - tableMarginFullWidthMode * 2}px;
+          max-width: ${containerWidth -
+            TOTAL_PADDING -
+            tableMarginFullWidthMode * 2}px;
         }
 
         [data-layout-section] {
-          max-width: ${containerWidth - TOTAL_PADDING + akLayoutGutterOffset * 2}px;
+          max-width: ${containerWidth -
+            TOTAL_PADDING +
+            akLayoutGutterOffset * 2}px;
         }
-      `;
-}}
+      `
+    }}
   }
-`;
-EditorContentArea.displayName = 'EditorContentArea';
+`
+EditorContentArea.displayName = 'EditorContentArea'
 export const EditorContentGutter = styled.div`
   box-sizing: border-box;
   padding: 0 ${akEditorGutterPadding}px;
-`;
-EditorContentGutter.displayName = 'EditorContentGutter';
+`
+EditorContentGutter.displayName = 'EditorContentGutter'

@@ -1,102 +1,101 @@
-import React from 'react';
-import { annotation } from '@atlaskit/adf-schema';
-import WithPluginState from '../../ui/WithPluginState';
-import { stateKey as reactPluginKey } from '../../plugins/base/pm-plugins/react-nodeview';
-import { keymapPlugin } from './pm-plugins/keymap';
-import { inlineCommentPlugin } from './pm-plugins/inline-comment';
-import { AnnotationUpdateEmitter } from './update-provider';
-import { getPluginState, inlineCommentPluginKey } from './utils';
-import { buildToolbar } from './toolbar';
-import { InlineCommentView } from './ui/InlineCommentView';
+import React from 'react'
+import { annotation } from '@atlaskit/adf-schema'
+import WithPluginState from '../../ui/WithPluginState'
+import { stateKey as reactPluginKey } from '../../plugins/base/pm-plugins/react-nodeview'
+import { keymapPlugin } from './pm-plugins/keymap'
+import { inlineCommentPlugin } from './pm-plugins/inline-comment'
+import { AnnotationUpdateEmitter } from './update-provider'
+import { getPluginState, inlineCommentPluginKey } from './utils'
+import { buildToolbar } from './toolbar'
+import { InlineCommentView } from './ui/InlineCommentView'
 
 const annotationPlugin = annotationProviders => {
   return {
     name: 'annotation',
 
     marks() {
-      return [{
-        name: 'annotation',
-        mark: annotation
-      }];
+      return [
+        {
+          name: 'annotation',
+          mark: annotation
+        }
+      ]
     },
 
-    pmPlugins: () => [{
-      name: 'annotation',
-      plugin: ({
-        dispatch,
-        portalProviderAPI,
-        eventDispatcher
-      }) => {
-        if (annotationProviders) {
-          return inlineCommentPlugin({
-            dispatch,
-            portalProviderAPI,
-            eventDispatcher,
-            provider: annotationProviders.inlineComment
-          });
-        }
+    pmPlugins: () => [
+      {
+        name: 'annotation',
+        plugin: ({ dispatch, portalProviderAPI, eventDispatcher }) => {
+          if (annotationProviders) {
+            return inlineCommentPlugin({
+              dispatch,
+              portalProviderAPI,
+              eventDispatcher,
+              provider: annotationProviders.inlineComment
+            })
+          }
 
-        return;
-      }
-    }, {
-      name: 'annotationKeymap',
-      plugin: () => {
-        if (annotationProviders) {
-          return keymapPlugin();
+          return
         }
+      },
+      {
+        name: 'annotationKeymap',
+        plugin: () => {
+          if (annotationProviders) {
+            return keymapPlugin()
+          }
 
-        return;
+          return
+        }
       }
-    }],
+    ],
     pluginsOptions: {
       floatingToolbar(state, intl) {
         if (!annotationProviders) {
-          return;
+          return
         }
 
-        const pluginState = getPluginState(state);
+        const pluginState = getPluginState(state)
 
-        if (pluginState && pluginState.isVisible && !pluginState.bookmark && !pluginState.mouseData.isSelecting) {
-          const {
-            isToolbarAbove
-          } = annotationProviders.inlineComment;
-          return buildToolbar(state, intl, isToolbarAbove);
+        if (
+          pluginState &&
+          pluginState.isVisible &&
+          !pluginState.bookmark &&
+          !pluginState.mouseData.isSelecting
+        ) {
+          const { isToolbarAbove } = annotationProviders.inlineComment
+          return buildToolbar(state, intl, isToolbarAbove)
         }
       }
-
     },
 
-    contentComponent({
-      editorView,
-      dispatchAnalyticsEvent
-    }) {
+    contentComponent({ editorView, dispatchAnalyticsEvent }) {
       if (!annotationProviders) {
-        return null;
+        return null
       }
 
-      return /*#__PURE__*/React.createElement(WithPluginState, {
+      return /*#__PURE__*/ React.createElement(WithPluginState, {
         plugins: {
           selectionState: reactPluginKey,
           inlineCommentState: inlineCommentPluginKey
         },
         render: pluginStates => {
-          const pluginState = pluginStates.inlineCommentState;
+          const pluginState = pluginStates.inlineCommentState
 
           if (pluginState && !pluginState.isVisible) {
-            return null;
+            return null
           }
 
-          return /*#__PURE__*/React.createElement(InlineCommentView, {
+          return /*#__PURE__*/ React.createElement(InlineCommentView, {
             providers: annotationProviders,
             editorView: editorView,
             dispatchAnalyticsEvent: dispatchAnalyticsEvent
-          });
+          })
         }
-      });
+      })
     }
+  }
+}
 
-  };
-};
-
-export default annotationPlugin;
-export { AnnotationUpdateEmitter };
+export default annotationPlugin
+export { AnnotationUpdateEmitter }

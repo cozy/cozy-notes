@@ -1,52 +1,47 @@
-import _defineProperty from "@babel/runtime/helpers/defineProperty";
-import { Plugin, PluginKey } from 'prosemirror-state';
+import _defineProperty from '@babel/runtime/helpers/defineProperty'
+import { Plugin, PluginKey } from 'prosemirror-state'
 export class ReactNodeViewState {
   constructor() {
-    _defineProperty(this, "changeHandlers", []);
+    _defineProperty(this, 'changeHandlers', [])
 
-    this.changeHandlers = [];
+    this.changeHandlers = []
   }
 
   subscribe(cb) {
-    this.changeHandlers.push(cb);
+    this.changeHandlers.push(cb)
   }
 
   unsubscribe(cb) {
-    this.changeHandlers = this.changeHandlers.filter(ch => ch !== cb);
+    this.changeHandlers = this.changeHandlers.filter(ch => ch !== cb)
   }
 
   notifyNewSelection(fromPos, toPos) {
-    this.changeHandlers.forEach(cb => cb(fromPos, toPos));
+    this.changeHandlers.forEach(cb => cb(fromPos, toPos))
   }
-
 }
-export const stateKey = new PluginKey('reactNodeView');
+export const stateKey = new PluginKey('reactNodeView')
 export const plugin = new Plugin({
   state: {
     init() {
-      return new ReactNodeViewState();
+      return new ReactNodeViewState()
     },
 
     apply(_tr, pluginState) {
-      return pluginState;
+      return pluginState
     }
-
   },
   key: stateKey,
   view: view => {
-    const pluginState = stateKey.getState(view.state);
+    const pluginState = stateKey.getState(view.state)
     return {
       update: view => {
-        const {
-          from,
-          to
-        } = view.state.selection;
-        pluginState.notifyNewSelection(from, to);
+        const { from, to } = view.state.selection
+        pluginState.notifyNewSelection(from, to)
       }
-    };
+    }
   }
-});
+})
 
-const plugins = () => [plugin];
+const plugins = () => [plugin]
 
-export default plugins;
+export default plugins

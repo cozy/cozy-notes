@@ -1,8 +1,18 @@
-import { css } from 'styled-components';
-import { mediaSingleSharedStyle, richMediaClassName } from '@atlaskit/editor-common';
-import { akEditorDeleteBorder, akEditorDeleteBackground, akEditorSelectedBorderBoldSize, akEditorMediaResizeHandlerPaddingWide, akEditorMediaResizeHandlerPadding, akEditorSelectedNodeClassName } from '@atlaskit/editor-shared-styles';
-import { N60, B200 } from '@atlaskit/theme/colors';
-import { fileCardImageViewSelector } from '@atlaskit/media-card';
+import { css } from 'styled-components'
+import {
+  mediaSingleSharedStyle,
+  richMediaClassName
+} from '@atlaskit/editor-common'
+import {
+  akEditorDeleteBorder,
+  akEditorDeleteBackground,
+  akEditorSelectedBorderBoldSize,
+  akEditorMediaResizeHandlerPaddingWide,
+  akEditorMediaResizeHandlerPadding,
+  akEditorSelectedNodeClassName
+} from '@atlaskit/editor-shared-styles'
+import { N60, B200 } from '@atlaskit/theme/colors'
+import { fileCardImageViewSelector } from '@atlaskit/media-card'
 export const mediaStyles = css`
   .ProseMirror {
     ${mediaSingleSharedStyle} & [layout='full-width'] .${richMediaClassName},
@@ -145,7 +155,7 @@ export const mediaStyles = css`
       box-shadow: none;
     }
   }
-`;
+`
 /* `left: unset` above is to work around Chrome bug where rendering a div with
  * that style applied inside a container that has a scroll, causes any svgs on
  * the page, without a border, that are inside a flexbox, to no longer align to

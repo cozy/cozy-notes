@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { N900, N0, N50 } from '@atlaskit/theme/colors';
+import styled from 'styled-components'
+import { N900, N0, N50 } from '@atlaskit/theme/colors'
 export const Button = styled.button`
   height: 26px;
   width: 26px;
@@ -9,7 +9,7 @@ export const Button = styled.button`
   border: 1px solid ${N0};
   cursor: pointer;
   display: block;
-`;
+`
 export const ButtonWrapper = styled.span`
   border: 1px solid transparent;
   margin: 1px;
@@ -21,4 +21,4 @@ export const ButtonWrapper = styled.span`
   &:hover {
     border-color: ${N50};
   }
-`;
+`

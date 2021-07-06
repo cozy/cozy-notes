@@ -1,35 +1,30 @@
-import { PluginKey } from 'prosemirror-state';
-import { pluginFactory } from '../../../utils/plugin-state-factory';
-export const pluginKey = new PluginKey('mediaEditorPlugin');
+import { PluginKey } from 'prosemirror-state'
+import { pluginFactory } from '../../../utils/plugin-state-factory'
+export const pluginKey = new PluginKey('mediaEditorPlugin')
 export const reducer = (state, action) => {
   switch (action.type) {
     case 'open':
-      return { ...state,
+      return {
+        ...state,
         editor: {
           identifier: action.identifier,
           pos: action.pos
         }
-      };
+      }
 
     case 'close':
-      return { ...state,
-        editor: undefined
-      };
+      return { ...state, editor: undefined }
 
     case 'upload':
-      return { ...state,
-        editor: undefined
-      };
+      return { ...state, editor: undefined }
 
     case 'setMediaClientConfig':
-      return { ...state,
-        mediaClientConfig: action.mediaClientConfig
-      };
+      return { ...state, mediaClientConfig: action.mediaClientConfig }
 
     default:
-      return state;
+      return state
   }
-};
+}
 export const {
   createPluginState,
   createCommand,
@@ -37,14 +32,12 @@ export const {
 } = pluginFactory(pluginKey, reducer, {
   mapping: (tr, state) => {
     if (!state.editor) {
-      return state;
+      return state
     } // remap the position of the editing media inside the state
 
-
-    return { ...state,
-      editor: { ...state.editor,
-        pos: tr.mapping.map(state.editor.pos)
-      }
-    };
+    return {
+      ...state,
+      editor: { ...state.editor, pos: tr.mapping.map(state.editor.pos) }
+    }
   }
-});
+})

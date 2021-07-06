@@ -1,5 +1,5 @@
-import * as colors from '@atlaskit/theme/colors';
-import { hexToRgba } from '@atlaskit/adf-schema';
+import * as colors from '@atlaskit/theme/colors'
+import { hexToRgba } from '@atlaskit/adf-schema'
 const background = {
   danger: {
     default: {
@@ -15,7 +15,7 @@ const background = {
       dark: hexToRgba(colors.B75, 0.6)
     }
   }
-};
+}
 const color = {
   danger: {
     default: {
@@ -31,19 +31,18 @@ const color = {
       dark: colors.R300
     }
   }
-};
+}
 
-const getStyles = (property, {
-  appearance = 'default',
-  state = 'default',
-  mode = 'light'
-}) => {
+const getStyles = (
+  property,
+  { appearance = 'default', state = 'default', mode = 'light' }
+) => {
   if (!property[appearance] || !property[appearance][state]) {
-    return 'initial';
+    return 'initial'
   }
 
-  return property[appearance][state][mode];
-};
+  return property[appearance][state][mode]
+}
 
 export const iconOnlySpacing = {
   '&&': {
@@ -55,8 +54,8 @@ export const iconOnlySpacing = {
   '& > span': {
     margin: '0px'
   }
-};
+}
 export const getButtonStyles = props => ({
   background: getStyles(background, props),
   color: getStyles(color, props)
-});
+})

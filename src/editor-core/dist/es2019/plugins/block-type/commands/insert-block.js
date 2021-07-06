@@ -1,57 +1,53 @@
-import { hasParentNodeOfType } from 'prosemirror-utils';
-import { TextSelection, NodeSelection } from 'prosemirror-state';
+import { hasParentNodeOfType } from 'prosemirror-utils'
+import { TextSelection, NodeSelection } from 'prosemirror-state'
 export const insertBlock = (state, nodeType, nodeName, start, end, attrs) => {
   // To ensure that match is done after HardBreak.
-  const {
-    hardBreak,
-    codeBlock,
-    listItem
-  } = state.schema.nodes;
-  const $pos = state.doc.resolve(start);
+  const { hardBreak, codeBlock, listItem } = state.schema.nodes
+  const $pos = state.doc.resolve(start)
 
   if ($pos.nodeAfter.type !== hardBreak) {
-    return null;
+    return null
   } // To ensure no nesting is done. (unless we're inserting a codeBlock inside lists)
 
-
-  if ($pos.depth > 1 && !(nodeType === codeBlock && hasParentNodeOfType(listItem)(state.selection))) {
-    return null;
+  if (
+    $pos.depth > 1 &&
+    !(nodeType === codeBlock && hasParentNodeOfType(listItem)(state.selection))
+  ) {
+    return null
   } // Split at the start of autoformatting and delete formatting characters.
 
+  let tr = state.tr.delete(start, end).split(start)
+  let currentNode = tr.doc.nodeAt(start + 1) // If node has more content split at the end of autoformatting.
 
-  let tr = state.tr.delete(start, end).split(start);
-  let currentNode = tr.doc.nodeAt(start + 1); // If node has more content split at the end of autoformatting.
-
-  let nodeHasMoreContent = false;
+  let nodeHasMoreContent = false
   tr.doc.nodesBetween(start, start + currentNode.nodeSize, (node, pos) => {
     if (!nodeHasMoreContent && node.type === hardBreak) {
-      nodeHasMoreContent = true;
-      tr = tr.split(pos + 1).delete(pos, pos + 1);
+      nodeHasMoreContent = true
+      tr = tr.split(pos + 1).delete(pos, pos + 1)
     }
-  });
+  })
 
   if (nodeHasMoreContent) {
-    currentNode = tr.doc.nodeAt(start + 1);
+    currentNode = tr.doc.nodeAt(start + 1)
   } // Create new node and fill with content of current node.
 
-
-  const {
-    blockquote,
-    paragraph
-  } = state.schema.nodes;
-  let content;
-  let depth;
+  const { blockquote, paragraph } = state.schema.nodes
+  let content
+  let depth
 
   if (nodeType === blockquote) {
-    depth = 3;
-    content = [paragraph.create({}, currentNode.content)];
+    depth = 3
+    content = [paragraph.create({}, currentNode.content)]
   } else {
-    depth = 2;
-    content = currentNode.content;
+    depth = 2
+    content = currentNode.content
   }
 
-  const newNode = nodeType.create(attrs, content); // Add new node.
+  const newNode = nodeType.create(attrs, content) // Add new node.
 
-  tr = tr.setSelection(new NodeSelection(tr.doc.resolve(start + 1))).replaceSelectionWith(newNode).setSelection(new TextSelection(tr.doc.resolve(start + depth)));
-  return tr;
-};
+  tr = tr
+    .setSelection(new NodeSelection(tr.doc.resolve(start + 1)))
+    .replaceSelectionWith(newNode)
+    .setSelection(new TextSelection(tr.doc.resolve(start + depth)))
+  return tr
+}

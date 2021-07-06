@@ -1,4 +1,4 @@
-import { defineMessages } from 'react-intl';
+import { defineMessages } from 'react-intl'
 export const messages = defineMessages({
   submit: {
     id: 'fabric.editor.configPanel.submit',
@@ -58,11 +58,13 @@ export const messages = defineMessages({
   from: {
     id: 'fabric.editor.configPanel.dateRange.custom.from',
     defaultMessage: 'From',
-    description: 'Label for the initial date when the option "Custom" is selected in the date range UI element'
+    description:
+      'Label for the initial date when the option "Custom" is selected in the date range UI element'
   },
   to: {
     id: 'fabric.editor.configPanel.dateRange.custom.to',
     defaultMessage: 'To',
-    description: 'Label for the end date when the option "Custom" is selected in the date range UI element'
+    description:
+      'Label for the end date when the option "Custom" is selected in the date range UI element'
   }
-});
+})

@@ -1,71 +1,92 @@
-import _extends from "@babel/runtime/helpers/extends";
-import _defineProperty from "@babel/runtime/helpers/defineProperty";
-import React from 'react';
-import { findParentNodeOfTypeClosestToPos, hasParentNodeOfType } from 'prosemirror-utils';
-import { calcPxFromColumns, calcPctFromPx, calcColumnsFromPx, wrappedLayouts } from '@atlaskit/editor-common';
-import { akEditorWideLayoutWidth, akEditorBreakoutPadding } from '@atlaskit/editor-shared-styles';
-import { Wrapper } from '../../../ui/Resizer/styled';
-import Resizer from '../../../ui/Resizer';
-import { snapTo, handleSides, imageAlignmentMap } from '../../../ui/Resizer/utils';
-import { calcMediaPxWidth } from '../../../plugins/media/utils/media-single';
+import _extends from '@babel/runtime/helpers/extends'
+import _defineProperty from '@babel/runtime/helpers/defineProperty'
+import React from 'react'
+import {
+  findParentNodeOfTypeClosestToPos,
+  hasParentNodeOfType
+} from 'prosemirror-utils'
+import {
+  calcPxFromColumns,
+  calcPctFromPx,
+  calcColumnsFromPx,
+  wrappedLayouts
+} from '@atlaskit/editor-common'
+import {
+  akEditorWideLayoutWidth,
+  akEditorBreakoutPadding
+} from '@atlaskit/editor-shared-styles'
+import { Wrapper } from '../../../ui/Resizer/styled'
+import Resizer from '../../../ui/Resizer'
+import {
+  snapTo,
+  handleSides,
+  imageAlignmentMap
+} from '../../../ui/Resizer/utils'
+import { calcMediaPxWidth } from '../../../plugins/media/utils/media-single'
 export default class ResizableEmbedCard extends React.Component {
   constructor(...args) {
-    super(...args);
+    super(...args)
 
-    _defineProperty(this, "state", {
+    _defineProperty(this, 'state', {
       offsetLeft: this.calcOffsetLeft()
-    });
+    })
 
-    _defineProperty(this, "calcNewSize", (newWidth, stop) => {
+    _defineProperty(this, 'calcNewSize', (newWidth, stop) => {
       const {
         layout,
-        view: {
-          state
-        }
-      } = this.props;
-      const newPct = calcPctFromPx(newWidth, this.props.lineLength) * 100;
+        view: { state }
+      } = this.props
+      const newPct = calcPctFromPx(newWidth, this.props.lineLength) * 100
       this.setState({
         resizedPctWidth: newPct
-      });
-      let newLayout = hasParentNodeOfType(state.schema.nodes.table)(state.selection) ? layout : this.calcUnwrappedLayout(newPct, newWidth);
+      })
+      let newLayout = hasParentNodeOfType(state.schema.nodes.table)(
+        state.selection
+      )
+        ? layout
+        : this.calcUnwrappedLayout(newPct, newWidth)
 
       if (newPct <= 100) {
         if (this.wrappedLayout && (stop ? newPct !== 100 : true)) {
-          newLayout = layout;
+          newLayout = layout
         }
 
         return {
           width: newPct,
           layout: newLayout
-        };
+        }
       } else {
         return {
           width: this.props.pctWidth || null,
           layout: newLayout
-        };
+        }
       }
-    });
+    })
 
-    _defineProperty(this, "calcUnwrappedLayout", (pct, width) => {
+    _defineProperty(this, 'calcUnwrappedLayout', (pct, width) => {
       if (pct <= 100) {
-        return 'center';
+        return 'center'
       }
 
       if (width <= akEditorWideLayoutWidth) {
-        return 'wide';
+        return 'wide'
       }
 
-      return 'full-width';
-    });
+      return 'full-width'
+    })
 
-    _defineProperty(this, "calcColumnLeftOffset", () => {
-      const {
-        offsetLeft
-      } = this.state;
-      return this.insideInlineLike ? calcColumnsFromPx(offsetLeft, this.props.lineLength, this.props.gridSize) : 0;
-    });
+    _defineProperty(this, 'calcColumnLeftOffset', () => {
+      const { offsetLeft } = this.state
+      return this.insideInlineLike
+        ? calcColumnsFromPx(
+            offsetLeft,
+            this.props.lineLength,
+            this.props.gridSize
+          )
+        : 0
+    })
 
-    _defineProperty(this, "calcPxWidth", useLayout => {
+    _defineProperty(this, 'calcPxWidth', useLayout => {
       const {
         width: origWidth,
         height: origHeight,
@@ -75,14 +96,10 @@ export default class ResizableEmbedCard extends React.Component {
         containerWidth,
         fullWidthMode,
         getPos,
-        view: {
-          state
-        }
-      } = this.props;
-      const {
-        resizedPctWidth
-      } = this.state;
-      const pos = typeof getPos === 'function' ? getPos() : undefined;
+        view: { state }
+      } = this.props
+      const { resizedPctWidth } = this.state
+      const pos = typeof getPos === 'function' ? getPos() : undefined
       return calcMediaPxWidth({
         origWidth,
         origHeight,
@@ -96,66 +113,71 @@ export default class ResizableEmbedCard extends React.Component {
         layout: useLayout || layout,
         pos: pos,
         resizedPctWidth
-      });
-    });
+      })
+    })
 
-    _defineProperty(this, "highlights", (newWidth, snapPoints) => {
-      const snapWidth = snapTo(newWidth, snapPoints);
+    _defineProperty(this, 'highlights', (newWidth, snapPoints) => {
+      const snapWidth = snapTo(newWidth, snapPoints)
       const {
         layoutColumn,
         table,
         expand,
         nestedExpand
-      } = this.props.view.state.schema.nodes;
+      } = this.props.view.state.schema.nodes
 
-      if (this.$pos && !!findParentNodeOfTypeClosestToPos(this.$pos, [layoutColumn, table, expand, nestedExpand].filter(Boolean))) {
-        return [];
+      if (
+        this.$pos &&
+        !!findParentNodeOfTypeClosestToPos(
+          this.$pos,
+          [layoutColumn, table, expand, nestedExpand].filter(Boolean)
+        )
+      ) {
+        return []
       }
 
       if (snapWidth > akEditorWideLayoutWidth) {
-        return ['full-width'];
+        return ['full-width']
       }
 
-      const {
-        layout,
-        lineLength,
-        gridSize
-      } = this.props;
-      const columns = calcColumnsFromPx(snapWidth, lineLength, gridSize);
-      const columnWidth = Math.round(columns);
-      const highlight = [];
+      const { layout, lineLength, gridSize } = this.props
+      const columns = calcColumnsFromPx(snapWidth, lineLength, gridSize)
+      const columnWidth = Math.round(columns)
+      const highlight = []
 
       if (layout === 'wrap-left' || layout === 'align-start') {
-        highlight.push(0, columnWidth);
+        highlight.push(0, columnWidth)
       } else if (layout === 'wrap-right' || layout === 'align-end') {
-        highlight.push(gridSize, gridSize - columnWidth);
+        highlight.push(gridSize, gridSize - columnWidth)
       } else if (this.insideInlineLike) {
-        highlight.push(Math.round(columns + this.calcColumnLeftOffset()));
+        highlight.push(Math.round(columns + this.calcColumnLeftOffset()))
       } else {
-        highlight.push(Math.floor((gridSize - columnWidth) / 2), Math.ceil((gridSize + columnWidth) / 2));
+        highlight.push(
+          Math.floor((gridSize - columnWidth) / 2),
+          Math.ceil((gridSize + columnWidth) / 2)
+        )
       }
 
-      return highlight;
-    });
+      return highlight
+    })
   }
 
   componentDidUpdate() {
-    const offsetLeft = this.calcOffsetLeft();
+    const offsetLeft = this.calcOffsetLeft()
 
     if (offsetLeft !== this.state.offsetLeft && offsetLeft >= 0) {
       this.setState({
         offsetLeft
-      });
+      })
     }
   }
 
   get wrappedLayout() {
-    return wrappedLayouts.indexOf(this.props.layout) > -1;
+    return wrappedLayouts.indexOf(this.props.layout) > -1
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.layout !== nextProps.layout) {
-      this.checkLayout(this.props.layout, nextProps.layout);
+      this.checkLayout(this.props.layout, nextProps.layout)
     }
   }
   /**
@@ -163,106 +185,106 @@ export default class ResizableEmbedCard extends React.Component {
    * be wide or full-width
    */
 
-
   checkLayout(oldLayout, newLayout) {
-    const {
-      resizedPctWidth
-    } = this.state;
+    const { resizedPctWidth } = this.state
 
-    if (wrappedLayouts.indexOf(oldLayout) > -1 && newLayout === 'center' && resizedPctWidth) {
-      const layout = this.calcUnwrappedLayout(resizedPctWidth, this.calcPxWidth(newLayout));
-      this.props.updateSize(resizedPctWidth, layout);
+    if (
+      wrappedLayouts.indexOf(oldLayout) > -1 &&
+      newLayout === 'center' &&
+      resizedPctWidth
+    ) {
+      const layout = this.calcUnwrappedLayout(
+        resizedPctWidth,
+        this.calcPxWidth(newLayout)
+      )
+      this.props.updateSize(resizedPctWidth, layout)
     }
   }
 
   get $pos() {
     if (typeof this.props.getPos !== 'function') {
-      return null;
+      return null
     }
 
-    const pos = this.props.getPos();
+    const pos = this.props.getPos()
 
     if (Number.isNaN(pos) || typeof pos !== 'number') {
-      return null;
+      return null
     } // need to pass view because we may not get updated props in time
 
-
-    return this.props.view.state.doc.resolve(pos);
+    return this.props.view.state.doc.resolve(pos)
   }
   /**
    * The maxmimum number of grid columns this node can resize to.
    */
 
-
   get gridWidth() {
-    const {
-      gridSize
-    } = this.props;
-    return !(this.wrappedLayout || this.insideInlineLike) ? gridSize / 2 : gridSize;
+    const { gridSize } = this.props
+    return !(this.wrappedLayout || this.insideInlineLike)
+      ? gridSize / 2
+      : gridSize
   }
 
   calcOffsetLeft() {
-    let offsetLeft = 0;
+    let offsetLeft = 0
 
     if (this.wrapper && this.insideInlineLike) {
-      const currentNode = this.wrapper;
-      const boundingRect = currentNode.getBoundingClientRect();
-      const pmRect = this.props.view.dom.getBoundingClientRect();
-      offsetLeft = boundingRect.left - pmRect.left;
+      const currentNode = this.wrapper
+      const boundingRect = currentNode.getBoundingClientRect()
+      const pmRect = this.props.view.dom.getBoundingClientRect()
+      offsetLeft = boundingRect.left - pmRect.left
     }
 
-    return offsetLeft;
+    return offsetLeft
   }
 
   calcSnapPoints() {
-    const {
-      offsetLeft
-    } = this.state;
-    const {
-      containerWidth,
-      lineLength
-    } = this.props;
-    const snapTargets = [];
+    const { offsetLeft } = this.state
+    const { containerWidth, lineLength } = this.props
+    const snapTargets = []
 
     for (let i = 0; i < this.gridWidth; i++) {
-      snapTargets.push(calcPxFromColumns(i, lineLength, this.gridWidth) - offsetLeft);
+      snapTargets.push(
+        calcPxFromColumns(i, lineLength, this.gridWidth) - offsetLeft
+      )
     } // full width
 
-
-    snapTargets.push(lineLength - offsetLeft);
-    const minimumWidth = calcPxFromColumns(this.wrappedLayout || this.insideInlineLike ? 1 : 2, lineLength, this.props.gridSize);
-    let snapPoints = snapTargets.filter(width => width >= minimumWidth);
-    const $pos = this.$pos;
+    snapTargets.push(lineLength - offsetLeft)
+    const minimumWidth = calcPxFromColumns(
+      this.wrappedLayout || this.insideInlineLike ? 1 : 2,
+      lineLength,
+      this.props.gridSize
+    )
+    let snapPoints = snapTargets.filter(width => width >= minimumWidth)
+    const $pos = this.$pos
 
     if (!$pos) {
-      return snapPoints;
+      return snapPoints
     }
 
-    const isTopLevel = $pos.parent.type.name === 'doc';
+    const isTopLevel = $pos.parent.type.name === 'doc'
 
     if (isTopLevel) {
-      snapPoints.push(akEditorWideLayoutWidth);
-      const fullWidthPoint = containerWidth - akEditorBreakoutPadding;
+      snapPoints.push(akEditorWideLayoutWidth)
+      const fullWidthPoint = containerWidth - akEditorBreakoutPadding
 
       if (fullWidthPoint > akEditorWideLayoutWidth) {
-        snapPoints.push(fullWidthPoint);
+        snapPoints.push(fullWidthPoint)
       }
     }
 
-    return snapPoints;
+    return snapPoints
   }
 
   get insideInlineLike() {
-    const $pos = this.$pos;
+    const $pos = this.$pos
 
     if (!$pos) {
-      return false;
+      return false
     }
 
-    const {
-      listItem
-    } = this.props.view.state.schema.nodes;
-    return !!findParentNodeOfTypeClosestToPos($pos, [listItem]);
+    const { listItem } = this.props.view.state.schema.nodes
+    return !!findParentNodeOfTypeClosestToPos($pos, [listItem])
   }
 
   render() {
@@ -274,38 +296,49 @@ export default class ResizableEmbedCard extends React.Component {
       containerWidth,
       fullWidthMode,
       children
-    } = this.props;
-    const pxWidth = this.calcPxWidth(); // scale, keeping aspect ratio
+    } = this.props
+    const pxWidth = this.calcPxWidth() // scale, keeping aspect ratio
 
-    const height = origHeight / origWidth * pxWidth;
-    const width = pxWidth;
-    const enable = {};
+    const height = (origHeight / origWidth) * pxWidth
+    const width = pxWidth
+    const enable = {}
     handleSides.forEach(side => {
-      const oppositeSide = side === 'left' ? 'right' : 'left';
-      enable[side] = ['full-width', 'wide', 'center'].concat(`wrap-${oppositeSide}`).concat(`align-${imageAlignmentMap[oppositeSide]}`).indexOf(layout) > -1;
+      const oppositeSide = side === 'left' ? 'right' : 'left'
+      enable[side] =
+        ['full-width', 'wide', 'center']
+          .concat(`wrap-${oppositeSide}`)
+          .concat(`align-${imageAlignmentMap[oppositeSide]}`)
+          .indexOf(layout) > -1
 
       if (side === 'left' && this.insideInlineLike) {
-        enable[side] = false;
+        enable[side] = false
       }
-    });
-    return /*#__PURE__*/React.createElement(Wrapper, {
-      ratio: (height / width * 100).toFixed(3),
-      layout: layout,
-      isResized: !!pctWidth,
-      containerWidth: containerWidth || origWidth,
-      innerRef: elem => this.wrapper = elem,
-      fullWidthMode: fullWidthMode
-    }, /*#__PURE__*/React.createElement(Resizer, _extends({}, this.props, {
-      width: width,
-      height: height,
-      enable: enable,
-      calcNewSize: this.calcNewSize,
-      snapPoints: this.calcSnapPoints(),
-      scaleFactor: !this.wrappedLayout && !this.insideInlineLike ? 2 : 1,
-      highlights: this.highlights,
-      innerPadding: 12,
-      nodeType: "embed"
-    }), children));
+    })
+    return /*#__PURE__*/ React.createElement(
+      Wrapper,
+      {
+        ratio: ((height / width) * 100).toFixed(3),
+        layout: layout,
+        isResized: !!pctWidth,
+        containerWidth: containerWidth || origWidth,
+        innerRef: elem => (this.wrapper = elem),
+        fullWidthMode: fullWidthMode
+      },
+      /*#__PURE__*/ React.createElement(
+        Resizer,
+        _extends({}, this.props, {
+          width: width,
+          height: height,
+          enable: enable,
+          calcNewSize: this.calcNewSize,
+          snapPoints: this.calcSnapPoints(),
+          scaleFactor: !this.wrappedLayout && !this.insideInlineLike ? 2 : 1,
+          highlights: this.highlights,
+          innerPadding: 12,
+          nodeType: 'embed'
+        }),
+        children
+      )
+    )
   }
-
 }

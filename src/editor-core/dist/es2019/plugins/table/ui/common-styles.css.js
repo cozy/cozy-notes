@@ -1,19 +1,63 @@
-import { css } from 'styled-components';
-import { tableMarginTop, tableSharedStyle } from '@atlaskit/editor-common';
-import { fontSize } from '@atlaskit/theme/constants';
-import { N40A, B300, N300, N20A, N0, R500 } from '@atlaskit/theme/colors';
-import { SelectionStyle, getSelectionStyles, akEditorSmallZIndex, akEditorTableNumberColumnWidth, akEditorStickyHeaderZIndex, akEditorTableToolbarSize, akEditorUnitZIndex, akEditorSelectedNodeClassName } from '@atlaskit/editor-shared-styles';
-import { scrollbarStyles } from '../../../ui/styles';
-import { TableCssClassName as ClassName } from '../types';
-import { tableCellBackgroundColor, tableToolbarColor, tableBorderColor, tableCellSelectedColor, tableToolbarSelectedColor, tableBorderSelectedColor, tableCellDeleteColor, tableBorderDeleteColor, tableToolbarDeleteColor, tableBorderRadiusSize, tablePadding, tableScrollbarOffset, resizeHandlerAreaWidth, resizeLineWidth, tableToolbarSize, tableInsertColumnButtonSize, tableControlsSpacing, tableTextColor, stickyRowZIndex } from './consts';
-import { HeaderButton, HeaderButtonHover, HeaderButtonDanger, insertColumnButtonWrapper, insertRowButtonWrapper, columnControlsLineMarker, DeleteButton, OverflowShadow, columnControlsDecoration, hoveredDeleteButton, hoveredCell, hoveredWarningCell, resizeHandle, InsertMarker } from './ui-styles.css';
+import { css } from 'styled-components'
+import { tableMarginTop, tableSharedStyle } from '@atlaskit/editor-common'
+import { fontSize } from '@atlaskit/theme/constants'
+import { N40A, B300, N300, N20A, N0, R500 } from '@atlaskit/theme/colors'
+import {
+  SelectionStyle,
+  getSelectionStyles,
+  akEditorSmallZIndex,
+  akEditorTableNumberColumnWidth,
+  akEditorStickyHeaderZIndex,
+  akEditorTableToolbarSize,
+  akEditorUnitZIndex,
+  akEditorSelectedNodeClassName
+} from '@atlaskit/editor-shared-styles'
+import { scrollbarStyles } from '../../../ui/styles'
+import { TableCssClassName as ClassName } from '../types'
+import {
+  tableCellBackgroundColor,
+  tableToolbarColor,
+  tableBorderColor,
+  tableCellSelectedColor,
+  tableToolbarSelectedColor,
+  tableBorderSelectedColor,
+  tableCellDeleteColor,
+  tableBorderDeleteColor,
+  tableToolbarDeleteColor,
+  tableBorderRadiusSize,
+  tablePadding,
+  tableScrollbarOffset,
+  resizeHandlerAreaWidth,
+  resizeLineWidth,
+  tableToolbarSize,
+  tableInsertColumnButtonSize,
+  tableControlsSpacing,
+  tableTextColor,
+  stickyRowZIndex
+} from './consts'
+import {
+  HeaderButton,
+  HeaderButtonHover,
+  HeaderButtonDanger,
+  insertColumnButtonWrapper,
+  insertRowButtonWrapper,
+  columnControlsLineMarker,
+  DeleteButton,
+  OverflowShadow,
+  columnControlsDecoration,
+  hoveredDeleteButton,
+  hoveredCell,
+  hoveredWarningCell,
+  resizeHandle,
+  InsertMarker
+} from './ui-styles.css'
 const rangeSelectionStyles = `
 .${ClassName.NODEVIEW_WRAPPER}.${akEditorSelectedNodeClassName} table tbody tr {
   th,td {
     ${getSelectionStyles([SelectionStyle.Blanket, SelectionStyle.Border])}
   }
 }
-`;
+`
 export const tableStyles = css`
   .${ClassName.LAYOUT_BUTTON} button {
     background: ${N20A};
@@ -66,7 +110,9 @@ export const tableStyles = css`
     /* Ends Delete button*/
 
     /* sticky styles */
-    .${ClassName.TABLE_STICKY} .${ClassName.NUMBERED_COLUMN} .${ClassName.NUMBERED_COLUMN_BUTTON}:first-child {
+    .${ClassName.TABLE_STICKY} .${ClassName.NUMBERED_COLUMN} .${
+  ClassName.NUMBERED_COLUMN_BUTTON
+}:first-child {
       margin-top: ${8 + 2}px;
       width: ${akEditorTableNumberColumnWidth}px;
 
@@ -100,7 +146,9 @@ export const tableStyles = css`
       z-index: 0;
     }
 
-    .${ClassName.TABLE_STICKY} .${ClassName.ROW_CONTROLS} .${ClassName.ROW_CONTROLS_BUTTON_WRAP}.sticky {
+    .${ClassName.TABLE_STICKY} .${ClassName.ROW_CONTROLS} .${
+  ClassName.ROW_CONTROLS_BUTTON_WRAP
+}.sticky {
       position: fixed !important;
       z-index: ${akEditorStickyHeaderZIndex} !important;
       display: flex;
@@ -142,7 +190,9 @@ export const tableStyles = css`
       z-index: ${stickyRowZIndex + 1};
     }
 
-    .${ClassName.WITH_CONTROLS}.${ClassName.TABLE_STICKY} .${ClassName.TABLE_STICKY_SHADOW} {
+    .${ClassName.WITH_CONTROLS}.${ClassName.TABLE_STICKY} .${
+  ClassName.TABLE_STICKY_SHADOW
+} {
       padding-bottom: ${tableToolbarSize}px;
     }
 
@@ -198,7 +248,9 @@ export const tableStyles = css`
       padding-top: ${tableControlsSpacing}px;
     }
 
-    .${ClassName.WITH_CONTROLS}.${ClassName.TABLE_STICKY} .${ClassName.NUMBERED_COLUMN} .${ClassName.NUMBERED_COLUMN_BUTTON}:first-child {
+    .${ClassName.WITH_CONTROLS}.${ClassName.TABLE_STICKY} .${
+  ClassName.NUMBERED_COLUMN
+} .${ClassName.NUMBERED_COLUMN_BUTTON}:first-child {
       margin-top: ${tableControlsSpacing + 2}px;
     }
 
@@ -308,7 +360,9 @@ export const tableStyles = css`
       background: ${tableToolbarSelectedColor};
       cursor: pointer;
     }
-    :not(.${ClassName.IS_RESIZING}) .${ClassName.CONTROLS_CORNER_BUTTON}.${ClassName.HOVERED_CELL_IN_DANGER} {
+    :not(.${ClassName.IS_RESIZING}) .${ClassName.CONTROLS_CORNER_BUTTON}.${
+  ClassName.HOVERED_CELL_IN_DANGER
+} {
       border-color: ${tableBorderDeleteColor};
       background: ${tableToolbarDeleteColor};
     }
@@ -468,7 +522,9 @@ export const tableStyles = css`
       .${ClassName.SELECTED_CELL}::after {
         background: ${tableCellSelectedColor};
       }
-      th.${ClassName.HOVERED_CELL_IN_DANGER}::after, td.${ClassName.HOVERED_CELL_IN_DANGER}::after {
+      th.${ClassName.HOVERED_CELL_IN_DANGER}::after, td.${
+  ClassName.HOVERED_CELL_IN_DANGER
+}::after {
         background: ${tableCellDeleteColor};
       }
     }
@@ -506,18 +562,18 @@ export const tableStyles = css`
     cursor: col-resize;
   }
 
-`;
+`
 export const tableFullPageEditorStyles = css`
   .ProseMirror .${ClassName.TABLE_NODE_WRAPPER} > table {
     margin-left: 0;
     margin-right: 0;
     width: 100%;
   }
-`;
+`
 export const tableCommentEditorStyles = css`
   .ProseMirror .${ClassName.TABLE_NODE_WRAPPER} > table {
     margin-left: 0;
     margin-right: 0;
     ${scrollbarStyles};
   }
-`;
+`

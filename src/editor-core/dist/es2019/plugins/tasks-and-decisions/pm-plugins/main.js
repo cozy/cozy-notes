@@ -1,32 +1,43 @@
-import { NodeSelection, Plugin } from 'prosemirror-state';
-import { uuid } from '@atlaskit/adf-schema';
-import { nodesBetweenChanged } from '../../../utils';
-import { createSelectionClickHandler } from '../../selection/utils';
-import { decisionItemNodeView } from '../nodeviews/decisionItem';
-import { taskItemNodeViewFactory } from '../nodeviews/taskItem';
-import { stateKey } from './plugin-key';
-var ACTIONS;
-
-(function (ACTIONS) {
-  ACTIONS[ACTIONS["SET_CONTEXT_PROVIDER"] = 0] = "SET_CONTEXT_PROVIDER";
-})(ACTIONS || (ACTIONS = {}));
+import { NodeSelection, Plugin } from 'prosemirror-state'
+import { uuid } from '@atlaskit/adf-schema'
+import { nodesBetweenChanged } from '../../../utils'
+import { createSelectionClickHandler } from '../../selection/utils'
+import { decisionItemNodeView } from '../nodeviews/decisionItem'
+import { taskItemNodeViewFactory } from '../nodeviews/taskItem'
+import { stateKey } from './plugin-key'
+var ACTIONS
+;(function(ACTIONS) {
+  ACTIONS[(ACTIONS['SET_CONTEXT_PROVIDER'] = 0)] = 'SET_CONTEXT_PROVIDER'
+})(ACTIONS || (ACTIONS = {}))
 
 const setContextIdentifierProvider = provider => (state, dispatch) => {
   if (dispatch) {
-    dispatch(state.tr.setMeta(stateKey, {
-      action: ACTIONS.SET_CONTEXT_PROVIDER,
-      data: provider
-    }));
+    dispatch(
+      state.tr.setMeta(stateKey, {
+        action: ACTIONS.SET_CONTEXT_PROVIDER,
+        data: provider
+      })
+    )
   }
 
-  return true;
-};
+  return true
+}
 
-export function createPlugin(portalProviderAPI, eventDispatcher, providerFactory, dispatch, useLongPressSelection = false) {
+export function createPlugin(
+  portalProviderAPI,
+  eventDispatcher,
+  providerFactory,
+  dispatch,
+  useLongPressSelection = false
+) {
   return new Plugin({
     props: {
       nodeViews: {
-        taskItem: taskItemNodeViewFactory(portalProviderAPI, eventDispatcher, providerFactory),
+        taskItem: taskItemNodeViewFactory(
+          portalProviderAPI,
+          eventDispatcher,
+          providerFactory
+        ),
         decisionItem: decisionItemNodeView(portalProviderAPI, eventDispatcher)
       },
 
@@ -37,78 +48,82 @@ export function createPlugin(portalProviderAPI, eventDispatcher, providerFactory
         // TODO: ProseMirror should already do this by default
         // Tech debt to investigate why we need a custom handler here:
         // https://product-fabric.atlassian.net/browse/ED-9278
-        const {
-          state,
-          dispatch
-        } = view;
-        const {
-          tr
-        } = state;
+        const { state, dispatch } = view
+        const { tr } = state
 
-        if (state.selection instanceof NodeSelection && state.selection.node.type === view.state.schema.nodes.decisionItem) {
-          state.selection.replace(tr);
-          tr.insertText(text);
+        if (
+          state.selection instanceof NodeSelection &&
+          state.selection.node.type === view.state.schema.nodes.decisionItem
+        ) {
+          state.selection.replace(tr)
+          tr.insertText(text)
 
           if (dispatch) {
-            dispatch(tr);
+            dispatch(tr)
           }
 
-          return true;
+          return true
         }
 
-        return false;
+        return false
       },
 
-      handleClickOn: createSelectionClickHandler(['decisionItem'], target => target.hasAttribute('data-decision-wrapper') || target.getAttribute('aria-label') === 'Decision', {
-        useLongPressSelection
-      })
+      handleClickOn: createSelectionClickHandler(
+        ['decisionItem'],
+        target =>
+          target.hasAttribute('data-decision-wrapper') ||
+          target.getAttribute('aria-label') === 'Decision',
+        {
+          useLongPressSelection
+        }
+      )
     },
     state: {
       init() {
         return {
           insideTaskDecisionItem: false
-        };
+        }
       },
 
       apply(tr, pluginState) {
-        const {
-          action,
-          data
-        } = tr.getMeta(stateKey) || {
+        const { action, data } = tr.getMeta(stateKey) || {
           action: null,
           data: null
-        };
-        let newPluginState = pluginState;
+        }
+        let newPluginState = pluginState
 
         switch (action) {
           case ACTIONS.SET_CONTEXT_PROVIDER:
-            newPluginState = { ...pluginState,
-              contextIdentifierProvider: data
-            };
-            break;
+            newPluginState = { ...pluginState, contextIdentifierProvider: data }
+            break
         }
 
-        dispatch(stateKey, newPluginState);
-        return newPluginState;
+        dispatch(stateKey, newPluginState)
+        return newPluginState
       }
-
     },
 
     view(editorView) {
       const providerHandler = (name, providerPromise) => {
         if (name === 'contextIdentifierProvider') {
           if (!providerPromise) {
-            setContextIdentifierProvider(undefined)(editorView.state, editorView.dispatch);
+            setContextIdentifierProvider(undefined)(
+              editorView.state,
+              editorView.dispatch
+            )
           } else {
             providerPromise.then(provider => {
-              setContextIdentifierProvider(provider)(editorView.state, editorView.dispatch);
-            });
+              setContextIdentifierProvider(provider)(
+                editorView.state,
+                editorView.dispatch
+              )
+            })
           }
         }
-      };
+      }
 
-      providerFactory.subscribe('contextIdentifierProvider', providerHandler);
-      return {};
+      providerFactory.subscribe('contextIdentifierProvider', providerHandler)
+      return {}
     },
 
     key: stateKey,
@@ -122,13 +137,12 @@ export function createPlugin(portalProviderAPI, eventDispatcher, providerFactory
      * Note: we currently do not handle the edge case where two nodes may have the same localId
      */
     appendTransaction: (transactions, _oldState, newState) => {
-      const tr = newState.tr;
-      let modified = false;
+      const tr = newState.tr
+      let modified = false
       transactions.forEach(transaction => {
         if (!transaction.docChanged) {
-          return;
+          return
         } // Adds a unique id to a node
-
 
         nodesBetweenChanged(transaction, (node, pos) => {
           const {
@@ -136,30 +150,33 @@ export function createPlugin(portalProviderAPI, eventDispatcher, providerFactory
             decisionItem,
             taskList,
             taskItem
-          } = newState.schema.nodes;
+          } = newState.schema.nodes
 
-          if (!!node.type && (node.type === decisionList || node.type === decisionItem || node.type === taskList || node.type === taskItem)) {
-            const {
-              localId,
-              ...rest
-            } = node.attrs;
+          if (
+            !!node.type &&
+            (node.type === decisionList ||
+              node.type === decisionItem ||
+              node.type === taskList ||
+              node.type === taskItem)
+          ) {
+            const { localId, ...rest } = node.attrs
 
             if (localId === undefined || localId === null || localId === '') {
               tr.setNodeMarkup(pos, undefined, {
                 localId: uuid.generate(),
                 ...rest
-              });
-              modified = true;
+              })
+              modified = true
             }
           }
-        });
-      });
+        })
+      })
 
       if (modified) {
-        return tr.setMeta('addToHistory', false);
+        return tr.setMeta('addToHistory', false)
       }
 
-      return;
+      return
     }
-  });
+  })
 }

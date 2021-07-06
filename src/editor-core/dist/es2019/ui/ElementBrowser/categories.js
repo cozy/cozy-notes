@@ -1,39 +1,51 @@
-import { defineMessages } from 'react-intl';
+import { defineMessages } from 'react-intl'
 export function getCategories(intl) {
-  return [{
-    title: intl.formatMessage(messages.all),
-    name: 'all'
-  }, {
-    title: intl.formatMessage(messages.formatting),
-    name: 'formatting'
-  }, {
-    title: intl.formatMessage(messages['confluence-content']),
-    name: 'confluence-content'
-  }, {
-    title: intl.formatMessage(messages.media),
-    name: 'media'
-  }, {
-    title: intl.formatMessage(messages.visuals),
-    name: 'visuals'
-  }, {
-    title: intl.formatMessage(messages.navigation),
-    name: 'navigation'
-  }, {
-    title: intl.formatMessage(messages['external-content']),
-    name: 'external-content'
-  }, {
-    title: intl.formatMessage(messages.communication),
-    name: 'communication'
-  }, {
-    title: intl.formatMessage(messages.reporting),
-    name: 'reporting'
-  }, {
-    title: intl.formatMessage(messages.admin),
-    name: 'admin'
-  }, {
-    title: intl.formatMessage(messages.development),
-    name: 'development'
-  }];
+  return [
+    {
+      title: intl.formatMessage(messages.all),
+      name: 'all'
+    },
+    {
+      title: intl.formatMessage(messages.formatting),
+      name: 'formatting'
+    },
+    {
+      title: intl.formatMessage(messages['confluence-content']),
+      name: 'confluence-content'
+    },
+    {
+      title: intl.formatMessage(messages.media),
+      name: 'media'
+    },
+    {
+      title: intl.formatMessage(messages.visuals),
+      name: 'visuals'
+    },
+    {
+      title: intl.formatMessage(messages.navigation),
+      name: 'navigation'
+    },
+    {
+      title: intl.formatMessage(messages['external-content']),
+      name: 'external-content'
+    },
+    {
+      title: intl.formatMessage(messages.communication),
+      name: 'communication'
+    },
+    {
+      title: intl.formatMessage(messages.reporting),
+      name: 'reporting'
+    },
+    {
+      title: intl.formatMessage(messages.admin),
+      name: 'admin'
+    },
+    {
+      title: intl.formatMessage(messages.development),
+      name: 'development'
+    }
+  ]
 }
 const messages = defineMessages({
   all: {
@@ -91,4 +103,4 @@ const messages = defineMessages({
     defaultMessage: 'Development',
     description: 'development'
   }
-});
+})

@@ -45,63 +45,59 @@
  *
  */
 function isFunction(x) {
-  return typeof x === 'function';
+  return typeof x === 'function'
 }
 
 export function pluginFactory(pluginKey, reducer, options = {}) {
-  const {
-    mapping,
-    onDocChanged,
-    onSelectionChanged
-  } = options;
+  const { mapping, onDocChanged, onSelectionChanged } = options
   return {
     createPluginState(dispatch, initialState) {
       return {
-        init: (_, state) => isFunction(initialState) ? initialState(state) : initialState,
+        init: (_, state) =>
+          isFunction(initialState) ? initialState(state) : initialState,
         apply: (tr, _pluginState) => {
-          const oldState = mapping ? mapping(tr, _pluginState) : _pluginState;
-          let newState = oldState;
-          const meta = tr.getMeta(pluginKey);
+          const oldState = mapping ? mapping(tr, _pluginState) : _pluginState
+          let newState = oldState
+          const meta = tr.getMeta(pluginKey)
 
           if (meta) {
-            newState = reducer(oldState, meta);
+            newState = reducer(oldState, meta)
           }
 
           if (onDocChanged && tr.docChanged) {
-            newState = onDocChanged(tr, newState);
+            newState = onDocChanged(tr, newState)
           } else if (onSelectionChanged && tr.selectionSet) {
-            newState = onSelectionChanged(tr, newState);
+            newState = onSelectionChanged(tr, newState)
           }
 
           if (newState !== oldState) {
-            dispatch(pluginKey, newState);
+            dispatch(pluginKey, newState)
           }
 
-          return newState;
+          return newState
         }
-      };
+      }
     },
 
     createCommand(action, transform) {
       return (state, dispatch) => {
         if (dispatch) {
-          const tr = transform ? transform(state.tr, state) : state.tr;
-          const resolvedAction = isFunction(action) ? action(state) : action;
+          const tr = transform ? transform(state.tr, state) : state.tr
+          const resolvedAction = isFunction(action) ? action(state) : action
 
           if (tr && resolvedAction) {
-            dispatch(tr.setMeta(pluginKey, resolvedAction));
+            dispatch(tr.setMeta(pluginKey, resolvedAction))
           } else {
-            return false;
+            return false
           }
         }
 
-        return true;
-      };
+        return true
+      }
     },
 
     getPluginState(state) {
-      return pluginKey.getState(state);
+      return pluginKey.getState(state)
     }
-
-  };
+  }
 }

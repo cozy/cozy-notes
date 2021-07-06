@@ -1,29 +1,34 @@
-import { tableCellSelector, tableHeaderSelector, tablePrefixSelector } from '@atlaskit/adf-schema';
-import { TableSharedCssClassName } from '@atlaskit/editor-common';
-export let SortOrder;
+import {
+  tableCellSelector,
+  tableHeaderSelector,
+  tablePrefixSelector
+} from '@atlaskit/adf-schema'
+import { TableSharedCssClassName } from '@atlaskit/editor-common'
+export let SortOrder
+;(function(SortOrder) {
+  SortOrder['ASC'] = 'asc'
+  SortOrder['DESC'] = 'desc'
+})(SortOrder || (SortOrder = {}))
 
-(function (SortOrder) {
-  SortOrder["ASC"] = "asc";
-  SortOrder["DESC"] = "desc";
-})(SortOrder || (SortOrder = {}));
+export const RESIZE_HANDLE_AREA_DECORATION_GAP = 30
+export let TableDecorations
+;(function(TableDecorations) {
+  TableDecorations['ALL_CONTROLS_HOVER'] = 'CONTROLS_HOVER'
+  TableDecorations['ROW_CONTROLS_HOVER'] = 'ROW_CONTROLS_HOVER'
+  TableDecorations['COLUMN_CONTROLS_HOVER'] = 'COLUMN_CONTROLS_HOVER'
+  TableDecorations['TABLE_CONTROLS_HOVER'] = 'TABLE_CONTROLS_HOVER'
+  TableDecorations['CELL_CONTROLS_HOVER'] = 'CELL_CONTROLS_HOVER'
+  TableDecorations['COLUMN_CONTROLS_DECORATIONS'] =
+    'COLUMN_CONTROLS_DECORATIONS'
+  TableDecorations['COLUMN_SELECTED'] = 'COLUMN_SELECTED'
+  TableDecorations['COLUMN_RESIZING_HANDLE'] = 'COLUMN_RESIZING_HANDLE'
+  TableDecorations['COLUMN_RESIZING_HANDLE_LINE'] =
+    'COLUMN_RESIZING_HANDLE_LINE'
+  TableDecorations['LAST_CELL_ELEMENT'] = 'LAST_CELL_ELEMENT'
+})(TableDecorations || (TableDecorations = {}))
 
-export const RESIZE_HANDLE_AREA_DECORATION_GAP = 30;
-export let TableDecorations;
-
-(function (TableDecorations) {
-  TableDecorations["ALL_CONTROLS_HOVER"] = "CONTROLS_HOVER";
-  TableDecorations["ROW_CONTROLS_HOVER"] = "ROW_CONTROLS_HOVER";
-  TableDecorations["COLUMN_CONTROLS_HOVER"] = "COLUMN_CONTROLS_HOVER";
-  TableDecorations["TABLE_CONTROLS_HOVER"] = "TABLE_CONTROLS_HOVER";
-  TableDecorations["CELL_CONTROLS_HOVER"] = "CELL_CONTROLS_HOVER";
-  TableDecorations["COLUMN_CONTROLS_DECORATIONS"] = "COLUMN_CONTROLS_DECORATIONS";
-  TableDecorations["COLUMN_SELECTED"] = "COLUMN_SELECTED";
-  TableDecorations["COLUMN_RESIZING_HANDLE"] = "COLUMN_RESIZING_HANDLE";
-  TableDecorations["COLUMN_RESIZING_HANDLE_LINE"] = "COLUMN_RESIZING_HANDLE_LINE";
-  TableDecorations["LAST_CELL_ELEMENT"] = "LAST_CELL_ELEMENT";
-})(TableDecorations || (TableDecorations = {}));
-
-export const TableCssClassName = { ...TableSharedCssClassName,
+export const TableCssClassName = {
+  ...TableSharedCssClassName,
   COLUMN_CONTROLS: `${tablePrefixSelector}-column-controls`,
   COLUMN_CONTROLS_DECORATIONS: `${tablePrefixSelector}-column-controls-decoration`,
   COLUMN_SELECTED: `${tablePrefixSelector}-column__selected`,
@@ -82,4 +87,4 @@ export const TableCssClassName = { ...TableSharedCssClassName,
   TOP_LEFT_CELL: 'table > tbody > tr:nth-child(2) > td:nth-child(1)',
   LAST_ITEM_IN_CELL: `${tablePrefixSelector}-last-item-in-cell`,
   WITH_RESIZE_LINE: `${tablePrefixSelector}-column-resize-line`
-};
+}

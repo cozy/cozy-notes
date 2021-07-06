@@ -1,21 +1,20 @@
-import { useEffect, useMemo, useCallback } from 'react';
+import { useEffect, useMemo, useCallback } from 'react'
 
 const safeError = message => {
   if (process.env.NODE_ENV !== 'production') {
-    throw new Error(message);
+    throw new Error(message)
   } // eslint-disable-next-line no-console
 
-
-  console.error(message);
-};
+  console.error(message)
+}
 
 const createAbortController = () => {
   if (typeof AbortController === 'undefined') {
-    safeError('Missing AbortController');
+    safeError('Missing AbortController')
   }
 
-  return new AbortController();
-};
+  return new AbortController()
+}
 
 /**
  * Similar to useEffect but integrated with the AbortController to make it useful for async operations.
@@ -29,21 +28,27 @@ const createAbortController = () => {
  * @param deps
  */
 export function useAbortableEffect(callback, deps) {
-  const abortController = useMemo(() => createAbortController(), // eslint-disable-next-line react-hooks/exhaustive-deps
-  deps);
-  const abort = useCallback(() => abortController.abort(), [abortController]); // AFP-2511 TODO: Fix automatic suppressions below
+  const abortController = useMemo(
+    () => createAbortController(), // eslint-disable-next-line react-hooks/exhaustive-deps
+    deps
+  )
+  const abort = useCallback(() => abortController.abort(), [abortController]) // AFP-2511 TODO: Fix automatic suppressions below
   // eslint-disable-next-line react-hooks/exhaustive-deps
 
-  const fn = useCallback(callback, deps);
+  const fn = useCallback(callback, deps)
   useEffect(() => {
-    const teardown = fn(abortController.signal);
+    const teardown = fn(abortController.signal)
     return () => {
       if (typeof teardown === 'function') {
-        teardown();
+        teardown()
       }
 
-      abort();
-    };
-  }, [abortController, abort, fn, // eslint-disable-next-line react-hooks/exhaustive-deps
-  ...deps]);
+      abort()
+    }
+  }, [
+    abortController,
+    abort,
+    fn, // eslint-disable-next-line react-hooks/exhaustive-deps
+    ...deps
+  ])
 }

@@ -1,15 +1,15 @@
-import classnames from 'classnames';
-import { Plugin } from 'prosemirror-state';
-import { TableCssClassName as ClassName } from '../../types';
-import { setResizeHandlePos } from './commands';
-import { handleMouseDown } from './event-handlers';
-import { createPluginState, getPluginState } from './plugin-factory';
-import { pluginKey } from './plugin-key';
-import { getResizeCellPos } from './utils';
-export function createPlugin(dispatch, {
-  lastColumnResizable = true,
-  dynamicTextSizing = false
-}) {
+import classnames from 'classnames'
+import { Plugin } from 'prosemirror-state'
+import { TableCssClassName as ClassName } from '../../types'
+import { setResizeHandlePos } from './commands'
+import { handleMouseDown } from './event-handlers'
+import { createPluginState, getPluginState } from './plugin-factory'
+import { pluginKey } from './plugin-key'
+import { getResizeCellPos } from './utils'
+export function createPlugin(
+  dispatch,
+  { lastColumnResizable = true, dynamicTextSizing = false }
+) {
   return new Plugin({
     key: pluginKey,
     state: createPluginState(dispatch, {
@@ -21,40 +21,35 @@ export function createPlugin(dispatch, {
     }),
     props: {
       attributes(state) {
-        const pluginState = getPluginState(state);
+        const pluginState = getPluginState(state)
         return {
           class: classnames(ClassName.RESIZING_PLUGIN, {
             [ClassName.RESIZE_CURSOR]: pluginState.resizeHandlePos !== null,
             [ClassName.IS_RESIZING]: !!pluginState.dragging
           })
-        };
+        }
       },
 
       handleDOMEvents: {
         mousedown(view, event) {
-          const {
-            state
-          } = view;
+          const { state } = view
           const resizeHandlePos = // we're setting `resizeHandlePos` via command in unit tests
-          getPluginState(state).resizeHandlePos || getResizeCellPos(view, event, lastColumnResizable);
-          const {
-            dragging
-          } = getPluginState(state);
+            getPluginState(state).resizeHandlePos ||
+            getResizeCellPos(view, event, lastColumnResizable)
+          const { dragging } = getPluginState(state)
 
           if (resizeHandlePos !== null && !dragging) {
-            if (handleMouseDown(view, event, resizeHandlePos, dynamicTextSizing)) {
-              const {
-                state,
-                dispatch
-              } = view;
-              return setResizeHandlePos(resizeHandlePos)(state, dispatch);
+            if (
+              handleMouseDown(view, event, resizeHandlePos, dynamicTextSizing)
+            ) {
+              const { state, dispatch } = view
+              return setResizeHandlePos(resizeHandlePos)(state, dispatch)
             }
           }
 
-          return false;
+          return false
         }
-
       }
     }
-  });
+  })
 }

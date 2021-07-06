@@ -1,7 +1,7 @@
-import { css } from 'styled-components';
-import { N0, N20 } from '@atlaskit/theme/colors';
-import { borderRadius } from '@atlaskit/theme/constants';
-import { contextualMenuTriggerSize } from '../consts';
+import { css } from 'styled-components'
+import { N0, N20 } from '@atlaskit/theme/colors'
+import { borderRadius } from '@atlaskit/theme/constants'
+import { contextualMenuTriggerSize } from '../consts'
 export const tableFloatingCellButtonStyles = css`
   > div {
     background: ${N20};
@@ -23,4 +23,4 @@ export const tableFloatingCellButtonStyles = css`
   && span {
     pointer-events: none;
   }
-`;
+`

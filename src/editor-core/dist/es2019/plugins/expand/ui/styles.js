@@ -1,43 +1,48 @@
-import { css } from 'styled-components';
-import { themed } from '@atlaskit/theme/components';
-import { gridSize } from '@atlaskit/theme/constants';
-import { R50, R300, N40A, N50A, N80A, DN50, R200 } from '@atlaskit/theme/colors';
-import { sharedExpandStyles } from '@atlaskit/editor-common';
-import { SelectionStyle, getSelectionStyles, akLayoutGutterOffset, akEditorSelectedNodeClassName } from '@atlaskit/editor-shared-styles';
-import { BreakoutCssClassName } from '../../breakout/constants';
-import { expandClassNames } from './class-names';
+import { css } from 'styled-components'
+import { themed } from '@atlaskit/theme/components'
+import { gridSize } from '@atlaskit/theme/constants'
+import { R50, R300, N40A, N50A, N80A, DN50, R200 } from '@atlaskit/theme/colors'
+import { sharedExpandStyles } from '@atlaskit/editor-common'
+import {
+  SelectionStyle,
+  getSelectionStyles,
+  akLayoutGutterOffset,
+  akEditorSelectedNodeClassName
+} from '@atlaskit/editor-shared-styles'
+import { BreakoutCssClassName } from '../../breakout/constants'
+import { expandClassNames } from './class-names'
 const EXPAND_SELECTED_BACKGROUND = themed({
   light: 'rgba(255, 255, 255, 0.6)',
   dark: 'rgba(9, 10, 11, 0.29)'
-});
+})
 const EXPAND_ICON_COLOR = css`
   color: ${themed({
-  light: N80A,
-  dark: '#d9dde3'
-})};
-`;
+    light: N80A,
+    dark: '#d9dde3'
+  })};
+`
 const ACTIVE_STATE_BACKGROUND_COLOR = themed({
   dark: `#0C294F`
-});
+})
 const ACTIVE_STATE_BORDER = themed({
   dark: `1px solid #4794ff`
-});
+})
 const ACTIVE_STATE_BORDER_RADIUS = themed({
   dark: '3px'
-});
+})
 const DANGER_STATE_BACKGROUND_COLOR = themed({
   light: R50,
   dark: '#441C13'
-});
+})
 const DANGER_STATE_BORDER = themed({
   dark: `1px solid ${R200}`
-});
+})
 const DANGER_STATE_BORDER_COLOR = themed({
   light: R300
-});
+})
 const DANGER_STATE_BORDER_RADIUS = themed({
   dark: '3px'
-});
+})
 export const expandStyles = css`
   .${expandClassNames.icon} > div {
     display: flex;
@@ -103,9 +108,9 @@ export const expandStyles = css`
   .${expandClassNames.expanded} {
     background: ${EXPAND_SELECTED_BACKGROUND};
     border-color: ${themed({
-  light: N40A,
-  dark: DN50
-})};
+      light: N40A,
+      dark: DN50
+    })};
 
     .${expandClassNames.content} {
       padding-top: ${gridSize}px;
@@ -143,11 +148,11 @@ export const expandStyles = css`
 
       &:hover {
         border-color: ${themed({
-  light: N50A,
-  dark: DN50
-})};
+          light: N50A,
+          dark: DN50
+        })};
         background: ${EXPAND_SELECTED_BACKGROUND};
       }
     }
   }
-`;
+`

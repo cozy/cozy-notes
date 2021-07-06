@@ -11,15 +11,18 @@ export default {
   'fabric.editor.addAltText': '대체 텍스트',
   'fabric.editor.alignment': '정렬',
   'fabric.editor.altText': '대체 텍스트',
-  'fabric.editor.alttext.validation': '대체 텍스트에서 특수 문자를 지워 주세요.',
+  'fabric.editor.alttext.validation':
+    '대체 텍스트에서 특수 문자를 지워 주세요.',
   'fabric.editor.annotate': '주석 달기',
   'fabric.editor.annotationToolbar': '주석 도구 모음',
   'fabric.editor.backLink': '뒤로 가기',
-  'fabric.editor.blockCardUnavailable': '인라인 링크는 {node} 내부에 있으며 보기를 변경할 수 없습니다.',
+  'fabric.editor.blockCardUnavailable':
+    '인라인 링크는 {node} 내부에 있으며 보기를 변경할 수 없습니다.',
   'fabric.editor.blockquote': '인용',
   'fabric.editor.blockquote.description': '인용 또는 인용구 삽입',
   'fabric.editor.bold': '굵게',
-  'fabric.editor.canNotSortTable': "⚠️ You can't sort a table with merged cells",
+  'fabric.editor.canNotSortTable':
+    "⚠️ You can't sort a table with merged cells",
   'fabric.editor.cardFloatingControls': '카드 옵션',
   'fabric.editor.cellBackground': '셀 배경',
   'fabric.editor.cellOptions': '셀 옵션',
@@ -37,13 +40,15 @@ export default {
   'fabric.editor.columns': '레이아웃',
   'fabric.editor.columns.description': '섹션으로 페이지 구성',
   'fabric.editor.configPanel.cancel': '취소',
-  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio': 'isMultiple과 스타일을 결합할 수 없음: 라디오',
+  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio':
+    'isMultiple과 스타일을 결합할 수 없음: 라디오',
   'fabric.editor.configPanel.formType.addField': '필드 추가',
   'fabric.editor.configPanel.formType.removeField': '필드 제거',
   'fabric.editor.configPanel.required': '필수 필드',
   'fabric.editor.configPanel.submit': '제출',
   'fabric.editor.createComment': '댓글 달기',
-  'fabric.editor.createCommentInvalid': '댓글은 텍스트와 제목에서만 사용합니다.',
+  'fabric.editor.createCommentInvalid':
+    '댓글은 텍스트와 제목에서만 사용합니다.',
   'fabric.editor.date': '날짜',
   'fabric.editor.date.description': '캘린더로 날짜 추가',
   'fabric.editor.decision': '결정',
@@ -58,16 +63,19 @@ export default {
   'fabric.editor.editAltText': '대체 텍스트 편집',
   'fabric.editor.editorHelp': '편집기 도움말',
   'fabric.editor.emoji': '이모지',
-  'fabric.editor.emoji.description': '이모지를 사용하여 아이디어 🎉 및 감정 😄 표현',
+  'fabric.editor.emoji.description':
+    '이모지를 사용하여 아이디어 🎉 및 감정 😄 표현',
   'fabric.editor.error': '오류',
   'fabric.editor.errorPanel': '오류 패널',
   'fabric.editor.errorPanel.description': '색상 있는 패널에서 오류 호출',
   'fabric.editor.expand': '확대',
   'fabric.editor.expand.description': '확대 삽입',
   'fabric.editor.feedbackDialog': '피드백 보내기',
-  'fabric.editor.feedbackDialog.description': '새로운 편집기 사용 경험에 대한 의견을 보내 주십시오',
+  'fabric.editor.feedbackDialog.description':
+    '새로운 편집기 사용 경험에 대한 의견을 보내 주십시오',
   'fabric.editor.filesAndImages': '파일 및 이미지',
-  'fabric.editor.filesAndImages.description': '페이지에 이미지 및 기타 파일 추가',
+  'fabric.editor.filesAndImages.description':
+    '페이지에 이미지 및 기타 파일 추가',
   'fabric.editor.find': '찾기',
   'fabric.editor.findNext': '다음 찾기',
   'fabric.editor.findPrevious': '이전 찾기',
@@ -87,8 +95,10 @@ export default {
   'fabric.editor.heading6': '머릿글 6',
   'fabric.editor.heading6Description': '하위 레벨 제목에 사용',
   'fabric.editor.help': '도움말',
-  'fabric.editor.help.description': '모든 키보드 바로 가기 키 및 마크다운 옵션 찾아보기',
-  'fabric.editor.helpDialogTips': '언제든 {keyMap}을(를) 눌러 이 대화상자를 빠르게 시작합니다',
+  'fabric.editor.help.description':
+    '모든 키보드 바로 가기 키 및 마크다운 옵션 찾아보기',
+  'fabric.editor.helpDialogTips':
+    '언제든 {keyMap}을(를) 눌러 이 대화상자를 빠르게 시작합니다',
   'fabric.editor.horizontalRule': '구분선',
   'fabric.editor.horizontalRule.description': '가로선으로 콘텐츠 구분',
   'fabric.editor.image': '이미지',
@@ -144,7 +154,8 @@ export default {
   'fabric.editor.successPanel': '성공 패널',
   'fabric.editor.successPanel.description': '색상 있는 패널에 팁 추가',
   'fabric.editor.superscript': '위첨자',
-  'fabric.editor.supportAltText': '대체 텍스트는 시각적 제약으로 인해 화면 읽기 프로그램을 사용하는 사람에게 유용합니다.',
+  'fabric.editor.supportAltText':
+    '대체 텍스트는 시각적 제약으로 인해 화면 읽기 프로그램을 사용하는 사람에게 유용합니다.',
   'fabric.editor.table': '표',
   'fabric.editor.table.description': '표 삽입',
   'fabric.editor.tableOptions': '표 옵션',
@@ -163,7 +174,8 @@ export default {
   'fabric.editor.viewMore': '더 보기',
   'fabric.editor.warning': '경고',
   'fabric.editor.warningPanel': '경고 패널',
-  'fabric.editor.warningPanel.description': '색상 있는 패널에 주의 사항 메모 추가',
+  'fabric.editor.warningPanel.description':
+    '색상 있는 패널에 주의 사항 메모 추가',
   'fabric.editor.wrapLeft': '왼쪽에서 줄 바꿈',
   'fabric.editor.wrapRight': '오른쪽에서 줄 바꿈',
   'fabric.theme.blue': 'Blue',
@@ -188,4 +200,4 @@ export default {
   'fabric.theme.teal': 'Teal',
   'fabric.theme.white': 'White',
   'fabric.theme.yellow': 'Yellow'
-};
+}

@@ -1,5 +1,5 @@
-import { MediaSingleDimensionHelper } from '@atlaskit/editor-common';
-import styled from 'styled-components';
+import { MediaSingleDimensionHelper } from '@atlaskit/editor-common'
+import styled from 'styled-components'
 export const Wrapper = styled.div`
   img {
     width: 100%;
@@ -10,5 +10,5 @@ export const Wrapper = styled.div`
     position: relative;
     clear: both;
   }
-`;
-Wrapper.displayName = 'ResizerWrapper';
+`
+Wrapper.displayName = 'ResizerWrapper'

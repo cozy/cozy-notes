@@ -1,4 +1,4 @@
-import { defineMessages } from 'react-intl';
+import { defineMessages } from 'react-intl'
 export const messages = defineMessages({
   action: {
     id: 'fabric.editor.action',
@@ -133,12 +133,14 @@ export const messages = defineMessages({
   status: {
     id: 'fabric.editor.status',
     defaultMessage: 'Status',
-    description: 'Inserts an item representing the status of an activity to task.'
+    description:
+      'Inserts an item representing the status of an activity to task.'
   },
   statusDescription: {
     id: 'fabric.editor.status.description',
     defaultMessage: 'Add a custom status label',
-    description: 'Inserts an item representing the status of an activity to task.'
+    description:
+      'Inserts an item representing the status of an activity to task.'
   },
   viewMore: {
     id: 'fabric.editor.viewMore',
@@ -148,7 +150,8 @@ export const messages = defineMessages({
   insertMenu: {
     id: 'fabric.editor.insertMenu',
     defaultMessage: 'Insert',
-    description: 'Opens a menu of additional items that can be inserted into your document.'
+    description:
+      'Opens a menu of additional items that can be inserted into your document.'
   },
   help: {
     id: 'fabric.editor.help',
@@ -160,4 +163,4 @@ export const messages = defineMessages({
     defaultMessage: 'Browse all the keyboard shortcuts and markdown options',
     description: 'Browse all the keyboard shortcuts and markdown options'
   }
-});
+})

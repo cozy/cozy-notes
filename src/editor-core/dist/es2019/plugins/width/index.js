@@ -1,5 +1,5 @@
-import { Plugin, PluginKey } from 'prosemirror-state';
-export const pluginKey = new PluginKey('widthPlugin');
+import { Plugin, PluginKey } from 'prosemirror-state'
+export const pluginKey = new PluginKey('widthPlugin')
 export function createPlugin(dispatch) {
   return new Plugin({
     key: pluginKey,
@@ -9,56 +9,53 @@ export function createPlugin(dispatch) {
       }),
 
       apply(tr, pluginState) {
-        const meta = tr.getMeta(pluginKey);
+        const meta = tr.getMeta(pluginKey)
 
         if (!meta) {
-          return pluginState;
+          return pluginState
         }
 
-        const newPluginState = { ...pluginState,
-          ...meta
-        };
+        const newPluginState = { ...pluginState, ...meta }
 
-        if (newPluginState && (pluginState.width !== newPluginState.width || pluginState.lineLength !== newPluginState.lineLength)) {
-          dispatch(pluginKey, newPluginState);
-          return newPluginState;
+        if (
+          newPluginState &&
+          (pluginState.width !== newPluginState.width ||
+            pluginState.lineLength !== newPluginState.lineLength)
+        ) {
+          dispatch(pluginKey, newPluginState)
+          return newPluginState
         }
 
-        return pluginState;
+        return pluginState
       }
-
     }
-  });
+  })
 }
 
 const widthPlugin = () => ({
   name: 'width',
-  pmPlugins: () => [{
-    name: 'width',
-    plugin: ({
-      dispatch
-    }) => createPlugin(dispatch)
-  }],
+  pmPlugins: () => [
+    {
+      name: 'width',
+      plugin: ({ dispatch }) => createPlugin(dispatch)
+    }
+  ],
 
   // do this early here, otherwise we have to wait for WidthEmitter to debounce
   // which causes anything dependent on lineLength to jump around
-  contentComponent({
-    editorView,
-    containerElement
-  }) {
+  contentComponent({ editorView, containerElement }) {
     const newState = {
       lineLength: editorView.dom.clientWidth
-    };
-
-    if (containerElement) {
-      newState.width = containerElement.offsetWidth;
     }
 
-    const tr = editorView.state.tr.setMeta(pluginKey, newState);
-    editorView.dispatch(tr);
-    return null;
+    if (containerElement) {
+      newState.width = containerElement.offsetWidth
+    }
+
+    const tr = editorView.state.tr.setMeta(pluginKey, newState)
+    editorView.dispatch(tr)
+    return null
   }
+})
 
-});
-
-export default widthPlugin;
+export default widthPlugin

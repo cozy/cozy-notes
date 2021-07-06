@@ -1,24 +1,36 @@
-import { PluginKey, TextSelection, AllSelection } from 'prosemirror-state';
-import { Decoration } from 'prosemirror-view';
-import { AnnotationSharedClassNames, canApplyAnnotationOnRange, getAnnotationIdsFromRange } from '@atlaskit/editor-common';
-import { AnnotationTypes } from '@atlaskit/adf-schema';
-import { AnnotationSelectionType } from './types';
-import { sum } from '../../utils';
-import { ACTION_SUBJECT, ACTION_SUBJECT_ID, EVENT_TYPE, ACTION } from '../analytics';
+import { PluginKey, TextSelection, AllSelection } from 'prosemirror-state'
+import { Decoration } from 'prosemirror-view'
+import {
+  AnnotationSharedClassNames,
+  canApplyAnnotationOnRange,
+  getAnnotationIdsFromRange
+} from '@atlaskit/editor-common'
+import { AnnotationTypes } from '@atlaskit/adf-schema'
+import { AnnotationSelectionType } from './types'
+import { sum } from '../../utils'
+import {
+  ACTION_SUBJECT,
+  ACTION_SUBJECT_ID,
+  EVENT_TYPE,
+  ACTION
+} from '../analytics'
 
 /**
  * Finds the marks in the nodes to the left and right.
  * @param $pos Position to center search around
  */
 export const surroundingMarks = $pos => {
-  const {
-    nodeBefore,
-    nodeAfter
-  } = $pos;
-  const markNodeBefore = nodeBefore && $pos.doc.nodeAt(Math.max(0, $pos.pos - nodeBefore.nodeSize - 1));
-  const markNodeAfter = nodeAfter && $pos.doc.nodeAt($pos.pos + nodeAfter.nodeSize);
-  return [markNodeBefore && markNodeBefore.marks || [], markNodeAfter && markNodeAfter.marks || []];
-};
+  const { nodeBefore, nodeAfter } = $pos
+  const markNodeBefore =
+    nodeBefore &&
+    $pos.doc.nodeAt(Math.max(0, $pos.pos - nodeBefore.nodeSize - 1))
+  const markNodeAfter =
+    nodeAfter && $pos.doc.nodeAt($pos.pos + nodeAfter.nodeSize)
+  return [
+    (markNodeBefore && markNodeBefore.marks) || [],
+    (markNodeAfter && markNodeAfter.marks) || []
+  ]
+}
 /**
  * Finds annotation marks, and returns their IDs.
  * @param marks Array of marks to search in
@@ -26,14 +38,14 @@ export const surroundingMarks = $pos => {
 
 export const filterAnnotationIds = marks => {
   if (!marks.length) {
-    return [];
+    return []
   }
 
-  const {
-    annotation
-  } = marks[0].type.schema.marks;
-  return marks.filter(mark => mark.type === annotation).map(mark => mark.attrs.id);
-};
+  const { annotation } = marks[0].type.schema.marks
+  return marks
+    .filter(mark => mark.type === annotation)
+    .map(mark => mark.attrs.id)
+}
 /**
  * Re-orders the annotation array based on the order in the document.
  *
@@ -46,79 +58,81 @@ export const filterAnnotationIds = marks => {
  */
 
 export const reorderAnnotations = (annotations, $from) => {
-  const idSet = surroundingMarks($from).map(filterAnnotationIds);
-  annotations.sort((a, b) => sum(idSet, ids => ids.indexOf(a.id)) - sum(idSet, ids => ids.indexOf(b.id)));
-};
+  const idSet = surroundingMarks($from).map(filterAnnotationIds)
+  annotations.sort(
+    (a, b) =>
+      sum(idSet, ids => ids.indexOf(a.id)) -
+      sum(idSet, ids => ids.indexOf(b.id))
+  )
+}
 export const getAllAnnotations = doc => {
-  const allAnnotationIds = new Set();
+  const allAnnotationIds = new Set()
   doc.descendants(node => {
-    node.marks.filter(mark => mark.type.name === 'annotation') // filter out annotations with invalid attribues as they cause errors when interacting with them
-    .filter(validateAnnotationMark).forEach(m => allAnnotationIds.add(m.attrs.id));
-    return true;
-  });
-  return Array.from(allAnnotationIds);
-};
+    node.marks
+      .filter(mark => mark.type.name === 'annotation') // filter out annotations with invalid attribues as they cause errors when interacting with them
+      .filter(validateAnnotationMark)
+      .forEach(m => allAnnotationIds.add(m.attrs.id))
+    return true
+  })
+  return Array.from(allAnnotationIds)
+}
 /*
  * verifies if annotation mark contains valid attributes
  */
 
 const validateAnnotationMark = annotationMark => {
-  const {
-    id,
-    annotationType
-  } = annotationMark.attrs;
-  return validateAnnotationId(id) && validateAnnotationType(annotationType);
+  const { id, annotationType } = annotationMark.attrs
+  return validateAnnotationId(id) && validateAnnotationType(annotationType)
 
   function validateAnnotationId(id) {
     if (!id || typeof id !== 'string') {
-      return false;
+      return false
     }
 
-    const invalidIds = ['null', 'undefined'];
-    return !invalidIds.includes(id.toLowerCase());
+    const invalidIds = ['null', 'undefined']
+    return !invalidIds.includes(id.toLowerCase())
   }
 
   function validateAnnotationType(type) {
     if (!type || typeof type !== 'string') {
-      return false;
+      return false
     }
 
-    const allowedTypes = Object.values(AnnotationTypes);
-    return allowedTypes.includes(type);
+    const allowedTypes = Object.values(AnnotationTypes)
+    return allowedTypes.includes(type)
   }
-}; // helper function: return the first selection range for the window
+} // helper function: return the first selection range for the window
 
-
-const getSelectionRange = function () {
-  const selection = window.getSelection(); // no selection made in browser
+const getSelectionRange = function() {
+  const selection = window.getSelection() // no selection made in browser
 
   if (!selection || selection.isCollapsed) {
-    return null;
+    return null
   }
 
-  const selectionRange = selection.getRangeAt(0);
-  return selectionRange;
-}; // helper function: find the bounds of first part within selected content
-
+  const selectionRange = selection.getRangeAt(0)
+  return selectionRange
+} // helper function: find the bounds of first part within selected content
 
 export const getSelectionStartRect = () => {
-  const range = getSelectionRange();
+  const range = getSelectionRange()
 
   if (!range) {
-    return null;
+    return null
   }
 
-  const rects = range.getClientRects();
+  const rects = range.getClientRects()
 
   if (!rects.length) {
-    return null;
+    return null
   } // Find first selection area that width is not 0
   // Sometimes there is a chance that user is selecting an empty DOM node.
 
-
-  const firstRect = Array.from(rects).find(rect => rect.width !== 0 && rect.height !== 0);
-  return firstRect || null;
-};
+  const firstRect = Array.from(rects).find(
+    rect => rect.width !== 0 && rect.height !== 0
+  )
+  return firstRect || null
+}
 /*
  * add decoration for the comment selection in draft state
  * (when creating new comment)
@@ -127,97 +141,93 @@ export const getSelectionStartRect = () => {
 export const addDraftDecoration = (start, end) => {
   return Decoration.inline(start, end, {
     class: `${AnnotationSharedClassNames.draft}`
-  });
-};
+  })
+}
 export const getAnnotationViewKey = annotations => {
-  const keys = annotations.map(mark => mark.id).join('_');
-  return `view-annotation-wrapper_${keys}`;
-};
+  const keys = annotations.map(mark => mark.id).join('_')
+  return `view-annotation-wrapper_${keys}`
+}
 export const findAnnotationsInSelection = (selection, doc) => {
-  const {
-    empty,
-    $anchor,
-    anchor
-  } = selection; // Only detect annotations on caret selection
+  const { empty, $anchor, anchor } = selection // Only detect annotations on caret selection
 
   if (!empty || !doc) {
-    return [];
+    return []
   }
 
-  const node = doc.nodeAt(anchor);
+  const node = doc.nodeAt(anchor)
 
   if (!node && !$anchor.nodeBefore) {
-    return [];
+    return []
   }
 
-  const annotationMark = doc.type.schema.marks.annotation;
-  const nodeBefore = $anchor.nodeBefore;
-  const anchorAnnotationMarks = node && node.marks || [];
-  let marks = [];
+  const annotationMark = doc.type.schema.marks.annotation
+  const nodeBefore = $anchor.nodeBefore
+  const anchorAnnotationMarks = (node && node.marks) || []
+  let marks = []
 
   if (annotationMark.isInSet(anchorAnnotationMarks)) {
-    marks = anchorAnnotationMarks;
+    marks = anchorAnnotationMarks
   } else if (nodeBefore && annotationMark.isInSet(nodeBefore.marks)) {
-    marks = nodeBefore.marks;
+    marks = nodeBefore.marks
   }
 
-  const annotations = marks.filter(mark => mark.type.name === 'annotation').map(mark => ({
-    id: mark.attrs.id,
-    type: mark.attrs.annotationType
-  }));
-  reorderAnnotations(annotations, $anchor);
-  return annotations;
-};
+  const annotations = marks
+    .filter(mark => mark.type.name === 'annotation')
+    .map(mark => ({
+      id: mark.attrs.id,
+      type: mark.attrs.annotationType
+    }))
+  reorderAnnotations(annotations, $anchor)
+  return annotations
+}
 /**
  * get selection from position to apply new comment for
  * @return bookmarked positions if they exists, otherwise current selection positions
  */
 
 export function getSelectionPositions(editorState, inlineCommentState) {
-  const {
-    bookmark
-  } = inlineCommentState; // get positions via saved bookmark if it is available
+  const { bookmark } = inlineCommentState // get positions via saved bookmark if it is available
   // this is to make comments box positioned relative to temporary highlight rather then current selection
 
   if (bookmark) {
-    return bookmark.resolve(editorState.doc);
+    return bookmark.resolve(editorState.doc)
   }
 
-  return editorState.selection;
+  return editorState.selection
 }
-export const inlineCommentPluginKey = new PluginKey('inlineCommentPluginKey');
+export const inlineCommentPluginKey = new PluginKey('inlineCommentPluginKey')
 export const getPluginState = state => {
-  return inlineCommentPluginKey.getState(state);
-};
+  return inlineCommentPluginKey.getState(state)
+}
 /**
  * get number of unique annotations within current selection
  */
 
 const getAnnotationsInSelectionCount = state => {
-  const {
-    from,
-    to
-  } = state.selection;
-  const annotations = getAnnotationIdsFromRange({
-    from,
-    to
-  }, state.doc, state.schema);
-  return annotations.length;
-};
+  const { from, to } = state.selection
+  const annotations = getAnnotationIdsFromRange(
+    {
+      from,
+      to
+    },
+    state.doc,
+    state.schema
+  )
+  return annotations.length
+}
 /**
  * get payload for the open/close analytics event
  */
 
-
 export const getDraftCommandAnalyticsPayload = (drafting, inputMethod) => {
   const payload = state => {
-    let attributes = {};
+    let attributes = {}
 
     if (drafting) {
       attributes = {
         inputMethod,
         overlap: getAnnotationsInSelectionCount(state)
-      };
+      }
     }
 
     return {
@@ -226,66 +236,65 @@ export const getDraftCommandAnalyticsPayload = (drafting, inputMethod) => {
       actionSubjectId: ACTION_SUBJECT_ID.INLINE_COMMENT,
       eventType: EVENT_TYPE.TRACK,
       attributes
-    };
-  };
-
-  return payload;
-};
-export const isSelectionValid = state => {
-  const {
-    selection
-  } = state;
-  const {
-    disallowOnWhitespace
-  } = getPluginState(state);
-
-  if (selection.empty || !(selection instanceof TextSelection || selection instanceof AllSelection)) {
-    return AnnotationSelectionType.INVALID;
+    }
   }
 
-  const containsInvalidNodes = hasInvalidNodes(state); // A selection that only covers 1 pos, and is an invalid node
+  return payload
+}
+export const isSelectionValid = state => {
+  const { selection } = state
+  const { disallowOnWhitespace } = getPluginState(state)
+
+  if (
+    selection.empty ||
+    !(selection instanceof TextSelection || selection instanceof AllSelection)
+  ) {
+    return AnnotationSelectionType.INVALID
+  }
+
+  const containsInvalidNodes = hasInvalidNodes(state) // A selection that only covers 1 pos, and is an invalid node
   // e.g. a text selection over a mention
 
   if (containsInvalidNodes && selection.to - selection.from === 1) {
-    return AnnotationSelectionType.INVALID;
+    return AnnotationSelectionType.INVALID
   }
 
   if (containsInvalidNodes) {
-    return AnnotationSelectionType.DISABLED;
+    return AnnotationSelectionType.DISABLED
   }
 
   if (disallowOnWhitespace && hasWhitespaceNode(selection)) {
-    return AnnotationSelectionType.INVALID;
+    return AnnotationSelectionType.INVALID
   }
 
-  return AnnotationSelectionType.VALID;
-};
+  return AnnotationSelectionType.VALID
+}
 export const hasInvalidNodes = state => {
-  const {
-    selection,
+  const { selection, doc, schema } = state
+  return !canApplyAnnotationOnRange(
+    {
+      from: selection.from,
+      to: selection.to
+    },
     doc,
     schema
-  } = state;
-  return !canApplyAnnotationOnRange({
-    from: selection.from,
-    to: selection.to
-  }, doc, schema);
-};
+  )
+}
 /**
  * Checks if any of the nodes in a given selection are completely whitespace
  * This is to conform to Confluence annotation specifications
  */
 
 export function hasWhitespaceNode(selection) {
-  let foundWhitespace = false;
+  let foundWhitespace = false
   selection.content().content.descendants(node => {
     if (node.textContent.trim() === '') {
-      foundWhitespace = true;
+      foundWhitespace = true
     }
 
-    return !foundWhitespace;
-  });
-  return foundWhitespace;
+    return !foundWhitespace
+  })
+  return foundWhitespace
 }
 /*
  * verifies if node contains annotation mark
@@ -294,20 +303,26 @@ export function hasWhitespaceNode(selection) {
 export function hasAnnotationMark(node, state) {
   const {
     schema: {
-      marks: {
-        annotation: annotationMark
-      }
+      marks: { annotation: annotationMark }
     }
-  } = state;
-  return !!(annotationMark && node && node.marks.length && annotationMark.isInSet(node.marks));
+  } = state
+  return !!(
+    annotationMark &&
+    node &&
+    node.marks.length &&
+    annotationMark.isInSet(node.marks)
+  )
 }
 /*
  * verifies that the annotation exists by the given id
  */
 
 export function annotationExists(annotationId, state) {
-  const commentsPluginState = getPluginState(state);
-  return commentsPluginState.annotations && Object.keys(commentsPluginState.annotations).includes(annotationId);
+  const commentsPluginState = getPluginState(state)
+  return (
+    commentsPluginState.annotations &&
+    Object.keys(commentsPluginState.annotations).includes(annotationId)
+  )
 }
 /*
  * verifies that slice contains any annotations
@@ -315,28 +330,27 @@ export function annotationExists(annotationId, state) {
 
 export function containsAnyAnnotations(slice, state) {
   if (!slice.content.size) {
-    return false;
+    return false
   }
 
-  let hasAnnotation = false;
+  let hasAnnotation = false
   slice.content.forEach(node => {
-    hasAnnotation = hasAnnotation || hasAnnotationMark(node, state); // return early if annotation found already
+    hasAnnotation = hasAnnotation || hasAnnotationMark(node, state) // return early if annotation found already
 
     if (hasAnnotation) {
-      return true;
+      return true
     } // check annotations in descendants
-
 
     node.descendants(node => {
       if (hasAnnotationMark(node, state)) {
-        hasAnnotation = true;
-        return false;
+        hasAnnotation = true
+        return false
       }
 
-      return true;
-    });
-  });
-  return hasAnnotation;
+      return true
+    })
+  })
+  return hasAnnotation
 }
 /*
  * remove annotations that dont exsist in plugin state from slice
@@ -344,16 +358,16 @@ export function containsAnyAnnotations(slice, state) {
 
 export function stripNonExistingAnnotations(slice, state) {
   if (!slice.content.size) {
-    return false;
+    return false
   }
 
   slice.content.forEach(node => {
-    stripNonExistingAnnotationsFromNode(node, state);
+    stripNonExistingAnnotationsFromNode(node, state)
     node.content.descendants(node => {
-      stripNonExistingAnnotationsFromNode(node, state);
-      return true;
-    });
-  });
+      stripNonExistingAnnotationsFromNode(node, state)
+      return true
+    })
+  })
 }
 /*
  * remove annotations that dont exsist in plugin state
@@ -364,12 +378,12 @@ function stripNonExistingAnnotationsFromNode(node, state) {
   if (hasAnnotationMark(node, state)) {
     node.marks = node.marks.filter(mark => {
       if (mark.type.name === 'annotation') {
-        return annotationExists(mark.attrs.id, state);
+        return annotationExists(mark.attrs.id, state)
       }
 
-      return true;
-    });
+      return true
+    })
   }
 
-  return node;
+  return node
 }

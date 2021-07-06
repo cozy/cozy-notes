@@ -1,1 +1,4 @@
-export { mobileSelectionPlugin as default, selectionPluginKey } from './mobile-selection-plugin';
+export {
+  mobileSelectionPlugin as default,
+  selectionPluginKey
+} from './mobile-selection-plugin'

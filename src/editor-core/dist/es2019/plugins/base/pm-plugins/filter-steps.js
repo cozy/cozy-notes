@@ -1,27 +1,36 @@
-import { Plugin } from 'prosemirror-state';
-import { ACTION_SUBJECT, ACTION, EVENT_TYPE, getAnalyticsEventsFromTransaction } from '../../analytics';
+import { Plugin } from 'prosemirror-state'
+import {
+  ACTION_SUBJECT,
+  ACTION,
+  EVENT_TYPE,
+  getAnalyticsEventsFromTransaction
+} from '../../analytics'
 
-const hasInvalidSteps = tr => (tr.steps || []).some(step => step.from > step.to);
+const hasInvalidSteps = tr => (tr.steps || []).some(step => step.from > step.to)
 
-export default (dispatchAnalyticsEvent => {
+export default dispatchAnalyticsEvent => {
   return new Plugin({
     filterTransaction(transaction) {
       if (hasInvalidSteps(transaction)) {
         // eslint-disable-next-line no-console
-        console.warn('The transaction was blocked because it contains invalid steps', transaction.steps);
+        console.warn(
+          'The transaction was blocked because it contains invalid steps',
+          transaction.steps
+        )
         dispatchAnalyticsEvent({
           action: ACTION.DISCARDED_INVALID_STEPS_FROM_TRANSACTION,
           actionSubject: ACTION_SUBJECT.EDITOR,
           attributes: {
-            analyticsEventPayloads: getAnalyticsEventsFromTransaction(transaction)
+            analyticsEventPayloads: getAnalyticsEventsFromTransaction(
+              transaction
+            )
           },
           eventType: EVENT_TYPE.OPERATIONAL
-        });
-        return false;
+        })
+        return false
       }
 
-      return true;
+      return true
     }
-
-  });
-});
+  })
+}

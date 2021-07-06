@@ -1,9 +1,13 @@
-import { tableCellMinWidth } from '@atlaskit/editor-common';
-import { akEditorTableNumberColumnWidth } from '@atlaskit/editor-shared-styles';
-import { getTableWidth } from '../../../utils';
-import { getLayoutSize } from '../utils/misc';
-import { reduceSpace } from '../utils/resize-logic';
-import { adjustColumnsWidths, getResizeState, getTotalWidth } from '../utils/resize-state';
+import { tableCellMinWidth } from '@atlaskit/editor-common'
+import { akEditorTableNumberColumnWidth } from '@atlaskit/editor-shared-styles'
+import { getTableWidth } from '../../../utils'
+import { getLayoutSize } from '../utils/misc'
+import { reduceSpace } from '../utils/resize-logic'
+import {
+  adjustColumnsWidths,
+  getResizeState,
+  getTotalWidth
+} from '../utils/resize-state'
 // Base function to trigger the actual scale on a table node.
 // Will only resize/scale if a table has been previously resized.
 export const scale = (tableRef, options, domAtPos) => {
@@ -20,35 +24,39 @@ export const scale = (tableRef, options, domAtPos) => {
     start,
     isBreakoutEnabled,
     layoutChanged
-  } = options;
+  } = options
   const maxSize = getLayoutSize(node.attrs.layout, containerWidth, {
     dynamicTextSizing,
     isBreakoutEnabled
-  });
-  const prevTableWidth = getTableWidth(prevNode);
-  const previousMaxSize = getLayoutSize(prevNode.attrs.layout, previousContainerWidth, {
-    dynamicTextSizing,
-    isBreakoutEnabled
-  });
-  let newWidth = maxSize; // adjust table width if layout is updated
+  })
+  const prevTableWidth = getTableWidth(prevNode)
+  const previousMaxSize = getLayoutSize(
+    prevNode.attrs.layout,
+    previousContainerWidth,
+    {
+      dynamicTextSizing,
+      isBreakoutEnabled
+    }
+  )
+  let newWidth = maxSize // adjust table width if layout is updated
 
-  const hasOverflow = prevTableWidth > previousMaxSize;
+  const hasOverflow = prevTableWidth > previousMaxSize
 
   if (layoutChanged && hasOverflow) {
     // No keep overflow if the old content can be in the new size
-    const canFitInNewSize = prevTableWidth < maxSize;
+    const canFitInNewSize = prevTableWidth < maxSize
 
     if (canFitInNewSize) {
-      newWidth = maxSize;
+      newWidth = maxSize
     } else {
       // Keep the same scale.
-      const overflowScale = prevTableWidth / previousMaxSize;
-      newWidth = Math.floor(newWidth * overflowScale);
+      const overflowScale = prevTableWidth / previousMaxSize
+      newWidth = Math.floor(newWidth * overflowScale)
     }
   }
 
   if (node.attrs.isNumberColumnEnabled) {
-    newWidth -= akEditorTableNumberColumnWidth;
+    newWidth -= akEditorTableNumberColumnWidth
   }
 
   const resizeState = getResizeState({
@@ -58,10 +66,16 @@ export const scale = (tableRef, options, domAtPos) => {
     tableRef,
     start,
     domAtPos
-  });
-  return scaleTableTo(resizeState, newWidth);
-};
-export const scaleWithParent = (tableRef, parentWidth, table, start, domAtPos) => {
+  })
+  return scaleTableTo(resizeState, newWidth)
+}
+export const scaleWithParent = (
+  tableRef,
+  parentWidth,
+  table,
+  start,
+  domAtPos
+) => {
   const resizeState = getResizeState({
     minWidth: tableCellMinWidth,
     maxSize: parentWidth,
@@ -69,40 +83,36 @@ export const scaleWithParent = (tableRef, parentWidth, table, start, domAtPos) =
     tableRef,
     start,
     domAtPos
-  });
+  })
 
   if (table.attrs.isNumberColumnEnabled) {
-    parentWidth -= akEditorTableNumberColumnWidth;
+    parentWidth -= akEditorTableNumberColumnWidth
   }
 
-  return scaleTableTo(resizeState, Math.floor(parentWidth));
-}; // Scales the table to a given size and updates its colgroup DOM node
+  return scaleTableTo(resizeState, Math.floor(parentWidth))
+} // Scales the table to a given size and updates its colgroup DOM node
 
 function scaleTableTo(state, maxSize) {
-  const scaleFactor = maxSize / getTotalWidth(state);
-  let newState = { ...state,
+  const scaleFactor = maxSize / getTotalWidth(state)
+  let newState = {
+    ...state,
     maxSize,
     cols: state.cols.map(col => {
-      const {
-        minWidth,
-        width
-      } = col;
-      let newColWidth = Math.floor(width * scaleFactor);
+      const { minWidth, width } = col
+      let newColWidth = Math.floor(width * scaleFactor)
 
       if (newColWidth < minWidth) {
-        newColWidth = minWidth;
+        newColWidth = minWidth
       }
 
-      return { ...col,
-        width: newColWidth
-      };
+      return { ...col, width: newColWidth }
     })
-  };
-  let newTotalWidth = getTotalWidth(newState);
+  }
+  let newTotalWidth = getTotalWidth(newState)
 
   if (newTotalWidth > maxSize) {
-    newState = reduceSpace(newState, newTotalWidth - maxSize);
+    newState = reduceSpace(newState, newTotalWidth - maxSize)
   }
 
-  return adjustColumnsWidths(newState, maxSize);
+  return adjustColumnsWidths(newState, maxSize)
 }

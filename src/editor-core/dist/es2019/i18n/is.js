@@ -10,7 +10,8 @@ export default {
   'fabric.editor.openLink': 'Opna tengil í nýjum flipa',
   'fabric.editor.unlink': 'Fjarlægja tengil',
   'fabric.editor.editLink': 'Breyta tengli',
-  'fabric.editor.hyperlinkToolbarPlaceholder': 'Líma tengil eða leita í „nýlega skoðað”',
+  'fabric.editor.hyperlinkToolbarPlaceholder':
+    'Líma tengil eða leita í „nýlega skoðað”',
   'fabric.editor.linkPlaceholder': 'Líma tengil',
   'fabric.editor.linkAddress': 'Tengja slóð',
   'fabric.editor.layoutFixedWidth': 'Til baka í staður',
@@ -27,17 +28,22 @@ export default {
   'fabric.editor.alignment': 'Stilling',
   'fabric.editor.normal': 'Eðlilegur texti',
   'fabric.editor.heading1': 'Fyrirsögn 1',
-  'fabric.editor.heading1Description': 'Notaðu þetta fyrir efsta stigs fyrirsögn',
+  'fabric.editor.heading1Description':
+    'Notaðu þetta fyrir efsta stigs fyrirsögn',
   'fabric.editor.heading2': 'Fyrirsögn 2',
   'fabric.editor.heading2Description': 'Notaðu þetta fyrir aðalhluta',
   'fabric.editor.heading3': 'Fyrirsögn 3',
-  'fabric.editor.heading3Description': 'Notaðu þetta fyrir undirhluta og hópfyrirsagnir',
+  'fabric.editor.heading3Description':
+    'Notaðu þetta fyrir undirhluta og hópfyrirsagnir',
   'fabric.editor.heading4': 'Fyrirsögn 4',
-  'fabric.editor.heading4Description': 'Notaðu þetta fyrir neðstu fyrirsagnirnar',
+  'fabric.editor.heading4Description':
+    'Notaðu þetta fyrir neðstu fyrirsagnirnar',
   'fabric.editor.heading5': 'Fyrirsögn 5',
-  'fabric.editor.heading5Description': 'Notaðu þetta til að hópa saman listaatriði',
+  'fabric.editor.heading5Description':
+    'Notaðu þetta til að hópa saman listaatriði',
   'fabric.editor.heading6': 'Fyrirsögn 6',
-  'fabric.editor.heading6Description': 'Notaðu þetta fyrir lægra stigs fyrirsagnir',
+  'fabric.editor.heading6Description':
+    'Notaðu þetta fyrir lægra stigs fyrirsagnir',
   'fabric.editor.blockquote': 'Vitna',
   'fabric.editor.blockquote.description': 'Setja inn tilboð eða tilvitnun',
   'fabric.editor.codeblock': 'Brot úr kóða',
@@ -47,11 +53,14 @@ export default {
   'fabric.editor.notePanel': 'Athugaðu spjaldið',
   'fabric.editor.notePanel.description': 'Bættu við athugasemd á lituðum skjá',
   'fabric.editor.successPanel': 'Velgengni spjaldið',
-  'fabric.editor.successPanel.description': 'Bættu ráðleggingum við á lituðum skjá',
+  'fabric.editor.successPanel.description':
+    'Bættu ráðleggingum við á lituðum skjá',
   'fabric.editor.warningPanel': 'Viðvörunar spjaldið',
-  'fabric.editor.warningPanel.description': 'Bættu við viðvörunarathugasemd á lituðum skjá',
+  'fabric.editor.warningPanel.description':
+    'Bættu við viðvörunarathugasemd á lituðum skjá',
   'fabric.editor.errorPanel': 'Villa spjaldið',
-  'fabric.editor.errorPanel.description': 'Gerðu villur áberandi á lituðum skjá',
+  'fabric.editor.errorPanel.description':
+    'Gerðu villur áberandi á lituðum skjá',
   'fabric.editor.other': 'Aðrir...',
   'fabric.editor.textStyles': 'Texta stíl',
   'fabric.editor.displayBlock': 'Sýna sem kort',
@@ -60,7 +69,8 @@ export default {
   'fabric.editor.selectLanguage': 'Velja tungumál',
   'fabric.editor.edit': 'Breyta',
   'fabric.editor.editorHelp': 'Ritstjórahjálp',
-  'fabric.editor.helpDialogTips': 'Styðjið á {keyMap} til að opna þetta samtal á skjótan hátt hvenær sem er',
+  'fabric.editor.helpDialogTips':
+    'Styðjið á {keyMap} til að opna þetta samtal á skjótan hátt hvenær sem er',
   'fabric.editor.keyboardShortcuts': 'Flýtilyklar',
   'fabric.editor.markdown': 'Markdown',
   'fabric.editor.undo': 'Afturkalla',
@@ -77,25 +87,32 @@ export default {
   'fabric.editor.link': 'Tengja',
   'fabric.editor.link.description': 'Setja inn tengil',
   'fabric.editor.filesAndImages': 'Skrár & myndir',
-  'fabric.editor.filesAndImages.description': 'Bæta myndum og aðrar skrár á síðunni þinni',
+  'fabric.editor.filesAndImages.description':
+    'Bæta myndum og aðrar skrár á síðunni þinni',
   'fabric.editor.image': 'Mynd',
   'fabric.editor.mention': 'Nefna',
-  'fabric.editor.mention.description': 'Nefndu einhvern til að senda þeim tilkynningu',
+  'fabric.editor.mention.description':
+    'Nefndu einhvern til að senda þeim tilkynningu',
   'fabric.editor.emoji': 'Emoji',
-  'fabric.editor.emoji.description': 'Notaðu lyndistákn til að tjá hugmyndir 🎉 og tilfinningar 😄',
+  'fabric.editor.emoji.description':
+    'Notaðu lyndistákn til að tjá hugmyndir 🎉 og tilfinningar 😄',
   'fabric.editor.table': 'Tafla',
   'fabric.editor.table.description': 'Setja inn töflu',
   'fabric.editor.decision': 'Ákvörðun',
-  'fabric.editor.decision.description': 'Fangaðu ákvarðanir svo auðvelt sé að fylgjast með þeim',
+  'fabric.editor.decision.description':
+    'Fangaðu ákvarðanir svo auðvelt sé að fylgjast með þeim',
   'fabric.editor.feedbackDialog': 'Gefa álit',
-  'fabric.editor.feedbackDialog.description': 'Segðu okkur frá reynslu þinni Að nota nýja ritstjórann',
+  'fabric.editor.feedbackDialog.description':
+    'Segðu okkur frá reynslu þinni Að nota nýja ritstjórann',
   'fabric.editor.horizontalRule': 'Divider',
-  'fabric.editor.horizontalRule.description': 'Aðskildu innihald með láréttri stiku',
+  'fabric.editor.horizontalRule.description':
+    'Aðskildu innihald með láréttri stiku',
   'fabric.editor.date': 'Dagsetning',
   'fabric.editor.date.description': 'Bættu við dagsetningu með dagatali',
   'fabric.editor.placeholderText': 'Placeholder texti',
   'fabric.editor.columns': 'Útlit',
-  'fabric.editor.columns.description': 'Byggðu upp síðuna þína með því að nota hluta',
+  'fabric.editor.columns.description':
+    'Byggðu upp síðuna þína með því að nota hluta',
   'fabric.editor.status': 'Staða',
   'fabric.editor.status.description': 'Bæta við sérsniðnu stöðumerki',
   'fabric.editor.viewMore': 'Skoða fleiri',
@@ -128,17 +145,22 @@ export default {
   'fabric.editor.cellBackground': 'Bakgrunnur reits',
   'fabric.editor.mergeCells': 'Sameina reiti',
   'fabric.editor.splitCell': 'Skipta reit upp',
-  'fabric.editor.clearCells': '{0, plural, one{Hreinsa reit} other{Hreinsa reiti}}',
+  'fabric.editor.clearCells':
+    '{0, plural, one{Hreinsa reit} other{Hreinsa reiti}}',
   'fabric.editor.sortColumnASC': 'Sort column A → Z',
   'fabric.editor.sortColumnDESC': 'Sort column Z → A',
-  'fabric.editor.canNotSortTable': "⚠️ You can't sort a table with merged cells",
+  'fabric.editor.canNotSortTable':
+    "⚠️ You can't sort a table with merged cells",
   'fabric.editor.insertColumn': 'Setja dálk inn',
-  'fabric.editor.removeColumns': '{0, plural, one{Fjarlægja dálk} other{Fjarlægja dálka}}',
+  'fabric.editor.removeColumns':
+    '{0, plural, one{Fjarlægja dálk} other{Fjarlægja dálka}}',
   'fabric.editor.insertRow': 'Setja röð inn',
-  'fabric.editor.removeRows': '{0, plural, one{Fjarlægja röð} other{Fjarlægja raðir}}',
+  'fabric.editor.removeRows':
+    '{0, plural, one{Fjarlægja röð} other{Fjarlægja raðir}}',
   'fabric.editor.cellOptions': 'Valmöguleikar fyrir reit',
   'fabric.editor.decisionPlaceholder': 'Bæta við ákvörðun...',
-  'fabric.editor.taskPlaceholder': "Sláðu inn aðgerðina þína, notaðu '@' til að úthluta einhverjum.",
+  'fabric.editor.taskPlaceholder':
+    "Sláðu inn aðgerðina þína, notaðu '@' til að úthluta einhverjum.",
   'fabric.editor.textColor': 'Textalitur',
   'fabric.editor.underline': 'Undirstrika',
   'fabric.editor.strike': 'Gegnumstrikun',
@@ -172,4 +194,4 @@ export default {
   'fabric.theme.dark-yellow': 'Dark yellow',
   'fabric.theme.dark-red': 'Dark red',
   'fabric.theme.dark-purple': 'Dark purple'
-};
+}

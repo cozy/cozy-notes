@@ -1,5 +1,5 @@
-import _defineProperty from "@babel/runtime/helpers/defineProperty";
-import React from 'react'; // React context to communicate the active context panel width up and down the tree.
+import _defineProperty from '@babel/runtime/helpers/defineProperty'
+import React from 'react' // React context to communicate the active context panel width up and down the tree.
 //
 // We need the width prop from the ContextPanel component.
 //
@@ -10,41 +10,39 @@ import React from 'react'; // React context to communicate the active context pa
 //
 // To subtract the context panel width from the available real estate, we use the Provider and Consumer.
 
-const {
-  Provider,
-  Consumer
-} = /*#__PURE__*/React.createContext({
+const { Provider, Consumer } = /*#__PURE__*/ React.createContext({
   width: 0,
   broadcastWidth: () => {}
-});
+})
 export class ContextPanelWidthProvider extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
 
-    _defineProperty(this, "state", {
+    _defineProperty(this, 'state', {
       width: 0
-    });
+    })
 
-    _defineProperty(this, "broadcastSidebarWidth", width => {
+    _defineProperty(this, 'broadcastSidebarWidth', width => {
       if (width !== this.state.width) {
         this.setState({
           width
-        });
+        })
       }
-    });
+    })
   }
 
   render() {
-    const {
-      width
-    } = this.state;
-    return /*#__PURE__*/React.createElement(Provider, {
-      value: {
-        width,
-        broadcastWidth: this.broadcastSidebarWidth
-      }
-    }, this.props.children);
+    const { width } = this.state
+    return /*#__PURE__*/ React.createElement(
+      Provider,
+      {
+        value: {
+          width,
+          broadcastWidth: this.broadcastSidebarWidth
+        }
+      },
+      this.props.children
+    )
   }
-
 }
-export { Provider as ContextPanelProvider, Consumer as ContextPanelConsumer };
+export { Provider as ContextPanelProvider, Consumer as ContextPanelConsumer }

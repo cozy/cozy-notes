@@ -1,19 +1,23 @@
-import _defineProperty from "@babel/runtime/helpers/defineProperty";
-import React from 'react';
-import PropTypes from 'prop-types';
-import { ACTION, ACTION_SUBJECT, INPUT_METHOD, EVENT_TYPE, ACTION_SUBJECT_ID } from '../../plugins/analytics';
-import { createDispatch } from '../../event-dispatcher';
-import { openHelpCommand } from '../../plugins/help-dialog/commands';
-import { analyticsEventKey } from '../../plugins/analytics/consts';
+import _defineProperty from '@babel/runtime/helpers/defineProperty'
+import React from 'react'
+import PropTypes from 'prop-types'
+import {
+  ACTION,
+  ACTION_SUBJECT,
+  INPUT_METHOD,
+  EVENT_TYPE,
+  ACTION_SUBJECT_ID
+} from '../../plugins/analytics'
+import { createDispatch } from '../../event-dispatcher'
+import { openHelpCommand } from '../../plugins/help-dialog/commands'
+import { analyticsEventKey } from '../../plugins/analytics/consts'
 export default class WithHelpTrigger extends React.Component {
   constructor(...args) {
-    super(...args);
+    super(...args)
 
-    _defineProperty(this, "openHelp", () => {
-      const {
-        editorActions
-      } = this.context;
-      const dispatch = createDispatch(editorActions.eventDispatcher);
+    _defineProperty(this, 'openHelp', () => {
+      const { editorActions } = this.context
+      const dispatch = createDispatch(editorActions.eventDispatcher)
       dispatch(analyticsEventKey, {
         payload: {
           action: ACTION.CLICKED,
@@ -24,22 +28,21 @@ export default class WithHelpTrigger extends React.Component {
           },
           eventType: EVENT_TYPE.UI
         }
-      });
+      })
 
-      const editorView = editorActions._privateGetEditorView();
+      const editorView = editorActions._privateGetEditorView()
 
       if (editorView) {
-        openHelpCommand(editorView.state.tr, editorView.dispatch);
+        openHelpCommand(editorView.state.tr, editorView.dispatch)
       }
-    });
+    })
   }
 
   render() {
-    return this.props.render(this.openHelp);
+    return this.props.render(this.openHelp)
   }
-
 }
 
-_defineProperty(WithHelpTrigger, "contextTypes", {
+_defineProperty(WithHelpTrigger, 'contextTypes', {
   editorActions: PropTypes.object.isRequired
-});
+})

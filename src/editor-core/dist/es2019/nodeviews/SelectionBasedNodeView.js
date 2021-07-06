@@ -1,7 +1,7 @@
-import _defineProperty from "@babel/runtime/helpers/defineProperty";
-import { NodeSelection } from 'prosemirror-state';
-import { stateKey as SelectionChangePluginKey } from '../plugins/base/pm-plugins/react-nodeview';
-import ReactNodeView from './ReactNodeView';
+import _defineProperty from '@babel/runtime/helpers/defineProperty'
+import { NodeSelection } from 'prosemirror-state'
+import { stateKey as SelectionChangePluginKey } from '../plugins/base/pm-plugins/react-nodeview'
+import ReactNodeView from './ReactNodeView'
 /**
  * A ReactNodeView that handles React components sensitive
  * to selection changes.
@@ -27,68 +27,85 @@ import ReactNodeView from './ReactNodeView';
  */
 
 export class SelectionBasedNodeView extends ReactNodeView {
-  constructor(node, view, getPos, portalProviderAPI, eventDispatcher, reactComponentProps, reactComponent, hasContext = false, viewShouldUpdate) {
-    super(node, view, getPos, portalProviderAPI, eventDispatcher, reactComponentProps, reactComponent, hasContext, viewShouldUpdate);
+  constructor(
+    node,
+    view,
+    getPos,
+    portalProviderAPI,
+    eventDispatcher,
+    reactComponentProps,
+    reactComponent,
+    hasContext = false,
+    viewShouldUpdate
+  ) {
+    super(
+      node,
+      view,
+      getPos,
+      portalProviderAPI,
+      eventDispatcher,
+      reactComponentProps,
+      reactComponent,
+      hasContext,
+      viewShouldUpdate
+    )
 
-    _defineProperty(this, "isNodeInsideSelection", (from, to, pos, posEnd) => {
-      ({
-        pos,
-        posEnd
-      } = this.getPositionsWithDefault(pos, posEnd));
+    _defineProperty(this, 'isNodeInsideSelection', (from, to, pos, posEnd) => {
+      ;({ pos, posEnd } = this.getPositionsWithDefault(pos, posEnd))
 
       if (typeof pos !== 'number' || typeof posEnd !== 'number') {
-        return false;
+        return false
       }
 
-      return from <= pos && to >= posEnd;
-    });
+      return from <= pos && to >= posEnd
+    })
 
-    _defineProperty(this, "isSelectionInsideNode", (from, to, pos, posEnd) => {
-      ({
-        pos,
-        posEnd
-      } = this.getPositionsWithDefault(pos, posEnd));
+    _defineProperty(this, 'isSelectionInsideNode', (from, to, pos, posEnd) => {
+      ;({ pos, posEnd } = this.getPositionsWithDefault(pos, posEnd))
 
       if (typeof pos !== 'number' || typeof posEnd !== 'number') {
-        return false;
+        return false
       }
 
-      return pos < from && to < posEnd;
-    });
+      return pos < from && to < posEnd
+    })
 
-    _defineProperty(this, "isSelectedNode", selection => {
+    _defineProperty(this, 'isSelectedNode', selection => {
       if (selection instanceof NodeSelection) {
         const {
-          selection: {
-            from,
-            to
-          }
-        } = this.view.state;
-        return selection.node === this.node || // If nodes are not the same object, we check if they are referring to the same document node
-        this.pos === from && this.posEnd === to && selection.node.eq(this.node);
+          selection: { from, to }
+        } = this.view.state
+        return (
+          selection.node === this.node || // If nodes are not the same object, we check if they are referring to the same document node
+          (this.pos === from &&
+            this.posEnd === to &&
+            selection.node.eq(this.node))
+        )
       }
 
-      return false;
-    });
+      return false
+    })
 
-    _defineProperty(this, "insideSelection", () => {
+    _defineProperty(this, 'insideSelection', () => {
       const {
-        selection: {
-          from,
-          to
-        }
-      } = this.view.state;
-      return this.isSelectedNode(this.view.state.selection) || this.isSelectionInsideNode(from, to);
-    });
+        selection: { from, to }
+      } = this.view.state
+      return (
+        this.isSelectedNode(this.view.state.selection) ||
+        this.isSelectionInsideNode(from, to)
+      )
+    })
 
-    _defineProperty(this, "onSelectionChange", () => {
-      this.update(this.node, []);
-    });
+    _defineProperty(this, 'onSelectionChange', () => {
+      this.update(this.node, [])
+    })
 
-    this.updatePos();
-    this.oldSelection = view.state.selection;
-    this.selectionChangeState = SelectionChangePluginKey.getState(this.view.state);
-    this.selectionChangeState.subscribe(this.onSelectionChange);
+    this.updatePos()
+    this.oldSelection = view.state.selection
+    this.selectionChangeState = SelectionChangePluginKey.getState(
+      this.view.state
+    )
+    this.selectionChangeState.subscribe(this.onSelectionChange)
   }
   /**
    * Update current node's start and end positions.
@@ -97,70 +114,68 @@ export class SelectionBasedNodeView extends ReactNodeView {
    * expensive, unless you know you're definitely going to render.
    */
 
-
   updatePos() {
     if (typeof this.getPos === 'boolean') {
-      return;
+      return
     }
 
-    this.pos = this.getPos();
-    this.posEnd = this.pos + this.node.nodeSize;
+    this.pos = this.getPos()
+    this.posEnd = this.pos + this.node.nodeSize
   }
 
   getPositionsWithDefault(pos, posEnd) {
     return {
       pos: typeof pos !== 'number' ? this.pos : pos,
       posEnd: typeof posEnd !== 'number' ? this.posEnd : posEnd
-    };
+    }
   }
 
   viewShouldUpdate(_nextNode) {
     const {
-      state: {
-        selection
-      }
-    } = this.view; // update selection
+      state: { selection }
+    } = this.view // update selection
 
-    const oldSelection = this.oldSelection;
-    this.oldSelection = selection; // update cached positions
+    const oldSelection = this.oldSelection
+    this.oldSelection = selection // update cached positions
 
-    const {
-      pos: oldPos,
-      posEnd: oldPosEnd
-    } = this;
-    this.updatePos();
-    const {
-      from,
-      to
-    } = selection;
-    const {
-      from: oldFrom,
-      to: oldTo
-    } = oldSelection;
+    const { pos: oldPos, posEnd: oldPosEnd } = this
+    this.updatePos()
+    const { from, to } = selection
+    const { from: oldFrom, to: oldTo } = oldSelection
 
     if (this.node.type.spec.selectable) {
-      const newNodeSelection = selection instanceof NodeSelection && selection.from === this.pos;
-      const oldNodeSelection = oldSelection instanceof NodeSelection && oldSelection.from === this.pos;
+      const newNodeSelection =
+        selection instanceof NodeSelection && selection.from === this.pos
+      const oldNodeSelection =
+        oldSelection instanceof NodeSelection && oldSelection.from === this.pos
 
-      if (newNodeSelection && !oldNodeSelection || oldNodeSelection && !newNodeSelection) {
-        return true;
+      if (
+        (newNodeSelection && !oldNodeSelection) ||
+        (oldNodeSelection && !newNodeSelection)
+      ) {
+        return true
       }
     }
 
-    const movedInToSelection = this.isNodeInsideSelection(from, to) && !this.isNodeInsideSelection(oldFrom, oldTo);
-    const movedOutOfSelection = !this.isNodeInsideSelection(from, to) && this.isNodeInsideSelection(oldFrom, oldTo);
-    const moveOutFromOldSelection = this.isNodeInsideSelection(from, to, oldPos, oldPosEnd) && !this.isNodeInsideSelection(from, to);
+    const movedInToSelection =
+      this.isNodeInsideSelection(from, to) &&
+      !this.isNodeInsideSelection(oldFrom, oldTo)
+    const movedOutOfSelection =
+      !this.isNodeInsideSelection(from, to) &&
+      this.isNodeInsideSelection(oldFrom, oldTo)
+    const moveOutFromOldSelection =
+      this.isNodeInsideSelection(from, to, oldPos, oldPosEnd) &&
+      !this.isNodeInsideSelection(from, to)
 
     if (movedInToSelection || movedOutOfSelection || moveOutFromOldSelection) {
-      return true;
+      return true
     }
 
-    return false;
+    return false
   }
 
   destroy() {
-    this.selectionChangeState.unsubscribe(this.onSelectionChange);
-    super.destroy();
+    this.selectionChangeState.unsubscribe(this.onSelectionChange)
+    super.destroy()
   }
-
 }

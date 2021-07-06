@@ -29,4 +29,4 @@ export default {
   sk: 'Slovak',
   es: 'Spanish',
   sv: 'Swedish'
-};
+}

@@ -1,6 +1,6 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
-import { WidthObserver } from '@atlaskit/width-detector';
+import React, { memo, useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
+import { WidthObserver } from '@atlaskit/width-detector'
 /**
  *
  * Problem:
@@ -28,31 +28,33 @@ import { WidthObserver } from '@atlaskit/width-detector';
  */
 
 export default function useContainerWidth() {
-  const [containerWidth, setContainerWidth] = useState(0);
-  const ref = useRef(null);
+  const [containerWidth, setContainerWidth] = useState(0)
+  const ref = useRef(null)
   useEffect(() => {
-    const {
-      current
-    } = ref;
+    const { current } = ref
 
     if (ref && current) {
-      setContainerWidth(current.getBoundingClientRect().width);
+      setContainerWidth(current.getBoundingClientRect().width)
     }
-  }, [ref]);
-  const ContainerWidthMonitor = /*#__PURE__*/memo(() => {
-    return /*#__PURE__*/React.createElement(WidthObserverWrapper, {
-      innerRef: ref,
-      tabIndex: -1
-    }, /*#__PURE__*/React.createElement(WidthObserver, {
-      setWidth: setContainerWidth
-    }));
-  });
+  }, [ref])
+  const ContainerWidthMonitor = /*#__PURE__*/ memo(() => {
+    return /*#__PURE__*/ React.createElement(
+      WidthObserverWrapper,
+      {
+        innerRef: ref,
+        tabIndex: -1
+      },
+      /*#__PURE__*/ React.createElement(WidthObserver, {
+        setWidth: setContainerWidth
+      })
+    )
+  })
   return {
     containerWidth,
     ContainerWidthMonitor
-  };
+  }
 }
 const WidthObserverWrapper = styled.div`
   position: relative;
-`;
-WidthObserverWrapper.displayName = 'WidthObserverWrapper';
+`
+WidthObserverWrapper.displayName = 'WidthObserverWrapper'

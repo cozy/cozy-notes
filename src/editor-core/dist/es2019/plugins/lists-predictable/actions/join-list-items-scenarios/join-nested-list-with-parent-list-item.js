@@ -1,11 +1,7 @@
-import { insertContentDeleteRange } from '../../../../utils/commands';
-import { isListNode } from '../../utils/node';
+import { insertContentDeleteRange } from '../../../../utils/commands'
+import { isListNode } from '../../utils/node'
 //Case for two adjacent list items with the first being of lower indentation
-export const joinNestedListWithParentListItem = ({
-  tr,
-  $next,
-  $head
-}) => {
+export const joinNestedListWithParentListItem = ({ tr, $next, $head }) => {
   /* CASE 3
    * Initial Structure:
    *
@@ -41,36 +37,59 @@ export const joinNestedListWithParentListItem = ({
    * }
    *
    */
-  const listE = $next.parent;
-  const listItemF = $next.nodeAfter; //We know next is before a ListItem. ListItem must have at least one child
+  const listE = $next.parent
+  const listItemF = $next.nodeAfter //We know next is before a ListItem. ListItem must have at least one child
 
   if (!listItemF || !listItemF.lastChild) {
-    return false;
+    return false
   }
 
-  const paragraphG = listItemF.firstChild; //ListItem must have at least one child
+  const paragraphG = listItemF.firstChild //ListItem must have at least one child
 
   if (!paragraphG) {
-    return false;
+    return false
   }
 
-  const beforeListE = $next.before();
-  const beforeListItemF = $next.pos;
-  const afterParagraphD = $head.after();
-  const afterListE = $next.after();
-  const afterListItemF = tr.doc.resolve($next.pos + 1).after(); //List must always have at least one listItem
+  const beforeListE = $next.before()
+  const beforeListItemF = $next.pos
+  const afterParagraphD = $head.after()
+  const afterListE = $next.after()
+  const afterListItemF = tr.doc.resolve($next.pos + 1).after() //List must always have at least one listItem
 
-  const containsChildrenJ = isListNode(listItemF.lastChild);
-  const shouldRemoveListE = listE.childCount === 1 && !containsChildrenJ; //Assures no Children J and K
+  const containsChildrenJ = isListNode(listItemF.lastChild)
+  const shouldRemoveListE = listE.childCount === 1 && !containsChildrenJ //Assures no Children J and K
 
-  const textInsertPos = $head.pos;
-  const childrenHInsertPos = afterParagraphD;
-  const childrenJInsertPos = $next.pos;
-  const textContent = paragraphG.content;
-  const childrenHContent = containsChildrenJ ? listItemF.content.cut(paragraphG.nodeSize, listItemF.nodeSize - listItemF.lastChild.nodeSize - 2) : listItemF.content.cut(paragraphG.nodeSize); //If Children J doesn't exist then Children H will include the last node
+  const textInsertPos = $head.pos
+  const childrenHInsertPos = afterParagraphD
+  const childrenJInsertPos = $next.pos
+  const textContent = paragraphG.content
+  const childrenHContent = containsChildrenJ
+    ? listItemF.content.cut(
+        paragraphG.nodeSize,
+        listItemF.nodeSize - listItemF.lastChild.nodeSize - 2
+      )
+    : listItemF.content.cut(paragraphG.nodeSize) //If Children J doesn't exist then Children H will include the last node
 
-  const childrenJContent = listItemF.lastChild.content; //Will be invalid if there are no Children J but it will be unused
+  const childrenJContent = listItemF.lastChild.content //Will be invalid if there are no Children J but it will be unused
 
-  insertContentDeleteRange(tr, tr => tr.doc.resolve(textInsertPos), containsChildrenJ ? [[textContent, textInsertPos], [childrenHContent, childrenHInsertPos], [childrenJContent, childrenJInsertPos]] : [[textContent, textInsertPos], [childrenHContent, childrenHInsertPos]], [shouldRemoveListE ? [beforeListE, afterListE] : [beforeListItemF, afterListItemF]]);
-  return true;
-};
+  insertContentDeleteRange(
+    tr,
+    tr => tr.doc.resolve(textInsertPos),
+    containsChildrenJ
+      ? [
+          [textContent, textInsertPos],
+          [childrenHContent, childrenHInsertPos],
+          [childrenJContent, childrenJInsertPos]
+        ]
+      : [
+          [textContent, textInsertPos],
+          [childrenHContent, childrenHInsertPos]
+        ],
+    [
+      shouldRemoveListE
+        ? [beforeListE, afterListE]
+        : [beforeListItemF, afterListItemF]
+    ]
+  )
+  return true
+}

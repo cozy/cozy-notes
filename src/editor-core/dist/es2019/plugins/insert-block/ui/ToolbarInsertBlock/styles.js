@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 export const TriggerWrapper = styled.span`
   width: 42px;
 
@@ -13,4 +13,4 @@ export const TriggerWrapper = styled.span`
   > div > div {
     display: flex;
   }
-`;
+`

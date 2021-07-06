@@ -1,4 +1,4 @@
-import { defineMessages } from 'react-intl';
+import { defineMessages } from 'react-intl'
 export const toolbarMessages = defineMessages({
   underline: {
     id: 'fabric.editor.underline',
@@ -18,12 +18,14 @@ export const toolbarMessages = defineMessages({
   subscript: {
     id: 'fabric.editor.subscript',
     defaultMessage: 'Subscript',
-    description: 'Whether the text selection is written below the line in a slightly smaller size'
+    description:
+      'Whether the text selection is written below the line in a slightly smaller size'
   },
   superscript: {
     id: 'fabric.editor.superscript',
     defaultMessage: 'Superscript',
-    description: 'Whether the text selection is written above the line in a slightly smaller size'
+    description:
+      'Whether the text selection is written above the line in a slightly smaller size'
   },
   clearFormatting: {
     id: 'fabric.editor.clearFormatting',
@@ -33,6 +35,7 @@ export const toolbarMessages = defineMessages({
   moreFormatting: {
     id: 'fabric.editor.moreFormatting',
     defaultMessage: 'More formatting',
-    description: 'Clicking this will show a menu with additional formatting options'
+    description:
+      'Clicking this will show a menu with additional formatting options'
   }
-});
+})

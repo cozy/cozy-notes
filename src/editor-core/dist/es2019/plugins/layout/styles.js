@@ -1,12 +1,22 @@
-import { css } from 'styled-components';
-import { gridSize } from '@atlaskit/theme/constants';
-import { N40A, N50A } from '@atlaskit/theme/colors';
-import { columnLayoutSharedStyle } from '@atlaskit/editor-common';
-import { gridMediumMaxWidth, akEditorDeleteBackground, akEditorDeleteBorder, akEditorSelectedBorderSize, akLayoutGutterOffset, akEditorSwoopCubicBezier, SelectionStyle, getSelectionStyles, akEditorSelectedNodeClassName } from '@atlaskit/editor-shared-styles';
-import { TableCssClassName } from '../table/types';
-import { tableMarginFullWidthMode } from '../table/ui/consts';
-export const LAYOUT_SECTION_MARGIN = gridSize();
-export const LAYOUT_COLUMN_PADDING = gridSize() * 1.5;
+import { css } from 'styled-components'
+import { gridSize } from '@atlaskit/theme/constants'
+import { N40A, N50A } from '@atlaskit/theme/colors'
+import { columnLayoutSharedStyle } from '@atlaskit/editor-common'
+import {
+  gridMediumMaxWidth,
+  akEditorDeleteBackground,
+  akEditorDeleteBorder,
+  akEditorSelectedBorderSize,
+  akLayoutGutterOffset,
+  akEditorSwoopCubicBezier,
+  SelectionStyle,
+  getSelectionStyles,
+  akEditorSelectedNodeClassName
+} from '@atlaskit/editor-shared-styles'
+import { TableCssClassName } from '../table/types'
+import { tableMarginFullWidthMode } from '../table/ui/consts'
+export const LAYOUT_SECTION_MARGIN = gridSize()
+export const LAYOUT_COLUMN_PADDING = gridSize() * 1.5
 export const layoutStyles = css`
   .ProseMirror {
     ${columnLayoutSharedStyle} [data-layout-section] {
@@ -106,4 +116,4 @@ export const layoutStyles = css`
       }
     }
   }
-`;
+`

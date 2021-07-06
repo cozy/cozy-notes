@@ -1,1 +1,1 @@
-export { default as ElementBrowser } from './ui/ElementBrowser';
+export { default as ElementBrowser } from './ui/ElementBrowser'

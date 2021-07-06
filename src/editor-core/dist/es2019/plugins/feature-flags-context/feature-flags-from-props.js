@@ -5,17 +5,44 @@
 export function createFeatureFlagsFromProps(props) {
   return {
     newInsertionBehaviour: props.allowNewInsertionBehaviour,
-    interactiveExpand: typeof props.allowExpand === 'boolean' ? props.allowExpand : Boolean(props.allowExpand && props.allowExpand.allowInteractiveExpand !== false),
+    interactiveExpand:
+      typeof props.allowExpand === 'boolean'
+        ? props.allowExpand
+        : Boolean(
+            props.allowExpand &&
+              props.allowExpand.allowInteractiveExpand !== false
+          ),
     placeholderBracketHint: !!props.placeholderBracketHint,
-    placeholderHints: Array.isArray(props.placeholderHints) && props.placeholderHints.length > 0,
-    moreTextColors: typeof props.allowTextColor === 'boolean' ? false : Boolean(props.allowTextColor && props.allowTextColor.EXPERIMENTAL_allowMoreTextColors === true),
+    placeholderHints:
+      Array.isArray(props.placeholderHints) &&
+      props.placeholderHints.length > 0,
+    moreTextColors:
+      typeof props.allowTextColor === 'boolean'
+        ? false
+        : Boolean(
+            props.allowTextColor &&
+              props.allowTextColor.EXPERIMENTAL_allowMoreTextColors === true
+          ),
     findReplace: !!props.allowFindReplace,
-    findReplaceMatchCase: typeof props.allowFindReplace === 'object' && Boolean(props.allowFindReplace.allowMatchCase),
-    extensionLocalIdGeneration: typeof props.allowExtension === 'boolean' ? false : !!(props.allowExtension && props.allowExtension.allowLocalIdGeneration),
-    keyboardAccessibleDatepicker: typeof props.allowKeyboardAccessibleDatepicker === 'boolean' ? props.allowKeyboardAccessibleDatepicker : false,
-    addColumnWithCustomStep: !props.allowTables || typeof props.allowTables === 'boolean' ? false : Boolean(props.allowTables.allowAddColumnWithCustomStep),
+    findReplaceMatchCase:
+      typeof props.allowFindReplace === 'object' &&
+      Boolean(props.allowFindReplace.allowMatchCase),
+    extensionLocalIdGeneration:
+      typeof props.allowExtension === 'boolean'
+        ? false
+        : !!(
+            props.allowExtension && props.allowExtension.allowLocalIdGeneration
+          ),
+    keyboardAccessibleDatepicker:
+      typeof props.allowKeyboardAccessibleDatepicker === 'boolean'
+        ? props.allowKeyboardAccessibleDatepicker
+        : false,
+    addColumnWithCustomStep:
+      !props.allowTables || typeof props.allowTables === 'boolean'
+        ? false
+        : Boolean(props.allowTables.allowAddColumnWithCustomStep),
     predictableLists: props.UNSAFE_predictableLists
-  };
+  }
 }
 /**
  * Transforms FeatureFlags to a type safe string array of the enabled feature flags.
@@ -24,5 +51,5 @@ export function createFeatureFlagsFromProps(props) {
  */
 
 export function getEnabledFeatureFlagKeys(featureFlags) {
-  return Object.keys(featureFlags).filter(key => featureFlags[key] === true);
+  return Object.keys(featureFlags).filter(key => featureFlags[key] === true)
 }

@@ -11,20 +11,24 @@ export default {
   'fabric.editor.addAltText': 'Testo alternativo',
   'fabric.editor.alignment': 'Allineamento',
   'fabric.editor.altText': 'Testo alternativo',
-  'fabric.editor.alttext.validation': 'Rimuovi eventuali caratteri speciali dal testo alternativo.',
+  'fabric.editor.alttext.validation':
+    'Rimuovi eventuali caratteri speciali dal testo alternativo.',
   'fabric.editor.annotate': 'Annota',
   'fabric.editor.annotationToolbar': 'Barra degli strumenti di annotazione',
   'fabric.editor.backLink': 'Torna indietro',
-  'fabric.editor.blockCardUnavailable': "Il collegamento inline è all'interno di {node} e non è possibile modificare la relativa visualizzazione",
+  'fabric.editor.blockCardUnavailable':
+    "Il collegamento inline è all'interno di {node} e non è possibile modificare la relativa visualizzazione",
   'fabric.editor.blockquote': 'Citazione',
   'fabric.editor.blockquote.description': 'Inserisci citazione',
   'fabric.editor.bold': 'Grassetto',
-  'fabric.editor.canNotSortTable': "⚠️ You can't sort a table with merged cells",
+  'fabric.editor.canNotSortTable':
+    "⚠️ You can't sort a table with merged cells",
   'fabric.editor.cardFloatingControls': 'Opzioni scheda',
   'fabric.editor.cellBackground': 'Sfondo cella',
   'fabric.editor.cellOptions': 'Opzioni cella',
   'fabric.editor.clearAltTextEdit': 'Cancella testo alternativo',
-  'fabric.editor.clearCells': '{0, plural, one {Cancella cella} other {Cancella celle}}',
+  'fabric.editor.clearCells':
+    '{0, plural, one {Cancella cella} other {Cancella celle}}',
   'fabric.editor.clearFormatting': 'Elimina formattazione',
   'fabric.editor.clearLink': 'Cancella link',
   'fabric.editor.clearLinkText': 'Cancella testo',
@@ -33,21 +37,25 @@ export default {
   'fabric.editor.closeHelpDialog': 'Chiudi la finestra della guida',
   'fabric.editor.code': 'Codice',
   'fabric.editor.codeblock': 'Frammento di codice',
-  'fabric.editor.codeblock.description': 'Mostra codice con colorazione della sintassi',
+  'fabric.editor.codeblock.description':
+    'Mostra codice con colorazione della sintassi',
   'fabric.editor.columns': 'Layout',
   'fabric.editor.columns.description': 'Organizza la tua pagina in sezioni',
   'fabric.editor.configPanel.cancel': 'Annulla',
-  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio': 'Impossibile combinare isMultiple con style: radio',
+  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio':
+    'Impossibile combinare isMultiple con style: radio',
   'fabric.editor.configPanel.formType.addField': 'Aggiungi campo',
   'fabric.editor.configPanel.formType.removeField': 'Rimuovi campo',
   'fabric.editor.configPanel.required': 'Campo obbligatorio',
   'fabric.editor.configPanel.submit': 'Invia',
   'fabric.editor.createComment': 'Crea commento',
-  'fabric.editor.createCommentInvalid': 'I commenti vengono abilitati solo per testo e intestazioni',
+  'fabric.editor.createCommentInvalid':
+    'I commenti vengono abilitati solo per testo e intestazioni',
   'fabric.editor.date': 'Data',
   'fabric.editor.date.description': 'Aggiungi una data usando un calendario',
   'fabric.editor.decision': 'Decisione',
-  'fabric.editor.decision.description': 'Acquisisci decisioni per monitorarle agevolmente',
+  'fabric.editor.decision.description':
+    'Acquisisci decisioni per monitorarle agevolmente',
   'fabric.editor.decisionPlaceholder': 'Aggiungi una decisione…',
   'fabric.editor.displayBlock': 'Mostra come scheda',
   'fabric.editor.displayEmbed': 'Visualizza come incorporato',
@@ -58,16 +66,20 @@ export default {
   'fabric.editor.editAltText': 'Modifica testo alternativo',
   'fabric.editor.editorHelp': "Guida dell'editor",
   'fabric.editor.emoji': 'Emoji',
-  'fabric.editor.emoji.description': 'Usa le emoji per esprimere idee 🎉 ed emozioni 😄',
+  'fabric.editor.emoji.description':
+    'Usa le emoji per esprimere idee 🎉 ed emozioni 😄',
   'fabric.editor.error': 'Errore',
   'fabric.editor.errorPanel': 'Pannello errori',
-  'fabric.editor.errorPanel.description': 'Segnala gli errori in un pannello colorato',
+  'fabric.editor.errorPanel.description':
+    'Segnala gli errori in un pannello colorato',
   'fabric.editor.expand': 'Espandi',
   'fabric.editor.expand.description': 'Inserisci espansione',
   'fabric.editor.feedbackDialog': 'Lascia un feedback',
-  'fabric.editor.feedbackDialog.description': 'Raccontaci la tua esperienza usando il nuovo editor',
+  'fabric.editor.feedbackDialog.description':
+    'Raccontaci la tua esperienza usando il nuovo editor',
   'fabric.editor.filesAndImages': 'File e immagini',
-  'fabric.editor.filesAndImages.description': 'Aggiungi alla tua pagina immagini e altri file',
+  'fabric.editor.filesAndImages.description':
+    'Aggiungi alla tua pagina immagini e altri file',
   'fabric.editor.find': 'Trova',
   'fabric.editor.findNext': 'Trova successivo',
   'fabric.editor.findPrevious': 'Trova precedente',
@@ -79,7 +91,8 @@ export default {
   'fabric.editor.heading2': 'Titolo 2',
   'fabric.editor.heading2Description': 'Per le sezioni principali',
   'fabric.editor.heading3': 'Titolo 3',
-  'fabric.editor.heading3Description': 'Per i titoli delle sottosezioni e dei gruppi',
+  'fabric.editor.heading3Description':
+    'Per i titoli delle sottosezioni e dei gruppi',
   'fabric.editor.heading4': 'Titolo 4',
   'fabric.editor.heading4Description': 'Per i titoli interni',
   'fabric.editor.heading5': 'Titolo 5',
@@ -87,14 +100,18 @@ export default {
   'fabric.editor.heading6': 'Titolo 6',
   'fabric.editor.heading6Description': 'Per i titoli di livello inferiore',
   'fabric.editor.help': 'Guida',
-  'fabric.editor.help.description': 'Sfoglia tutti i tasti di scelta rapida e le opzioni di Markdown',
-  'fabric.editor.helpDialogTips': 'Premi {keyMap} per aprire velocemente questa finestra di dialogo ogni volta che vuoi',
+  'fabric.editor.help.description':
+    'Sfoglia tutti i tasti di scelta rapida e le opzioni di Markdown',
+  'fabric.editor.helpDialogTips':
+    'Premi {keyMap} per aprire velocemente questa finestra di dialogo ogni volta che vuoi',
   'fabric.editor.horizontalRule': 'Divisore',
-  'fabric.editor.horizontalRule.description': 'Contenuti separati con una riga orizzontale',
+  'fabric.editor.horizontalRule.description':
+    'Contenuti separati con una riga orizzontale',
   'fabric.editor.image': 'Immagine',
   'fabric.editor.info': 'Info',
   'fabric.editor.infoPanel': 'Pannello informazioni',
-  'fabric.editor.infoPanel.description': 'Metti in evidenza l’informazione in un pannello colorato',
+  'fabric.editor.infoPanel.description':
+    'Metti in evidenza l’informazione in un pannello colorato',
   'fabric.editor.insertColumn': 'Inserisci colonna',
   'fabric.editor.insertMenu': 'Inserisci',
   'fabric.editor.insertRow': 'Inserisci riga',
@@ -106,26 +123,31 @@ export default {
   'fabric.editor.lists': 'Elenchi',
   'fabric.editor.markdown': 'Markdown',
   'fabric.editor.mention': 'Menziona',
-  'fabric.editor.mention.description': 'Menziona qualcuno per inviargli una notifica',
+  'fabric.editor.mention.description':
+    'Menziona qualcuno per inviargli una notifica',
   'fabric.editor.mergeCells': 'Unisci celle',
   'fabric.editor.moreFormatting': 'Formattazione aggiuntiva',
   'fabric.editor.noResultsFound': 'Nessun risultato trovato',
   'fabric.editor.normal': 'Testo normale',
   'fabric.editor.note': 'Nota',
   'fabric.editor.notePanel': 'Pannello note',
-  'fabric.editor.notePanel.description': 'Aggiungi una nota in un pannello colorato',
+  'fabric.editor.notePanel.description':
+    'Aggiungi una nota in un pannello colorato',
   'fabric.editor.numberedColumn': 'Colonna numerata',
   'fabric.editor.orderedList': 'Elenco numerato',
   'fabric.editor.orderedList.description': 'Crea una lista ordinata',
   'fabric.editor.other': 'Altri...',
   'fabric.editor.pastePlainText': 'Incolla testo non formattato',
-  'fabric.editor.placeholderAltText': 'Descrivi questa immagine con testo alternativo',
+  'fabric.editor.placeholderAltText':
+    'Descrivi questa immagine con testo alternativo',
   'fabric.editor.placeholderText': 'Testo segnaposto',
   'fabric.editor.placeholderTextPlaceholder': 'Aggiungi testo segnaposto',
   'fabric.editor.quickInsert': 'Inserimento rapido',
   'fabric.editor.redo': 'Ripeti',
-  'fabric.editor.removeColumns': '{0, plural, one {Rimuovi colonna} other {Rimuovi colonne}}',
-  'fabric.editor.removeRows': '{0, plural, one {Rimuovi riga} other {Rimuovi righe}}',
+  'fabric.editor.removeColumns':
+    '{0, plural, one {Rimuovi colonna} other {Rimuovi colonne}}',
+  'fabric.editor.removeRows':
+    '{0, plural, one {Rimuovi riga} other {Rimuovi righe}}',
   'fabric.editor.replace': 'Sostituisci',
   'fabric.editor.replaceAll': 'Sostituisci tutto',
   'fabric.editor.replaceWith': 'Sostituisci con',
@@ -136,19 +158,23 @@ export default {
   'fabric.editor.sortColumnDESC': 'Sort column Z → A',
   'fabric.editor.splitCell': 'Dividi celle',
   'fabric.editor.status': 'Stato',
-  'fabric.editor.status.description': 'Aggiungi un’etichetta di stato personalizzato',
+  'fabric.editor.status.description':
+    'Aggiungi un’etichetta di stato personalizzato',
   'fabric.editor.statusPlaceholder': 'Imposta uno stato',
   'fabric.editor.strike': 'Barrato',
   'fabric.editor.subscript': 'Pedice',
   'fabric.editor.success': 'Operazione riuscita',
   'fabric.editor.successPanel': 'Pannello operazioni completate',
-  'fabric.editor.successPanel.description': 'Aggiungi consigli in un pannello colorato',
+  'fabric.editor.successPanel.description':
+    'Aggiungi consigli in un pannello colorato',
   'fabric.editor.superscript': 'Apice',
-  'fabric.editor.supportAltText': 'Il testo alternativo è utile agli utenti con problemi di vista che utilizzano utilità per la lettura dello schermo.',
+  'fabric.editor.supportAltText':
+    'Il testo alternativo è utile agli utenti con problemi di vista che utilizzano utilità per la lettura dello schermo.',
   'fabric.editor.table': 'Tabella',
   'fabric.editor.table.description': 'Inserisci una tabella',
   'fabric.editor.tableOptions': 'Opzioni tabella',
-  'fabric.editor.taskPlaceholder': 'Digita la tua azione e usa “@” per assegnarla a qualcuno.',
+  'fabric.editor.taskPlaceholder':
+    'Digita la tua azione e usa “@” per assegnarla a qualcuno.',
   'fabric.editor.textColor': 'Colore del testo',
   'fabric.editor.textColor.lessColors': 'Meno colori',
   'fabric.editor.textColor.moreColors': 'Più colori',
@@ -163,7 +189,8 @@ export default {
   'fabric.editor.viewMore': 'Visualizza altro',
   'fabric.editor.warning': 'Attenzione',
   'fabric.editor.warningPanel': 'Pannello avvisi',
-  'fabric.editor.warningPanel.description': 'Aggiungi un avviso in un pannello colorato',
+  'fabric.editor.warningPanel.description':
+    'Aggiungi un avviso in un pannello colorato',
   'fabric.editor.wrapLeft': 'Ritorno a capo a sinistra',
   'fabric.editor.wrapRight': 'RItorno a capo a destra',
   'fabric.theme.blue': 'Blue',
@@ -188,4 +215,4 @@ export default {
   'fabric.theme.teal': 'Teal',
   'fabric.theme.white': 'White',
   'fabric.theme.yellow': 'Yellow'
-};
+}

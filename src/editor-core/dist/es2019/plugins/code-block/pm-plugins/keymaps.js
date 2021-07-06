@@ -1,60 +1,80 @@
-import { keymap } from 'prosemirror-keymap';
-import { Selection } from 'prosemirror-state';
-import { findParentNodeOfTypeClosestToPos, hasParentNodeOfType } from 'prosemirror-utils';
-import { getCursor, isEmptyNode, pipe } from '../../../utils';
+import { keymap } from 'prosemirror-keymap'
+import { Selection } from 'prosemirror-state'
+import {
+  findParentNodeOfTypeClosestToPos,
+  hasParentNodeOfType
+} from 'prosemirror-utils'
+import { getCursor, isEmptyNode, pipe } from '../../../utils'
 
 const deleteCurrentItem = $from => tr => {
-  return tr.delete($from.before($from.depth) - 1, $from.end($from.depth) + 1);
-};
+  return tr.delete($from.before($from.depth) - 1, $from.end($from.depth) + 1)
+}
 
 const setTextSelection = pos => tr => {
-  const newSelection = Selection.findFrom(tr.doc.resolve(pos), -1, true);
+  const newSelection = Selection.findFrom(tr.doc.resolve(pos), -1, true)
 
   if (newSelection) {
-    tr.setSelection(newSelection);
+    tr.setSelection(newSelection)
   }
 
-  return tr;
-};
+  return tr
+}
 
 export function keymapPlugin(schema) {
   return keymap({
     Backspace: (state, dispatch) => {
-      const $cursor = getCursor(state.selection);
+      const $cursor = getCursor(state.selection)
       const {
         paragraph,
         codeBlock,
         listItem,
         table,
         layoutColumn
-      } = state.schema.nodes;
+      } = state.schema.nodes
 
       if (!$cursor || $cursor.parent.type !== codeBlock) {
-        return false;
+        return false
       }
 
-      if ($cursor.pos === 1 || hasParentNodeOfType(listItem)(state.selection) && $cursor.parentOffset === 0) {
-        const node = findParentNodeOfTypeClosestToPos($cursor, codeBlock);
+      if (
+        $cursor.pos === 1 ||
+        (hasParentNodeOfType(listItem)(state.selection) &&
+          $cursor.parentOffset === 0)
+      ) {
+        const node = findParentNodeOfTypeClosestToPos($cursor, codeBlock)
 
         if (!node) {
-          return false;
+          return false
         }
 
-        dispatch(state.tr.setNodeMarkup(node.pos, node.node.type, node.node.attrs, []).setBlockType($cursor.pos, $cursor.pos, paragraph));
-        return true;
+        dispatch(
+          state.tr
+            .setNodeMarkup(node.pos, node.node.type, node.node.attrs, [])
+            .setBlockType($cursor.pos, $cursor.pos, paragraph)
+        )
+        return true
       }
 
-      if (dispatch && $cursor.node && isEmptyNode(schema)($cursor.node()) && (hasParentNodeOfType(layoutColumn)(state.selection) || hasParentNodeOfType(table)(state.selection))) {
-        const {
-          tr
-        } = state;
-        const insertPos = $cursor.pos;
-        dispatch(pipe(deleteCurrentItem($cursor), setTextSelection(insertPos))(tr).scrollIntoView());
-        return true;
+      if (
+        dispatch &&
+        $cursor.node &&
+        isEmptyNode(schema)($cursor.node()) &&
+        (hasParentNodeOfType(layoutColumn)(state.selection) ||
+          hasParentNodeOfType(table)(state.selection))
+      ) {
+        const { tr } = state
+        const insertPos = $cursor.pos
+        dispatch(
+          pipe(
+            deleteCurrentItem($cursor),
+            setTextSelection(insertPos)
+          )(tr).scrollIntoView()
+        )
+        return true
       }
 
-      return false;
+      return false
     }
-  });
+  })
 }
-export default keymapPlugin;
+export default keymapPlugin

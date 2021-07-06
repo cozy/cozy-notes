@@ -7,24 +7,29 @@
 // Turkish
 export default {
   'fabric.editor.action': 'Yapılacaklar listesi',
-  'fabric.editor.action.description': 'Yapılacaklar listesi oluşturun ve atayın',
+  'fabric.editor.action.description':
+    'Yapılacaklar listesi oluşturun ve atayın',
   'fabric.editor.addAltText': 'Alternatif metin',
   'fabric.editor.alignment': 'Hizalama',
   'fabric.editor.altText': 'Alternatif metin',
-  'fabric.editor.alttext.validation': 'Lütfen alt (alternatif metin) özniteliğindeki özel karakterleri kaldırın.',
+  'fabric.editor.alttext.validation':
+    'Lütfen alt (alternatif metin) özniteliğindeki özel karakterleri kaldırın.',
   'fabric.editor.annotate': 'Not ekle',
   'fabric.editor.annotationToolbar': 'Not ekleme araç çubuğu',
   'fabric.editor.backLink': 'Geri dön',
-  'fabric.editor.blockCardUnavailable': 'Satır içi bağlantı {node} düğümündedir ve görüntüsü değiştirilemez',
+  'fabric.editor.blockCardUnavailable':
+    'Satır içi bağlantı {node} düğümündedir ve görüntüsü değiştirilemez',
   'fabric.editor.blockquote': 'Alıntı',
   'fabric.editor.blockquote.description': 'Alıntı veya atıf ekleyin',
   'fabric.editor.bold': 'Kalın',
-  'fabric.editor.canNotSortTable': '⚠️ Birleştirilmiş hücre içeren bir tabloyu sıralayamazsınız',
+  'fabric.editor.canNotSortTable':
+    '⚠️ Birleştirilmiş hücre içeren bir tabloyu sıralayamazsınız',
   'fabric.editor.cardFloatingControls': 'Kart seçenekleri',
   'fabric.editor.cellBackground': 'Hücre arka planı',
   'fabric.editor.cellOptions': 'Hücre seçenekleri',
   'fabric.editor.clearAltTextEdit': 'Alternatif metni temizle',
-  'fabric.editor.clearCells': '{0, plural, one {Hücreyi temizle} other {Hücreleri temizle}}',
+  'fabric.editor.clearCells':
+    '{0, plural, one {Hücreyi temizle} other {Hücreleri temizle}}',
   'fabric.editor.clearFormatting': 'Biçimlendirmeyi temizle',
   'fabric.editor.clearLink': 'Bağlantıyı temizle',
   'fabric.editor.clearLinkText': 'Metni temizle',
@@ -33,21 +38,26 @@ export default {
   'fabric.editor.closeHelpDialog': 'Yardım iletişim kutusunu kapat',
   'fabric.editor.code': 'Kod',
   'fabric.editor.codeblock': 'Kod parçacığı',
-  'fabric.editor.codeblock.description': 'Kodları söz dizimini vurgulayarak görüntüleyin',
+  'fabric.editor.codeblock.description':
+    'Kodları söz dizimini vurgulayarak görüntüleyin',
   'fabric.editor.columns': 'Düzenler',
-  'fabric.editor.columns.description': 'Bölümler aracılığıyla sayfanızı yapılandırın',
+  'fabric.editor.columns.description':
+    'Bölümler aracılığıyla sayfanızı yapılandırın',
   'fabric.editor.configPanel.cancel': 'İptal',
-  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio': 'Can not combine isMultiple with style: radio',
+  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio':
+    'Can not combine isMultiple with style: radio',
   'fabric.editor.configPanel.formType.addField': 'Alan ekle',
   'fabric.editor.configPanel.formType.removeField': 'Alanı kaldır',
   'fabric.editor.configPanel.required': 'Gerekli alan',
   'fabric.editor.configPanel.submit': 'Gönder',
   'fabric.editor.createComment': 'Yorum yazın',
-  'fabric.editor.createCommentInvalid': 'Yorum özelliği yalnızca metin ve başlıklarda etkindir',
+  'fabric.editor.createCommentInvalid':
+    'Yorum özelliği yalnızca metin ve başlıklarda etkindir',
   'fabric.editor.date': 'Tarih',
   'fabric.editor.date.description': 'Takvimi kullanarak tarih ekleyin',
   'fabric.editor.decision': 'Karar',
-  'fabric.editor.decision.description': 'Takibi kolaylaştırmak için kararları vurgulayın',
+  'fabric.editor.decision.description':
+    'Takibi kolaylaştırmak için kararları vurgulayın',
   'fabric.editor.decisionPlaceholder': 'Karar ekle…',
   'fabric.editor.displayBlock': 'Kart olarak göster',
   'fabric.editor.displayEmbed': 'Ekli nesne olarak göster',
@@ -58,16 +68,19 @@ export default {
   'fabric.editor.editAltText': 'Alternatif metni düzenle',
   'fabric.editor.editorHelp': 'Düzenleyici yardımı',
   'fabric.editor.emoji': 'Emoji',
-  'fabric.editor.emoji.description': 'Düşüncelerinizi 🎉 ve duygularınızı 😄 ifade etmek için emojiler kullanın',
+  'fabric.editor.emoji.description':
+    'Düşüncelerinizi 🎉 ve duygularınızı 😄 ifade etmek için emojiler kullanın',
   'fabric.editor.error': 'Hata',
   'fabric.editor.errorPanel': 'Hata panosu',
   'fabric.editor.errorPanel.description': 'Renkli bir panoda hataları belirtin',
   'fabric.editor.expand': 'Genişlet',
   'fabric.editor.expand.description': 'Genişletme öğesi ekle',
   'fabric.editor.feedbackDialog': 'Geri bildirim verin',
-  'fabric.editor.feedbackDialog.description': 'Yeni düzenleyici hakkındaki deneyimlerinizi bizimle paylaşın',
+  'fabric.editor.feedbackDialog.description':
+    'Yeni düzenleyici hakkındaki deneyimlerinizi bizimle paylaşın',
   'fabric.editor.filesAndImages': 'Dosyalar ve görseller',
-  'fabric.editor.filesAndImages.description': 'Sayfanıza görseller ve başka dosyalar ekleyin',
+  'fabric.editor.filesAndImages.description':
+    'Sayfanıza görseller ve başka dosyalar ekleyin',
   'fabric.editor.find': 'Bul',
   'fabric.editor.findNext': 'Sonrakini bul',
   'fabric.editor.findPrevious': 'Öncekini bul',
@@ -75,26 +88,35 @@ export default {
   'fabric.editor.headerColumn': 'Başlık sütunu',
   'fabric.editor.headerRow': 'Başlık satırı',
   'fabric.editor.heading1': 'Başlık 1',
-  'fabric.editor.heading1Description': 'En üst sıradaki başlıklar için bu seçeneği kullanın',
+  'fabric.editor.heading1Description':
+    'En üst sıradaki başlıklar için bu seçeneği kullanın',
   'fabric.editor.heading2': 'Başlık 2',
-  'fabric.editor.heading2Description': 'Alt başlıklar için bu seçeneği kullanın',
+  'fabric.editor.heading2Description':
+    'Alt başlıklar için bu seçeneği kullanın',
   'fabric.editor.heading3': 'Başlık 3',
-  'fabric.editor.heading3Description': 'Alt bölümler ve grup başlıkları için bu seçeneği kullanın',
+  'fabric.editor.heading3Description':
+    'Alt bölümler ve grup başlıkları için bu seçeneği kullanın',
   'fabric.editor.heading4': 'Başlık 4',
-  'fabric.editor.heading4Description': 'Daha alt düzey başlıklar için bu seçeneği kullanın',
+  'fabric.editor.heading4Description':
+    'Daha alt düzey başlıklar için bu seçeneği kullanın',
   'fabric.editor.heading5': 'Başlık 5',
-  'fabric.editor.heading5Description': 'Liste ögelerini gruplandırmak için bu seçeneği kullanın',
+  'fabric.editor.heading5Description':
+    'Liste ögelerini gruplandırmak için bu seçeneği kullanın',
   'fabric.editor.heading6': 'Başlık 6',
-  'fabric.editor.heading6Description': 'En alt düzey başlıklar için bu seçeneği kullanın',
+  'fabric.editor.heading6Description':
+    'En alt düzey başlıklar için bu seçeneği kullanın',
   'fabric.editor.help': 'Yardım',
-  'fabric.editor.help.description': 'Tüm klavye kısayollarına ve markdown seçeneklerine göz atın',
-  'fabric.editor.helpDialogTips': 'Bu iletişim kutusunu istediğiniz zaman açmak için lütfen {keyMap} düğmesine basın',
+  'fabric.editor.help.description':
+    'Tüm klavye kısayollarına ve markdown seçeneklerine göz atın',
+  'fabric.editor.helpDialogTips':
+    'Bu iletişim kutusunu istediğiniz zaman açmak için lütfen {keyMap} düğmesine basın',
   'fabric.editor.horizontalRule': 'Ayırıcı',
   'fabric.editor.horizontalRule.description': 'İçeriği yatay çizgiyle ayırın',
   'fabric.editor.image': 'Görsel',
   'fabric.editor.info': 'Bilgi',
   'fabric.editor.infoPanel': 'Bilgi panosu',
-  'fabric.editor.infoPanel.description': 'Renkli bir panoda bilgileri vurgulayın',
+  'fabric.editor.infoPanel.description':
+    'Renkli bir panoda bilgileri vurgulayın',
   'fabric.editor.insertColumn': 'Sütun ekle',
   'fabric.editor.insertMenu': 'Ekle',
   'fabric.editor.insertRow': 'Satır ekle',
@@ -106,7 +128,8 @@ export default {
   'fabric.editor.lists': 'Listeler',
   'fabric.editor.markdown': 'Markdown',
   'fabric.editor.mention': 'Bahsetme',
-  'fabric.editor.mention.description': 'Bildirim göndermek istediğiniz kullanıcıdan bahsedin',
+  'fabric.editor.mention.description':
+    'Bildirim göndermek istediğiniz kullanıcıdan bahsedin',
   'fabric.editor.mergeCells': 'Hücreleri birleştir',
   'fabric.editor.moreFormatting': 'Diğer biçimlendirme seçenekleri',
   'fabric.editor.noResultsFound': 'Sonuç bulunamadı',
@@ -119,13 +142,16 @@ export default {
   'fabric.editor.orderedList.description': 'Sıralı liste oluşturun',
   'fabric.editor.other': 'Diğerleri...',
   'fabric.editor.pastePlainText': 'Düz metin olarak yapıştır',
-  'fabric.editor.placeholderAltText': 'Bu görseli bir alternatif metinle açıklayın',
+  'fabric.editor.placeholderAltText':
+    'Bu görseli bir alternatif metinle açıklayın',
   'fabric.editor.placeholderText': 'Yer tutucu metin',
   'fabric.editor.placeholderTextPlaceholder': 'Yer tutucu metin ekleyin',
   'fabric.editor.quickInsert': 'Hızlı ekleme',
   'fabric.editor.redo': 'Yinele',
-  'fabric.editor.removeColumns': '{0, plural, one {Sütunu kaldır} other {Sütunları kaldır}}',
-  'fabric.editor.removeRows': '{0, plural, one {Satırı kaldır} other {Satırları kaldır}}',
+  'fabric.editor.removeColumns':
+    '{0, plural, one {Sütunu kaldır} other {Sütunları kaldır}}',
+  'fabric.editor.removeRows':
+    '{0, plural, one {Satırı kaldır} other {Satırları kaldır}}',
   'fabric.editor.replace': 'Değiştir',
   'fabric.editor.replaceAll': 'Tümünü değiştir',
   'fabric.editor.replaceWith': 'Yeni değer',
@@ -142,13 +168,16 @@ export default {
   'fabric.editor.subscript': 'Alt simge',
   'fabric.editor.success': 'Başarılı',
   'fabric.editor.successPanel': 'Başarı panosu',
-  'fabric.editor.successPanel.description': 'Renkli bir panoya ipuçları ekleyin',
+  'fabric.editor.successPanel.description':
+    'Renkli bir panoya ipuçları ekleyin',
   'fabric.editor.superscript': 'Üst simge',
-  'fabric.editor.supportAltText': 'Alternatif metin, görme güçlüğü çektiği için ekran okuyucu kullanan kişilere yardımcı olur.',
+  'fabric.editor.supportAltText':
+    'Alternatif metin, görme güçlüğü çektiği için ekran okuyucu kullanan kişilere yardımcı olur.',
   'fabric.editor.table': 'Tablo',
   'fabric.editor.table.description': 'Tablo ekleyin',
   'fabric.editor.tableOptions': 'Tablo seçenekleri',
-  'fabric.editor.taskPlaceholder': "Yapılacak eylemi yazın, birine atamak için '@' kullanın.",
+  'fabric.editor.taskPlaceholder':
+    "Yapılacak eylemi yazın, birine atamak için '@' kullanın.",
   'fabric.editor.textColor': 'Metin rengi',
   'fabric.editor.textColor.lessColors': 'Daha az renk',
   'fabric.editor.textColor.moreColors': 'Daha fazla renk',
@@ -163,7 +192,8 @@ export default {
   'fabric.editor.viewMore': 'Daha fazla göster',
   'fabric.editor.warning': 'Uyarı',
   'fabric.editor.warningPanel': 'Uyarı panosu',
-  'fabric.editor.warningPanel.description': 'Renkli bir panoya uyarı notu ekleyin',
+  'fabric.editor.warningPanel.description':
+    'Renkli bir panoya uyarı notu ekleyin',
   'fabric.editor.wrapLeft': 'Sola kaydır',
   'fabric.editor.wrapRight': 'Sağa kaydır',
   'fabric.theme.blue': 'Mavi',
@@ -188,4 +218,4 @@ export default {
   'fabric.theme.teal': 'Cam göbeği',
   'fabric.theme.white': 'Beyaz',
   'fabric.theme.yellow': 'Sarı'
-};
+}

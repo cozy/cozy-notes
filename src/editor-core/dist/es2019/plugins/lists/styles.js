@@ -1,4 +1,4 @@
-import { css } from 'styled-components';
+import { css } from 'styled-components'
 export const listsStyles = css`
   .ProseMirror li {
     position: relative;
@@ -7,4 +7,4 @@ export const listsStyles = css`
       margin: 4px 0 0 0;
     }
   }
-`;
+`

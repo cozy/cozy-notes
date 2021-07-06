@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import { borderRadius } from '@atlaskit/theme/constants';
-import * as colors from '@atlaskit/theme/colors';
-import { akEditorUnitZIndex } from '@atlaskit/editor-shared-styles';
+import styled from 'styled-components'
+import { borderRadius } from '@atlaskit/theme/constants'
+import * as colors from '@atlaskit/theme/colors'
+import { akEditorUnitZIndex } from '@atlaskit/editor-shared-styles'
 export const Header = styled.div`
   z-index: ${akEditorUnitZIndex};
   min-height: 24px;
@@ -10,11 +10,12 @@ export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: ${props => props.showKeyline ? `0 2px 0 ${colors.N30}` : 'none'};
+  box-shadow: ${props =>
+    props.showKeyline ? `0 2px 0 ${colors.N30}` : 'none'};
   color: ${colors.N400};
   background-color: ${colors.N0};
   border-radius: ${borderRadius()}px;
-`;
+`
 export const Footer = styled.div`
   z-index: ${akEditorUnitZIndex};
   font-size: 14px;
@@ -22,8 +23,9 @@ export const Footer = styled.div`
   color: ${colors.N300};
   padding: 24px;
   text-align: right;
-  box-shadow: ${props => props.showKeyline ? `0 -2px 0 ${colors.N30}` : 'none'};
-`;
+  box-shadow: ${props =>
+    props.showKeyline ? `0 -2px 0 ${colors.N30}` : 'none'};
+`
 export const ContentWrapper = styled.div`
   padding: 18px 20px;
   border-bottom-right-radius: ${borderRadius()}px;
@@ -31,7 +33,7 @@ export const ContentWrapper = styled.div`
   position: relative;
   color: ${colors.N400};
   background-color: ${colors.N0};
-`;
+`
 export const Line = styled.div`
   background: #fff;
   content: '';
@@ -43,29 +45,29 @@ export const Line = styled.div`
   right: 0;
   width: 100%;
   min-width: 604px;
-`;
+`
 export const Content = styled.div`
   min-width: 524px;
   width: 100%;
   position: relative;
   display: flex;
   justify-content: space-between;
-`;
+`
 export const ColumnLeft = styled.div`
   width: 44%;
-`;
+`
 export const ColumnRight = styled.div`
   width: 44%;
-`;
+`
 export const Row = styled.div`
   margin: 20px 0;
   display: flex;
   justify-content: space-between;
-`;
+`
 export const Title = styled.div`
   font-size: 18px;
   font-weight: 400;
-`;
+`
 export const CodeSm = styled.span`
   background-color: ${colors.N20};
   border-radius: ${borderRadius()}px;
@@ -74,7 +76,7 @@ export const CodeSm = styled.span`
   height: 24px;
   line-height: 24px;
   text-align: center;
-`;
+`
 export const CodeMd = styled.span`
   background-color: ${colors.N20};
   border-radius: ${borderRadius()}px;
@@ -83,7 +85,7 @@ export const CodeMd = styled.span`
   line-height: 24px;
   width: 50px;
   text-align: center;
-`;
+`
 export const CodeLg = styled.span`
   background-color: ${colors.N20};
   border-radius: ${borderRadius()}px;
@@ -92,4 +94,4 @@ export const CodeLg = styled.span`
   line-height: 24px;
   padding: 0 10px;
   text-align: center;
-`;
+`

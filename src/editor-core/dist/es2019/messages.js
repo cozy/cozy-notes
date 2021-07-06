@@ -1,7 +1,7 @@
 // Common Translations will live here
-import { defineMessages } from 'react-intl';
-import { linkMessages } from '@atlaskit/editor-common';
-export { linkMessages };
+import { defineMessages } from 'react-intl'
+import { linkMessages } from '@atlaskit/editor-common'
+export { linkMessages }
 export const linkToolbarMessages = defineMessages({
   addLink: {
     id: 'fabric.editor.mediaAddLink',
@@ -48,22 +48,25 @@ export const linkToolbarMessages = defineMessages({
     defaultMessage: 'Please enter a link.',
     description: 'Please enter a link.'
   }
-});
+})
 export default defineMessages({
   layoutFixedWidth: {
     id: 'fabric.editor.layoutFixedWidth',
     defaultMessage: 'Back to center',
-    description: 'Display your element (image, table, extension, etc) as standard width'
+    description:
+      'Display your element (image, table, extension, etc) as standard width'
   },
   layoutWide: {
     id: 'fabric.editor.layoutWide',
     defaultMessage: 'Go wide',
-    description: 'Display your element (image, table, extension, etc) wider than normal'
+    description:
+      'Display your element (image, table, extension, etc) wider than normal'
   },
   layoutFullWidth: {
     id: 'fabric.editor.layoutFullWidth',
     defaultMessage: 'Go full width',
-    description: 'Display your element (image, table, extension, etc) as full width'
+    description:
+      'Display your element (image, table, extension, etc) as full width'
   },
   alignImageRight: {
     id: 'fabric.editor.alignImageRight',
@@ -83,7 +86,8 @@ export default defineMessages({
   remove: {
     id: 'fabric.editor.remove',
     defaultMessage: 'Remove',
-    description: 'Delete the element (image, panel, table, etc.) from your document'
+    description:
+      'Delete the element (image, panel, table, etc.) from your document'
   },
   visit: {
     id: 'fabric.editor.visit',
@@ -160,4 +164,4 @@ export default defineMessages({
     defaultMessage: 'Copied!',
     description: 'Copied the whole content of the element to clipboard'
   }
-});
+})

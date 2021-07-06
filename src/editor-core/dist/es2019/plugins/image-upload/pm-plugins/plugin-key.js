@@ -1,2 +1,2 @@
-import { PluginKey } from 'prosemirror-state';
-export const stateKey = new PluginKey('imageUploadPlugin');
+import { PluginKey } from 'prosemirror-state'
+export const stateKey = new PluginKey('imageUploadPlugin')

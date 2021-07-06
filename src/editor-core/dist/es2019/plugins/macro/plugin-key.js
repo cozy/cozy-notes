@@ -1,2 +1,2 @@
-import { PluginKey } from 'prosemirror-state';
-export const pluginKey = new PluginKey('macroPlugin');
+import { PluginKey } from 'prosemirror-state'
+export const pluginKey = new PluginKey('macroPlugin')

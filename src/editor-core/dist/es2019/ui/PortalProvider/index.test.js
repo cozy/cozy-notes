@@ -1,95 +1,112 @@
-jest.mock('react-dom', () => ({ ...jest.requireActual('react-dom'),
+jest.mock('react-dom', () => ({
+  ...jest.requireActual('react-dom'),
   unmountComponentAtNode: jest.fn()
-}));
-import React from 'react';
-import { unmountComponentAtNode } from 'react-dom';
-import { mount } from 'enzyme';
-import { AnalyticsListener, useAnalyticsEvents } from '@atlaskit/analytics-next';
-import { PortalProvider, PortalRenderer } from './';
-import { ContextAdapter } from '../../nodeviews/context-adapter';
+}))
+import React from 'react'
+import { unmountComponentAtNode } from 'react-dom'
+import { mount } from 'enzyme'
+import { AnalyticsListener, useAnalyticsEvents } from '@atlaskit/analytics-next'
+import { PortalProvider, PortalRenderer } from './'
+import { ContextAdapter } from '../../nodeviews/context-adapter'
 
-const Component = () => /*#__PURE__*/React.createElement("div", {
-  className: "component"
-}, "My component");
+const Component = () =>
+  /*#__PURE__*/ React.createElement(
+    'div',
+    {
+      className: 'component'
+    },
+    'My component'
+  )
 
 const Component2 = () => {
-  const {
-    createAnalyticsEvent
-  } = useAnalyticsEvents();
-  const event = createAnalyticsEvent({});
-  event.fire('portalprovidertest');
-  return /*#__PURE__*/React.createElement("div", null, "Component 2");
-};
+  const { createAnalyticsEvent } = useAnalyticsEvents()
+  const event = createAnalyticsEvent({})
+  event.fire('portalprovidertest')
+  return /*#__PURE__*/ React.createElement('div', null, 'Component 2')
+}
 
-const ComponentWithAnalytics = () => /*#__PURE__*/React.createElement(Component2, null);
+const ComponentWithAnalytics = () =>
+  /*#__PURE__*/ React.createElement(Component2, null)
 
 describe('PortalProvider', () => {
-  let portalProviderAPI;
-  let wrapper;
-  let place;
-  let place2;
-  let handleAnalyticsEvent;
-  let handleAnalyticsEventFromContext;
+  let portalProviderAPI
+  let wrapper
+  let place
+  let place2
+  let handleAnalyticsEvent
+  let handleAnalyticsEventFromContext
 
   const initPortalProvider = () => {
-    handleAnalyticsEvent = jest.fn();
-    handleAnalyticsEventFromContext = jest.fn();
-    wrapper = mount( /*#__PURE__*/React.createElement(AnalyticsListener, {
-      channel: "portalprovidertest",
-      onEvent: handleAnalyticsEventFromContext
-    }, /*#__PURE__*/React.createElement(ContextAdapter, null, /*#__PURE__*/React.createElement(PortalProvider, {
-      onAnalyticsEvent: handleAnalyticsEvent,
-      useAnalyticsContext: true,
-      render: api => {
-        portalProviderAPI = api;
-        return /*#__PURE__*/React.createElement(PortalRenderer, {
-          portalProviderAPI: api
-        });
-      }
-    }))));
-    portalProviderAPI.render(Component, place);
-    wrapper.update();
-  };
+    handleAnalyticsEvent = jest.fn()
+    handleAnalyticsEventFromContext = jest.fn()
+    wrapper = mount(
+      /*#__PURE__*/ React.createElement(
+        AnalyticsListener,
+        {
+          channel: 'portalprovidertest',
+          onEvent: handleAnalyticsEventFromContext
+        },
+        /*#__PURE__*/ React.createElement(
+          ContextAdapter,
+          null,
+          /*#__PURE__*/ React.createElement(PortalProvider, {
+            onAnalyticsEvent: handleAnalyticsEvent,
+            useAnalyticsContext: true,
+            render: api => {
+              portalProviderAPI = api
+              return /*#__PURE__*/ React.createElement(PortalRenderer, {
+                portalProviderAPI: api
+              })
+            }
+          })
+        )
+      )
+    )
+    portalProviderAPI.render(Component, place)
+    wrapper.update()
+  }
 
   beforeEach(() => {
-    jest.resetAllMocks();
-    place = document.body.appendChild(document.createElement('div'));
-    place.classList.add('place');
-    place2 = document.body.appendChild(document.createElement('div'));
-    place2.classList.add('place2');
-    initPortalProvider();
-  });
+    jest.resetAllMocks()
+    place = document.body.appendChild(document.createElement('div'))
+    place.classList.add('place')
+    place2 = document.body.appendChild(document.createElement('div'))
+    place2.classList.add('place2')
+    initPortalProvider()
+  })
   afterEach(() => {
-    place.parentNode.removeChild(place);
-    place2.parentNode.removeChild(place2);
-  });
+    place.parentNode.removeChild(place)
+    place2.parentNode.removeChild(place2)
+  })
   it('should render a component successfully', () => {
-    expect(mount( /*#__PURE__*/React.createElement(Component, null)).html()).toEqual(place.innerHTML);
-  });
+    expect(
+      mount(/*#__PURE__*/ React.createElement(Component, null)).html()
+    ).toEqual(place.innerHTML)
+  })
   it('should render several components successfully', () => {
-    portalProviderAPI.render(Component, place2);
-    wrapper.update();
-    const component = mount( /*#__PURE__*/React.createElement(Component, null));
-    expect(component.html()).toEqual(place.innerHTML);
-    expect(component.html()).toEqual(place2.innerHTML);
-  });
+    portalProviderAPI.render(Component, place2)
+    wrapper.update()
+    const component = mount(/*#__PURE__*/ React.createElement(Component, null))
+    expect(component.html()).toEqual(place.innerHTML)
+    expect(component.html()).toEqual(place2.innerHTML)
+  })
   it('should destroy a component successfully', () => {
-    portalProviderAPI.remove(place);
-    wrapper.update();
-    expect(unmountComponentAtNode).toBeCalledWith(place);
-  });
+    portalProviderAPI.remove(place)
+    wrapper.update()
+    expect(unmountComponentAtNode).toBeCalledWith(place)
+  })
   describe('React throws an error while unmounting child component', () => {
-    const error = new Error('Something happened...');
+    const error = new Error('Something happened...')
     beforeEach(() => {
       unmountComponentAtNode.mockImplementation(() => {
-        throw error;
-      });
-    });
+        throw error
+      })
+    })
     it('should not throw error', () => {
-      expect(() => portalProviderAPI.remove(place)).not.toThrowError();
-    });
+      expect(() => portalProviderAPI.remove(place)).not.toThrowError()
+    })
     it('should fire analytics if React throws an error when unmounting', () => {
-      portalProviderAPI.remove(place);
+      portalProviderAPI.remove(place)
       expect(handleAnalyticsEvent).toHaveBeenCalledWith({
         payload: {
           action: 'failedToUnmount',
@@ -104,12 +121,12 @@ describe('PortalProvider', () => {
           },
           eventType: 'operational'
         }
-      });
-    });
-  });
+      })
+    })
+  })
   it('should propogate events up from child component', () => {
-    portalProviderAPI.render(ComponentWithAnalytics, place);
-    wrapper.update();
-    expect(handleAnalyticsEventFromContext).toBeCalledTimes(1);
-  });
-});
+    portalProviderAPI.render(ComponentWithAnalytics, place)
+    wrapper.update()
+    expect(handleAnalyticsEventFromContext).toBeCalledTimes(1)
+  })
+})

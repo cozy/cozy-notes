@@ -1,4 +1,4 @@
-import { defineMessages } from 'react-intl';
+import { defineMessages } from 'react-intl'
 export const messages = defineMessages({
   url: {
     id: 'fabric.editor.url',
@@ -8,7 +8,8 @@ export const messages = defineMessages({
   block: {
     id: 'fabric.editor.displayBlock',
     defaultMessage: 'Display card',
-    description: 'Display link as a card with a rich preview similar to in a Facebook feed with page title, description, and potentially an image.'
+    description:
+      'Display link as a card with a rich preview similar to in a Facebook feed with page title, description, and potentially an image.'
   },
   inline: {
     id: 'fabric.editor.displayInline',
@@ -32,7 +33,9 @@ export const messages = defineMessages({
   },
   blockCardUnavailable: {
     id: 'fabric.editor.blockCardUnavailable',
-    defaultMessage: 'The inline link is inside {node} and cannot have its view changed',
-    description: 'Warning message to show the user that this node cannot change its view'
+    defaultMessage:
+      'The inline link is inside {node} and cannot have its view changed',
+    description:
+      'Warning message to show the user that this node cannot change its view'
   }
-});
+})

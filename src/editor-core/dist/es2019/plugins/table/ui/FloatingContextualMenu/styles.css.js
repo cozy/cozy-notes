@@ -1,9 +1,9 @@
-import { css } from 'styled-components';
-import { tableBackgroundBorderColor } from '@atlaskit/adf-schema';
-import { N60A, N90 } from '@atlaskit/theme/colors';
-import { contextualMenuDropdownWidth } from '../consts';
-import { TableCssClassName as ClassName } from '../../types';
-import { borderRadius } from '@atlaskit/theme/constants';
+import { css } from 'styled-components'
+import { tableBackgroundBorderColor } from '@atlaskit/adf-schema'
+import { N60A, N90 } from '@atlaskit/theme/colors'
+import { contextualMenuDropdownWidth } from '../consts'
+import { TableCssClassName as ClassName } from '../../types'
+import { borderRadius } from '@atlaskit/theme/constants'
 export const tablePopupStyles = css`
   .${ClassName.CONTEXTUAL_SUBMENU} {
     border-radius: ${borderRadius()}px;
@@ -39,4 +39,4 @@ export const tablePopupStyles = css`
       color: ${N90};
     }
   }
-`;
+`

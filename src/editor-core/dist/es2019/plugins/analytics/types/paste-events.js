@@ -3,7 +3,7 @@ export const PasteTypes = {
   plain: 'plain',
   markdown: 'markdown',
   binary: 'binary'
-};
+}
 export const PasteSources = {
   fabricEditor: 'fabric-editor',
   applePages: 'apple-pages',
@@ -13,7 +13,7 @@ export const PasteSources = {
   microsoftWord: 'microsoft-word',
   dropboxPaper: 'dropbox-paper',
   uncategorized: 'uncategorized'
-};
+}
 export const PasteContents = {
   text: 'text',
   url: 'url',
@@ -43,4 +43,4 @@ export const PasteContents = {
   tableRow: 'tableRow',
   taskItem: 'taskItem',
   uncategorized: 'uncategorized'
-};
+}

@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import { akEditorSubtleAccent } from '@atlaskit/editor-shared-styles';
-import { borderRadius } from '@atlaskit/theme/constants';
-import { N300, N50 } from '@atlaskit/theme/colors';
+import styled from 'styled-components'
+import { akEditorSubtleAccent } from '@atlaskit/editor-shared-styles'
+import { borderRadius } from '@atlaskit/theme/constants'
+import { N300, N50 } from '@atlaskit/theme/colors'
 export const Input = styled.input`
   /* Normal .className gets overridden by input[type=text] hence this hack to produce input.className */
   input& {
@@ -25,4 +25,4 @@ export const Input = styled.input`
       cursor: text;
     }
   }
-`;
+`

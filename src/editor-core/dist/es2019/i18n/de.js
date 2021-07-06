@@ -11,20 +11,24 @@ export default {
   'fabric.editor.addAltText': 'Alternativtext',
   'fabric.editor.alignment': 'Ausrichtung',
   'fabric.editor.altText': 'Alternativer Text',
-  'fabric.editor.alttext.validation': 'Bitte entfernen Sie jegliche Sonderzeichen in alternativem Text.',
+  'fabric.editor.alttext.validation':
+    'Bitte entfernen Sie jegliche Sonderzeichen in alternativem Text.',
   'fabric.editor.annotate': 'Anmerkung hinzufügen',
   'fabric.editor.annotationToolbar': 'Symbolleiste für Anmerkungen',
   'fabric.editor.backLink': 'Zurück',
-  'fabric.editor.blockCardUnavailable': 'Die Ansicht des Inline-Links kann nicht geändert werden, da sich der Link innerhalb von {node} befindet.',
+  'fabric.editor.blockCardUnavailable':
+    'Die Ansicht des Inline-Links kann nicht geändert werden, da sich der Link innerhalb von {node} befindet.',
   'fabric.editor.blockquote': 'Zitieren',
   'fabric.editor.blockquote.description': 'Zitat einfügen',
   'fabric.editor.bold': 'Fett',
-  'fabric.editor.canNotSortTable': "⚠️ You can't sort a table with merged cells",
+  'fabric.editor.canNotSortTable':
+    "⚠️ You can't sort a table with merged cells",
   'fabric.editor.cardFloatingControls': 'Kartenoptionen',
   'fabric.editor.cellBackground': 'Zellenhintergrund',
   'fabric.editor.cellOptions': 'Zelloptionen',
   'fabric.editor.clearAltTextEdit': 'Alternativtext löschen',
-  'fabric.editor.clearCells': '{0, plural, one {Zelleninhalt löschen} other {Zelleninhalte löschen}}',
+  'fabric.editor.clearCells':
+    '{0, plural, one {Zelleninhalt löschen} other {Zelleninhalte löschen}}',
   'fabric.editor.clearFormatting': 'Formatierung löschen',
   'fabric.editor.clearLink': 'Link löschen',
   'fabric.editor.clearLinkText': 'Text löschen',
@@ -33,21 +37,26 @@ export default {
   'fabric.editor.closeHelpDialog': 'Hilfedialog schließen',
   'fabric.editor.code': 'Code',
   'fabric.editor.codeblock': 'Code-Auszug',
-  'fabric.editor.codeblock.description': 'Code mit Syntaxhervorhebungen anzeigen',
+  'fabric.editor.codeblock.description':
+    'Code mit Syntaxhervorhebungen anzeigen',
   'fabric.editor.columns': 'Layouts',
-  'fabric.editor.columns.description': 'Seite mithilfe von Abschnitten strukturieren',
+  'fabric.editor.columns.description':
+    'Seite mithilfe von Abschnitten strukturieren',
   'fabric.editor.configPanel.cancel': 'Abbrechen',
-  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio': 'isMultiple kann nicht mit Stil: radio kombiniert werden.',
+  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio':
+    'isMultiple kann nicht mit Stil: radio kombiniert werden.',
   'fabric.editor.configPanel.formType.addField': 'Feld hinzufügen',
   'fabric.editor.configPanel.formType.removeField': 'Feld entfernen',
   'fabric.editor.configPanel.required': 'Pflichtfeld',
   'fabric.editor.configPanel.submit': 'Senden',
   'fabric.editor.createComment': 'Kommentar erstellen',
-  'fabric.editor.createCommentInvalid': 'Die Kommentarfunktion ist nur für Text und Überschriften aktiviert.',
+  'fabric.editor.createCommentInvalid':
+    'Die Kommentarfunktion ist nur für Text und Überschriften aktiviert.',
   'fabric.editor.date': 'Datum',
   'fabric.editor.date.description': 'Datum mittels Kalender hinzufügen',
   'fabric.editor.decision': 'Entscheidung',
-  'fabric.editor.decision.description': 'Entscheidungen erfassen, um sie leicht zu verfolgen',
+  'fabric.editor.decision.description':
+    'Entscheidungen erfassen, um sie leicht zu verfolgen',
   'fabric.editor.decisionPlaceholder': 'Entscheidung hinzufügen …',
   'fabric.editor.displayBlock': 'Als Karte anzeigen',
   'fabric.editor.displayEmbed': 'Als eingebettet anzeigen',
@@ -58,16 +67,20 @@ export default {
   'fabric.editor.editAltText': 'Alternativtext bearbeiten',
   'fabric.editor.editorHelp': 'Editorhilfe',
   'fabric.editor.emoji': 'Emoji',
-  'fabric.editor.emoji.description': 'Verwenden Sie Emojis, um Ideen 🎉 und Emotionen 😄 auszudrücken.',
+  'fabric.editor.emoji.description':
+    'Verwenden Sie Emojis, um Ideen 🎉 und Emotionen 😄 auszudrücken.',
   'fabric.editor.error': 'Fehler',
   'fabric.editor.errorPanel': 'Fehlerpanel',
-  'fabric.editor.errorPanel.description': 'Fehler in einem farbigen Panel hervorheben',
+  'fabric.editor.errorPanel.description':
+    'Fehler in einem farbigen Panel hervorheben',
   'fabric.editor.expand': 'Erweiterung',
   'fabric.editor.expand.description': 'Eine Erweiterung einfügen',
   'fabric.editor.feedbackDialog': 'Feedback geben',
-  'fabric.editor.feedbackDialog.description': 'Teilen Sie uns Ihre Erfahrungen mit dem neuen Editor mit.',
+  'fabric.editor.feedbackDialog.description':
+    'Teilen Sie uns Ihre Erfahrungen mit dem neuen Editor mit.',
   'fabric.editor.filesAndImages': 'Dateien und Bilder',
-  'fabric.editor.filesAndImages.description': 'Bilder oder andere Dateien zu Ihrer Seite hinzufügen',
+  'fabric.editor.filesAndImages.description':
+    'Bilder oder andere Dateien zu Ihrer Seite hinzufügen',
   'fabric.editor.find': 'Suchen',
   'fabric.editor.findNext': 'Nächstes suchen',
   'fabric.editor.findPrevious': 'Vorheriges suchen',
@@ -75,26 +88,36 @@ export default {
   'fabric.editor.headerColumn': 'Kopfzeilen-Spalte',
   'fabric.editor.headerRow': 'Kopfzeile',
   'fabric.editor.heading1': 'Überschrift 1',
-  'fabric.editor.heading1Description': 'Verwenden Sie dies für Überschriften oberster Ebene.',
+  'fabric.editor.heading1Description':
+    'Verwenden Sie dies für Überschriften oberster Ebene.',
   'fabric.editor.heading2': 'Überschrift 2',
-  'fabric.editor.heading2Description': 'Verwenden Sie dies für Schlüsselbereiche.',
+  'fabric.editor.heading2Description':
+    'Verwenden Sie dies für Schlüsselbereiche.',
   'fabric.editor.heading3': 'Überschrift 3',
-  'fabric.editor.heading3Description': 'Verwenden Sie dies für Unterbereiche und Gruppenüberschriften.',
+  'fabric.editor.heading3Description':
+    'Verwenden Sie dies für Unterbereiche und Gruppenüberschriften.',
   'fabric.editor.heading4': 'Überschrift 4',
-  'fabric.editor.heading4Description': 'Verwenden Sie dies für Überschriften tieferer Ebene.',
+  'fabric.editor.heading4Description':
+    'Verwenden Sie dies für Überschriften tieferer Ebene.',
   'fabric.editor.heading5': 'Überschrift 5',
-  'fabric.editor.heading5Description': 'Verwenden Sie dies für die Gruppierung von Listenelementen.',
+  'fabric.editor.heading5Description':
+    'Verwenden Sie dies für die Gruppierung von Listenelementen.',
   'fabric.editor.heading6': 'Überschrift 6',
-  'fabric.editor.heading6Description': 'Verwenden Sie dies für Überschriften niedrigerer Ebene.',
+  'fabric.editor.heading6Description':
+    'Verwenden Sie dies für Überschriften niedrigerer Ebene.',
   'fabric.editor.help': 'Hilfe',
-  'fabric.editor.help.description': 'Alle Tastaturkürzel und Markdown-Optionen durchsuchen',
-  'fabric.editor.helpDialogTips': 'Drücken Sie {keyMap}, um diesen Dialog jederzeit schnell zu öffnen',
+  'fabric.editor.help.description':
+    'Alle Tastaturkürzel und Markdown-Optionen durchsuchen',
+  'fabric.editor.helpDialogTips':
+    'Drücken Sie {keyMap}, um diesen Dialog jederzeit schnell zu öffnen',
   'fabric.editor.horizontalRule': 'Trennlinie',
-  'fabric.editor.horizontalRule.description': 'Inhalte mithilfe einer horizontalen Linie unterteilen',
+  'fabric.editor.horizontalRule.description':
+    'Inhalte mithilfe einer horizontalen Linie unterteilen',
   'fabric.editor.image': 'Bild',
   'fabric.editor.info': 'Info',
   'fabric.editor.infoPanel': 'Infopanel',
-  'fabric.editor.infoPanel.description': 'Informationen in einem farbigen Panel hervorheben',
+  'fabric.editor.infoPanel.description':
+    'Informationen in einem farbigen Panel hervorheben',
   'fabric.editor.insertColumn': 'Spalte einfügen',
   'fabric.editor.insertMenu': 'Einfügen',
   'fabric.editor.insertRow': 'Zeile einfügen',
@@ -106,26 +129,31 @@ export default {
   'fabric.editor.lists': 'Listen',
   'fabric.editor.markdown': 'Markdown',
   'fabric.editor.mention': 'Erwähnen',
-  'fabric.editor.mention.description': 'Erwähnen Sie einen Benutzer, um ihm eine Benachrichtigung zu senden.',
+  'fabric.editor.mention.description':
+    'Erwähnen Sie einen Benutzer, um ihm eine Benachrichtigung zu senden.',
   'fabric.editor.mergeCells': 'Zellen zusammenführen',
   'fabric.editor.moreFormatting': 'Mehr Formatierungsoptionen',
   'fabric.editor.noResultsFound': 'Keine Ergebnisse gefunden',
   'fabric.editor.normal': 'Normaler Text',
   'fabric.editor.note': 'Hinweis',
   'fabric.editor.notePanel': 'Hinweispanel',
-  'fabric.editor.notePanel.description': 'Hinweis in einem farbigen Panel einfügen',
+  'fabric.editor.notePanel.description':
+    'Hinweis in einem farbigen Panel einfügen',
   'fabric.editor.numberedColumn': 'Nummerierte Spalte',
   'fabric.editor.orderedList': 'Nummerierte Liste',
   'fabric.editor.orderedList.description': 'Sortierte Liste erstellen',
   'fabric.editor.other': 'Sonstige …',
   'fabric.editor.pastePlainText': 'Einfachen Text einfügen',
-  'fabric.editor.placeholderAltText': 'Dieses Bild mit Alternativtext beschreiben',
+  'fabric.editor.placeholderAltText':
+    'Dieses Bild mit Alternativtext beschreiben',
   'fabric.editor.placeholderText': 'Platzhaltertext',
   'fabric.editor.placeholderTextPlaceholder': 'Platzhaltertext hinzufügen',
   'fabric.editor.quickInsert': 'Schnelleinfügung',
   'fabric.editor.redo': 'Wiederholen',
-  'fabric.editor.removeColumns': '{0, plural, one {Spalte löschen} other {Spalten löschen}}',
-  'fabric.editor.removeRows': '{0, plural, one {Reihe löschen} other {Reihen löschen}}',
+  'fabric.editor.removeColumns':
+    '{0, plural, one {Spalte löschen} other {Spalten löschen}}',
+  'fabric.editor.removeRows':
+    '{0, plural, one {Reihe löschen} other {Reihen löschen}}',
   'fabric.editor.replace': 'Ersetzen',
   'fabric.editor.replaceAll': 'Alle ersetzen',
   'fabric.editor.replaceWith': 'Ersetzen mit',
@@ -136,19 +164,23 @@ export default {
   'fabric.editor.sortColumnDESC': 'Sort column Z → A',
   'fabric.editor.splitCell': 'Zelle teilen',
   'fabric.editor.status': 'Status',
-  'fabric.editor.status.description': 'Benutzerdefiniertes Status-Label hinzufügen',
+  'fabric.editor.status.description':
+    'Benutzerdefiniertes Status-Label hinzufügen',
   'fabric.editor.statusPlaceholder': 'Status festlegen',
   'fabric.editor.strike': 'Durchgestrichen',
   'fabric.editor.subscript': 'Tiefgestellt',
   'fabric.editor.success': 'Erfolgreich',
   'fabric.editor.successPanel': 'Erfolgspanel',
-  'fabric.editor.successPanel.description': 'Tipps in einem farbigen Panel einfügen',
+  'fabric.editor.successPanel.description':
+    'Tipps in einem farbigen Panel einfügen',
   'fabric.editor.superscript': 'Hochgstellt',
-  'fabric.editor.supportAltText': 'Alternativtexte sind eine Hilfe für Personen, die aufgrund ihrer eingeschränkten Sehfähigkeit Screenreader nutzen.',
+  'fabric.editor.supportAltText':
+    'Alternativtexte sind eine Hilfe für Personen, die aufgrund ihrer eingeschränkten Sehfähigkeit Screenreader nutzen.',
   'fabric.editor.table': 'Tabelle',
   'fabric.editor.table.description': 'Tabelle einfügen',
   'fabric.editor.tableOptions': 'Tabellenoptionen',
-  'fabric.editor.taskPlaceholder': 'Geben Sie Ihre Aktion ein und weisen Sie sie mithilfe von „@” jemandem zu.',
+  'fabric.editor.taskPlaceholder':
+    'Geben Sie Ihre Aktion ein und weisen Sie sie mithilfe von „@” jemandem zu.',
   'fabric.editor.textColor': 'Textfarbe',
   'fabric.editor.textColor.lessColors': 'Weniger Farben',
   'fabric.editor.textColor.moreColors': 'Mehr Farben',
@@ -163,7 +195,8 @@ export default {
   'fabric.editor.viewMore': 'Mehr anzeigen',
   'fabric.editor.warning': 'Warnung',
   'fabric.editor.warningPanel': 'Warnpanel',
-  'fabric.editor.warningPanel.description': 'Hinweis zur Vorsicht in einem farbigen Panel einfügen',
+  'fabric.editor.warningPanel.description':
+    'Hinweis zur Vorsicht in einem farbigen Panel einfügen',
   'fabric.editor.wrapLeft': 'Links umwickeln',
   'fabric.editor.wrapRight': 'Rechts umwickeln',
   'fabric.theme.blue': 'Blue',
@@ -188,4 +221,4 @@ export default {
   'fabric.theme.teal': 'Teal',
   'fabric.theme.white': 'White',
   'fabric.theme.yellow': 'Yellow'
-};
+}

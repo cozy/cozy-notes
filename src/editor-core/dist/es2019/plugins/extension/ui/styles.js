@@ -1,5 +1,13 @@
-import { css } from 'styled-components';
-import { blockNodesVerticalMargin, akEditorSelectedBorderSize, akEditorDeleteBorder, akEditorDeleteBackground, SelectionStyle, getSelectionStyles, akEditorSelectedNodeClassName } from '@atlaskit/editor-shared-styles';
+import { css } from 'styled-components'
+import {
+  blockNodesVerticalMargin,
+  akEditorSelectedBorderSize,
+  akEditorDeleteBorder,
+  akEditorDeleteBackground,
+  SelectionStyle,
+  getSelectionStyles,
+  akEditorSelectedNodeClassName
+} from '@atlaskit/editor-shared-styles'
 export const extensionStyles = css`
   .extensionView-content-wrap,
   .bodiedExtensionView-content-wrap {
@@ -15,7 +23,10 @@ export const extensionStyles = css`
 
     &:not(.danger).${akEditorSelectedNodeClassName} {
       & > span > .extension-container {
-        ${getSelectionStyles([SelectionStyle.BoxShadow, SelectionStyle.Blanket])}
+        ${getSelectionStyles([
+          SelectionStyle.BoxShadow,
+          SelectionStyle.Blanket
+        ])}
       }
     }
 
@@ -28,4 +39,4 @@ export const extensionStyles = css`
   .extensionView-content-wrap .extension-container {
     overflow: hidden;
   }
-`;
+`

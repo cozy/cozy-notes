@@ -1,15 +1,27 @@
-import { css } from 'styled-components';
-import { themed } from '@atlaskit/theme/components';
-import { borderRadius } from '@atlaskit/theme/constants';
-import * as colors from '@atlaskit/theme/colors';
-import { blockNodesVerticalMargin, akEditorTableCellMinWidth, akEditorDeleteBackground, akEditorDeleteBorder, akEditorSelectedBorderSize, akEditorDeleteIconColor, SelectionStyle, getSelectionStyles, akEditorCodeFontFamily, akEditorCodeBlockPadding, akEditorSelectedNodeClassName } from '@atlaskit/editor-shared-styles';
-import { codeBlockClassNames } from './ui/class-names';
+import { css } from 'styled-components'
+import { themed } from '@atlaskit/theme/components'
+import { borderRadius } from '@atlaskit/theme/constants'
+import * as colors from '@atlaskit/theme/colors'
+import {
+  blockNodesVerticalMargin,
+  akEditorTableCellMinWidth,
+  akEditorDeleteBackground,
+  akEditorDeleteBorder,
+  akEditorSelectedBorderSize,
+  akEditorDeleteIconColor,
+  SelectionStyle,
+  getSelectionStyles,
+  akEditorCodeFontFamily,
+  akEditorCodeBlockPadding,
+  akEditorSelectedNodeClassName
+} from '@atlaskit/editor-shared-styles'
+import { codeBlockClassNames } from './ui/class-names'
 export const codeBlockStyles = css`
   .ProseMirror .code-block {
     background: ${themed({
-  light: colors.N20,
-  dark: colors.DN50
-})};
+      light: colors.N20,
+      dark: colors.DN50
+    })};
     font-family: ${akEditorCodeFontFamily};
     border-radius: ${borderRadius()}px;
     font-size: 14px;
@@ -22,9 +34,9 @@ export const codeBlockStyles = css`
 
     .${codeBlockClassNames.gutter} {
       background-color: ${themed({
-  light: 'rgba(9, 30, 66, 0.04)',
-  dark: colors.DN40
-})};
+        light: 'rgba(9, 30, 66, 0.04)',
+        dark: colors.DN40
+      })};
       color: ${colors.N300};
       text-align: right;
       user-select: none;
@@ -46,9 +58,9 @@ export const codeBlockStyles = css`
 
     .${codeBlockClassNames.content} {
       color: ${themed({
-  light: colors.N800,
-  dark: colors.DN500
-})};
+        light: colors.N800,
+        dark: colors.DN500
+      })};
       border-radius: ${borderRadius()}px;
       padding: ${akEditorCodeBlockPadding} 16px;
       overflow: auto;
@@ -120,4 +132,4 @@ export const codeBlockStyles = css`
       background-color: rgba(255, 189, 173, 0.5);
     }
   }
-`;
+`

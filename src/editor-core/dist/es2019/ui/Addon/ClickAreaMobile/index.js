@@ -1,7 +1,7 @@
-import _defineProperty from "@babel/runtime/helpers/defineProperty";
-import React from 'react';
-import styled from 'styled-components';
-import { clickAreaClickHandler } from '../click-area-helper';
+import _defineProperty from '@babel/runtime/helpers/defineProperty'
+import React from 'react'
+import styled from 'styled-components'
+import { clickAreaClickHandler } from '../click-area-helper'
 /**
  * Fills the visible viewport height so that it can filter
  * clicks/taps within or below the content (e.g. if the content
@@ -11,8 +11,8 @@ import { clickAreaClickHandler } from '../click-area-helper';
 const ClickWrapper = styled.div`
   height: 100%;
   min-height: ${props => props.minHeight}vh;
-`;
-ClickWrapper.displayName = 'ClickWrapper';
+`
+ClickWrapper.displayName = 'ClickWrapper'
 
 /**
  * Click Area is responsible for improving UX by ensuring the user
@@ -30,36 +30,38 @@ ClickWrapper.displayName = 'ClickWrapper';
  */
 export default class ClickAreaMobile extends React.Component {
   constructor(...args) {
-    super(...args);
+    super(...args)
 
-    _defineProperty(this, "clickElementRef", /*#__PURE__*/React.createRef());
+    _defineProperty(this, 'clickElementRef', /*#__PURE__*/ React.createRef())
 
-    _defineProperty(this, "handleClick", event => {
-      const {
-        editorView: view
-      } = this.props;
+    _defineProperty(this, 'handleClick', event => {
+      const { editorView: view } = this.props
 
       if (!view) {
-        return;
+        return
       }
 
-      clickAreaClickHandler(view, event);
-      const scrollGutterClicked = event.clientY > view.dom.getBoundingClientRect().bottom; // Reset the default prosemirror scrollIntoView logic by
+      clickAreaClickHandler(view, event)
+      const scrollGutterClicked =
+        event.clientY > view.dom.getBoundingClientRect().bottom // Reset the default prosemirror scrollIntoView logic by
       // clamping the scroll position to the bottom of the viewport.
 
       if (scrollGutterClicked && this.clickElementRef.current) {
-        this.clickElementRef.current.scrollIntoView(false);
+        this.clickElementRef.current.scrollIntoView(false)
       }
-    });
+    })
   }
 
   render() {
-    return /*#__PURE__*/React.createElement(ClickWrapper, {
-      className: "editor-click-wrapper",
-      minHeight: this.props.minHeight,
-      onClick: this.handleClick,
-      innerRef: this.clickElementRef
-    }, this.props.children);
+    return /*#__PURE__*/ React.createElement(
+      ClickWrapper,
+      {
+        className: 'editor-click-wrapper',
+        minHeight: this.props.minHeight,
+        onClick: this.handleClick,
+        innerRef: this.clickElementRef
+      },
+      this.props.children
+    )
   }
-
 }

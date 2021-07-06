@@ -1,76 +1,105 @@
-import _defineProperty from "@babel/runtime/helpers/defineProperty";
-import { PluginKey } from 'prosemirror-state';
-import { createInputRule, instrumentedInputRule, leafNodeReplacementCharacter } from '../../../utils/input-rules';
-import { isMarkTypeAllowedInCurrentSelection } from '../../../utils';
-import { addAnalytics, ACTION, ACTION_SUBJECT, ACTION_SUBJECT_ID, INPUT_METHOD, EVENT_TYPE } from '../../analytics';
-let matcher;
+import _defineProperty from '@babel/runtime/helpers/defineProperty'
+import { PluginKey } from 'prosemirror-state'
+import {
+  createInputRule,
+  instrumentedInputRule,
+  leafNodeReplacementCharacter
+} from '../../../utils/input-rules'
+import { isMarkTypeAllowedInCurrentSelection } from '../../../utils'
+import {
+  addAnalytics,
+  ACTION,
+  ACTION_SUBJECT,
+  ACTION_SUBJECT_ID,
+  INPUT_METHOD,
+  EVENT_TYPE
+} from '../../analytics'
+let matcher
 export function inputRulePlugin(schema, providerFactory) {
   if (schema.nodes.emoji && providerFactory) {
-    initMatcher(providerFactory);
-    const asciiEmojiRule = createInputRule(AsciiEmojiMatcher.REGEX, inputRuleHandler);
+    initMatcher(providerFactory)
+    const asciiEmojiRule = createInputRule(
+      AsciiEmojiMatcher.REGEX,
+      inputRuleHandler
+    )
     return instrumentedInputRule('emoji', {
       rules: [asciiEmojiRule]
-    });
+    })
   }
 
-  return;
+  return
 }
 
 function initMatcher(providerFactory) {
   const handleProvider = (_name, provider) => {
     if (!provider) {
-      return;
+      return
     }
 
     provider.then(emojiProvider => {
       emojiProvider.getAsciiMap().then(map => {
-        matcher = new RecordingAsciiEmojiMatcher(emojiProvider, map);
-      });
-    });
-  };
+        matcher = new RecordingAsciiEmojiMatcher(emojiProvider, map)
+      })
+    })
+  }
 
-  providerFactory.subscribe('emojiProvider', handleProvider);
+  providerFactory.subscribe('emojiProvider', handleProvider)
 }
 
 function inputRuleHandler(state, matchParts, start, end) {
   if (!matcher) {
-    return null;
+    return null
   }
 
   if (!isEnabled(state)) {
-    return null;
+    return null
   }
 
-  const match = matcher.match(matchParts);
+  const match = matcher.match(matchParts)
 
   if (match) {
-    const transactionCreator = new AsciiEmojiTransactionCreator(state, match, start, end);
-    return transactionCreator.create();
+    const transactionCreator = new AsciiEmojiTransactionCreator(
+      state,
+      match,
+      start,
+      end
+    )
+    return transactionCreator.create()
   }
 
-  return null;
+  return null
 }
 
 function isEnabled(state) {
-  const typeAheadQuery = state.schema.marks.typeAheadQuery;
-  const isTypeAheadQueryActive = state.selection.$from.marks().some(mark => mark.type === typeAheadQuery);
-  return isTypeAheadQueryActive || isMarkTypeAllowedInCurrentSelection(typeAheadQuery, state);
+  const typeAheadQuery = state.schema.marks.typeAheadQuery
+  const isTypeAheadQueryActive = state.selection.$from
+    .marks()
+    .some(mark => mark.type === typeAheadQuery)
+  return (
+    isTypeAheadQueryActive ||
+    isMarkTypeAllowedInCurrentSelection(typeAheadQuery, state)
+  )
 }
 
-const REGEX_LEADING_CAPTURE_INDEX = 1;
-const REGEX_EMOJI_LEADING_PARENTHESES = 2;
-const REGEX_EMOJI_ASCII_CAPTURE_INDEX = 3;
-const REGEX_TRAILING_CAPTURE_INDEX = 4;
+const REGEX_LEADING_CAPTURE_INDEX = 1
+const REGEX_EMOJI_LEADING_PARENTHESES = 2
+const REGEX_EMOJI_ASCII_CAPTURE_INDEX = 3
+const REGEX_TRAILING_CAPTURE_INDEX = 4
 
-const getLeadingString = (match, withParenthesis = true) => match[REGEX_LEADING_CAPTURE_INDEX] + (withParenthesis ? match[REGEX_EMOJI_LEADING_PARENTHESES] : '');
+const getLeadingString = (match, withParenthesis = true) =>
+  match[REGEX_LEADING_CAPTURE_INDEX] +
+  (withParenthesis ? match[REGEX_EMOJI_LEADING_PARENTHESES] : '')
 
-const getLeadingStringWithoutParentheses = match => getLeadingString(match, false);
+const getLeadingStringWithoutParentheses = match =>
+  getLeadingString(match, false)
 
-const getAscii = (match, withParentheses = false) => (withParentheses ? match[REGEX_EMOJI_LEADING_PARENTHESES] : '') + match[REGEX_EMOJI_ASCII_CAPTURE_INDEX].trim();
+const getAscii = (match, withParentheses = false) =>
+  (withParentheses ? match[REGEX_EMOJI_LEADING_PARENTHESES] : '') +
+  match[REGEX_EMOJI_ASCII_CAPTURE_INDEX].trim()
 
-const getAsciiWithParentheses = matchParts => getAscii(matchParts, true);
+const getAsciiWithParentheses = matchParts => getAscii(matchParts, true)
 
-const getTrailingString = match => match[REGEX_TRAILING_CAPTURE_INDEX] || '';
+const getTrailingString = match => match[REGEX_TRAILING_CAPTURE_INDEX] || ''
 
 class AsciiEmojiMatcher {
   /**
@@ -101,58 +130,74 @@ class AsciiEmojiMatcher {
    * See https://regex101.com/r/HRS9O2/4
    */
   constructor(asciiToEmojiMap) {
-    this.asciiToEmojiMap = asciiToEmojiMap;
+    this.asciiToEmojiMap = asciiToEmojiMap
   }
 
   match(matchParts) {
-    return this.getAsciiEmojiMatch(getLeadingStringWithoutParentheses(matchParts), getAsciiWithParentheses(matchParts), getTrailingString(matchParts)) || this.getAsciiEmojiMatch(getLeadingString(matchParts), getAscii(matchParts), getTrailingString(matchParts));
+    return (
+      this.getAsciiEmojiMatch(
+        getLeadingStringWithoutParentheses(matchParts),
+        getAsciiWithParentheses(matchParts),
+        getTrailingString(matchParts)
+      ) ||
+      this.getAsciiEmojiMatch(
+        getLeadingString(matchParts),
+        getAscii(matchParts),
+        getTrailingString(matchParts)
+      )
+    )
   }
 
   getAsciiEmojiMatch(leading, ascii, trailing) {
-    const emoji = this.asciiToEmojiMap.get(ascii);
-    return emoji ? {
-      emoji,
-      leadingString: leading,
-      trailingString: trailing
-    } : undefined;
+    const emoji = this.asciiToEmojiMap.get(ascii)
+    return emoji
+      ? {
+          emoji,
+          leadingString: leading,
+          trailingString: trailing
+        }
+      : undefined
   }
-
 }
 /**
  * A matcher that will record ascii matches as usages of the matched emoji.
  */
 
-
-_defineProperty(AsciiEmojiMatcher, "REGEX", new RegExp(`((?:^|[\\s${leafNodeReplacementCharacter}])(?:\\(*?))(\\(?)([^:\\s${leafNodeReplacementCharacter}\\(]\\S{1,3}|:\\S{1,3}( ))$`));
+_defineProperty(
+  AsciiEmojiMatcher,
+  'REGEX',
+  new RegExp(
+    `((?:^|[\\s${leafNodeReplacementCharacter}])(?:\\(*?))(\\(?)([^:\\s${leafNodeReplacementCharacter}\\(]\\S{1,3}|:\\S{1,3}( ))$`
+  )
+)
 
 class RecordingAsciiEmojiMatcher extends AsciiEmojiMatcher {
   constructor(emojiProvider, asciiToEmojiMap) {
-    super(asciiToEmojiMap);
-    this.emojiProvider = emojiProvider;
+    super(asciiToEmojiMap)
+    this.emojiProvider = emojiProvider
   }
 
   match(matchParts) {
-    const match = super.match(matchParts);
+    const match = super.match(matchParts)
 
     if (match && this.emojiProvider.recordSelection) {
-      this.emojiProvider.recordSelection(match.emoji);
+      this.emojiProvider.recordSelection(match.emoji)
     }
 
-    return match;
+    return match
   }
-
 }
 
 class AsciiEmojiTransactionCreator {
   constructor(state, match, start, end) {
-    this.state = state;
-    this.match = match;
-    this.start = start;
-    this.end = end;
+    this.state = state
+    this.match = match
+    this.start = start
+    this.end = end
   }
 
   create() {
-    const tr = this.state.tr.replaceWith(this.from, this.to, this.createNodes());
+    const tr = this.state.tr.replaceWith(this.from, this.to, this.createNodes())
     return addAnalytics(this.state, tr, {
       action: ACTION.INSERTED,
       actionSubject: ACTION_SUBJECT.DOCUMENT,
@@ -161,57 +206,54 @@ class AsciiEmojiTransactionCreator {
         inputMethod: INPUT_METHOD.ASCII
       },
       eventType: EVENT_TYPE.TRACK
-    });
+    })
   }
 
   get from() {
-    return this.start + this.match.leadingString.length;
+    return this.start + this.match.leadingString.length
   }
 
   get to() {
-    return this.end;
+    return this.end
   }
 
   createNodes() {
-    const nodes = [this.createEmojiNode()];
+    const nodes = [this.createEmojiNode()]
 
     if (this.trailingTextNodeRequired()) {
-      nodes.push(this.createTrailingTextNode());
+      nodes.push(this.createTrailingTextNode())
     }
 
-    return nodes;
+    return nodes
   }
 
   createEmojiNode() {
-    const {
-      emoji: emojiTypeNode
-    } = this.state.schema.nodes;
-    return emojiTypeNode.create(this.getEmojiNodeAttrs());
+    const { emoji: emojiTypeNode } = this.state.schema.nodes
+    return emojiTypeNode.create(this.getEmojiNodeAttrs())
   }
 
   getEmojiNodeAttrs() {
-    const emoji = this.match.emoji;
+    const emoji = this.match.emoji
     return {
       id: emoji.id,
       shortName: emoji.shortName,
       text: emoji.fallback || emoji.shortName
-    };
+    }
   }
 
   trailingTextNodeRequired() {
-    return this.match.trailingString.length > 0;
+    return this.match.trailingString.length > 0
   }
 
   createTrailingTextNode() {
-    return this.state.schema.text(this.match.trailingString);
+    return this.state.schema.text(this.match.trailingString)
   }
-
 }
 
-export const stateKey = new PluginKey('asciiEmojiPlugin');
+export const stateKey = new PluginKey('asciiEmojiPlugin')
 
 const plugins = (schema, providerFactory) => {
-  return [inputRulePlugin(schema, providerFactory)].filter(plugin => !!plugin);
-};
+  return [inputRulePlugin(schema, providerFactory)].filter(plugin => !!plugin)
+}
 
-export default plugins;
+export default plugins

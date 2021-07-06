@@ -1,18 +1,44 @@
-import { Fragment } from 'prosemirror-model';
-import { setNodeSelection, setTextSelection, insideTableCell, isInListItem, findFarthestParentNode, isInLayoutColumn } from '../../../utils';
-import { posOfPrecedingMediaGroup, posOfMediaGroupNearby, posOfParentMediaGroup, isSelectionNonMediaBlockNode, isInsidePotentialEmptyParagraph, copyOptionalAttrsFromMediaState } from './media-common';
-import { safeInsert, hasParentNode } from 'prosemirror-utils';
-import { atTheBeginningOfBlock, atTheEndOfBlock, atTheEndOfDoc, endPositionOfParent, startPositionOfParent } from '../../../utils/prosemirror/position';
-import { isSupportedInParent } from '../../../utils/nodes';
-import { ACTION, ACTION_SUBJECT, ACTION_SUBJECT_ID, EVENT_TYPE, addAnalytics } from '../../analytics';
+import { Fragment } from 'prosemirror-model'
+import {
+  setNodeSelection,
+  setTextSelection,
+  insideTableCell,
+  isInListItem,
+  findFarthestParentNode,
+  isInLayoutColumn
+} from '../../../utils'
+import {
+  posOfPrecedingMediaGroup,
+  posOfMediaGroupNearby,
+  posOfParentMediaGroup,
+  isSelectionNonMediaBlockNode,
+  isInsidePotentialEmptyParagraph,
+  copyOptionalAttrsFromMediaState
+} from './media-common'
+import { safeInsert, hasParentNode } from 'prosemirror-utils'
+import {
+  atTheBeginningOfBlock,
+  atTheEndOfBlock,
+  atTheEndOfDoc,
+  endPositionOfParent,
+  startPositionOfParent
+} from '../../../utils/prosemirror/position'
+import { isSupportedInParent } from '../../../utils/nodes'
+import {
+  ACTION,
+  ACTION_SUBJECT,
+  ACTION_SUBJECT_ID,
+  EVENT_TYPE,
+  addAnalytics
+} from '../../analytics'
 
 const getInsertMediaGroupAnalytics = (mediaState, inputMethod) => {
-  let media = '';
+  let media = ''
 
   if (mediaState.length === 1) {
-    media = mediaState[0].fileMimeType || 'unknown';
+    media = mediaState[0].fileMimeType || 'unknown'
   } else if (mediaState.length > 1) {
-    media = 'multiple';
+    media = 'multiple'
   }
 
   return {
@@ -25,20 +51,17 @@ const getInsertMediaGroupAnalytics = (mediaState, inputMethod) => {
       fileExtension: media
     },
     eventType: EVENT_TYPE.TRACK
-  };
-};
+  }
+}
 /**
  * Check if current editor selections is a media group or not.
  * @param state Editor state
  */
 
-
 function isSelectionMediaGroup(state) {
-  const {
-    schema
-  } = state;
-  const selectionParent = state.selection.$anchor.node();
-  return selectionParent && selectionParent.type === schema.nodes.mediaGroup;
+  const { schema } = state
+  const selectionParent = state.selection.$anchor.node()
+  return selectionParent && selectionParent.type === schema.nodes.mediaGroup
 }
 /**
  * Insert a paragraph after if reach the end of doc
@@ -47,17 +70,22 @@ function isSelectionMediaGroup(state) {
  * @param state Editor state
  */
 
-
 function shouldAppendParagraph(state, node) {
   const {
     schema: {
-      nodes: {
-        media
-      }
+      nodes: { media }
     }
-  } = state;
-  const wasMediaNode = node && node.type === media;
-  return (insideTableCell(state) || isInListItem(state) || isInLayoutColumn(state) || atTheEndOfDoc(state) && (!posOfPrecedingMediaGroup(state) || isSelectionNonMediaBlockNode(state))) && !wasMediaNode;
+  } = state
+  const wasMediaNode = node && node.type === media
+  return (
+    (insideTableCell(state) ||
+      isInListItem(state) ||
+      isInLayoutColumn(state) ||
+      (atTheEndOfDoc(state) &&
+        (!posOfPrecedingMediaGroup(state) ||
+          isSelectionNonMediaBlockNode(state)))) &&
+    !wasMediaNode
+  )
 }
 /**
  * Insert a media into an existing media group
@@ -67,131 +95,138 @@ function shouldAppendParagraph(state, node) {
  * @param collection Collection for the media to be added
  */
 
-
-export const insertMediaGroupNode = (view, mediaStates, collection, inputMethod) => {
-  const {
-    state,
-    dispatch
-  } = view;
-  const {
-    tr,
-    schema
-  } = state;
-  const {
-    media,
-    paragraph
-  } = schema.nodes; // Do nothing if no media found
+export const insertMediaGroupNode = (
+  view,
+  mediaStates,
+  collection,
+  inputMethod
+) => {
+  const { state, dispatch } = view
+  const { tr, schema } = state
+  const { media, paragraph } = schema.nodes // Do nothing if no media found
 
   if (!media || !mediaStates.length) {
-    return;
+    return
   }
 
-  const mediaNodes = createMediaFileNodes(mediaStates, collection, media);
-  const mediaInsertPos = findMediaInsertPos(state);
-  const resolvedInsertPos = tr.doc.resolve(mediaInsertPos);
-  const parent = resolvedInsertPos.parent;
-  const nodeAtInsertionPoint = tr.doc.nodeAt(mediaInsertPos);
-  const shouldSplit = !isSelectionMediaGroup(state) && isSupportedInParent(state, Fragment.from(state.schema.nodes.mediaGroup.createChecked({}, mediaNodes)));
-  const withParagraph = shouldAppendParagraph(state, nodeAtInsertionPoint);
-  let content = parent.type === schema.nodes.mediaGroup ? mediaNodes // If parent is a mediaGroup do not wrap items again.
-  : [schema.nodes.mediaGroup.createChecked({}, mediaNodes)];
+  const mediaNodes = createMediaFileNodes(mediaStates, collection, media)
+  const mediaInsertPos = findMediaInsertPos(state)
+  const resolvedInsertPos = tr.doc.resolve(mediaInsertPos)
+  const parent = resolvedInsertPos.parent
+  const nodeAtInsertionPoint = tr.doc.nodeAt(mediaInsertPos)
+  const shouldSplit =
+    !isSelectionMediaGroup(state) &&
+    isSupportedInParent(
+      state,
+      Fragment.from(state.schema.nodes.mediaGroup.createChecked({}, mediaNodes))
+    )
+  const withParagraph = shouldAppendParagraph(state, nodeAtInsertionPoint)
+  let content =
+    parent.type === schema.nodes.mediaGroup
+      ? mediaNodes // If parent is a mediaGroup do not wrap items again.
+      : [schema.nodes.mediaGroup.createChecked({}, mediaNodes)]
 
   if (shouldSplit) {
-    content = withParagraph ? content.concat(paragraph.create()) : content; // delete the selection or empty paragraph
+    content = withParagraph ? content.concat(paragraph.create()) : content // delete the selection or empty paragraph
 
-    const deleteRange = findDeleteRange(state);
+    const deleteRange = findDeleteRange(state)
 
     if (!deleteRange) {
-      tr.insert(mediaInsertPos, content);
+      tr.insert(mediaInsertPos, content)
     } else if (mediaInsertPos <= deleteRange.start) {
-      tr.deleteRange(deleteRange.start, deleteRange.end).insert(mediaInsertPos, content);
+      tr.deleteRange(deleteRange.start, deleteRange.end).insert(
+        mediaInsertPos,
+        content
+      )
     } else {
-      tr.insert(mediaInsertPos, content).deleteRange(deleteRange.start, deleteRange.end);
+      tr.insert(mediaInsertPos, content).deleteRange(
+        deleteRange.start,
+        deleteRange.end
+      )
     }
 
-    addAnalytics(state, tr, getInsertMediaGroupAnalytics(mediaStates, inputMethod));
-    dispatch(tr);
-    setSelectionAfterMediaInsertion(view);
-    return;
+    addAnalytics(
+      state,
+      tr,
+      getInsertMediaGroupAnalytics(mediaStates, inputMethod)
+    )
+    dispatch(tr)
+    setSelectionAfterMediaInsertion(view)
+    return
   } // Don't append new paragraph when adding media to a existing mediaGroup
 
-
   if (withParagraph && parent.type !== schema.nodes.mediaGroup) {
-    content.push(paragraph.create());
+    content.push(paragraph.create())
   }
 
-  addAnalytics(state, tr, getInsertMediaGroupAnalytics(mediaStates, inputMethod));
-  dispatch(safeInsert(Fragment.fromArray(content), mediaInsertPos)(tr));
-};
+  addAnalytics(
+    state,
+    tr,
+    getInsertMediaGroupAnalytics(mediaStates, inputMethod)
+  )
+  dispatch(safeInsert(Fragment.fromArray(content), mediaInsertPos)(tr))
+}
 
 const createMediaFileNodes = (mediaStates, collection, media) => {
   const nodes = mediaStates.map(mediaState => {
-    const {
-      id
-    } = mediaState;
+    const { id } = mediaState
     const node = media.create({
       id,
       type: 'file',
       collection
-    });
-    copyOptionalAttrsFromMediaState(mediaState, node);
-    return node;
-  });
-  return nodes;
-};
+    })
+    copyOptionalAttrsFromMediaState(mediaState, node)
+    return node
+  })
+  return nodes
+}
 /**
  * Find root list node if exist from current selection
  * @param state Editor state
  */
 
-
 const findRootListNode = state => {
   const {
     schema: {
-      nodes: {
-        bulletList,
-        orderedList
-      }
+      nodes: { bulletList, orderedList }
     }
-  } = state;
-  return findFarthestParentNode(node => node.type === bulletList || node.type === orderedList)(state.selection.$from);
-};
+  } = state
+  return findFarthestParentNode(
+    node => node.type === bulletList || node.type === orderedList
+  )(state.selection.$from)
+}
 /**
  * Return position of media to be inserted, if it is inside a list
  * @param content Content to be inserted
  * @param state Editor State
  */
 
-
 export const getPosInList = state => {
   const {
     schema: {
-      nodes: {
-        mediaGroup,
-        listItem
-      }
+      nodes: { mediaGroup, listItem }
     }
-  } = state; // 1. Check if I am inside a list.
+  } = state // 1. Check if I am inside a list.
 
   if (hasParentNode(node => node.type === listItem)(state.selection)) {
     // 2. Get end position of root list
-    const rootListNode = findRootListNode(state);
+    const rootListNode = findRootListNode(state)
 
     if (rootListNode) {
-      const pos = rootListNode.pos + rootListNode.node.nodeSize; // 3. Fint the first location inside the media group
+      const pos = rootListNode.pos + rootListNode.node.nodeSize // 3. Fint the first location inside the media group
 
-      const nextNode = state.doc.nodeAt(pos);
+      const nextNode = state.doc.nodeAt(pos)
 
       if (nextNode && nextNode.type === mediaGroup) {
-        return pos + 1;
+        return pos + 1
       }
 
-      return pos;
+      return pos
     }
   }
 
-  return;
-};
+  return
+}
 /**
  * Find insertion point,
  * If it is in a List it will return position to the next block,
@@ -202,83 +237,77 @@ export const getPosInList = state => {
  */
 
 const findMediaInsertPos = state => {
-  const {
-    $from,
-    $to
-  } = state.selection; // Check if selection is inside a list.
+  const { $from, $to } = state.selection // Check if selection is inside a list.
 
-  const posInList = getPosInList(state);
+  const posInList = getPosInList(state)
 
   if (posInList) {
     // If I have a position in lists, I should return, otherwise I am not inside a list
-    return posInList;
+    return posInList
   }
 
-  const nearbyMediaGroupPos = posOfMediaGroupNearby(state);
+  const nearbyMediaGroupPos = posOfMediaGroupNearby(state)
 
-  if (nearbyMediaGroupPos && (!isSelectionNonMediaBlockNode(state) || $from.pos < nearbyMediaGroupPos && $to.pos < nearbyMediaGroupPos)) {
-    return nearbyMediaGroupPos;
+  if (
+    nearbyMediaGroupPos &&
+    (!isSelectionNonMediaBlockNode(state) ||
+      ($from.pos < nearbyMediaGroupPos && $to.pos < nearbyMediaGroupPos))
+  ) {
+    return nearbyMediaGroupPos
   }
 
   if (isSelectionNonMediaBlockNode(state)) {
-    return $to.pos;
+    return $to.pos
   }
 
   if (atTheEndOfBlock(state)) {
-    return $to.pos + 1;
+    return $to.pos + 1
   }
 
   if (atTheBeginningOfBlock(state)) {
-    return $from.pos - 1;
+    return $from.pos - 1
   }
 
-  return $to.pos;
-};
+  return $to.pos
+}
 
 const findDeleteRange = state => {
-  const {
-    $from,
-    $to
-  } = state.selection;
+  const { $from, $to } = state.selection
 
   if (posOfParentMediaGroup(state)) {
-    return;
+    return
   }
 
   if (!isInsidePotentialEmptyParagraph(state) || posOfMediaGroupNearby(state)) {
-    return range($from.pos, $to.pos);
+    return range($from.pos, $to.pos)
   }
 
-  return range(startPositionOfParent($from) - 1, endPositionOfParent($to));
-};
+  return range(startPositionOfParent($from) - 1, endPositionOfParent($to))
+}
 
 const range = (start, end = start) => {
   return {
     start,
     end
-  };
-};
+  }
+}
 
 const setSelectionAfterMediaInsertion = view => {
-  const {
-    state
-  } = view;
-  const {
-    doc
-  } = state;
-  const mediaPos = posOfMediaGroupNearby(state);
+  const { state } = view
+  const { doc } = state
+  const mediaPos = posOfMediaGroupNearby(state)
 
   if (!mediaPos) {
-    return;
+    return
   }
 
-  const $mediaPos = doc.resolve(mediaPos);
-  const endOfMediaGroup = endPositionOfParent($mediaPos);
+  const $mediaPos = doc.resolve(mediaPos)
+  const endOfMediaGroup = endPositionOfParent($mediaPos)
 
   if (endOfMediaGroup + 1 >= doc.nodeSize - 1) {
     // if nothing after the media group, fallback to select the newest uploaded media item
-    setNodeSelection(view, mediaPos);
+    setNodeSelection(view, mediaPos)
   } else {
-    setTextSelection(view, endOfMediaGroup + 1);
+    setTextSelection(view, endOfMediaGroup + 1)
   }
-};
+}

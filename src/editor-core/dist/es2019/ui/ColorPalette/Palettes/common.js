@@ -1,5 +1,5 @@
-import { N800 } from '@atlaskit/theme/colors';
-import chromatism from 'chromatism';
+import { N800 } from '@atlaskit/theme/colors'
+import chromatism from 'chromatism'
 /**
  * For a given color set the alpha channel to alpha
  *
@@ -9,12 +9,8 @@ import chromatism from 'chromatism';
  */
 
 function setAlpha(color, alpha) {
-  const {
-    r,
-    g,
-    b
-  } = chromatism.convert(color).rgb;
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  const { r, g, b } = chromatism.convert(color).rgb
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
 }
 
-export const DEFAULT_BORDER_COLOR = setAlpha(N800, 0.12);
+export const DEFAULT_BORDER_COLOR = setAlpha(N800, 0.12)

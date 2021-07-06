@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react';
-import { useAbortableEffect } from '../use-abortable-effect';
+import { useState, useCallback } from 'react'
+import { useAbortableEffect } from '../use-abortable-effect'
 
 /**
  * Similar to useState but deals with async values.
@@ -15,17 +15,19 @@ import { useAbortableEffect } from '../use-abortable-effect';
 export function useStateFromPromise(callback, deps, initialValue) {
   // AFP-2511 TODO: Fix automatic suppressions below
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const fn = useCallback(callback, deps);
-  const [value, setValue] = useState(initialValue);
-  useAbortableEffect(signal => {
-    Promise.resolve(fn()).then(result => {
-      if (signal.aborted) {
-        return;
-      }
+  const fn = useCallback(callback, deps)
+  const [value, setValue] = useState(initialValue)
+  useAbortableEffect(
+    signal => {
+      Promise.resolve(fn()).then(result => {
+        if (signal.aborted) {
+          return
+        }
 
-      setValue(result);
-    });
-  }, // eslint-disable-next-line react-hooks/exhaustive-deps
-  [...deps]);
-  return [value, setValue];
+        setValue(result)
+      })
+    }, // eslint-disable-next-line react-hooks/exhaustive-deps
+    [...deps]
+  )
+  return [value, setValue]
 }

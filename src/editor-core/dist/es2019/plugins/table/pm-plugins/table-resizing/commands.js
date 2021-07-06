@@ -1,101 +1,120 @@
-import { isTableSelected } from '@atlaskit/editor-tables/utils';
-import { updateColumnWidths } from '../../transforms';
-import { createCommand, getPluginState } from './plugin-factory';
-import { evenAllColumnsWidths, hasTableBeenResized, isClickNear, insertColgroupFromNode as recreateResizeColsByNode, scale, scaleWithParent } from './utils'; // Scale the table to meet new requirements (col, layout change etc)
+import { isTableSelected } from '@atlaskit/editor-tables/utils'
+import { updateColumnWidths } from '../../transforms'
+import { createCommand, getPluginState } from './plugin-factory'
+import {
+  evenAllColumnsWidths,
+  hasTableBeenResized,
+  isClickNear,
+  insertColgroupFromNode as recreateResizeColsByNode,
+  scale,
+  scaleWithParent
+} from './utils' // Scale the table to meet new requirements (col, layout change etc)
 
-export const scaleTable = (tableRef, options, domAtPos) => (state, dispatch) => {
+export const scaleTable = (tableRef, options, domAtPos) => (
+  state,
+  dispatch
+) => {
   if (!tableRef) {
-    return false;
+    return false
   }
 
-  const {
-    node,
-    start,
-    parentWidth
-  } = options; // If a table has not been resized yet, columns should be auto.
+  const { node, start, parentWidth } = options // If a table has not been resized yet, columns should be auto.
 
   if (hasTableBeenResized(node) === false) {
     // If its not a re-sized table, we still want to re-create cols
     // To force reflow of columns upon delete.
-    recreateResizeColsByNode(tableRef, node);
-    return false;
+    recreateResizeColsByNode(tableRef, node)
+    return false
   }
 
-  let resizeState;
+  let resizeState
 
   if (parentWidth) {
-    resizeState = scaleWithParent(tableRef, parentWidth, node, start, domAtPos);
+    resizeState = scaleWithParent(tableRef, parentWidth, node, start, domAtPos)
   } else {
-    resizeState = scale(tableRef, options, domAtPos);
+    resizeState = scale(tableRef, options, domAtPos)
   }
 
   if (resizeState) {
-    let {
-      tr
-    } = state;
-    tr = updateColumnWidths(resizeState, node, start)(tr);
+    let { tr } = state
+    tr = updateColumnWidths(resizeState, node, start)(tr)
 
     if (tr.docChanged && dispatch) {
-      tr.setMeta('scrollIntoView', false); // TODO: ED-8995
+      tr.setMeta('scrollIntoView', false) // TODO: ED-8995
       // We need to do this check to reduce the number of race conditions when working with tables.
       // This metadata is been used in the sendTransaction function in the Collab plugin
 
-      tr.setMeta('scaleTable', true);
-      dispatch(tr);
-      return true;
+      tr.setMeta('scaleTable', true)
+      dispatch(tr)
+      return true
     }
   }
 
-  return false;
-};
-export const evenColumns = ({
-  resizeState,
-  table,
-  start,
-  event
-}) => (state, dispatch) => {
+  return false
+}
+export const evenColumns = ({ resizeState, table, start, event }) => (
+  state,
+  dispatch
+) => {
   if (!isTableSelected(state.selection)) {
-    return false;
+    return false
   } // double click detection logic
   // Note: ProseMirror's handleDoubleClick doesn't quite work with DOM mousedown event handler
 
+  const { lastClick } = getPluginState(state)
+  const now = Date.now()
 
-  const {
-    lastClick
-  } = getPluginState(state);
-  const now = Date.now();
-
-  if (lastClick && now - lastClick.time < 500 && isClickNear(event, lastClick)) {
-    const newState = evenAllColumnsWidths(resizeState);
-    setLastClick(null, tr => updateColumnWidths(newState, table, start)(tr))(state, dispatch);
-    return true;
+  if (
+    lastClick &&
+    now - lastClick.time < 500 &&
+    isClickNear(event, lastClick)
+  ) {
+    const newState = evenAllColumnsWidths(resizeState)
+    setLastClick(null, tr => updateColumnWidths(newState, table, start)(tr))(
+      state,
+      dispatch
+    )
+    return true
   }
 
   setLastClick({
     x: event.clientX,
     y: event.clientY,
     time: now
-  })(state, dispatch);
-  return false;
-};
-export const setResizeHandlePos = resizeHandlePos => createCommand({
-  type: 'SET_RESIZE_HANDLE_POSITION',
-  data: {
-    resizeHandlePos
-  }
-});
-export const stopResizing = tr => createCommand({
-  type: 'STOP_RESIZING'
-}, originalTr => (tr || originalTr).setMeta('scrollIntoView', false));
-export const setDragging = (dragging, tr) => createCommand({
-  type: 'SET_DRAGGING',
-  data: {
-    dragging
-  }
-}, originalTr => tr || originalTr);
-export const setLastClick = (lastClick, transform) => createCommand({
-  type: 'SET_LAST_CLICK',
-  data: {
-    lastClick
-  }
-}, transform);
+  })(state, dispatch)
+  return false
+}
+export const setResizeHandlePos = resizeHandlePos =>
+  createCommand({
+    type: 'SET_RESIZE_HANDLE_POSITION',
+    data: {
+      resizeHandlePos
+    }
+  })
+export const stopResizing = tr =>
+  createCommand(
+    {
+      type: 'STOP_RESIZING'
+    },
+    originalTr => (tr || originalTr).setMeta('scrollIntoView', false)
+  )
+export const setDragging = (dragging, tr) =>
+  createCommand(
+    {
+      type: 'SET_DRAGGING',
+      data: {
+        dragging
+      }
+    },
+    originalTr => tr || originalTr
+  )
+export const setLastClick = (lastClick, transform) =>
+  createCommand(
+    {
+      type: 'SET_LAST_CLICK',
+      data: {
+        lastClick
+      }
+    },
+    transform
+  )

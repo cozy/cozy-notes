@@ -1,4 +1,4 @@
-import { createLocalizationProvider } from '@atlaskit/locale';
+import { createLocalizationProvider } from '@atlaskit/locale'
 
 /**
  * Attempt to parse a string representing a date in a particular locale to a date object
@@ -8,17 +8,17 @@ import { createLocalizationProvider } from '@atlaskit/locale';
  */
 export function parseDateType(dateString, locale) {
   try {
-    const l10n = createLocalizationProvider(locale);
-    const date = l10n.parseDate(dateString); // If date is invalid
+    const l10n = createLocalizationProvider(locale)
+    const date = l10n.parseDate(dateString) // If date is invalid
 
     if (isNaN(date.getTime())) {
-      return null;
+      return null
     }
 
-    const year = date.getFullYear();
+    const year = date.getFullYear()
 
     if (year < 1000 || year > 9999) {
-      return null;
+      return null
     }
 
     const dateObj = {
@@ -26,10 +26,10 @@ export function parseDateType(dateString, locale) {
       // toDate() called by parseDate() doesn't use UTC, so can't use here
       month: date.getMonth() + 1,
       year
-    };
-    return dateObj;
+    }
+    return dateObj
   } catch (e) {
-    return null;
+    return null
   }
 }
 /**
@@ -39,34 +39,26 @@ export function parseDateType(dateString, locale) {
  */
 
 export function formatDateType(date, locale) {
-  const {
-    day,
-    month,
-    year
-  } = date;
-  const l10n = createLocalizationProvider(locale); // Range of month is 0-11!
+  const { day, month, year } = date
+  const l10n = createLocalizationProvider(locale) // Range of month is 0-11!
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
 
-  const dateObj = new Date(Date.UTC(year, month - 1, day)); // const date = parse(value);
+  const dateObj = new Date(Date.UTC(year, month - 1, day)) // const date = parse(value);
 
-  return l10n.formatDate(dateObj);
+  return l10n.formatDate(dateObj)
 }
 export function dateTypeToDate(date) {
-  const {
-    day,
-    month,
-    year
-  } = date; // Range of month is 0-11!
+  const { day, month, year } = date // Range of month is 0-11!
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
 
-  const dateObj = new Date(Date.UTC(year, month - 1, day));
-  return dateObj;
+  const dateObj = new Date(Date.UTC(year, month - 1, day))
+  return dateObj
 }
 export function dateToDateType(date) {
   const dateObj = {
     day: date.getUTCDate(),
     month: date.getUTCMonth() + 1,
     year: date.getUTCFullYear()
-  };
-  return dateObj;
+  }
+  return dateObj
 }

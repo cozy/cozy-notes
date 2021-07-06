@@ -1,7 +1,20 @@
-import { insertContentDeleteRange, isEmptySelectionAtEnd, walkNextNode } from '../../../utils/commands';
-import { ACTION, ACTION_SUBJECT, ACTION_SUBJECT_ID, EVENT_TYPE, INPUT_METHOD, DELETE_DIRECTION, addAnalytics, LIST_TEXT_SCENARIOS } from '../../analytics';
-import { findParentNodeOfType } from 'prosemirror-utils';
-import { isPosInsideList, isPosInsideParagraph } from '../utils';
+import {
+  insertContentDeleteRange,
+  isEmptySelectionAtEnd,
+  walkNextNode
+} from '../../../utils/commands'
+import {
+  ACTION,
+  ACTION_SUBJECT,
+  ACTION_SUBJECT_ID,
+  EVENT_TYPE,
+  INPUT_METHOD,
+  DELETE_DIRECTION,
+  addAnalytics,
+  LIST_TEXT_SCENARIOS
+} from '../../analytics'
+import { findParentNodeOfType } from 'prosemirror-utils'
+import { isPosInsideList, isPosInsideParagraph } from '../utils'
 
 //Cases below refer to the cases found in this document: https://product-fabric.atlassian.net/wiki/spaces/E/pages/1146954996/List+Backspace+and+Delete+Behaviour
 //Case for two adjacent nodes with the first being a list item and the last being a paragraph
@@ -27,20 +40,24 @@ const listDeleteCase1 = (tr, dispatch, $next, $head) => {
    * }
    *
    */
-  const paragraphE = $next.parent;
-  const beforeParagraphE = $next.before();
-  const afterParagraphE = $next.after();
-  const textInsertPos = $head.pos;
-  const textContent = paragraphE.content;
-  insertContentDeleteRange(tr, tr => tr.doc.resolve(textInsertPos), [[textContent, textInsertPos]], [[beforeParagraphE, afterParagraphE]]);
+  const paragraphE = $next.parent
+  const beforeParagraphE = $next.before()
+  const afterParagraphE = $next.after()
+  const textInsertPos = $head.pos
+  const textContent = paragraphE.content
+  insertContentDeleteRange(
+    tr,
+    tr => tr.doc.resolve(textInsertPos),
+    [[textContent, textInsertPos]],
+    [[beforeParagraphE, afterParagraphE]]
+  )
 
   if (dispatch) {
-    dispatch(tr);
+    dispatch(tr)
   }
 
-  return true;
-}; //Case for two adjacent list items of the same indentation
-
+  return true
+} //Case for two adjacent list items of the same indentation
 
 const listDeleteCase2 = (tr, dispatch, $next, $head) => {
   /* CASE 2
@@ -68,29 +85,36 @@ const listDeleteCase2 = (tr, dispatch, $next, $head) => {
    * }
    *
    */
-  const listItemE = $next.parent;
-  const paragraphF = $next.nodeAfter; //ListItem must have at least one child
+  const listItemE = $next.parent
+  const paragraphF = $next.nodeAfter //ListItem must have at least one child
 
   if (!paragraphF) {
-    return false;
+    return false
   }
 
-  const beforeListItemE = $next.before();
-  const afterListItemE = $next.after();
-  const endListItemB = $head.end(-1);
-  const textInsertPos = $head.pos;
-  const childrenGInsertPos = endListItemB;
-  const textContent = paragraphF.content;
-  const childrenGContent = listItemE.content.cut(paragraphF.nodeSize);
-  insertContentDeleteRange(tr, tr => tr.doc.resolve(textInsertPos), [[textContent, textInsertPos], [childrenGContent, childrenGInsertPos]], [[beforeListItemE, afterListItemE]]);
+  const beforeListItemE = $next.before()
+  const afterListItemE = $next.after()
+  const endListItemB = $head.end(-1)
+  const textInsertPos = $head.pos
+  const childrenGInsertPos = endListItemB
+  const textContent = paragraphF.content
+  const childrenGContent = listItemE.content.cut(paragraphF.nodeSize)
+  insertContentDeleteRange(
+    tr,
+    tr => tr.doc.resolve(textInsertPos),
+    [
+      [textContent, textInsertPos],
+      [childrenGContent, childrenGInsertPos]
+    ],
+    [[beforeListItemE, afterListItemE]]
+  )
 
   if (dispatch) {
-    dispatch(tr);
+    dispatch(tr)
   }
 
-  return true;
-}; //Case for two adjacent list items with the first being of lower indentation
-
+  return true
+} //Case for two adjacent list items with the first being of lower indentation
 
 const listDeleteCase3 = (tr, dispatch, $next, $head) => {
   /* CASE 3
@@ -128,45 +152,69 @@ const listDeleteCase3 = (tr, dispatch, $next, $head) => {
    * }
    *
    */
-  const listE = $next.parent;
-  const listItemF = $next.nodeAfter; //We know next is before a ListItem. ListItem must have at least one child
+  const listE = $next.parent
+  const listItemF = $next.nodeAfter //We know next is before a ListItem. ListItem must have at least one child
 
   if (!listItemF || !listItemF.lastChild) {
-    return false;
+    return false
   }
 
-  const paragraphG = listItemF.firstChild; //ListItem must have at least one child
+  const paragraphG = listItemF.firstChild //ListItem must have at least one child
 
   if (!paragraphG) {
-    return false;
+    return false
   }
 
-  const beforeListE = $next.before();
-  const beforeListItemF = $next.pos;
-  const afterParagraphD = $head.after();
-  const afterListE = $next.after();
-  const afterListItemF = tr.doc.resolve($next.pos + 1).after(); //List must always have at least one listItem
+  const beforeListE = $next.before()
+  const beforeListItemF = $next.pos
+  const afterParagraphD = $head.after()
+  const afterListE = $next.after()
+  const afterListItemF = tr.doc.resolve($next.pos + 1).after() //List must always have at least one listItem
 
-  const containsChildrenJ = listItemF.lastChild.type.name === 'bulletList' || listItemF.lastChild.type.name === 'orderedList';
-  const shouldRemoveListE = listE.childCount === 1 && !containsChildrenJ; //Assures no Children J and K
+  const containsChildrenJ =
+    listItemF.lastChild.type.name === 'bulletList' ||
+    listItemF.lastChild.type.name === 'orderedList'
+  const shouldRemoveListE = listE.childCount === 1 && !containsChildrenJ //Assures no Children J and K
 
-  const textInsertPos = $head.pos;
-  const childrenHInsertPos = afterParagraphD;
-  const childrenJInsertPos = $next.pos;
-  const textContent = paragraphG.content;
-  const childrenHContent = containsChildrenJ ? listItemF.content.cut(paragraphG.nodeSize, listItemF.nodeSize - listItemF.lastChild.nodeSize - 2) : listItemF.content.cut(paragraphG.nodeSize); //If Children J doesn't exist then Children H will include the last node
+  const textInsertPos = $head.pos
+  const childrenHInsertPos = afterParagraphD
+  const childrenJInsertPos = $next.pos
+  const textContent = paragraphG.content
+  const childrenHContent = containsChildrenJ
+    ? listItemF.content.cut(
+        paragraphG.nodeSize,
+        listItemF.nodeSize - listItemF.lastChild.nodeSize - 2
+      )
+    : listItemF.content.cut(paragraphG.nodeSize) //If Children J doesn't exist then Children H will include the last node
 
-  const childrenJContent = listItemF.lastChild.content; //Will be invalid if there are no Children J but it will be unused
+  const childrenJContent = listItemF.lastChild.content //Will be invalid if there are no Children J but it will be unused
 
-  insertContentDeleteRange(tr, tr => tr.doc.resolve(textInsertPos), containsChildrenJ ? [[textContent, textInsertPos], [childrenHContent, childrenHInsertPos], [childrenJContent, childrenJInsertPos]] : [[textContent, textInsertPos], [childrenHContent, childrenHInsertPos]], [shouldRemoveListE ? [beforeListE, afterListE] : [beforeListItemF, afterListItemF]]);
+  insertContentDeleteRange(
+    tr,
+    tr => tr.doc.resolve(textInsertPos),
+    containsChildrenJ
+      ? [
+          [textContent, textInsertPos],
+          [childrenHContent, childrenHInsertPos],
+          [childrenJContent, childrenJInsertPos]
+        ]
+      : [
+          [textContent, textInsertPos],
+          [childrenHContent, childrenHInsertPos]
+        ],
+    [
+      shouldRemoveListE
+        ? [beforeListE, afterListE]
+        : [beforeListItemF, afterListItemF]
+    ]
+  )
 
   if (dispatch) {
-    dispatch(tr);
+    dispatch(tr)
   }
 
-  return true;
-}; //Case for two adjacent list items with the first being of greater indentation
-
+  return true
+} //Case for two adjacent list items with the first being of greater indentation
 
 const listDeleteCase4 = (tr, dispatch, $next, $head) => {
   /* CASE 4
@@ -220,121 +268,152 @@ const listDeleteCase4 = (tr, dispatch, $next, $head) => {
    * }
    *
    */
-  const listItemK = $next.parent; //List must have at least one child
+  const listItemK = $next.parent //List must have at least one child
 
   if (!listItemK.firstChild || !listItemK.lastChild) {
-    return false;
+    return false
   }
 
-  const beforeListItemK = $next.before();
-  const afterListItemB = $next.before();
-  const afterListItemK = $next.after();
-  const containsChildrenO = listItemK.lastChild.type.name === 'bulletList' || listItemK.lastChild.type.name === 'orderedList';
-  const textInsertPos = $head.pos;
-  const childrenMInsertPos = $head.pos + 1;
-  const childrenOInsertPos = afterListItemB - 2;
-  const textContent = listItemK.firstChild.content;
-  const childrenMContent = containsChildrenO ? listItemK.content.cut(listItemK.firstChild.nodeSize, listItemK.nodeSize - listItemK.lastChild.nodeSize - 2 //Get the position before
-  ) : listItemK.content.cut(listItemK.firstChild.nodeSize);
-  const childrenOContent = listItemK.lastChild.content;
-  insertContentDeleteRange(tr, tr => tr.doc.resolve(textInsertPos), containsChildrenO ? [[textContent, textInsertPos], [childrenMContent, childrenMInsertPos], [childrenOContent, childrenOInsertPos]] : [[textContent, textInsertPos], [childrenMContent, childrenMInsertPos]], [[beforeListItemK, afterListItemK]]);
+  const beforeListItemK = $next.before()
+  const afterListItemB = $next.before()
+  const afterListItemK = $next.after()
+  const containsChildrenO =
+    listItemK.lastChild.type.name === 'bulletList' ||
+    listItemK.lastChild.type.name === 'orderedList'
+  const textInsertPos = $head.pos
+  const childrenMInsertPos = $head.pos + 1
+  const childrenOInsertPos = afterListItemB - 2
+  const textContent = listItemK.firstChild.content
+  const childrenMContent = containsChildrenO
+    ? listItemK.content.cut(
+        listItemK.firstChild.nodeSize,
+        listItemK.nodeSize - listItemK.lastChild.nodeSize - 2 //Get the position before
+      )
+    : listItemK.content.cut(listItemK.firstChild.nodeSize)
+  const childrenOContent = listItemK.lastChild.content
+  insertContentDeleteRange(
+    tr,
+    tr => tr.doc.resolve(textInsertPos),
+    containsChildrenO
+      ? [
+          [textContent, textInsertPos],
+          [childrenMContent, childrenMInsertPos],
+          [childrenOContent, childrenOInsertPos]
+        ]
+      : [
+          [textContent, textInsertPos],
+          [childrenMContent, childrenMInsertPos]
+        ],
+    [[beforeListItemK, afterListItemK]]
+  )
 
   if (dispatch) {
-    dispatch(tr);
+    dispatch(tr)
   }
 
-  return true;
-};
+  return true
+}
 
 const DELETE_FORWARD_COMMANDS = {
   [LIST_TEXT_SCENARIOS.JOIN_PARAGRAPH_WITH_LIST]: listDeleteCase1,
   [LIST_TEXT_SCENARIOS.JOIN_SIBLINGS]: listDeleteCase2,
   [LIST_TEXT_SCENARIOS.JOIN_DESCENDANT_TO_PARENT]: listDeleteCase3,
   [LIST_TEXT_SCENARIOS.JOIN_PARENT_SIBLING_TO_PARENT_CHILD]: listDeleteCase4
-};
+}
 export const calcJoinListScenario = (walkNode, $head) => {
-  const {
-    $pos: $next,
-    foundNode: nextFoundNode
-  } = walkNode;
-  const headParent = $head.parent;
-  const headGrandParent = $head.node(-1);
-  const headInList = isPosInsideList($head);
-  const headInParagraph = isPosInsideParagraph($head);
-  const headInLastNonListChild = headGrandParent && headGrandParent.lastChild && (headGrandParent.lastChild === headParent || headGrandParent.childCount > 1 && headGrandParent.child(headGrandParent.childCount - 2) === headParent && ( //find the second last child if a list item may be the last child
-  headGrandParent.lastChild.type.name === 'orderedList' || headGrandParent.lastChild.type.name === 'bulletList'));
-  const nextInList = isPosInsideList($next);
-  const nextInParagraph = isPosInsideParagraph($next);
+  const { $pos: $next, foundNode: nextFoundNode } = walkNode
+  const headParent = $head.parent
+  const headGrandParent = $head.node(-1)
+  const headInList = isPosInsideList($head)
+  const headInParagraph = isPosInsideParagraph($head)
+  const headInLastNonListChild =
+    headGrandParent &&
+    headGrandParent.lastChild &&
+    (headGrandParent.lastChild === headParent ||
+      (headGrandParent.childCount > 1 &&
+      headGrandParent.child(headGrandParent.childCount - 2) === headParent && //find the second last child if a list item may be the last child
+        (headGrandParent.lastChild.type.name === 'orderedList' ||
+          headGrandParent.lastChild.type.name === 'bulletList')))
+  const nextInList = isPosInsideList($next)
+  const nextInParagraph = isPosInsideParagraph($next)
 
-  if (!nextFoundNode || !headInList || !headInParagraph || !headInLastNonListChild) {
-    return false;
+  if (
+    !nextFoundNode ||
+    !headInList ||
+    !headInParagraph ||
+    !headInLastNonListChild
+  ) {
+    return false
   }
 
   if (!nextInList && nextInParagraph) {
-    return LIST_TEXT_SCENARIOS.JOIN_PARAGRAPH_WITH_LIST;
+    return LIST_TEXT_SCENARIOS.JOIN_PARAGRAPH_WITH_LIST
   }
 
   if (!nextInList) {
-    return false;
+    return false
   }
 
-  const nextNodeAfter = $next.nodeAfter;
-  const nextGrandParent = $next.node(-1);
-  const headGreatGrandParent = $head.node(-2);
-  const nextInListItem = $next.parent.type.name === 'listItem';
-  const nextNodeAfterListItem = nextNodeAfter && nextNodeAfter.type.name === 'listItem';
-  const nextListItemHasFirstChildParagraph = nextNodeAfter && //Redundant check but the linter complains otherwise
-  nextNodeAfterListItem && nextNodeAfter.firstChild && nextNodeAfter.firstChild.type.name === 'paragraph';
+  const nextNodeAfter = $next.nodeAfter
+  const nextGrandParent = $next.node(-1)
+  const headGreatGrandParent = $head.node(-2)
+  const nextInListItem = $next.parent.type.name === 'listItem'
+  const nextNodeAfterListItem =
+    nextNodeAfter && nextNodeAfter.type.name === 'listItem'
+  const nextListItemHasFirstChildParagraph =
+    nextNodeAfter && //Redundant check but the linter complains otherwise
+    nextNodeAfterListItem &&
+    nextNodeAfter.firstChild &&
+    nextNodeAfter.firstChild.type.name === 'paragraph'
 
   if (!nextInListItem && nextListItemHasFirstChildParagraph) {
-    return LIST_TEXT_SCENARIOS.JOIN_DESCENDANT_TO_PARENT;
+    return LIST_TEXT_SCENARIOS.JOIN_DESCENDANT_TO_PARENT
   }
 
   if (!nextInListItem) {
-    return false;
+    return false
   }
 
-  const nextParentSiblingOfHeadParent = nextGrandParent && nextGrandParent === headGreatGrandParent;
-  const nextNodeAfterIsParagraph = nextNodeAfter && nextNodeAfter.type.name === 'paragraph';
+  const nextParentSiblingOfHeadParent =
+    nextGrandParent && nextGrandParent === headGreatGrandParent
+  const nextNodeAfterIsParagraph =
+    nextNodeAfter && nextNodeAfter.type.name === 'paragraph'
 
   if (!nextNodeAfterIsParagraph) {
-    return false;
+    return false
   }
 
   if (nextParentSiblingOfHeadParent) {
-    return LIST_TEXT_SCENARIOS.JOIN_SIBLINGS;
+    return LIST_TEXT_SCENARIOS.JOIN_SIBLINGS
   }
 
-  return LIST_TEXT_SCENARIOS.JOIN_PARENT_SIBLING_TO_PARENT_CHILD;
-};
+  return LIST_TEXT_SCENARIOS.JOIN_PARENT_SIBLING_TO_PARENT_CHILD
+}
 export const listDelete = (state, dispatch) => {
   const {
     tr,
-    selection: {
-      $head
-    }
-  } = state;
-  const walkNode = walkNextNode($head);
+    selection: { $head }
+  } = state
+  const walkNode = walkNextNode($head)
 
   if (!isEmptySelectionAtEnd(state)) {
-    return false;
+    return false
   }
 
-  const scenario = calcJoinListScenario(walkNode, $head);
+  const scenario = calcJoinListScenario(walkNode, $head)
 
   if (!scenario) {
-    return false;
+    return false
   }
 
-  const {
-    bulletList,
-    orderedList
-  } = state.schema.nodes;
-  const listParent = findParentNodeOfType([bulletList, orderedList])(tr.selection);
-  let actionSubjectId = ACTION_SUBJECT_ID.FORMAT_LIST_BULLET;
+  const { bulletList, orderedList } = state.schema.nodes
+  const listParent = findParentNodeOfType([bulletList, orderedList])(
+    tr.selection
+  )
+  let actionSubjectId = ACTION_SUBJECT_ID.FORMAT_LIST_BULLET
 
   if (listParent && listParent.node.type === orderedList) {
-    actionSubjectId = ACTION_SUBJECT_ID.FORMAT_LIST_NUMBER;
+    actionSubjectId = ACTION_SUBJECT_ID.FORMAT_LIST_NUMBER
   }
 
   addAnalytics(state, tr, {
@@ -347,6 +426,6 @@ export const listDelete = (state, dispatch) => {
       direction: DELETE_DIRECTION.FORWARD,
       scenario
     }
-  });
-  return DELETE_FORWARD_COMMANDS[scenario](tr, dispatch, walkNode.$pos, $head);
-};
+  })
+  return DELETE_FORWARD_COMMANDS[scenario](tr, dispatch, walkNode.$pos, $head)
+}

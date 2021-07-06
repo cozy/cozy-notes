@@ -10,27 +10,26 @@
  * @property clear - Clear the changes
  */
 export default function getAttrsWithChangesRecorder(getAttrs, options) {
-  let changes = [];
+  let changes = []
 
   function getAttrsWithChangesRecorder(prevAttrs, node) {
-    const newAttrs = getAttrs(prevAttrs, node);
+    const newAttrs = getAttrs(prevAttrs, node)
     changes.push({
       node: node,
       prevAttrs,
       newAttrs,
       options
-    });
-    return newAttrs;
+    })
+    return newAttrs
   }
 
   return {
     getAttrs: getAttrsWithChangesRecorder,
 
     getAndResetAttrsChanges() {
-      const oldChanges = changes;
-      changes = [];
-      return oldChanges;
+      const oldChanges = changes
+      changes = []
+      return oldChanges
     }
-
-  };
+  }
 }

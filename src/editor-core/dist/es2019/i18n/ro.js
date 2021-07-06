@@ -10,7 +10,8 @@ export default {
   'fabric.editor.openLink': 'Deschideți linkul într-o filă nouă',
   'fabric.editor.unlink': 'Anulare link',
   'fabric.editor.editLink': 'Editați linkul',
-  'fabric.editor.hyperlinkToolbarPlaceholder': 'Lipiți link sau căutați elementele vizualizate recent',
+  'fabric.editor.hyperlinkToolbarPlaceholder':
+    'Lipiți link sau căutați elementele vizualizate recent',
   'fabric.editor.linkPlaceholder': 'Lipire link',
   'fabric.editor.linkAddress': 'Adresă link',
   'fabric.editor.layoutFixedWidth': 'Înapoi la centru',
@@ -31,27 +32,35 @@ export default {
   'fabric.editor.heading2': 'Titlu 2',
   'fabric.editor.heading2Description': 'Utilizați pentru secțiuni cheie',
   'fabric.editor.heading3': 'Titlu 3',
-  'fabric.editor.heading3Description': 'Utilizați pentru subsecțiuni și titluri grupate',
+  'fabric.editor.heading3Description':
+    'Utilizați pentru subsecțiuni și titluri grupate',
   'fabric.editor.heading4': 'Titlu 4',
   'fabric.editor.heading4Description': 'Utilizați pentru subtitluri',
   'fabric.editor.heading5': 'Titlu 5',
-  'fabric.editor.heading5Description': 'Utilizați pentru elemente din lista de grupare',
+  'fabric.editor.heading5Description':
+    'Utilizați pentru elemente din lista de grupare',
   'fabric.editor.heading6': 'Titlu 6',
   'fabric.editor.heading6Description': 'Utilizați pentru titlul inferior',
   'fabric.editor.blockquote': 'Citat',
   'fabric.editor.blockquote.description': 'Inserați citat sau referință',
   'fabric.editor.codeblock': 'Snippet cod',
-  'fabric.editor.codeblock.description': 'Afișați codul cu evidențierea sintaxei',
+  'fabric.editor.codeblock.description':
+    'Afișați codul cu evidențierea sintaxei',
   'fabric.editor.infoPanel': 'Panou info',
-  'fabric.editor.infoPanel.description': 'Evidențiați informația într-un panou colorat',
+  'fabric.editor.infoPanel.description':
+    'Evidențiați informația într-un panou colorat',
   'fabric.editor.notePanel': 'Panou notițe',
-  'fabric.editor.notePanel.description': 'Adăugați o notă într-un panou colorat',
+  'fabric.editor.notePanel.description':
+    'Adăugați o notă într-un panou colorat',
   'fabric.editor.successPanel': 'Panou realizări',
-  'fabric.editor.successPanel.description': 'Adăugați sfaturi într-un panou colorat',
+  'fabric.editor.successPanel.description':
+    'Adăugați sfaturi într-un panou colorat',
   'fabric.editor.warningPanel': 'Panou avertismente',
-  'fabric.editor.warningPanel.description': 'Adăugați o notă de precauție într-un panou colorat',
+  'fabric.editor.warningPanel.description':
+    'Adăugați o notă de precauție într-un panou colorat',
   'fabric.editor.errorPanel': 'Panou erori',
-  'fabric.editor.errorPanel.description': 'Indicați erorile într-un panou colorat',
+  'fabric.editor.errorPanel.description':
+    'Indicați erorile într-un panou colorat',
   'fabric.editor.other': 'Altele...',
   'fabric.editor.textStyles': 'Stiluri de text',
   'fabric.editor.displayBlock': 'Afișare ca dală',
@@ -60,7 +69,8 @@ export default {
   'fabric.editor.selectLanguage': 'Selectare limbă',
   'fabric.editor.edit': 'Editare',
   'fabric.editor.editorHelp': 'Ajutor Editor',
-  'fabric.editor.helpDialogTips': 'Apăsați {keyMap} pentru a deschide rapid acest dialog la orice moment',
+  'fabric.editor.helpDialogTips':
+    'Apăsați {keyMap} pentru a deschide rapid acest dialog la orice moment',
   'fabric.editor.keyboardShortcuts': 'Scurtături tastatură',
   'fabric.editor.markdown': 'Marcaj',
   'fabric.editor.undo': 'Revocare',
@@ -77,27 +87,34 @@ export default {
   'fabric.editor.link': 'Link',
   'fabric.editor.link.description': 'Inserare link',
   'fabric.editor.filesAndImages': 'Fișiere și imagini',
-  'fabric.editor.filesAndImages.description': 'Adăugați imagini și alte fișiere în pagina dvs.',
+  'fabric.editor.filesAndImages.description':
+    'Adăugați imagini și alte fișiere în pagina dvs.',
   'fabric.editor.image': 'Imagine',
   'fabric.editor.mention': 'Mențiune',
-  'fabric.editor.mention.description': 'Menționați pe cineva pentru a le trimite o notificare',
+  'fabric.editor.mention.description':
+    'Menționați pe cineva pentru a le trimite o notificare',
   'fabric.editor.emoji': 'Emoji',
-  'fabric.editor.emoji.description': 'Utilizați emoji-uri pentru a exprima idei 🎉 și emoții 😄',
+  'fabric.editor.emoji.description':
+    'Utilizați emoji-uri pentru a exprima idei 🎉 și emoții 😄',
   'fabric.editor.table': 'Tabel',
   'fabric.editor.table.description': 'Inserați un tabel',
   'fabric.editor.decision': 'Decizie',
-  'fabric.editor.decision.description': 'Capturați deciziile pentru a fi ușor de urmărit',
+  'fabric.editor.decision.description':
+    'Capturați deciziile pentru a fi ușor de urmărit',
   'fabric.editor.feedbackDialog': 'Oferă feedback',
-  'fabric.editor.feedbackDialog.description': 'Spune-ne despre experiența ta în folosirea noului editor',
+  'fabric.editor.feedbackDialog.description':
+    'Spune-ne despre experiența ta în folosirea noului editor',
   'fabric.editor.horizontalRule': 'Divizor',
-  'fabric.editor.horizontalRule.description': 'Separați conținutul cu o linie orizontală',
+  'fabric.editor.horizontalRule.description':
+    'Separați conținutul cu o linie orizontală',
   'fabric.editor.date': 'Dată',
   'fabric.editor.date.description': 'Adăugați o dată cu ajutorul unui calendar',
   'fabric.editor.placeholderText': 'Substituent',
   'fabric.editor.columns': 'Aspecte',
   'fabric.editor.columns.description': 'Structurați pagina utilizând secțiuni',
   'fabric.editor.status': 'Stare',
-  'fabric.editor.status.description': 'Introduceți o etichetă de stare personalizată',
+  'fabric.editor.status.description':
+    'Introduceți o etichetă de stare personalizată',
   'fabric.editor.viewMore': 'Vezi mai multe',
   'fabric.editor.insertMenu': 'Inserare',
   'fabric.editor.twoColumns': 'Două coloane',
@@ -128,17 +145,22 @@ export default {
   'fabric.editor.cellBackground': 'Fundal celulă',
   'fabric.editor.mergeCells': 'Îmbinare celule',
   'fabric.editor.splitCell': 'Împărțire celulă',
-  'fabric.editor.clearCells': '{0, plural, one{Golire celulă} few{Golire celule} other{Golire celule}}',
+  'fabric.editor.clearCells':
+    '{0, plural, one{Golire celulă} few{Golire celule} other{Golire celule}}',
   'fabric.editor.sortColumnASC': 'Sort column A → Z',
   'fabric.editor.sortColumnDESC': 'Sort column Z → A',
-  'fabric.editor.canNotSortTable': "⚠️ You can't sort a table with merged cells",
+  'fabric.editor.canNotSortTable':
+    "⚠️ You can't sort a table with merged cells",
   'fabric.editor.insertColumn': 'Inserare coloană',
-  'fabric.editor.removeColumns': '{0, plural, one{Eliminare coloană} few{Eliminare coloane} other{Eliminare coloane}}',
+  'fabric.editor.removeColumns':
+    '{0, plural, one{Eliminare coloană} few{Eliminare coloane} other{Eliminare coloane}}',
   'fabric.editor.insertRow': 'Inserare rând',
-  'fabric.editor.removeRows': '{0, plural, one{Eliminare rând} few{Eliminare rânduri} other{Eliminare rânduri}}',
+  'fabric.editor.removeRows':
+    '{0, plural, one{Eliminare rând} few{Eliminare rânduri} other{Eliminare rânduri}}',
   'fabric.editor.cellOptions': 'Opțiuni celulă',
   'fabric.editor.decisionPlaceholder': 'Adăugați o decizie...',
-  'fabric.editor.taskPlaceholder': 'Introduceți acțiunea și folosiți semnul @ pentru a o atribui cuiva.',
+  'fabric.editor.taskPlaceholder':
+    'Introduceți acțiunea și folosiți semnul @ pentru a o atribui cuiva.',
   'fabric.editor.textColor': 'Culoare text',
   'fabric.editor.underline': 'Subliniere',
   'fabric.editor.strike': 'Tăiere cu o linie',
@@ -172,4 +194,4 @@ export default {
   'fabric.theme.dark-yellow': 'Dark yellow',
   'fabric.theme.dark-red': 'Dark red',
   'fabric.theme.dark-purple': 'Dark purple'
-};
+}

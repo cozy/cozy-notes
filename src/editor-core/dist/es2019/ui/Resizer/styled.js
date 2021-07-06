@@ -1,5 +1,5 @@
-import { MediaSingleDimensionHelper } from '@atlaskit/editor-common';
-import styled from 'styled-components';
+import { MediaSingleDimensionHelper } from '@atlaskit/editor-common'
+import styled from 'styled-components'
 export const Wrapper = styled.div`
   & > div {
     ${MediaSingleDimensionHelper};
@@ -22,4 +22,4 @@ export const Wrapper = styled.div`
     font-size: 0;
     line-height: 0;
   }
-`;
+`

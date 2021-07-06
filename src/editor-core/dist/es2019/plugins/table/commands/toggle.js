@@ -1,7 +1,7 @@
 //#region Imports
-import { toggleHeader } from '@atlaskit/editor-tables/utils';
-import { findTable } from '@atlaskit/editor-tables/utils';
-import { createCommand } from '../pm-plugins/plugin-factory'; //#endregion
+import { toggleHeader } from '@atlaskit/editor-tables/utils'
+import { findTable } from '@atlaskit/editor-tables/utils'
+import { createCommand } from '../pm-plugins/plugin-factory' //#endregion
 // #region Utils
 
 /**
@@ -12,65 +12,81 @@ import { createCommand } from '../pm-plugins/plugin-factory'; //#endregion
 export const getNextLayout = currentLayout => {
   switch (currentLayout) {
     case 'default':
-      return 'wide';
+      return 'wide'
 
     case 'wide':
-      return 'full-width';
+      return 'full-width'
 
     case 'full-width':
-      return 'default';
+      return 'default'
 
     default:
-      return 'default';
+      return 'default'
   }
-}; // #endregion
+} // #endregion
 // #region Actions
 
-export const toggleHeaderRow = (state, dispatch) => toggleHeader('row')(state, tr => createCommand({
-  type: 'TOGGLE_HEADER_ROW'
-}, () => tr.setMeta('scrollIntoView', false))(state, dispatch));
-export const toggleHeaderColumn = (state, dispatch) => toggleHeader('column')(state, tr => createCommand({
-  type: 'TOGGLE_HEADER_COLUMN'
-}, () => tr.setMeta('scrollIntoView', false))(state, dispatch));
+export const toggleHeaderRow = (state, dispatch) =>
+  toggleHeader('row')(state, tr =>
+    createCommand(
+      {
+        type: 'TOGGLE_HEADER_ROW'
+      },
+      () => tr.setMeta('scrollIntoView', false)
+    )(state, dispatch)
+  )
+export const toggleHeaderColumn = (state, dispatch) =>
+  toggleHeader('column')(state, tr =>
+    createCommand(
+      {
+        type: 'TOGGLE_HEADER_COLUMN'
+      },
+      () => tr.setMeta('scrollIntoView', false)
+    )(state, dispatch)
+  )
 export const toggleNumberColumn = (state, dispatch) => {
-  const {
-    tr
-  } = state;
-  const {
-    node,
-    pos
-  } = findTable(state.selection);
-  tr.setNodeMarkup(pos, state.schema.nodes.table, { ...node.attrs,
+  const { tr } = state
+  const { node, pos } = findTable(state.selection)
+  tr.setNodeMarkup(pos, state.schema.nodes.table, {
+    ...node.attrs,
     isNumberColumnEnabled: !node.attrs.isNumberColumnEnabled
-  });
-  tr.setMeta('scrollIntoView', false);
+  })
+  tr.setMeta('scrollIntoView', false)
 
   if (dispatch) {
-    dispatch(tr);
+    dispatch(tr)
   }
 
-  return true;
-};
+  return true
+}
 export const toggleTableLayout = (state, dispatch) => {
-  const table = findTable(state.selection);
+  const table = findTable(state.selection)
 
   if (!table) {
-    return false;
+    return false
   }
 
-  const layout = getNextLayout(table.node.attrs.layout);
-  return createCommand({
-    type: 'SET_TABLE_LAYOUT',
-    data: {
-      layout
+  const layout = getNextLayout(table.node.attrs.layout)
+  return createCommand(
+    {
+      type: 'SET_TABLE_LAYOUT',
+      data: {
+        layout
+      }
+    },
+    tr => {
+      tr.setNodeMarkup(table.pos, state.schema.nodes.table, {
+        ...table.node.attrs,
+        layout
+      })
+      return tr.setMeta('scrollIntoView', false)
     }
-  }, tr => {
-    tr.setNodeMarkup(table.pos, state.schema.nodes.table, { ...table.node.attrs,
-      layout
-    });
-    return tr.setMeta('scrollIntoView', false);
-  })(state, dispatch);
-};
-export const toggleContextualMenu = () => createCommand({
-  type: 'TOGGLE_CONTEXTUAL_MENU'
-}, tr => tr.setMeta('addToHistory', false)); // #endregion
+  )(state, dispatch)
+}
+export const toggleContextualMenu = () =>
+  createCommand(
+    {
+      type: 'TOGGLE_CONTEXTUAL_MENU'
+    },
+    tr => tr.setMeta('addToHistory', false)
+  ) // #endregion

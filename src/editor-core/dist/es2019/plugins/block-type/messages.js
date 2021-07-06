@@ -1,4 +1,4 @@
-import { defineMessages } from 'react-intl';
+import { defineMessages } from 'react-intl'
 export const messages = defineMessages({
   normal: {
     id: 'fabric.editor.normal',
@@ -8,7 +8,8 @@ export const messages = defineMessages({
   heading1: {
     id: 'fabric.editor.heading1',
     defaultMessage: 'Heading 1',
-    description: 'Used for the title of a section of your document, headings run from 1 (largest size) to 6 (smallest size)'
+    description:
+      'Used for the title of a section of your document, headings run from 1 (largest size) to 6 (smallest size)'
   },
   heading1Description: {
     id: 'fabric.editor.heading1Description',
@@ -18,7 +19,8 @@ export const messages = defineMessages({
   heading2: {
     id: 'fabric.editor.heading2',
     defaultMessage: 'Heading 2',
-    description: 'Used for the title of a section of your document, headings run from 1 (largest size) to 6 (smallest size)'
+    description:
+      'Used for the title of a section of your document, headings run from 1 (largest size) to 6 (smallest size)'
   },
   heading2Description: {
     id: 'fabric.editor.heading2Description',
@@ -28,7 +30,8 @@ export const messages = defineMessages({
   heading3: {
     id: 'fabric.editor.heading3',
     defaultMessage: 'Heading 3',
-    description: 'Used for the title of a section of your document, headings run from 1 (largest size) to 6 (smallest size)'
+    description:
+      'Used for the title of a section of your document, headings run from 1 (largest size) to 6 (smallest size)'
   },
   heading3Description: {
     id: 'fabric.editor.heading3Description',
@@ -38,7 +41,8 @@ export const messages = defineMessages({
   heading4: {
     id: 'fabric.editor.heading4',
     defaultMessage: 'Heading 4',
-    description: 'Used for the title of a section of your document, headings run from 1 (largest size) to 6 (smallest size)'
+    description:
+      'Used for the title of a section of your document, headings run from 1 (largest size) to 6 (smallest size)'
   },
   heading4Description: {
     id: 'fabric.editor.heading4Description',
@@ -48,7 +52,8 @@ export const messages = defineMessages({
   heading5: {
     id: 'fabric.editor.heading5',
     defaultMessage: 'Heading 5',
-    description: 'Used for the title of a section of your document, headings run from 1 (largest size) to 6 (smallest size)'
+    description:
+      'Used for the title of a section of your document, headings run from 1 (largest size) to 6 (smallest size)'
   },
   heading5Description: {
     id: 'fabric.editor.heading5Description',
@@ -58,7 +63,8 @@ export const messages = defineMessages({
   heading6: {
     id: 'fabric.editor.heading6',
     defaultMessage: 'Heading 6',
-    description: 'Used for the title of a section of your document, headings run from 1 (largest size) to 6 (smallest size)'
+    description:
+      'Used for the title of a section of your document, headings run from 1 (largest size) to 6 (smallest size)'
   },
   heading6Description: {
     id: 'fabric.editor.heading6Description',
@@ -88,12 +94,14 @@ export const messages = defineMessages({
   infoPanel: {
     id: 'fabric.editor.infoPanel',
     defaultMessage: 'Info panel',
-    description: 'Visually distinguishes your text by adding a background colour (blue, purple, yellow, green, red)'
+    description:
+      'Visually distinguishes your text by adding a background colour (blue, purple, yellow, green, red)'
   },
   infoPanelDescription: {
     id: 'fabric.editor.infoPanel.description',
     defaultMessage: 'Highlight information in a colored panel',
-    description: 'Visually distinguishes your text by adding a background colour (blue, purple, yellow, green, red)'
+    description:
+      'Visually distinguishes your text by adding a background colour (blue, purple, yellow, green, red)'
   },
   notePanel: {
     id: 'fabric.editor.notePanel',
@@ -140,4 +148,4 @@ export const messages = defineMessages({
     defaultMessage: 'Others...',
     description: 'Other text formatting'
   }
-});
+})

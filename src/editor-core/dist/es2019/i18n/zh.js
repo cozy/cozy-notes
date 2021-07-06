@@ -15,11 +15,13 @@ export default {
   'fabric.editor.annotate': '标注',
   'fabric.editor.annotationToolbar': '标注工具栏',
   'fabric.editor.backLink': '返回',
-  'fabric.editor.blockCardUnavailable': '内嵌链接位于 {node} 内部，无法更改其视图',
+  'fabric.editor.blockCardUnavailable':
+    '内嵌链接位于 {node} 内部，无法更改其视图',
   'fabric.editor.blockquote': '引用',
   'fabric.editor.blockquote.description': '插入引用',
   'fabric.editor.bold': '粗体',
-  'fabric.editor.canNotSortTable': "⚠️ You can't sort a table with merged cells",
+  'fabric.editor.canNotSortTable':
+    "⚠️ You can't sort a table with merged cells",
   'fabric.editor.cardFloatingControls': '卡片选项',
   'fabric.editor.cellBackground': '单元格背景',
   'fabric.editor.cellOptions': '单元格选项',
@@ -37,7 +39,8 @@ export default {
   'fabric.editor.columns': '布局',
   'fabric.editor.columns.description': '使用分段组织页面',
   'fabric.editor.configPanel.cancel': '取消',
-  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio': 'Can not combine isMultiple with style: radio',
+  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio':
+    'Can not combine isMultiple with style: radio',
   'fabric.editor.configPanel.formType.addField': '添加字段',
   'fabric.editor.configPanel.formType.removeField': '删除字段',
   'fabric.editor.configPanel.required': '必填字段',
@@ -65,7 +68,8 @@ export default {
   'fabric.editor.expand': '扩展',
   'fabric.editor.expand.description': '插入扩展',
   'fabric.editor.feedbackDialog': '提供反馈意见',
-  'fabric.editor.feedbackDialog.description': '跟我们讲讲您对新编辑器的使用体验',
+  'fabric.editor.feedbackDialog.description':
+    '跟我们讲讲您对新编辑器的使用体验',
   'fabric.editor.filesAndImages': '文件和图片',
   'fabric.editor.filesAndImages.description': '向页面添加图像和其他文件',
   'fabric.editor.find': '查找',
@@ -144,7 +148,8 @@ export default {
   'fabric.editor.successPanel': '成功面板',
   'fabric.editor.successPanel.description': '在彩色面板添加提示',
   'fabric.editor.superscript': '上标',
-  'fabric.editor.supportAltText': '对于因有视觉障碍而使用屏幕朗读器的用户，替代文本很有帮助。',
+  'fabric.editor.supportAltText':
+    '对于因有视觉障碍而使用屏幕朗读器的用户，替代文本很有帮助。',
   'fabric.editor.table': '表格',
   'fabric.editor.table.description': '插入表格',
   'fabric.editor.tableOptions': '表格选项',
@@ -188,4 +193,4 @@ export default {
   'fabric.theme.teal': 'Teal',
   'fabric.theme.white': 'White',
   'fabric.theme.yellow': 'Yellow'
-};
+}

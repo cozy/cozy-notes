@@ -1,4 +1,4 @@
-import { useRef, useLayoutEffect } from 'react';
+import { useRef, useLayoutEffect } from 'react'
 /**
  * A custom hook that handles focus on a DOM element.
  * Takes in a boolean value and calls element.focus
@@ -32,17 +32,15 @@ import { useRef, useLayoutEffect } from 'react';
  */
 
 export default function useFocus(focus) {
-  const ref = useRef(null);
+  const ref = useRef(null)
   useLayoutEffect(() => {
-    const {
-      current
-    } = ref;
+    const { current } = ref
 
     if (focus && current && document.activeElement !== current) {
       current.focus({
         preventScroll: true
-      });
+      })
     }
-  }, [focus]);
-  return ref;
+  }, [focus])
+  return ref
 }

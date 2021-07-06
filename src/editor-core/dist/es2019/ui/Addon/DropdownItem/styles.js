@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { N800, N20 } from '@atlaskit/theme/colors';
+import styled from 'styled-components'
+import { N800, N20 } from '@atlaskit/theme/colors'
 export const DropdownItem = styled.div`
   display: flex;
   align-items: center;
@@ -14,4 +14,4 @@ export const DropdownItem = styled.div`
   &:hover {
     background-color: ${N20};
   }
-`;
+`

@@ -9,4 +9,4 @@ export const SmartLinkNodeContexts = {
   listItem: 'listItem',
   panel: 'panel',
   mixed: 'mixed'
-};
+}

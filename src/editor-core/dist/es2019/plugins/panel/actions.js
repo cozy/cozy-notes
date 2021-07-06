@@ -1,17 +1,26 @@
-import { removeParentNodeOfType, findSelectedNodeOfType, removeSelectedNode, findParentNodeOfType } from 'prosemirror-utils';
-import { NodeSelection } from 'prosemirror-state';
-import { PanelType } from '@atlaskit/adf-schema';
-import { getPanelTypeBackground } from '@atlaskit/editor-common';
-import { ACTION, ACTION_SUBJECT, INPUT_METHOD, EVENT_TYPE, addAnalytics } from '../analytics';
-import { pluginKey } from './types';
-import { findPanel } from './utils';
+import {
+  removeParentNodeOfType,
+  findSelectedNodeOfType,
+  removeSelectedNode,
+  findParentNodeOfType
+} from 'prosemirror-utils'
+import { NodeSelection } from 'prosemirror-state'
+import { PanelType } from '@atlaskit/adf-schema'
+import { getPanelTypeBackground } from '@atlaskit/editor-common'
+import {
+  ACTION,
+  ACTION_SUBJECT,
+  INPUT_METHOD,
+  EVENT_TYPE,
+  addAnalytics
+} from '../analytics'
+import { pluginKey } from './types'
+import { findPanel } from './utils'
 export const removePanel = () => (state, dispatch) => {
   const {
-    schema: {
-      nodes
-    },
+    schema: { nodes },
     tr
-  } = state;
+  } = state
   const payload = {
     action: ACTION.DELETED,
     actionSubject: ACTION_SUBJECT.PANEL,
@@ -19,79 +28,82 @@ export const removePanel = () => (state, dispatch) => {
       inputMethod: INPUT_METHOD.TOOLBAR
     },
     eventType: EVENT_TYPE.TRACK
-  };
-  let deleteTr = tr;
+  }
+  let deleteTr = tr
 
   if (findSelectedNodeOfType(nodes.panel)(tr.selection)) {
-    deleteTr = removeSelectedNode(tr);
+    deleteTr = removeSelectedNode(tr)
   } else if (findParentNodeOfType(nodes.panel)(tr.selection)) {
-    deleteTr = removeParentNodeOfType(nodes.panel)(tr);
+    deleteTr = removeParentNodeOfType(nodes.panel)(tr)
   }
 
   if (!deleteTr) {
-    return false;
+    return false
   }
 
   if (dispatch) {
-    dispatch(addAnalytics(state, deleteTr, payload));
+    dispatch(addAnalytics(state, deleteTr, payload))
   }
 
-  return true;
-};
+  return true
+}
 
 const getNewPanelData = (state, newPanelType, panelOptions = {}) => {
   let {
     activePanelIcon: previousIcon,
     activePanelColor: previousColor,
     activePanelType: previousType
-  } = pluginKey.getState(state);
-  const {
-    emoji,
-    color
-  } = panelOptions;
-  let panelIcon = previousIcon;
-  let panelType = newPanelType;
-  let panelColor = getPanelTypeBackground(newPanelType !== PanelType.CUSTOM ? newPanelType : previousType);
+  } = pluginKey.getState(state)
+  const { emoji, color } = panelOptions
+  let panelIcon = previousIcon
+  let panelType = newPanelType
+  let panelColor = getPanelTypeBackground(
+    newPanelType !== PanelType.CUSTOM ? newPanelType : previousType
+  )
 
   if (color || previousColor) {
-    panelType = PanelType.CUSTOM;
-    panelColor = color || previousColor;
+    panelType = PanelType.CUSTOM
+    panelColor = color || previousColor
   }
 
   if (emoji) {
-    panelType = PanelType.CUSTOM;
-    panelIcon = emoji;
+    panelType = PanelType.CUSTOM
+    panelIcon = emoji
   }
 
   return {
     panelIcon,
     panelColor,
     panelType: panelType
-  };
-};
+  }
+}
 
-export const changePanelType = (panelType, panelOptions = {}, UNSAFE_allowCustomPanel = false) => (state, dispatch) => {
+export const changePanelType = (
+  panelType,
+  panelOptions = {},
+  UNSAFE_allowCustomPanel = false
+) => (state, dispatch) => {
   const {
-    schema: {
-      nodes
-    },
+    schema: { nodes },
     tr
-  } = state;
-  const panelNode = findPanel(state);
+  } = state
+  const panelNode = findPanel(state)
 
   if (panelNode === undefined) {
-    return false;
+    return false
   }
 
-  let newType = panelType;
-  let previousType = pluginKey.getState(state).activePanelType;
+  let newType = panelType
+  let previousType = pluginKey.getState(state).activePanelType
 
   if (UNSAFE_allowCustomPanel) {
-    const {
-      panelType: newPanelType
-    } = getNewPanelData(state, panelType, panelOptions);
-    newType = newPanelType;
-    previousType = panelType;
+    const { panelType: newPanelType } = getNewPanelData(
+      state,
+      panelType,
+      panelOptions
+    )
+    newType = newPanelType
+    previousType = panelType
   }
 
   const payload = {
@@ -102,40 +114,47 @@ export const changePanelType = (panelType, panelOptions = {}, UNSAFE_allowCustom
       previousType
     },
     eventType: EVENT_TYPE.TRACK
-  };
-  let newTr;
+  }
+  let newTr
 
   if (UNSAFE_allowCustomPanel) {
-    const {
-      panelIcon,
-      panelColor,
-      panelType: newPanelType
-    } = getNewPanelData(state, panelType, panelOptions);
-    newTr = tr.setNodeMarkup(panelNode.pos, nodes.panel, {
-      panelType: newPanelType,
-      panelIcon,
-      panelColor
-    }).setMeta(pluginKey, {
-      activePanelType: newPanelType,
-      activePanelIcon: panelIcon,
-      activePanelColor: panelColor
-    });
+    const { panelIcon, panelColor, panelType: newPanelType } = getNewPanelData(
+      state,
+      panelType,
+      panelOptions
+    )
+    newTr = tr
+      .setNodeMarkup(panelNode.pos, nodes.panel, {
+        panelType: newPanelType,
+        panelIcon,
+        panelColor
+      })
+      .setMeta(pluginKey, {
+        activePanelType: newPanelType,
+        activePanelIcon: panelIcon,
+        activePanelColor: panelColor
+      })
   } else {
-    newTr = tr.setNodeMarkup(panelNode.pos, nodes.panel, {
-      panelType
-    }).setMeta(pluginKey, {
-      activePanelType: panelType
-    });
+    newTr = tr
+      .setNodeMarkup(panelNode.pos, nodes.panel, {
+        panelType
+      })
+      .setMeta(pluginKey, {
+        activePanelType: panelType
+      })
   } // Select the panel if it was previously selected
 
-
-  const newTrWithSelection = state.selection instanceof NodeSelection && state.selection.node.type.name === 'panel' ? newTr.setSelection(new NodeSelection(tr.doc.resolve(panelNode.pos))) : newTr;
-  const changePanelTypeTr = addAnalytics(state, newTrWithSelection, payload);
-  changePanelTypeTr.setMeta('scrollIntoView', false);
+  const newTrWithSelection =
+    state.selection instanceof NodeSelection &&
+    state.selection.node.type.name === 'panel'
+      ? newTr.setSelection(new NodeSelection(tr.doc.resolve(panelNode.pos)))
+      : newTr
+  const changePanelTypeTr = addAnalytics(state, newTrWithSelection, payload)
+  changePanelTypeTr.setMeta('scrollIntoView', false)
 
   if (dispatch) {
-    dispatch(changePanelTypeTr);
+    dispatch(changePanelTypeTr)
   }
 
-  return true;
-};
+  return true
+}

@@ -1,17 +1,17 @@
-import { formatDateType, dateTypeToDate, dateToDateType } from './formatParse';
-import addDays from 'date-fns/add_days';
-import addMonths from 'date-fns/add_months';
-import addYears from 'date-fns/add_years';
+import { formatDateType, dateTypeToDate, dateToDateType } from './formatParse'
+import addDays from 'date-fns/add_days'
+import addMonths from 'date-fns/add_months'
+import addYears from 'date-fns/add_years'
 export function padToTwo(number) {
-  return number <= 99 ? `0${number}`.slice(-2) : `${number}`;
+  return number <= 99 ? `0${number}`.slice(-2) : `${number}`
 }
 
 function isDigit(c) {
   if (c === undefined) {
-    return false;
+    return false
   }
 
-  return c >= '0' && c <= '9';
+  return c >= '0' && c <= '9'
 }
 /**
  * Check if cursor is in first segment of a date.
@@ -19,27 +19,26 @@ function isDigit(c) {
  * @param date Date string in any locale
  */
 
-
 function isCursorInFirstDateSegment(cursorPos, date) {
-  let posCounter = cursorPos - 1;
-  let isAdjacent = true; // The date without any non-digit characters on the end
+  let posCounter = cursorPos - 1
+  let isAdjacent = true // The date without any non-digit characters on the end
 
-  const strippedDate = date.replace(/[^0-9]+$/g, '');
+  const strippedDate = date.replace(/[^0-9]+$/g, '')
 
   while (posCounter >= 0 && isAdjacent) {
-    const c = strippedDate[posCounter]; // if(c === undefined) {
+    const c = strippedDate[posCounter] // if(c === undefined) {
     //   console.log("c undef");
     //   console.log({posCounter, strippedDate,cursorPos,date})
     // }
 
     if (!isDigit(c)) {
-      isAdjacent = false;
+      isAdjacent = false
     }
 
-    posCounter -= 1;
+    posCounter -= 1
   }
 
-  return isAdjacent;
+  return isAdjacent
 }
 /**
  * Check if cursor is in last segment of a date.
@@ -47,24 +46,23 @@ function isCursorInFirstDateSegment(cursorPos, date) {
  * @param date Date string in any locale
  */
 
-
 function isCursorInLastDateSegment(cursorPos, date) {
-  let posCounter = cursorPos;
-  let isAdjacent = true; // The date without any non-digit characters on the end
+  let posCounter = cursorPos
+  let isAdjacent = true // The date without any non-digit characters on the end
 
-  const strippedDate = date.replace(/[^0-9]+$/g, '');
+  const strippedDate = date.replace(/[^0-9]+$/g, '')
 
   while (posCounter < strippedDate.length && isAdjacent) {
-    const c = strippedDate[posCounter];
+    const c = strippedDate[posCounter]
 
     if (!isDigit(c)) {
-      isAdjacent = false;
+      isAdjacent = false
     }
 
-    posCounter += 1;
+    posCounter += 1
   }
 
-  return isAdjacent;
+  return isAdjacent
 }
 /**
  * Inconclusively check if a date string is valid - a value of false means it is definitely
@@ -72,18 +70,17 @@ function isCursorInLastDateSegment(cursorPos, date) {
  * @param date Date string to be parsed
  */
 
-
 export function isDatePossiblyValid(date) {
   for (const c of date) {
-    const isNumber = c >= '0' && c <= '9';
-    const isValidPunctuation = '. ,/'.indexOf(c) !== -1;
+    const isNumber = c >= '0' && c <= '9'
+    const isValidPunctuation = '. ,/'.indexOf(c) !== -1
 
     if (!(isNumber || isValidPunctuation)) {
-      return false;
+      return false
     }
   }
 
-  return true;
+  return true
 }
 /**
  * Find the segment of a date a position refers to. Eg: pos 2 in 29/03/2020 is in
@@ -95,36 +92,38 @@ export function isDatePossiblyValid(date) {
 
 export function findDateSegmentByPosition(position, date, locale) {
   if (position > date.length) {
-    return undefined;
+    return undefined
   }
 
-  const placeholder = getLocaleDatePlaceholder(locale);
+  const placeholder = getLocaleDatePlaceholder(locale)
 
   if (!placeholder) {
-    return undefined;
+    return undefined
   } // The placeholder without any non-digit characters on the end
 
-
-  const strippedPlaceholder = placeholder.replace(/[^ymd]+$/g, '');
+  const strippedPlaceholder = placeholder.replace(/[^ymd]+$/g, '')
   const keyToSegment = {
     d: 'day',
     m: 'month',
     y: 'year'
-  };
-  const firstSegment = keyToSegment[strippedPlaceholder[0]];
-  const lastSegment = keyToSegment[strippedPlaceholder[strippedPlaceholder.length - 1]];
-  const allPossibleSegments = ['day', 'month', 'year'];
-  const middleSegment = allPossibleSegments.filter(s => s !== firstSegment && s !== lastSegment)[0];
+  }
+  const firstSegment = keyToSegment[strippedPlaceholder[0]]
+  const lastSegment =
+    keyToSegment[strippedPlaceholder[strippedPlaceholder.length - 1]]
+  const allPossibleSegments = ['day', 'month', 'year']
+  const middleSegment = allPossibleSegments.filter(
+    s => s !== firstSegment && s !== lastSegment
+  )[0]
 
   if (isCursorInFirstDateSegment(position, date)) {
-    return firstSegment;
+    return firstSegment
   }
 
   if (isCursorInLastDateSegment(position, date)) {
-    return lastSegment;
+    return lastSegment
   }
 
-  return middleSegment;
+  return middleSegment
 }
 /**
  * Generate a placeholder date string for a given locale
@@ -139,29 +138,29 @@ export function getLocaleDatePlaceholder(locale) {
     day: 7,
     month: 1,
     year: 1992
-  };
-  const localisedDateString = formatDateType(uniqueDateType, locale);
+  }
+  const localisedDateString = formatDateType(uniqueDateType, locale)
   const shortDateFormat = localisedDateString.replace(/\d+/g, str => {
     if (!str) {
-      return '';
+      return ''
     }
 
-    var num = parseInt(str);
+    var num = parseInt(str)
 
     switch (num % 100) {
       case 92:
-        return str.replace(/.{1}/g, 'y');
+        return str.replace(/.{1}/g, 'y')
 
       case 1:
-        return str.length === 1 ? 'm' : 'mm';
+        return str.length === 1 ? 'm' : 'mm'
 
       case 7:
-        return str.length === 1 ? 'd' : 'dd';
+        return str.length === 1 ? 'd' : 'dd'
     }
 
-    return '';
-  });
-  return shortDateFormat;
+    return ''
+  })
+  return shortDateFormat
 }
 /**
  * Adjust date segment up or down. Eg. If day is the active segment and adjustment is -1,
@@ -172,11 +171,21 @@ export function getLocaleDatePlaceholder(locale) {
  */
 
 export function adjustDate(date, activeSegment, adjustment) {
-  const originalDate = dateTypeToDate(date);
-  const newDate = activeSegment === 'day' ? addDays(originalDate, adjustment) : activeSegment === 'month' ? addMonths(originalDate, adjustment) : addYears(originalDate, adjustment);
-  return dateToDateType(newDate);
+  const originalDate = dateTypeToDate(date)
+  const newDate =
+    activeSegment === 'day'
+      ? addDays(originalDate, adjustment)
+      : activeSegment === 'month'
+      ? addMonths(originalDate, adjustment)
+      : addYears(originalDate, adjustment)
+  return dateToDateType(newDate)
 }
 export function isToday(date) {
-  const today = new Date();
-  return date !== undefined && today.getDate() === date.day && date.month === today.getMonth() + 1 && date.year === today.getFullYear();
+  const today = new Date()
+  return (
+    date !== undefined &&
+    today.getDate() === date.day &&
+    date.month === today.getMonth() + 1 &&
+    date.year === today.getFullYear()
+  )
 }

@@ -1,16 +1,22 @@
-import getDeviceInfo from './getDeviceInfo';
-import getBrowserInfo from './getBrowserInfo';
-const JIRA_ISSUE_COLLECTOR_URL = 'https://product-fabric.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/-w0bwo4/b/14/e73395c53c3b10fde2303f4bf74ffbf6/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-US&collectorId=98644b9c';
+import getDeviceInfo from './getDeviceInfo'
+import getBrowserInfo from './getBrowserInfo'
+const JIRA_ISSUE_COLLECTOR_URL =
+  'https://product-fabric.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/-w0bwo4/b/14/e73395c53c3b10fde2303f4bf74ffbf6/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-US&collectorId=98644b9c'
 
-const loadJiraCollectorDialogScript = (labels, packageName, coreVersion, packageVersion) => {
+const loadJiraCollectorDialogScript = (
+  labels,
+  packageName,
+  coreVersion,
+  packageVersion
+) => {
   return new Promise(async (resolve, reject) => {
     if (window.jQuery) {
       window.ATL_JQ_PAGE_PROPS = {
         triggerFunction: showCollectorDialog => {
           if (typeof showCollectorDialog === 'function') {
-            resolve(showCollectorDialog);
+            resolve(showCollectorDialog)
           } else {
-            reject('Failed to initialize showCollectorDialog');
+            reject('Failed to initialize showCollectorDialog')
           }
         },
         fieldValues: {
@@ -29,18 +35,17 @@ const loadJiraCollectorDialogScript = (labels, packageName, coreVersion, package
         },
         priority: '1',
         components: '15306' // Fix here
-
-      };
+      }
       window.jQuery.ajax({
         url: JIRA_ISSUE_COLLECTOR_URL,
         type: 'get',
         cache: true,
         dataType: 'script'
-      });
+      })
     } else {
-      reject('jQuery is not defined');
+      reject('jQuery is not defined')
     }
-  });
-};
+  })
+}
 
-export default loadJiraCollectorDialogScript;
+export default loadJiraCollectorDialogScript

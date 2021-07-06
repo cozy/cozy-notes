@@ -1,2 +1,2 @@
-export { PubSubSpecialEventType } from './types';
-export { CollabProvider } from './collab-provider';
+export { PubSubSpecialEventType } from './types'
+export { CollabProvider } from './collab-provider'

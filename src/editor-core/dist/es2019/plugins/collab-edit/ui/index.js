@@ -1,2 +1,2 @@
-import AvatarsWithPluginState from './avatars-with-plugin-state';
-export default AvatarsWithPluginState;
+import AvatarsWithPluginState from './avatars-with-plugin-state'
+export default AvatarsWithPluginState

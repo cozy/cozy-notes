@@ -1,39 +1,38 @@
-import _defineProperty from "@babel/runtime/helpers/defineProperty";
+import _defineProperty from '@babel/runtime/helpers/defineProperty'
 export class EventDispatcher {
   constructor() {
-    _defineProperty(this, "listeners", {});
+    _defineProperty(this, 'listeners', {})
   }
 
   on(event, cb) {
     if (!this.listeners[event]) {
-      this.listeners[event] = new Set();
+      this.listeners[event] = new Set()
     }
 
-    this.listeners[event].add(cb);
+    this.listeners[event].add(cb)
   }
 
   off(event, cb) {
     if (!this.listeners[event]) {
-      return;
+      return
     }
 
     if (this.listeners[event].has(cb)) {
-      this.listeners[event].delete(cb);
+      this.listeners[event].delete(cb)
     }
   }
 
   emit(event, data) {
     if (!this.listeners[event]) {
-      return;
+      return
     }
 
-    this.listeners[event].forEach(cb => cb(data));
+    this.listeners[event].forEach(cb => cb(data))
   }
 
   destroy() {
-    this.listeners = {};
+    this.listeners = {}
   }
-
 }
 /**
  * Creates a dispatch function that can be called inside ProseMirror Plugin
@@ -43,10 +42,10 @@ export class EventDispatcher {
 export function createDispatch(eventDispatcher) {
   return (eventName, data) => {
     if (!eventName) {
-      throw new Error('event name is required!');
+      throw new Error('event name is required!')
     }
 
-    const event = typeof eventName === 'string' ? eventName : eventName.key;
-    eventDispatcher.emit(event, data);
-  };
+    const event = typeof eventName === 'string' ? eventName : eventName.key
+    eventDispatcher.emit(event, data)
+  }
 }

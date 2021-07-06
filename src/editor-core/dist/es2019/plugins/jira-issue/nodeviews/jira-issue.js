@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-import { JiraIcon } from '@atlaskit/logo';
-import { borderRadius } from '@atlaskit/theme/constants';
-import { N30, N50 } from '@atlaskit/theme/colors';
+import React from 'react'
+import styled from 'styled-components'
+import { JiraIcon } from '@atlaskit/logo'
+import { borderRadius } from '@atlaskit/theme/constants'
+import { N30, N50 } from '@atlaskit/theme/colors'
 const WrapperNode = styled.span`
   align-items: center;
   background: ${N30};
@@ -23,7 +23,7 @@ const WrapperNode = styled.span`
     background: ${N50};
     outline: none;
   }
-`;
+`
 const JiraChildNode = styled.span`
   display: inline-block;
   color: #707070;
@@ -34,7 +34,7 @@ const JiraChildNode = styled.span`
     color: black;
     content: 'JIRA | ';
   }
-`;
+`
 const SvgChildNode = styled.span`
   display: inline-block;
   height: 24px;
@@ -45,16 +45,23 @@ const SvgChildNode = styled.span`
     height: 24px;
     width: 24px;
   }
-`;
+`
 export default function JIRAIssueNode(props) {
   const {
     node: {
-      attrs: {
-        issueKey
-      }
+      attrs: { issueKey }
     }
-  } = props;
-  return /*#__PURE__*/React.createElement(WrapperNode, null, /*#__PURE__*/React.createElement(SvgChildNode, null, /*#__PURE__*/React.createElement(JiraIcon, {
-    size: "small"
-  })), /*#__PURE__*/React.createElement(JiraChildNode, null, issueKey));
+  } = props
+  return /*#__PURE__*/ React.createElement(
+    WrapperNode,
+    null,
+    /*#__PURE__*/ React.createElement(
+      SvgChildNode,
+      null,
+      /*#__PURE__*/ React.createElement(JiraIcon, {
+        size: 'small'
+      })
+    ),
+    /*#__PURE__*/ React.createElement(JiraChildNode, null, issueKey)
+  )
 }

@@ -1,6 +1,6 @@
-import { css } from 'styled-components';
-import { TELEPOINTER_DIM_CLASS } from './plugin-state';
-import { colors } from './utils';
+import { css } from 'styled-components'
+import { TELEPOINTER_DIM_CLASS } from './plugin-state'
+import { colors } from './utils'
 
 const telepointerColorStyle = (color, index) => `
   &.color-${index} {
@@ -11,7 +11,7 @@ const telepointerColorStyle = (color, index) => `
       border-color: ${color.solid};
     }
   }
-`;
+`
 
 export const telepointerStyle = css`
   .ProseMirror .telepointer {
@@ -43,4 +43,4 @@ export const telepointerStyle = css`
 
     ${colors.map((color, index) => telepointerColorStyle(color, index))};
   }
-`;
+`

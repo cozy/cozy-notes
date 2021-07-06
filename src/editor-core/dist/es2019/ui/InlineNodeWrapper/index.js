@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
 /**
  * @see ED-6102: Deleting inline nodes doesn't work properly on Android
  * @see discussion here: https://github.com/ProseMirror/prosemirror/issues/903
@@ -10,19 +10,19 @@ import styled from 'styled-components';
  */
 
 export function createMobileInlineDomRef() {
-  const domRef = document.createElement('span');
-  domRef.contentEditable = 'false';
-  domRef.classList.add('inline-node--mobile');
-  return domRef;
+  const domRef = document.createElement('span')
+  domRef.contentEditable = 'false'
+  domRef.classList.add('inline-node--mobile')
+  return domRef
 }
 export const InlineNodeInnerWrapper = styled.span`
   display: block;
-`;
+`
 
-const InlineNodeWrapper = ({
-  useInlineWrapper,
-  children
-}) => useInlineWrapper ? /*#__PURE__*/React.createElement(InlineNodeInnerWrapper, null, children) : /*#__PURE__*/React.createElement(React.Fragment, null, children);
+const InlineNodeWrapper = ({ useInlineWrapper, children }) =>
+  useInlineWrapper
+    ? /*#__PURE__*/ React.createElement(InlineNodeInnerWrapper, null, children)
+    : /*#__PURE__*/ React.createElement(React.Fragment, null, children)
 
-InlineNodeWrapper.displayName = 'InlineNodeWrapper';
-export default InlineNodeWrapper;
+InlineNodeWrapper.displayName = 'InlineNodeWrapper'
+export default InlineNodeWrapper

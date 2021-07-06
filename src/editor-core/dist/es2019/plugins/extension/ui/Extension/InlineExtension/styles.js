@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { borderRadius } from '@atlaskit/theme/constants';
-import { Wrapper as WrapperDefault } from '../styles';
+import styled from 'styled-components'
+import { borderRadius } from '@atlaskit/theme/constants'
+import { Wrapper as WrapperDefault } from '../styles'
 export const Wrapper = styled(WrapperDefault)`
   cursor: pointer;
   display: inline-flex;
@@ -22,4 +22,4 @@ export const Wrapper = styled(WrapperDefault)`
     padding: 0;
     background: white;
   }
-`;
+`

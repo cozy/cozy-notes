@@ -1,10 +1,6 @@
-import { insertContentDeleteRange } from '../../../../utils/commands';
+import { insertContentDeleteRange } from '../../../../utils/commands'
 //Case for two adjacent nodes with the first being a list item and the last being a paragraph
-export const joinParagrapWithList = ({
-  tr,
-  $next,
-  $head
-}) => {
+export const joinParagrapWithList = ({ tr, $next, $head }) => {
   /* CASE 1
    * Initial Structure:
    *
@@ -26,11 +22,16 @@ export const joinParagrapWithList = ({
    * }
    *
    */
-  const paragraphE = $next.parent;
-  const beforeParagraphE = $next.before();
-  const afterParagraphE = $next.after();
-  const textInsertPos = $head.pos;
-  const textContent = paragraphE.content;
-  insertContentDeleteRange(tr, tr => tr.doc.resolve(textInsertPos), [[textContent, textInsertPos]], [[beforeParagraphE, afterParagraphE]]);
-  return true;
-};
+  const paragraphE = $next.parent
+  const beforeParagraphE = $next.before()
+  const afterParagraphE = $next.after()
+  const textInsertPos = $head.pos
+  const textContent = paragraphE.content
+  insertContentDeleteRange(
+    tr,
+    tr => tr.doc.resolve(textInsertPos),
+    [[textContent, textInsertPos]],
+    [[beforeParagraphE, afterParagraphE]]
+  )
+  return true
+}

@@ -1,8 +1,8 @@
-import styled, { css } from 'styled-components';
-import { gridSize, borderRadius } from '@atlaskit/theme/constants';
-import { N30, N100 } from '@atlaskit/theme/colors';
-import { akEditorMobileMaxWidth } from '@atlaskit/editor-shared-styles';
-const akGridSize = gridSize() + 'px';
+import styled, { css } from 'styled-components'
+import { gridSize, borderRadius } from '@atlaskit/theme/constants'
+import { N30, N100 } from '@atlaskit/theme/colors'
+import { akEditorMobileMaxWidth } from '@atlaskit/editor-shared-styles'
+const akGridSize = gridSize() + 'px'
 export const ButtonGroup = styled.span`
   display: inline-flex;
   align-items: center;
@@ -10,14 +10,14 @@ export const ButtonGroup = styled.span`
   & > div {
     display: flex;
   }
-`;
+`
 export const Separator = styled.span`
   background: ${N30};
   width: 1px;
   height: 24px;
   display: inline-block;
   margin: 0 8px;
-`;
+`
 export const Wrapper = styled.span`
   display: flex;
   align-items: center;
@@ -30,20 +30,16 @@ export const Wrapper = styled.span`
   > div > div {
     display: flex;
   }
-  margin-left: ${({
-  isSmall
-}) => isSmall ? 4 : 0}px;
-  min-width: ${({
-  isSmall
-}) => isSmall ? '40px' : 'auto'};
-`;
+  margin-left: ${({ isSmall }) => (isSmall ? 4 : 0)}px;
+  min-width: ${({ isSmall }) => (isSmall ? '40px' : 'auto')};
+`
 export const ExpandIconWrapper = styled.span`
   margin-left: -8px;
-`;
+`
 export const TriggerWrapper = styled.div`
   display: flex;
-`;
-export const MenuWrapper = Wrapper;
+`
+export const MenuWrapper = Wrapper
 export const ButtonContent = styled.span`
   display: flex;
   min-width: 80px;
@@ -51,13 +47,13 @@ export const ButtonContent = styled.span`
   overflow: hidden;
   justify-content: center;
   flex-direction: column;
-  padding: 0 ${props => props.spacing === 'none' ? '8px' : '6px'};
-`; // Taken from the style of inline dialog components
+  padding: 0 ${props => (props.spacing === 'none' ? '8px' : '6px')};
+` // Taken from the style of inline dialog components
 
 export const dropShadow = css`
   box-shadow: 0 0 1px rgba(9, 30, 66, 0.31),
     0 4px 8px -2px rgba(9, 30, 66, 0.25);
-`;
+`
 export const scrollbarStyles = `
   -ms-overflow-style: -ms-autohiding-scrollbar;
 
@@ -82,7 +78,7 @@ export const scrollbarStyles = `
   &::-webkit-scrollbar-thumb:hover {
     background-color: rgba(0, 0, 0, 0.4);
   }
-`;
+`
 export const Shortcut = styled.div`
   background-color: rgba(223, 225, 229, 0.5); /* N60 at 50% */
   color: ${N100};
@@ -94,12 +90,12 @@ export const Shortcut = styled.div`
   @media (max-width: ${akEditorMobileMaxWidth}px) {
     display: none;
   }
-`;
+`
 export const ClickSelectWrapper = styled.span`
   user-select: all;
-`;
+`
 export const CellColourPreview = styled.div`
   &::before {
     background: ${props => props.selectedColor};
   }
-`;
+`

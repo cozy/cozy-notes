@@ -1,2 +1,2 @@
-import { PluginKey } from 'prosemirror-state';
-export const clipboardPluginKey = new PluginKey('clipboardPlugin');
+import { PluginKey } from 'prosemirror-state'
+export const clipboardPluginKey = new PluginKey('clipboardPlugin')

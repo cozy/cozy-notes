@@ -1,1 +1,1 @@
-export const MAX_NESTED_LIST_INDENTATION = 6;
+export const MAX_NESTED_LIST_INDENTATION = 6

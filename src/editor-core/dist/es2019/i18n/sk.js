@@ -11,20 +11,24 @@ export default {
   'fabric.editor.addAltText': 'Alternatívny text',
   'fabric.editor.alignment': 'Zarovnanie',
   'fabric.editor.altText': 'Všetok text',
-  'fabric.editor.alttext.validation': 'Vymažte z alternatívneho textu všetky špeciálne znaky.',
+  'fabric.editor.alttext.validation':
+    'Vymažte z alternatívneho textu všetky špeciálne znaky.',
   'fabric.editor.annotate': 'Komentovať',
   'fabric.editor.annotationToolbar': 'Panel s nástrojmi poznámok',
   'fabric.editor.backLink': 'Vrátiť sa',
-  'fabric.editor.blockCardUnavailable': 'Vnorené prepojenie je v uzle {node} a jeho zobrazenie nemožno zmeniť',
+  'fabric.editor.blockCardUnavailable':
+    'Vnorené prepojenie je v uzle {node} a jeho zobrazenie nemožno zmeniť',
   'fabric.editor.blockquote': 'Citácia',
   'fabric.editor.blockquote.description': 'Vložiť citát alebo citáciu',
   'fabric.editor.bold': 'Hrubé',
-  'fabric.editor.canNotSortTable': "⚠️ You can't sort a table with merged cells",
+  'fabric.editor.canNotSortTable':
+    "⚠️ You can't sort a table with merged cells",
   'fabric.editor.cardFloatingControls': 'Možnosti karty',
   'fabric.editor.cellBackground': 'Pozadie buniek',
   'fabric.editor.cellOptions': 'Možnosti bunky',
   'fabric.editor.clearAltTextEdit': 'Vymazať alternatívny text',
-  'fabric.editor.clearCells': '{0, plural, one {Vymazať bunku} few {Vymazať bunky} many {Vymazať bunky} other {Vymazať bunky}}',
+  'fabric.editor.clearCells':
+    '{0, plural, one {Vymazať bunku} few {Vymazať bunky} many {Vymazať bunky} other {Vymazať bunky}}',
   'fabric.editor.clearFormatting': 'Vymazať formátovanie',
   'fabric.editor.clearLink': 'Vymazať prepojenie',
   'fabric.editor.clearLinkText': 'Vymazať text',
@@ -37,17 +41,20 @@ export default {
   'fabric.editor.columns': 'Rozloženia',
   'fabric.editor.columns.description': 'Rozdeľte stránku pomocou sekcií',
   'fabric.editor.configPanel.cancel': 'Zrušiť',
-  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio': '„IsMultiple“ a „style: radio“ nie je možné kombinovať',
+  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio':
+    '„IsMultiple“ a „style: radio“ nie je možné kombinovať',
   'fabric.editor.configPanel.formType.addField': 'Pridať pole',
   'fabric.editor.configPanel.formType.removeField': 'Odstrániť pole',
   'fabric.editor.configPanel.required': 'Povinné pole',
   'fabric.editor.configPanel.submit': 'Odoslať',
   'fabric.editor.createComment': 'Vytvoriť komentár',
-  'fabric.editor.createCommentInvalid': 'Komentáre sú povolené len pre text a nadpisy',
+  'fabric.editor.createCommentInvalid':
+    'Komentáre sú povolené len pre text a nadpisy',
   'fabric.editor.date': 'Dátum',
   'fabric.editor.date.description': 'Pridajte dátum pomocou kalendára',
   'fabric.editor.decision': 'Rozhodnutie',
-  'fabric.editor.decision.description': 'Zaznamenajte rozhodnutia, aby sa mohli jednoducho sledovať',
+  'fabric.editor.decision.description':
+    'Zaznamenajte rozhodnutia, aby sa mohli jednoducho sledovať',
   'fabric.editor.decisionPlaceholder': 'Pridať rozhodnutie...',
   'fabric.editor.displayBlock': 'Zobraziť ako kartu',
   'fabric.editor.displayEmbed': 'Zobraziť ako vložený objekt',
@@ -58,16 +65,19 @@ export default {
   'fabric.editor.editAltText': 'Upraviť alternatívny text',
   'fabric.editor.editorHelp': 'Pomoc editora',
   'fabric.editor.emoji': 'Zábavný obrázok',
-  'fabric.editor.emoji.description': 'Použite emotikony na vyjadrenie nápadov 🎉 a emócií 😄',
+  'fabric.editor.emoji.description':
+    'Použite emotikony na vyjadrenie nápadov 🎉 a emócií 😄',
   'fabric.editor.error': 'Chyba',
   'fabric.editor.errorPanel': 'Panel chýb',
   'fabric.editor.errorPanel.description': 'Vyvolanie chýb vo farebnom paneli',
   'fabric.editor.expand': 'Rozšírenie',
   'fabric.editor.expand.description': 'Vložiť rozšírenie',
   'fabric.editor.feedbackDialog': 'Poskytnúť spätnú väzbu',
-  'fabric.editor.feedbackDialog.description': 'Povedzte nám o svojej skúsenosti s používaním nového editora',
+  'fabric.editor.feedbackDialog.description':
+    'Povedzte nám o svojej skúsenosti s používaním nového editora',
   'fabric.editor.filesAndImages': 'Súbory a obrázky',
-  'fabric.editor.filesAndImages.description': 'Pridajte obrázky a ďalšie súbory na stránku',
+  'fabric.editor.filesAndImages.description':
+    'Pridajte obrázky a ďalšie súbory na stránku',
   'fabric.editor.find': 'Nájsť',
   'fabric.editor.findNext': 'Nájsť ďalší',
   'fabric.editor.findPrevious': 'Nájsť predchádzajúci',
@@ -79,7 +89,8 @@ export default {
   'fabric.editor.heading2': 'Nadpis 2',
   'fabric.editor.heading2Description': 'Použiť pre kľúčové časti',
   'fabric.editor.heading3': 'Nadpis 3',
-  'fabric.editor.heading3Description': 'Použiť pre podriadené časti a nadpisy skupín',
+  'fabric.editor.heading3Description':
+    'Použiť pre podriadené časti a nadpisy skupín',
   'fabric.editor.heading4': 'Nadpis 4',
   'fabric.editor.heading4Description': 'Použiť pre podnadpisy',
   'fabric.editor.heading5': 'Nadpis 5',
@@ -87,14 +98,17 @@ export default {
   'fabric.editor.heading6': 'Nadpis 6',
   'fabric.editor.heading6Description': 'Použiť pre nadpisy nízkej úrovne',
   'fabric.editor.help': 'Pomocník',
-  'fabric.editor.help.description': 'Preskúmať klávesové skratky a možnosti značenia',
-  'fabric.editor.helpDialogTips': 'Stlačením tlačidla {keyMap} rýchlo kedykoľvek otvorte tento dialóg',
+  'fabric.editor.help.description':
+    'Preskúmať klávesové skratky a možnosti značenia',
+  'fabric.editor.helpDialogTips':
+    'Stlačením tlačidla {keyMap} rýchlo kedykoľvek otvorte tento dialóg',
   'fabric.editor.horizontalRule': 'Rozdeľovač',
   'fabric.editor.horizontalRule.description': 'Oddeľte obsah vodorovnou čiarou',
   'fabric.editor.image': 'Obrázok',
   'fabric.editor.info': 'Informácie',
   'fabric.editor.infoPanel': 'Informačný panel',
-  'fabric.editor.infoPanel.description': 'Zvýrazniť informácie vo farebnom paneli',
+  'fabric.editor.infoPanel.description':
+    'Zvýrazniť informácie vo farebnom paneli',
   'fabric.editor.insertColumn': 'Vložiť stĺpec',
   'fabric.editor.insertMenu': 'Vložiť',
   'fabric.editor.insertRow': 'Vložiť riadok',
@@ -106,7 +120,8 @@ export default {
   'fabric.editor.lists': 'Zoznamy',
   'fabric.editor.markdown': 'Vyznačenie',
   'fabric.editor.mention': 'Spomenutie',
-  'fabric.editor.mention.description': 'Spomeňte niekoho a pošlite mu oznámenie',
+  'fabric.editor.mention.description':
+    'Spomeňte niekoho a pošlite mu oznámenie',
   'fabric.editor.mergeCells': 'Zlúčiť bunky',
   'fabric.editor.moreFormatting': 'Ďalšie formátovanie',
   'fabric.editor.noResultsFound': 'Nenašli sa žiadne výsledky',
@@ -124,8 +139,10 @@ export default {
   'fabric.editor.placeholderTextPlaceholder': 'Pridať zástupný text',
   'fabric.editor.quickInsert': 'Rýchlo vložiť',
   'fabric.editor.redo': 'Vrátiť naspäť',
-  'fabric.editor.removeColumns': '{0, plural, one {Odstrániť stĺpec} few {Odstrániť stĺpce} many {Odstrániť stĺpce} other {Odstrániť stĺpce}}',
-  'fabric.editor.removeRows': '{0, plural, one {Odstrániť riadok} few {Odstrániť riadky} many {Odstrániť riadky} other {Odstrániť riadky}}',
+  'fabric.editor.removeColumns':
+    '{0, plural, one {Odstrániť stĺpec} few {Odstrániť stĺpce} many {Odstrániť stĺpce} other {Odstrániť stĺpce}}',
+  'fabric.editor.removeRows':
+    '{0, plural, one {Odstrániť riadok} few {Odstrániť riadky} many {Odstrániť riadky} other {Odstrániť riadky}}',
   'fabric.editor.replace': 'Nahradiť',
   'fabric.editor.replaceAll': 'Nahradiť všetko',
   'fabric.editor.replaceWith': 'Nahradiť textom',
@@ -144,11 +161,13 @@ export default {
   'fabric.editor.successPanel': 'Panel úspechov',
   'fabric.editor.successPanel.description': 'Pridať tipy do farebného panela',
   'fabric.editor.superscript': 'Horný index',
-  'fabric.editor.supportAltText': 'Alternatívny text je užitočný pre ľudí so zrakovým postihnutím používajúcich čítačky obrazovky.',
+  'fabric.editor.supportAltText':
+    'Alternatívny text je užitočný pre ľudí so zrakovým postihnutím používajúcich čítačky obrazovky.',
   'fabric.editor.table': 'Tabuľka',
   'fabric.editor.table.description': 'Vložiť tabuľku',
   'fabric.editor.tableOptions': 'Možnosti tabuľky',
-  'fabric.editor.taskPlaceholder': 'Napíšte svoju činnosť. Pomocou "@" ju niekomu priraďte.',
+  'fabric.editor.taskPlaceholder':
+    'Napíšte svoju činnosť. Pomocou "@" ju niekomu priraďte.',
   'fabric.editor.textColor': 'Farba textu',
   'fabric.editor.textColor.lessColors': 'Menej farieb',
   'fabric.editor.textColor.moreColors': 'Viac farieb',
@@ -163,7 +182,8 @@ export default {
   'fabric.editor.viewMore': 'Zobraziť ďalšie',
   'fabric.editor.warning': 'Varovanie',
   'fabric.editor.warningPanel': 'Panel výstrah',
-  'fabric.editor.warningPanel.description': 'Pridať upozornenie do farebného panela',
+  'fabric.editor.warningPanel.description':
+    'Pridať upozornenie do farebného panela',
   'fabric.editor.wrapLeft': 'Zbaliť vľavo',
   'fabric.editor.wrapRight': 'Zbaliť vpravo',
   'fabric.theme.blue': 'Blue',
@@ -188,4 +208,4 @@ export default {
   'fabric.theme.teal': 'Teal',
   'fabric.theme.white': 'White',
   'fabric.theme.yellow': 'Yellow'
-};
+}

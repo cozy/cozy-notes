@@ -1,32 +1,39 @@
-import { addAnalytics, ACTION, ACTION_SUBJECT, ACTION_SUBJECT_ID, EVENT_TYPE, INPUT_METHOD } from '../../analytics';
-import { isInsideListItem } from '../utils/selection';
-import { isBulletList } from '../utils/node';
-import { findFirstParentListNode } from '../utils/find';
-import { getCommonListAnalyticsAttributes } from '../utils/analytics';
-import { outdentListItemsSelected as outdentListAction } from '../actions/outdent-list-items-selected';
+import {
+  addAnalytics,
+  ACTION,
+  ACTION_SUBJECT,
+  ACTION_SUBJECT_ID,
+  EVENT_TYPE,
+  INPUT_METHOD
+} from '../../analytics'
+import { isInsideListItem } from '../utils/selection'
+import { isBulletList } from '../utils/node'
+import { findFirstParentListNode } from '../utils/find'
+import { getCommonListAnalyticsAttributes } from '../utils/analytics'
+import { outdentListItemsSelected as outdentListAction } from '../actions/outdent-list-items-selected'
 export function outdentList(inputMethod = INPUT_METHOD.KEYBOARD) {
-  return function (state, dispatch) {
+  return function(state, dispatch) {
     if (!isInsideListItem(state)) {
-      return false;
+      return false
     }
 
-    const {
-      $from
-    } = state.selection;
-    const parentListNode = findFirstParentListNode($from);
+    const { $from } = state.selection
+    const parentListNode = findFirstParentListNode($from)
 
     if (!parentListNode) {
       // Even though this is a non-operation, we don't want to send this event to the browser. Because if we return false, the browser will move the focus to another place
-      return true;
+      return true
     }
 
-    const actionSubjectId = isBulletList(parentListNode.node) ? ACTION_SUBJECT_ID.FORMAT_LIST_BULLET : ACTION_SUBJECT_ID.FORMAT_LIST_NUMBER;
-    let customTr = state.tr;
-    outdentListAction(customTr);
+    const actionSubjectId = isBulletList(parentListNode.node)
+      ? ACTION_SUBJECT_ID.FORMAT_LIST_BULLET
+      : ACTION_SUBJECT_ID.FORMAT_LIST_NUMBER
+    let customTr = state.tr
+    outdentListAction(customTr)
 
     if (!customTr || !customTr.docChanged) {
       // Even though this is a non-operation, we don't want to send this event to the browser. Because if we return false, the browser will move the focus to another place
-      return true;
+      return true
     }
 
     addAnalytics(state, customTr, {
@@ -34,15 +41,13 @@ export function outdentList(inputMethod = INPUT_METHOD.KEYBOARD) {
       actionSubject: ACTION_SUBJECT.LIST,
       actionSubjectId,
       eventType: EVENT_TYPE.TRACK,
-      attributes: { ...getCommonListAnalyticsAttributes(state),
-        inputMethod
-      }
-    });
+      attributes: { ...getCommonListAnalyticsAttributes(state), inputMethod }
+    })
 
     if (dispatch) {
-      dispatch(customTr);
+      dispatch(customTr)
     }
 
-    return true;
-  };
+    return true
+  }
 }

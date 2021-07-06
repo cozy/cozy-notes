@@ -1,6 +1,13 @@
-import { css } from 'styled-components';
-import { StatusSharedCssClassName } from '@atlaskit/editor-common';
-import { SelectionStyle, getSelectionStyles, akEditorDeleteBackgroundWithOpacity, akEditorDeleteBorder, akEditorSelectedBorderSize, akEditorSelectedNodeClassName } from '@atlaskit/editor-shared-styles';
+import { css } from 'styled-components'
+import { StatusSharedCssClassName } from '@atlaskit/editor-common'
+import {
+  SelectionStyle,
+  getSelectionStyles,
+  akEditorDeleteBackgroundWithOpacity,
+  akEditorDeleteBorder,
+  akEditorSelectedBorderSize,
+  akEditorSelectedNodeClassName
+} from '@atlaskit/editor-shared-styles'
 export const statusStyles = css`
   .${StatusSharedCssClassName.STATUS_CONTAINER} {
     > span {
@@ -27,4 +34,4 @@ export const statusStyles = css`
       box-shadow: 0 0 0 ${akEditorSelectedBorderSize}px ${akEditorDeleteBorder};
     }
   }
-`;
+`

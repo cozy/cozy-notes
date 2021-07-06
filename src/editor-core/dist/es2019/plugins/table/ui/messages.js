@@ -1,4 +1,4 @@
-import { defineMessages } from 'react-intl';
+import { defineMessages } from 'react-intl'
 export default defineMessages({
   insertColumn: {
     id: 'fabric.editor.insertColumn',
@@ -25,4 +25,4 @@ export default defineMessages({
     defaultMessage: 'Cell options',
     description: 'Opens a menu with options for the current table cell.'
   }
-});
+})

@@ -1,27 +1,18 @@
-import { TextSelection } from 'prosemirror-state';
-import { CellSelection } from '@atlaskit/editor-tables/cell-selection';
-import { ACTIONS, pluginKey } from '../pm-plugins/main';
+import { TextSelection } from 'prosemirror-state'
+import { CellSelection } from '@atlaskit/editor-tables/cell-selection'
+import { ACTIONS, pluginKey } from '../pm-plugins/main'
 export const removeColor = () => (state, dispatch) => {
-  const {
-    schema,
-    selection
-  } = state;
-  const {
-    textColor
-  } = schema.marks;
-  let tr = state.tr;
+  const { schema, selection } = state
+  const { textColor } = schema.marks
+  let tr = state.tr
 
   if (selection instanceof TextSelection) {
-    const {
-      from,
-      to,
-      $cursor
-    } = selection;
+    const { from, to, $cursor } = selection
 
     if ($cursor) {
-      tr = state.tr.removeStoredMark(textColor);
+      tr = state.tr.removeStoredMark(textColor)
     } else {
-      tr = state.tr.removeMark(from, to, textColor);
+      tr = state.tr.removeMark(from, to, textColor)
     }
   }
 
@@ -33,30 +24,38 @@ export const removeColor = () => (state, dispatch) => {
      * part here.
      */
     selection.forEachCell((cell, cellPos) => {
-      const from = cellPos;
-      const to = cellPos + cell.nodeSize;
-      tr.doc.nodesBetween(tr.mapping.map(from), tr.mapping.map(to), (node, pos) => {
-        if (!node.isText) {
-          return true;
-        } // This is an issue when the user selects some text.
-        // We need to check if the current node position is less than the range selection from.
-        // If it’s true, that means we should apply the mark using the range selection,
-        // not the current node position.
+      const from = cellPos
+      const to = cellPos + cell.nodeSize
+      tr.doc.nodesBetween(
+        tr.mapping.map(from),
+        tr.mapping.map(to),
+        (node, pos) => {
+          if (!node.isText) {
+            return true
+          } // This is an issue when the user selects some text.
+          // We need to check if the current node position is less than the range selection from.
+          // If it’s true, that means we should apply the mark using the range selection,
+          // not the current node position.
 
-
-        const nodeBetweenFrom = Math.max(pos, tr.mapping.map(from));
-        const nodeBetweenTo = Math.min(pos + node.nodeSize, tr.mapping.map(to));
-        tr.removeMark(nodeBetweenFrom, nodeBetweenTo, textColor);
-        return true;
-      });
-    });
+          const nodeBetweenFrom = Math.max(pos, tr.mapping.map(from))
+          const nodeBetweenTo = Math.min(
+            pos + node.nodeSize,
+            tr.mapping.map(to)
+          )
+          tr.removeMark(nodeBetweenFrom, nodeBetweenTo, textColor)
+          return true
+        }
+      )
+    })
   }
 
   if (dispatch) {
-    dispatch(tr.setMeta(pluginKey, {
-      action: ACTIONS.RESET_COLOR
-    }));
+    dispatch(
+      tr.setMeta(pluginKey, {
+        action: ACTIONS.RESET_COLOR
+      })
+    )
   }
 
-  return true;
-};
+  return true
+}

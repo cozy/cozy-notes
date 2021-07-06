@@ -1,5 +1,10 @@
-import { tableDeleteButtonOffset, tableDeleteButtonSize, tableToolbarSize } from '../consts';
-const DELETE_BUTTON_CONTROLS_OFFSET = tableToolbarSize + tableDeleteButtonSize + tableDeleteButtonOffset;
+import {
+  tableDeleteButtonOffset,
+  tableDeleteButtonSize,
+  tableToolbarSize
+} from '../consts'
+const DELETE_BUTTON_CONTROLS_OFFSET =
+  tableToolbarSize + tableDeleteButtonSize + tableDeleteButtonOffset
 
 function getColumnOptions(left, tableWrapper) {
   return {
@@ -9,16 +14,18 @@ function getColumnOptions(left, tableWrapper) {
 
     shouldRenderPopup() {
       if (tableWrapper) {
-        const rect = tableWrapper.getBoundingClientRect();
-        const maxVisibleLeftPosition = rect.width + tableWrapper.scrollLeft - tableDeleteButtonSize;
-        const minVisibleLeftPosition = tableWrapper.scrollLeft;
-        return maxVisibleLeftPosition - left > 0 && left > minVisibleLeftPosition;
+        const rect = tableWrapper.getBoundingClientRect()
+        const maxVisibleLeftPosition =
+          rect.width + tableWrapper.scrollLeft - tableDeleteButtonSize
+        const minVisibleLeftPosition = tableWrapper.scrollLeft
+        return (
+          maxVisibleLeftPosition - left > 0 && left > minVisibleLeftPosition
+        )
       }
 
-      return true;
+      return true
     }
-
-  };
+  }
 }
 
 function getRowOptions(top) {
@@ -29,13 +36,13 @@ function getRowOptions(top) {
     offset: [0, -top],
 
     onPositionCalculated(position) {
-      return { ...position,
+      return {
+        ...position,
         // We need to force left to always be the offset to not be affected by overflow
         left: -DELETE_BUTTON_CONTROLS_OFFSET
-      };
+      }
     }
-
-  };
+  }
 }
 
 export default function getPopupOptions({
@@ -46,14 +53,13 @@ export default function getPopupOptions({
 }) {
   switch (selectionType) {
     case 'column':
-      return getColumnOptions(left, tableWrapper);
+      return getColumnOptions(left, tableWrapper)
 
     case 'row':
-      return getRowOptions(top);
+      return getRowOptions(top)
 
-    default:
-      {
-        return {};
-      }
+    default: {
+      return {}
+    }
   }
 }

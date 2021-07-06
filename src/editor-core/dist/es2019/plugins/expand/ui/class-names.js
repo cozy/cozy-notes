@@ -1,4 +1,4 @@
-const prefix = 'ak-editor-expand';
+const prefix = 'ak-editor-expand'
 export const expandClassNames = {
   prefix,
   expanded: `${prefix}__expanded`,
@@ -9,4 +9,4 @@ export const expandClassNames = {
   titleInput: `${prefix}__title-input`,
   content: `${prefix}__content`,
   type: type => `${prefix}__type-${type}`
-};
+}

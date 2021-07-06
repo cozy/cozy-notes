@@ -1,8 +1,14 @@
-import { ACTION, ACTION_SUBJECT, ACTION_SUBJECT_ID, EVENT_TYPE, withAnalytics } from '../../analytics';
-import { pluginKey } from '../pm-plugins/main';
-import { getActiveColor } from '../utils/color';
-import { removeColor } from './remove-color';
-import { toggleColor } from './toggle-color';
+import {
+  ACTION,
+  ACTION_SUBJECT,
+  ACTION_SUBJECT_ID,
+  EVENT_TYPE,
+  withAnalytics
+} from '../../analytics'
+import { pluginKey } from '../pm-plugins/main'
+import { getActiveColor } from '../utils/color'
+import { removeColor } from './remove-color'
+import { toggleColor } from './toggle-color'
 /**
  * Helper to create a higher order analytics command
  * @param newColor  - Color to be change in hex code
@@ -12,14 +18,16 @@ import { toggleColor } from './toggle-color';
  */
 
 function createWithColorAnalytics(newColor, previousColor, palette) {
-  const newColorFromPalette = palette.find(({
-    value
-  }) => value === newColor);
-  const previousColorFromPalette = palette.find(({
-    value
-  }) => value === previousColor);
-  const newColorLabel = newColorFromPalette ? newColorFromPalette.label : newColor;
-  const previousColorLabel = previousColorFromPalette ? previousColorFromPalette.label : previousColor || '';
+  const newColorFromPalette = palette.find(({ value }) => value === newColor)
+  const previousColorFromPalette = palette.find(
+    ({ value }) => value === previousColor
+  )
+  const newColorLabel = newColorFromPalette
+    ? newColorFromPalette.label
+    : newColor
+  const previousColorLabel = previousColorFromPalette
+    ? previousColorFromPalette.label
+    : previousColor || ''
   return withAnalytics({
     action: ACTION.FORMATTED,
     actionSubject: ACTION_SUBJECT.TEXT,
@@ -29,32 +37,33 @@ function createWithColorAnalytics(newColor, previousColor, palette) {
       newColor: newColorLabel.toLowerCase(),
       previousColor: previousColorLabel.toLowerCase()
     }
-  });
+  })
 }
 
 export const changeColor = color => (state, dispatch) => {
-  const {
-    textColor
-  } = state.schema.marks;
+  const { textColor } = state.schema.marks
 
   if (textColor) {
-    const pluginState = pluginKey.getState(state);
-    const activeColor = getActiveColor(state);
-    const withColorAnalytics = createWithColorAnalytics(color, activeColor, // palette is a subset of paletteExpanded
-    pluginState.paletteExpanded || pluginState.palette);
+    const pluginState = pluginKey.getState(state)
+    const activeColor = getActiveColor(state)
+    const withColorAnalytics = createWithColorAnalytics(
+      color,
+      activeColor, // palette is a subset of paletteExpanded
+      pluginState.paletteExpanded || pluginState.palette
+    )
 
     if (pluginState.disabled) {
-      return false;
+      return false
     }
 
     if (color === pluginState.defaultColor) {
-      withColorAnalytics(removeColor())(state, dispatch);
-      return true;
+      withColorAnalytics(removeColor())(state, dispatch)
+      return true
     }
 
-    withColorAnalytics(toggleColor(color))(state, dispatch);
-    return true;
+    withColorAnalytics(toggleColor(color))(state, dispatch)
+    return true
   }
 
-  return false;
-};
+  return false
+}

@@ -1,2 +1,2 @@
-import { PluginKey } from 'prosemirror-state';
-export const pluginKey = new PluginKey('helpDialogPlugin');
+import { PluginKey } from 'prosemirror-state'
+export const pluginKey = new PluginKey('helpDialogPlugin')

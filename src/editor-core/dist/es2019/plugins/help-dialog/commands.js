@@ -1,16 +1,16 @@
-import { pluginKey } from './plugin-key';
+import { pluginKey } from './plugin-key'
 export const openHelpCommand = (tr, dispatch) => {
-  tr = tr.setMeta(pluginKey, true);
+  tr = tr.setMeta(pluginKey, true)
 
   if (dispatch) {
-    dispatch(tr);
-    return true;
+    dispatch(tr)
+    return true
   }
 
-  return false;
-};
+  return false
+}
 export const closeHelpCommand = (tr, dispatch) => {
-  tr = tr.setMeta(pluginKey, false);
-  dispatch(tr);
-};
-export const stopPropagationCommand = e => e.stopPropagation();
+  tr = tr.setMeta(pluginKey, false)
+  dispatch(tr)
+}
+export const stopPropagationCommand = e => e.stopPropagation()

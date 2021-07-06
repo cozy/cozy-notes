@@ -1,107 +1,103 @@
-import React from 'react';
-import rafSchedule from 'raf-schd';
-import { Plugin, PluginKey, AllSelection } from 'prosemirror-state';
-import { findDomRefAtPos, findSelectedNodeOfType } from 'prosemirror-utils';
-import { Popup } from '@atlaskit/editor-common';
-import WithPluginState from '../../ui/WithPluginState';
-import { ToolbarLoader } from './ui/ToolbarLoader';
-import { pluginKey as editorDisabledPluginKey } from '../editor-disabled';
-import { findNode } from './utils';
+import React from 'react'
+import rafSchedule from 'raf-schd'
+import { Plugin, PluginKey, AllSelection } from 'prosemirror-state'
+import { findDomRefAtPos, findSelectedNodeOfType } from 'prosemirror-utils'
+import { Popup } from '@atlaskit/editor-common'
+import WithPluginState from '../../ui/WithPluginState'
+import { ToolbarLoader } from './ui/ToolbarLoader'
+import { pluginKey as editorDisabledPluginKey } from '../editor-disabled'
+import { findNode } from './utils'
 export const getRelevantConfig = (selection, configs) => {
   // node selections always take precedence, see if
-  let configPair;
+  let configPair
   configs.find(config => {
-    const node = findSelectedNodeOfType(config.nodeType)(selection);
+    const node = findSelectedNodeOfType(config.nodeType)(selection)
 
     if (node) {
       configPair = {
         node: node.node,
         pos: node.pos,
         config
-      };
+      }
     }
 
-    return !!node;
-  });
+    return !!node
+  })
 
   if (configPair) {
-    return configPair;
+    return configPair
   } // create mapping of node type name to configs
 
-
-  const configByNodeType = {};
+  const configByNodeType = {}
   configs.forEach(config => {
     if (Array.isArray(config.nodeType)) {
       config.nodeType.forEach(nodeType => {
-        configByNodeType[nodeType.name] = config;
-      });
+        configByNodeType[nodeType.name] = config
+      })
     } else {
-      configByNodeType[config.nodeType.name] = config;
+      configByNodeType[config.nodeType.name] = config
     }
-  }); // search up the tree from selection
+  }) // search up the tree from selection
 
-  const {
-    $from
-  } = selection;
+  const { $from } = selection
 
   for (let i = $from.depth; i > 0; i--) {
-    const node = $from.node(i);
-    const matchedConfig = configByNodeType[node.type.name];
+    const node = $from.node(i)
+    const matchedConfig = configByNodeType[node.type.name]
 
     if (matchedConfig) {
       return {
         config: matchedConfig,
         node: node,
         pos: $from.pos
-      };
+      }
     }
   } // if it is AllSelection (can be result of Cmd+A) - use first node
 
-
   if (selection instanceof AllSelection) {
-    const docNode = $from.node(0);
-    let matchedConfig = null;
+    const docNode = $from.node(0)
+    let matchedConfig = null
     const firstChild = findNode(docNode, node => {
-      matchedConfig = configByNodeType[node.type.name];
-      return !!matchedConfig;
-    });
+      matchedConfig = configByNodeType[node.type.name]
+      return !!matchedConfig
+    })
 
     if (firstChild && matchedConfig) {
       return {
         config: matchedConfig,
         node: firstChild,
         pos: $from.pos
-      };
+      }
     }
   }
 
-  return;
-};
+  return
+}
 
-const getDomRefFromSelection = view => findDomRefAtPos(view.state.selection.from, view.domAtPos.bind(view));
+const getDomRefFromSelection = view =>
+  findDomRefAtPos(view.state.selection.from, view.domAtPos.bind(view))
 
 function filterUndefined(x) {
-  return !!x;
+  return !!x
 }
 
 const floatingToolbarPlugin = () => ({
   name: 'floatingToolbar',
 
   pmPlugins(floatingToolbarHandlers = []) {
-    return [{
-      // Should be after all toolbar plugins
-      name: 'floatingToolbar',
-      plugin: ({
-        dispatch,
-        reactContext,
-        providerFactory
-      }) => floatingToolbarPluginFactory({
-        dispatch,
-        floatingToolbarHandlers,
-        reactContext,
-        providerFactory
-      })
-    }];
+    return [
+      {
+        // Should be after all toolbar plugins
+        name: 'floatingToolbar',
+        plugin: ({ dispatch, reactContext, providerFactory }) =>
+          floatingToolbarPluginFactory({
+            dispatch,
+            floatingToolbarHandlers,
+            reactContext,
+            providerFactory
+          })
+      }
+    ]
   },
 
   contentComponent({
@@ -112,17 +108,19 @@ const floatingToolbarPlugin = () => ({
     providerFactory,
     dispatchAnalyticsEvent
   }) {
-    return /*#__PURE__*/React.createElement(WithPluginState, {
+    return /*#__PURE__*/ React.createElement(WithPluginState, {
       plugins: {
         floatingToolbarState: pluginKey,
         editorDisabledPlugin: editorDisabledPluginKey
       },
-      render: ({
-        editorDisabledPlugin,
-        floatingToolbarState
-      }) => {
-        if (!floatingToolbarState || !floatingToolbarState.config || typeof floatingToolbarState.config.visible !== 'undefined' && !floatingToolbarState.config.visible) {
-          return null;
+      render: ({ editorDisabledPlugin, floatingToolbarState }) => {
+        if (
+          !floatingToolbarState ||
+          !floatingToolbarState.config ||
+          (typeof floatingToolbarState.config.visible !== 'undefined' &&
+            !floatingToolbarState.config.visible)
+        ) {
+          return null
         }
 
         const {
@@ -136,57 +134,66 @@ const floatingToolbarPlugin = () => ({
           offset = [0, 12],
           forcePlacement,
           onPositionCalculated
-        } = floatingToolbarState.config;
-        const targetRef = getDomRef(editorView);
+        } = floatingToolbarState.config
+        const targetRef = getDomRef(editorView)
 
-        if (!targetRef || editorDisabledPlugin && editorDisabledPlugin.editorDisabled) {
-          return null;
+        if (
+          !targetRef ||
+          (editorDisabledPlugin && editorDisabledPlugin.editorDisabled)
+        ) {
+          return null
         }
 
-        let customPositionCalculation;
-        const toolbarItems = Array.isArray(items) ? items : items(floatingToolbarState.node);
+        let customPositionCalculation
+        const toolbarItems = Array.isArray(items)
+          ? items
+          : items(floatingToolbarState.node)
 
         if (onPositionCalculated) {
           customPositionCalculation = nextPos => {
-            return onPositionCalculated(editorView, nextPos);
-          };
+            return onPositionCalculated(editorView, nextPos)
+          }
         }
 
-        return /*#__PURE__*/React.createElement(Popup, {
-          ariaLabel: title,
-          offset: offset,
-          target: targetRef,
-          alignY: "bottom",
-          forcePlacement: forcePlacement,
-          fitHeight: height,
-          fitWidth: width,
-          alignX: align,
-          stick: true,
-          mountTo: popupsMountPoint,
-          boundariesElement: popupsBoundariesElement,
-          scrollableElement: popupsScrollableElement,
-          onPositionCalculated: customPositionCalculation
-        }, /*#__PURE__*/React.createElement(ToolbarLoader, {
-          target: targetRef,
-          items: toolbarItems,
-          node: floatingToolbarState.node,
-          dispatchCommand: fn => fn && fn(editorView.state, editorView.dispatch),
-          editorView: editorView,
-          className: className,
-          focusEditor: () => editorView.focus(),
-          providerFactory: providerFactory,
-          popupsMountPoint: popupsMountPoint,
-          popupsBoundariesElement: popupsBoundariesElement,
-          popupsScrollableElement: popupsScrollableElement,
-          dispatchAnalyticsEvent: dispatchAnalyticsEvent
-        }));
+        return /*#__PURE__*/ React.createElement(
+          Popup,
+          {
+            ariaLabel: title,
+            offset: offset,
+            target: targetRef,
+            alignY: 'bottom',
+            forcePlacement: forcePlacement,
+            fitHeight: height,
+            fitWidth: width,
+            alignX: align,
+            stick: true,
+            mountTo: popupsMountPoint,
+            boundariesElement: popupsBoundariesElement,
+            scrollableElement: popupsScrollableElement,
+            onPositionCalculated: customPositionCalculation
+          },
+          /*#__PURE__*/ React.createElement(ToolbarLoader, {
+            target: targetRef,
+            items: toolbarItems,
+            node: floatingToolbarState.node,
+            dispatchCommand: fn =>
+              fn && fn(editorView.state, editorView.dispatch),
+            editorView: editorView,
+            className: className,
+            focusEditor: () => editorView.focus(),
+            providerFactory: providerFactory,
+            popupsMountPoint: popupsMountPoint,
+            popupsBoundariesElement: popupsBoundariesElement,
+            popupsScrollableElement: popupsScrollableElement,
+            dispatchAnalyticsEvent: dispatchAnalyticsEvent
+          })
+        )
       }
-    });
+    })
   }
+})
 
-});
-
-export default floatingToolbarPlugin;
+export default floatingToolbarPlugin
 /**
  *
  * ProseMirror Plugin
@@ -196,7 +203,7 @@ export default floatingToolbarPlugin;
 // So from other plugins you will always get the previous state.
 // To prevent the confusion we are not exporting the plugin key.
 
-const pluginKey = new PluginKey('floatingToolbarPluginKey');
+const pluginKey = new PluginKey('floatingToolbarPluginKey')
 /**
  * Clean up floating toolbar configs from undesired properties.
  */
@@ -204,12 +211,10 @@ const pluginKey = new PluginKey('floatingToolbarPluginKey');
 function sanitizeFloatingToolbarConfig(config) {
   // Cleanup from non existing node types
   if (Array.isArray(config.nodeType)) {
-    return { ...config,
-      nodeType: config.nodeType.filter(filterUndefined)
-    };
+    return { ...config, nodeType: config.nodeType.filter(filterUndefined) }
   }
 
-  return config;
+  return config
 }
 
 function floatingToolbarPluginFactory(options) {
@@ -218,31 +223,33 @@ function floatingToolbarPluginFactory(options) {
     dispatch,
     reactContext,
     providerFactory
-  } = options;
+  } = options
 
   const apply = (_tr, _pluginState, _oldState, newState) => {
-    const {
-      intl
-    } = reactContext();
-    const activeConfigs = floatingToolbarHandlers.map(handler => handler(newState, intl, providerFactory)).filter(filterUndefined).map(config => sanitizeFloatingToolbarConfig(config));
-    const relevantConfig = activeConfigs && getRelevantConfig(newState.selection, activeConfigs);
-    dispatch(pluginKey, relevantConfig);
-    return relevantConfig;
-  };
+    const { intl } = reactContext()
+    const activeConfigs = floatingToolbarHandlers
+      .map(handler => handler(newState, intl, providerFactory))
+      .filter(filterUndefined)
+      .map(config => sanitizeFloatingToolbarConfig(config))
+    const relevantConfig =
+      activeConfigs && getRelevantConfig(newState.selection, activeConfigs)
+    dispatch(pluginKey, relevantConfig)
+    return relevantConfig
+  }
 
-  const rafApply = rafSchedule(apply);
+  const rafApply = rafSchedule(apply)
   return new Plugin({
     key: pluginKey,
     state: {
       init: () => {
-        ToolbarLoader.preload();
+        ToolbarLoader.preload()
       },
       apply: rafApply
     },
     view: () => ({
       destroy: () => {
-        rafApply.cancel();
+        rafApply.cancel()
       }
     })
-  });
+  })
 }

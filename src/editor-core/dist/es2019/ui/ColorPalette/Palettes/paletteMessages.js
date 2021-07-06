@@ -1,4 +1,4 @@
-import { defineMessages } from 'react-intl';
+import { defineMessages } from 'react-intl'
 export default defineMessages({
   white: {
     id: 'fabric.theme.white',
@@ -110,4 +110,4 @@ export default defineMessages({
     defaultMessage: 'Dark purple',
     description: 'Name of a color'
   }
-});
+})

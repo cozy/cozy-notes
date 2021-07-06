@@ -1,16 +1,20 @@
-import { Plugin } from 'prosemirror-state';
-import { MobileScrollActionTypes } from './actions';
-import { setHeightDiff, setWindowHeight } from './commands';
-import { createPluginState, getPluginState, mobileScrollPluginKey } from './plugin-factory'; // 44 pixels squared is the minimum size for a tap target as per Apple's UX design guidelines
+import { Plugin } from 'prosemirror-state'
+import { MobileScrollActionTypes } from './actions'
+import { setHeightDiff, setWindowHeight } from './commands'
+import {
+  createPluginState,
+  getPluginState,
+  mobileScrollPluginKey
+} from './plugin-factory' // 44 pixels squared is the minimum size for a tap target as per Apple's UX design guidelines
 
-export const MIN_TAP_SIZE_PX = 44;
+export const MIN_TAP_SIZE_PX = 44
 
 const getInitialState = () => ({
   keyboardHeight: -1,
   heightDiff: -1,
   mobilePaddingTop: 0,
   windowHeight: window.innerHeight
-});
+})
 /**
  * Plugin to help fix behaviour of scrolling on mobile devices:
  *
@@ -23,9 +27,8 @@ const getInitialState = () => ({
  *
  */
 
-
 const createPlugin = dispatch => {
-  let rafId;
+  let rafId
   return new Plugin({
     state: createPluginState(dispatch, getInitialState),
     key: mobileScrollPluginKey,
@@ -37,116 +40,113 @@ const createPlugin = dispatch => {
         // document.scrollingElement not supported in IE11, but as this is a plugin for iOS
         // only, we don't care
         // eslint-disable-next-line compat/compat
-        const scrollElement = document.scrollingElement;
+        const scrollElement = document.scrollingElement
 
         if (!scrollElement) {
-          return false;
+          return false
         }
 
-        const {
-          keyboardHeight,
-          heightDiff
-        } = getPluginState(editorView.state);
-        const newHeightDiff = scrollElement.clientHeight - window.innerHeight;
+        const { keyboardHeight, heightDiff } = getPluginState(editorView.state)
+        const newHeightDiff = scrollElement.clientHeight - window.innerHeight
 
         if (heightDiff !== newHeightDiff) {
-          setHeightDiff(newHeightDiff)(editorView.state, editorView.dispatch);
-          updateScrollValues.call(this, keyboardHeight, newHeightDiff);
+          setHeightDiff(newHeightDiff)(editorView.state, editorView.dispatch)
+          updateScrollValues.call(this, keyboardHeight, newHeightDiff)
         }
 
-        return false;
+        return false
       }
-
     },
 
     appendTransaction(transactions, oldState, newState) {
       const scrollTr = transactions.find(tr => {
-        const mobileScrollAction = tr.getMeta(mobileScrollPluginKey);
-        return mobileScrollAction && (mobileScrollAction.type === MobileScrollActionTypes.SET_KEYBOARD_HEIGHT || mobileScrollAction.type === MobileScrollActionTypes.SET_WINDOW_HEIGHT);
-      });
+        const mobileScrollAction = tr.getMeta(mobileScrollPluginKey)
+        return (
+          mobileScrollAction &&
+          (mobileScrollAction.type ===
+            MobileScrollActionTypes.SET_KEYBOARD_HEIGHT ||
+            mobileScrollAction.type ===
+              MobileScrollActionTypes.SET_WINDOW_HEIGHT)
+        )
+      })
 
       if (scrollTr) {
-        const {
-          keyboardHeight,
-          windowHeight
-        } = getPluginState(oldState);
+        const { keyboardHeight, windowHeight } = getPluginState(oldState)
         const {
           keyboardHeight: newKeyboardHeight,
           heightDiff,
           windowHeight: newWindowHeight
-        } = getPluginState(newState);
+        } = getPluginState(newState)
 
         if (keyboardHeight !== newKeyboardHeight) {
-          updateScrollValues.call(this, newKeyboardHeight, heightDiff);
+          updateScrollValues.call(this, newKeyboardHeight, heightDiff)
         } // scroll selection into view if viewport is now smaller
 
-
         if (newWindowHeight < windowHeight) {
-          return newState.tr.scrollIntoView();
+          return newState.tr.scrollIntoView()
         }
       }
     },
 
     view(editorView) {
       const handleResize = () => {
-        let windowInnerHeight = window.innerHeight;
-        let count = 0;
+        let windowInnerHeight = window.innerHeight
+        let count = 0
 
         const checkWindowHeight = () => {
           // wait for height to stabilise before we commit to set it
           // this helps handle menu transitions in Android which we don't want to scroll for
           if (window.innerHeight === windowInnerHeight) {
-            count++;
+            count++
 
             if (count >= 5) {
-              rafId = undefined;
-              setWindowHeight(window.innerHeight)(editorView.state, editorView.dispatch);
+              rafId = undefined
+              setWindowHeight(window.innerHeight)(
+                editorView.state,
+                editorView.dispatch
+              )
             } else {
-              rafId = requestAnimationFrame(checkWindowHeight);
+              rafId = requestAnimationFrame(checkWindowHeight)
             }
-          }
-        };
-
-        rafId = requestAnimationFrame(checkWindowHeight);
-      }; // the window will resize on Android when the keyboard shows/hides
-
-
-      window.addEventListener('resize', handleResize);
-      return {
-        destroy() {
-          window.removeEventListener('resize', handleResize);
-
-          if (rafId) {
-            window.cancelAnimationFrame(rafId);
           }
         }
 
-      };
-    }
+        rafId = requestAnimationFrame(checkWindowHeight)
+      } // the window will resize on Android when the keyboard shows/hides
 
-  });
-};
+      window.addEventListener('resize', handleResize)
+      return {
+        destroy() {
+          window.removeEventListener('resize', handleResize)
+
+          if (rafId) {
+            window.cancelAnimationFrame(rafId)
+          }
+        }
+      }
+    }
+  })
+}
 /**
  * Update the scroll values on the plugin props
  * These are used by ProseMirror to determine when and how far it should scroll
  */
 
-
-const updateScrollValues = function (keyboardHeight, heightDiff) {
+const updateScrollValues = function(keyboardHeight, heightDiff) {
   if (keyboardHeight === -1 || heightDiff === -1) {
-    return;
+    return
   }
 
-  const {
-    scrollThreshold,
-    scrollMargin
-  } = calculateScrollValues(keyboardHeight, heightDiff);
+  const { scrollThreshold, scrollMargin } = calculateScrollValues(
+    keyboardHeight,
+    heightDiff
+  )
 
   if (this.props) {
-    this.props.scrollThreshold = scrollThreshold;
-    this.props.scrollMargin = scrollMargin;
+    this.props.scrollThreshold = scrollThreshold
+    this.props.scrollMargin = scrollMargin
   }
-};
+}
 
 const calculateScrollValues = (keyboardHeight, heightDiff) => ({
   scrollThreshold: {
@@ -161,20 +161,19 @@ const calculateScrollValues = (keyboardHeight, heightDiff) => ({
     left: 0,
     right: 0
   }
-});
+})
 
 const mobileScrollPlugin = () => ({
   name: 'mobileScroll',
 
   pmPlugins() {
-    return [{
-      name: 'mobileScroll',
-      plugin: ({
-        dispatch
-      }) => createPlugin(dispatch)
-    }];
+    return [
+      {
+        name: 'mobileScroll',
+        plugin: ({ dispatch }) => createPlugin(dispatch)
+      }
+    ]
   }
+})
 
-});
-
-export default mobileScrollPlugin;
+export default mobileScrollPlugin

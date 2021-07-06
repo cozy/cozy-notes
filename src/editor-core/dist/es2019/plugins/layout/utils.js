@@ -1,21 +1,23 @@
-import { Fragment, Slice } from 'prosemirror-model';
-import { flatmap, mapFragment } from '../../utils/slice';
+import { Fragment, Slice } from 'prosemirror-model'
+import { flatmap, mapFragment } from '../../utils/slice'
 
-const isLayoutNode = node => node.type === node.type.schema.nodes.layoutSection || node.type === node.type.schema.nodes.layoutColumn;
+const isLayoutNode = node =>
+  node.type === node.type.schema.nodes.layoutSection ||
+  node.type === node.type.schema.nodes.layoutColumn
 
 export function unwrapContentFromLayout(maybeLayoutSection) {
   const fragment = mapFragment(Fragment.from(maybeLayoutSection), node => {
-    return isLayoutNode(node) ? node.content : node;
-  });
-  const nodes = [];
-  fragment.forEach(i => nodes.push(i));
-  return nodes;
+    return isLayoutNode(node) ? node.content : node
+  })
+  const nodes = []
+  fragment.forEach(i => nodes.push(i))
+  return nodes
 }
 export function removeLayoutFromFirstChild(node, i) {
-  return i === 0 ? unwrapContentFromLayout(node) : node;
+  return i === 0 ? unwrapContentFromLayout(node) : node
 }
 export function removeLayoutFromLastChild(node, i, fragment) {
-  return i === fragment.childCount - 1 ? unwrapContentFromLayout(node) : node;
+  return i === fragment.childCount - 1 ? unwrapContentFromLayout(node) : node
 }
 /**
  * When we have a slice that cuts across a layoutSection/layoutColumn
@@ -31,24 +33,38 @@ export function removeLayoutFromLastChild(node, i, fragment) {
 export function transformSliceToRemoveOpenLayoutNodes(slice, schema) {
   // Case 1: A slice entirely within a single layoutSection
   if (slice.openStart && slice.openEnd && slice.content.childCount === 1) {
-    const maybeLayoutSection = slice.content.firstChild;
+    const maybeLayoutSection = slice.content.firstChild
 
     if (maybeLayoutSection.type === schema.nodes.layoutSection) {
-      return new Slice(flatmap(slice.content, removeLayoutFromFirstChild), // '-2' here because we've removed the layoutSection/layoutColumn; reducing the open depth.
-      slice.openStart - 2, slice.openEnd - 2);
+      return new Slice(
+        flatmap(slice.content, removeLayoutFromFirstChild), // '-2' here because we've removed the layoutSection/layoutColumn; reducing the open depth.
+        slice.openStart - 2,
+        slice.openEnd - 2
+      )
     }
   } // Case 2: A slice starting inside a layoutSection and finishing outside
 
-
-  if (slice.openStart && slice.content.firstChild.type === schema.nodes.layoutSection) {
-    slice = new Slice(flatmap(slice.content, removeLayoutFromFirstChild), slice.openStart - 2, slice.openEnd);
+  if (
+    slice.openStart &&
+    slice.content.firstChild.type === schema.nodes.layoutSection
+  ) {
+    slice = new Slice(
+      flatmap(slice.content, removeLayoutFromFirstChild),
+      slice.openStart - 2,
+      slice.openEnd
+    )
   } // Case 3: A slice starting outside a layoutSection and finishing inside
 
-
-  if (slice.openEnd && slice.content.lastChild.type === schema.nodes.layoutSection) {
-    slice = new Slice(flatmap(slice.content, removeLayoutFromLastChild), slice.openStart, slice.openEnd - 2);
+  if (
+    slice.openEnd &&
+    slice.content.lastChild.type === schema.nodes.layoutSection
+  ) {
+    slice = new Slice(
+      flatmap(slice.content, removeLayoutFromLastChild),
+      slice.openStart,
+      slice.openEnd - 2
+    )
   } // Case 2 & 3 also handles a slice starting in one layoutSection & finishing in a different layoutSection
 
-
-  return slice;
+  return slice
 }

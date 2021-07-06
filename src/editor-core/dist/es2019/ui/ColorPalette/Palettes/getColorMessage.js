@@ -1,5 +1,5 @@
 export default function getColorMessage(messages, color) {
-  let message = messages[color];
+  let message = messages[color]
 
   if (!message) {
     // eslint-disable-next-line no-console
@@ -7,8 +7,8 @@ export default function getColorMessage(messages, color) {
 You must add a message description to properly translate this color.
 Using current label as default message.
 This could have happen when someone changed the 'colorPalette' from 'adf-schema' without updating this file.
-`);
+`)
   }
 
-  return message;
+  return message
 }

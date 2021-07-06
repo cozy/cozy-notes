@@ -1,15 +1,12 @@
-import { Plugin, PluginKey } from 'prosemirror-state';
-import { pluginFactory } from '../../utils/plugin-state-factory';
-export const pluginKey = new PluginKey('editorDisabledPlugin');
+import { Plugin, PluginKey } from 'prosemirror-state'
+import { pluginFactory } from '../../utils/plugin-state-factory'
+export const pluginKey = new PluginKey('editorDisabledPlugin')
 
 function reducer(_pluginState, meta) {
-  return meta;
+  return meta
 }
 
-const {
-  createPluginState,
-  getPluginState
-} = pluginFactory(pluginKey, reducer);
+const { createPluginState, getPluginState } = pluginFactory(pluginKey, reducer)
 /*
 Stores the state of the editor enabled/disabled for panel and floating
 toolbar to subscribe to through <WithPluginState>. Otherwise the NodeViews
@@ -28,25 +25,24 @@ export function createPlugin(dispatch) {
           if (getPluginState(view.state).editorDisabled !== !view.editable) {
             const tr = view.state.tr.setMeta(pluginKey, {
               editorDisabled: !view.editable
-            });
-            tr.setMeta('isLocal', true);
-            view.dispatch(tr);
+            })
+            tr.setMeta('isLocal', true)
+            view.dispatch(tr)
           }
         }
-
-      };
+      }
     }
-  });
+  })
 }
 
 const editorDisabledPlugin = () => ({
   name: 'editorDisabled',
-  pmPlugins: () => [{
-    name: 'editorDisabled',
-    plugin: ({
-      dispatch
-    }) => createPlugin(dispatch)
-  }]
-});
+  pmPlugins: () => [
+    {
+      name: 'editorDisabled',
+      plugin: ({ dispatch }) => createPlugin(dispatch)
+    }
+  ]
+})
 
-export default editorDisabledPlugin;
+export default editorDisabledPlugin

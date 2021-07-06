@@ -1,4 +1,4 @@
-import { HistoryActionTypes } from './actions';
+import { HistoryActionTypes } from './actions'
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -6,10 +6,10 @@ const reducer = (state, action) => {
       return {
         canUndo: action.canUndo,
         canRedo: action.canRedo
-      };
+      }
   }
 
-  return state;
-};
+  return state
+}
 
-export default reducer;
+export default reducer

@@ -1,4 +1,4 @@
-import { createPlugin } from './pm-plugins/main';
+import { createPlugin } from './pm-plugins/main'
 
 const pastePlugin = ({
   cardOptions,
@@ -8,15 +8,20 @@ const pastePlugin = ({
   name: 'paste',
 
   pmPlugins() {
-    return [{
-      name: 'paste',
-      plugin: ({
-        schema,
-        providerFactory
-      }) => createPlugin(schema, cardOptions, sanitizePrivateContent, predictableLists, providerFactory)
-    }];
+    return [
+      {
+        name: 'paste',
+        plugin: ({ schema, providerFactory }) =>
+          createPlugin(
+            schema,
+            cardOptions,
+            sanitizePrivateContent,
+            predictableLists,
+            providerFactory
+          )
+      }
+    ]
   }
+})
 
-});
-
-export default pastePlugin;
+export default pastePlugin

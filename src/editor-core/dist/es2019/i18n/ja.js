@@ -11,15 +11,18 @@ export default {
   'fabric.editor.addAltText': '代替テキスト',
   'fabric.editor.alignment': '配置',
   'fabric.editor.altText': '代替テキスト',
-  'fabric.editor.alttext.validation': '代替テキスト内の特殊文字を削除してください。',
+  'fabric.editor.alttext.validation':
+    '代替テキスト内の特殊文字を削除してください。',
   'fabric.editor.annotate': '注釈',
   'fabric.editor.annotationToolbar': '注釈ツールバー',
   'fabric.editor.backLink': '戻る',
-  'fabric.editor.blockCardUnavailable': 'インラインリンクは {node} 内にあるためビューを変更できません',
+  'fabric.editor.blockCardUnavailable':
+    'インラインリンクは {node} 内にあるためビューを変更できません',
   'fabric.editor.blockquote': '引用',
   'fabric.editor.blockquote.description': '引用文を挿入',
   'fabric.editor.bold': '太字',
-  'fabric.editor.canNotSortTable': "⚠️ You can't sort a table with merged cells",
+  'fabric.editor.canNotSortTable':
+    "⚠️ You can't sort a table with merged cells",
   'fabric.editor.cardFloatingControls': 'カードのオプション',
   'fabric.editor.cellBackground': 'セルの背景',
   'fabric.editor.cellOptions': 'セルのオプション',
@@ -37,13 +40,15 @@ export default {
   'fabric.editor.columns': 'レイアウト',
   'fabric.editor.columns.description': 'セクションを使用してページを構成',
   'fabric.editor.configPanel.cancel': 'キャンセル',
-  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio': '「isMultiple」と「style: radio」を組み合わせることはできません',
+  'fabric.editor.configPanel.fieldTypeError.isMultipleAndRadio':
+    '「isMultiple」と「style: radio」を組み合わせることはできません',
   'fabric.editor.configPanel.formType.addField': 'フィールドを追加',
   'fabric.editor.configPanel.formType.removeField': 'フィールドを削除',
   'fabric.editor.configPanel.required': '必須フィールド',
   'fabric.editor.configPanel.submit': '送信',
   'fabric.editor.createComment': 'コメントの作成',
-  'fabric.editor.createCommentInvalid': 'コメントはテキストと見出しにのみ有効です',
+  'fabric.editor.createCommentInvalid':
+    'コメントはテキストと見出しにのみ有効です',
   'fabric.editor.date': '日付',
   'fabric.editor.date.description': 'カレンダーを使用して日付を追加',
   'fabric.editor.decision': '決定事項',
@@ -58,14 +63,17 @@ export default {
   'fabric.editor.editAltText': '代替テキストを編集',
   'fabric.editor.editorHelp': 'エディター ヘルプ',
   'fabric.editor.emoji': '絵文字',
-  'fabric.editor.emoji.description': '絵文字を使用してアイデア 🎉 や気持ち 😄 を表現',
+  'fabric.editor.emoji.description':
+    '絵文字を使用してアイデア 🎉 や気持ち 😄 を表現',
   'fabric.editor.error': 'エラー',
   'fabric.editor.errorPanel': 'エラー パネル',
-  'fabric.editor.errorPanel.description': '色付きのパネルでエラーをコールアウト',
+  'fabric.editor.errorPanel.description':
+    '色付きのパネルでエラーをコールアウト',
   'fabric.editor.expand': '展開',
   'fabric.editor.expand.description': '展開を挿入',
   'fabric.editor.feedbackDialog': 'フィードバックを送信',
-  'fabric.editor.feedbackDialog.description': '新しいエディターに関するご意見・ご感想をお聞かせください',
+  'fabric.editor.feedbackDialog.description':
+    '新しいエディターに関するご意見・ご感想をお聞かせください',
   'fabric.editor.filesAndImages': 'ファイルおよび画像',
   'fabric.editor.filesAndImages.description': 'ページに画像やファイルを追加',
   'fabric.editor.find': '検索',
@@ -79,7 +87,8 @@ export default {
   'fabric.editor.heading2': '見出し 2',
   'fabric.editor.heading2Description': 'キー セクションに使用',
   'fabric.editor.heading3': '見出し 3',
-  'fabric.editor.heading3Description': 'サブセクションおよびグループ見出しに使用',
+  'fabric.editor.heading3Description':
+    'サブセクションおよびグループ見出しに使用',
   'fabric.editor.heading4': '見出し 4',
   'fabric.editor.heading4Description': '階層見出しに使用',
   'fabric.editor.heading5': '見出し 5',
@@ -87,8 +96,10 @@ export default {
   'fabric.editor.heading6': '見出し 6',
   'fabric.editor.heading6Description': '下位レベルの見出しに使用',
   'fabric.editor.help': 'ヘルプ',
-  'fabric.editor.help.description': 'キーボード ショートカットと Markdown のオプションをすべて表示',
-  'fabric.editor.helpDialogTips': '{keyMap} を押すと、このダイアログをいつでもすぐに開けます',
+  'fabric.editor.help.description':
+    'キーボード ショートカットと Markdown のオプションをすべて表示',
+  'fabric.editor.helpDialogTips':
+    '{keyMap} を押すと、このダイアログをいつでもすぐに開けます',
   'fabric.editor.horizontalRule': '分割線',
   'fabric.editor.horizontalRule.description': '横線を使用してコンテンツを分割',
   'fabric.editor.image': '画像',
@@ -106,7 +117,8 @@ export default {
   'fabric.editor.lists': 'リスト',
   'fabric.editor.markdown': 'Markdown',
   'fabric.editor.mention': 'メンション',
-  'fabric.editor.mention.description': 'ユーザーをメンションして通知を送信します',
+  'fabric.editor.mention.description':
+    'ユーザーをメンションして通知を送信します',
   'fabric.editor.mergeCells': 'セルをマージ',
   'fabric.editor.moreFormatting': 'その他のフォーマット',
   'fabric.editor.noResultsFound': '結果が見つかりません',
@@ -144,17 +156,20 @@ export default {
   'fabric.editor.successPanel': '成功パネル',
   'fabric.editor.successPanel.description': '色付きのパネルでヒントを追加',
   'fabric.editor.superscript': '上付き文字',
-  'fabric.editor.supportAltText': '代替テキストは視覚障がいがあるためスクリーン リーダーを使用している人に便利な機能です。',
+  'fabric.editor.supportAltText':
+    '代替テキストは視覚障がいがあるためスクリーン リーダーを使用している人に便利な機能です。',
   'fabric.editor.table': '表',
   'fabric.editor.table.description': '表を挿入',
   'fabric.editor.tableOptions': '表のオプション',
-  'fabric.editor.taskPlaceholder': 'アクションを入力し、「@」を使用して担当者を割り当てます。',
+  'fabric.editor.taskPlaceholder':
+    'アクションを入力し、「@」を使用して担当者を割り当てます。',
   'fabric.editor.textColor': 'テキストの色',
   'fabric.editor.textColor.lessColors': '色を減らす',
   'fabric.editor.textColor.moreColors': '色を増やす',
   'fabric.editor.textStyles': 'テキスト スタイル',
   'fabric.editor.threeColumns': '3 列',
-  'fabric.editor.threeColumnsWithSidebars': 'サイドバーを使用した 3 列レイアウト',
+  'fabric.editor.threeColumnsWithSidebars':
+    'サイドバーを使用した 3 列レイアウト',
   'fabric.editor.twoColumns': '2 列',
   'fabric.editor.underline': '下線',
   'fabric.editor.undo': '元に戻す',
@@ -163,7 +178,8 @@ export default {
   'fabric.editor.viewMore': 'さらに表示',
   'fabric.editor.warning': '警告',
   'fabric.editor.warningPanel': '警告パネル',
-  'fabric.editor.warningPanel.description': '色付きのパネルで注意を促すメモを追加',
+  'fabric.editor.warningPanel.description':
+    '色付きのパネルで注意を促すメモを追加',
   'fabric.editor.wrapLeft': '左揃え',
   'fabric.editor.wrapRight': '右揃え',
   'fabric.theme.blue': 'Blue',
@@ -188,4 +204,4 @@ export default {
   'fabric.theme.teal': 'Teal',
   'fabric.theme.white': 'White',
   'fabric.theme.yellow': 'Yellow'
-};
+}

@@ -1,9 +1,11 @@
 export function isDroppedFile(rawEvent) {
-  const e = rawEvent;
+  const e = rawEvent
 
   if (!e.dataTransfer) {
-    return false;
+    return false
   }
 
-  return Array.prototype.slice.call(e.dataTransfer.types).indexOf('Files') !== -1;
+  return (
+    Array.prototype.slice.call(e.dataTransfer.types).indexOf('Files') !== -1
+  )
 }

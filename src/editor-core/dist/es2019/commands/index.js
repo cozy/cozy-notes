@@ -1,248 +1,264 @@
-import { Fragment } from 'prosemirror-model';
-import { NodeSelection, Selection, TextSelection } from 'prosemirror-state';
-import { CellSelection } from '@atlaskit/editor-tables/cell-selection';
-import { canMoveDown, canMoveUp } from '../utils';
-import { withAnalytics, EVENT_TYPE, ACTION, ACTION_SUBJECT, ACTION_SUBJECT_ID } from '../plugins/analytics';
+import { Fragment } from 'prosemirror-model'
+import { NodeSelection, Selection, TextSelection } from 'prosemirror-state'
+import { CellSelection } from '@atlaskit/editor-tables/cell-selection'
+import { canMoveDown, canMoveUp } from '../utils'
+import {
+  withAnalytics,
+  EVENT_TYPE,
+  ACTION,
+  ACTION_SUBJECT,
+  ACTION_SUBJECT_ID
+} from '../plugins/analytics'
 export function preventDefault() {
-  return function () {
-    return true;
-  };
+  return function() {
+    return true
+  }
 }
 export function insertNewLine() {
-  return function (state, dispatch) {
-    const {
-      $from
-    } = state.selection;
-    const parent = $from.parent;
-    const {
-      hardBreak
-    } = state.schema.nodes;
+  return function(state, dispatch) {
+    const { $from } = state.selection
+    const parent = $from.parent
+    const { hardBreak } = state.schema.nodes
 
     if (hardBreak) {
-      const hardBreakNode = hardBreak.createChecked();
+      const hardBreakNode = hardBreak.createChecked()
 
       if (parent && parent.type.validContent(Fragment.from(hardBreakNode))) {
         if (dispatch) {
-          dispatch(state.tr.replaceSelectionWith(hardBreakNode, false));
+          dispatch(state.tr.replaceSelectionWith(hardBreakNode, false))
         }
 
-        return true;
+        return true
       }
     }
 
     if (state.selection instanceof TextSelection) {
       if (dispatch) {
-        dispatch(state.tr.insertText('\n'));
+        dispatch(state.tr.insertText('\n'))
       }
 
-      return true;
+      return true
     }
 
-    return false;
-  };
+    return false
+  }
 }
 export const insertNewLineWithAnalytics = withAnalytics({
   action: ACTION.INSERTED,
   actionSubject: ACTION_SUBJECT.TEXT,
   actionSubjectId: ACTION_SUBJECT_ID.LINE_BREAK,
   eventType: EVENT_TYPE.TRACK
-})(insertNewLine());
+})(insertNewLine())
 export function insertRule() {
-  return function (state, dispatch) {
-    const {
-      to
-    } = state.selection;
-    const {
-      rule
-    } = state.schema.nodes;
+  return function(state, dispatch) {
+    const { to } = state.selection
+    const { rule } = state.schema.nodes
 
     if (rule) {
-      const ruleNode = rule.create();
+      const ruleNode = rule.create()
 
       if (dispatch) {
-        dispatch(state.tr.insert(to + 1, ruleNode));
+        dispatch(state.tr.insert(to + 1, ruleNode))
       }
 
-      return true;
+      return true
     }
 
-    return false;
-  };
+    return false
+  }
 }
 export const createNewParagraphAbove = (state, dispatch) => {
-  const append = false;
+  const append = false
 
   if (!canMoveUp(state) && canCreateParagraphNear(state)) {
-    createParagraphNear(append)(state, dispatch);
-    return true;
+    createParagraphNear(append)(state, dispatch)
+    return true
   }
 
-  return false;
-};
+  return false
+}
 export const createNewParagraphBelow = (state, dispatch) => {
-  const append = true;
+  const append = true
 
   if (!canMoveDown(state) && canCreateParagraphNear(state)) {
-    createParagraphNear(append)(state, dispatch);
-    return true;
+    createParagraphNear(append)(state, dispatch)
+    return true
   }
 
-  return false;
-};
+  return false
+}
 
 function canCreateParagraphNear(state) {
   const {
-    selection: {
-      $from
-    }
-  } = state;
-  const node = $from.node($from.depth);
-  const insideCodeBlock = !!node && node.type === state.schema.nodes.codeBlock;
-  const isNodeSelection = state.selection instanceof NodeSelection;
-  return $from.depth > 1 || isNodeSelection || insideCodeBlock;
+    selection: { $from }
+  } = state
+  const node = $from.node($from.depth)
+  const insideCodeBlock = !!node && node.type === state.schema.nodes.codeBlock
+  const isNodeSelection = state.selection instanceof NodeSelection
+  return $from.depth > 1 || isNodeSelection || insideCodeBlock
 }
 
 export function createParagraphNear(append = true) {
-  return function (state, dispatch) {
-    const paragraph = state.schema.nodes.paragraph;
+  return function(state, dispatch) {
+    const paragraph = state.schema.nodes.paragraph
 
     if (!paragraph) {
-      return false;
+      return false
     }
 
-    let insertPos;
+    let insertPos
 
     if (state.selection instanceof TextSelection) {
       if (topLevelNodeIsEmptyTextBlock(state)) {
-        return false;
+        return false
       }
 
-      insertPos = getInsertPosFromTextBlock(state, append);
+      insertPos = getInsertPosFromTextBlock(state, append)
     } else {
-      insertPos = getInsertPosFromNonTextBlock(state, append);
+      insertPos = getInsertPosFromNonTextBlock(state, append)
     }
 
-    const tr = state.tr.insert(insertPos, paragraph.createAndFill());
-    tr.setSelection(TextSelection.create(tr.doc, insertPos + 1));
+    const tr = state.tr.insert(insertPos, paragraph.createAndFill())
+    tr.setSelection(TextSelection.create(tr.doc, insertPos + 1))
 
     if (dispatch) {
-      dispatch(tr);
+      dispatch(tr)
     }
 
-    return true;
-  };
+    return true
+  }
 }
 
 function getInsertPosFromTextBlock(state, append) {
-  const {
-    $from,
-    $to
-  } = state.selection;
-  let pos;
+  const { $from, $to } = state.selection
+  let pos
 
   if (!append) {
-    pos = $from.start(0);
+    pos = $from.start(0)
   } else {
-    pos = $to.end(0);
+    pos = $to.end(0)
   }
 
-  return pos;
+  return pos
 }
 
 function getInsertPosFromNonTextBlock(state, append) {
-  const {
-    $from,
-    $to
-  } = state.selection;
-  const nodeAtSelection = state.selection instanceof NodeSelection && state.doc.nodeAt(state.selection.$anchor.pos);
-  const isMediaSelection = nodeAtSelection && nodeAtSelection.type.name === 'mediaGroup';
-  let pos;
+  const { $from, $to } = state.selection
+  const nodeAtSelection =
+    state.selection instanceof NodeSelection &&
+    state.doc.nodeAt(state.selection.$anchor.pos)
+  const isMediaSelection =
+    nodeAtSelection && nodeAtSelection.type.name === 'mediaGroup'
+  let pos
 
   if (!append) {
     // The start position is different with text block because it starts from 0
-    pos = $from.start($from.depth); // The depth is different with text block because it starts from 0
+    pos = $from.start($from.depth) // The depth is different with text block because it starts from 0
 
-    pos = $from.depth > 0 && !isMediaSelection ? pos - 1 : pos;
+    pos = $from.depth > 0 && !isMediaSelection ? pos - 1 : pos
   } else {
-    pos = $to.end($to.depth);
-    pos = $to.depth > 0 && !isMediaSelection ? pos + 1 : pos;
+    pos = $to.end($to.depth)
+    pos = $to.depth > 0 && !isMediaSelection ? pos + 1 : pos
   }
 
-  return pos;
+  return pos
 }
 
 function topLevelNodeIsEmptyTextBlock(state) {
-  const topLevelNode = state.selection.$from.node(1);
-  return topLevelNode.isTextblock && topLevelNode.type !== state.schema.nodes.codeBlock && topLevelNode.nodeSize === 2;
+  const topLevelNode = state.selection.$from.node(1)
+  return (
+    topLevelNode.isTextblock &&
+    topLevelNode.type !== state.schema.nodes.codeBlock &&
+    topLevelNode.nodeSize === 2
+  )
 }
 
 export function createParagraphAtEnd() {
-  return function (state, dispatch) {
+  return function(state, dispatch) {
     const {
       doc,
       tr,
-      schema: {
-        nodes
-      }
-    } = state;
+      schema: { nodes }
+    } = state
 
-    if (doc.lastChild && !(doc.lastChild.type === nodes.paragraph && doc.lastChild.content.size === 0)) {
-      tr.insert(doc.content.size, nodes.paragraph.createAndFill());
+    if (
+      doc.lastChild &&
+      !(
+        doc.lastChild.type === nodes.paragraph &&
+        doc.lastChild.content.size === 0
+      )
+    ) {
+      tr.insert(doc.content.size, nodes.paragraph.createAndFill())
     }
 
-    tr.setSelection(TextSelection.create(tr.doc, tr.doc.content.size - 1));
-    tr.scrollIntoView();
+    tr.setSelection(TextSelection.create(tr.doc, tr.doc.content.size - 1))
+    tr.scrollIntoView()
 
     if (dispatch) {
-      dispatch(tr);
+      dispatch(tr)
     }
 
-    return true;
-  };
+    return true
+  }
 }
 export const changeImageAlignment = align => (state, dispatch) => {
-  const {
-    from,
-    to
-  } = state.selection;
-  const tr = state.tr;
+  const { from, to } = state.selection
+  const tr = state.tr
   state.doc.nodesBetween(from, to, (node, pos) => {
     if (node.type === state.schema.nodes.mediaSingle) {
-      tr.setNodeMarkup(pos, undefined, { ...node.attrs,
+      tr.setNodeMarkup(pos, undefined, {
+        ...node.attrs,
         layout: align === 'center' ? 'center' : `align-${align}`
-      });
+      })
     }
-  });
+  })
 
   if (tr.docChanged && dispatch) {
-    dispatch(tr.scrollIntoView());
-    return true;
+    dispatch(tr.scrollIntoView())
+    return true
   }
 
-  return false;
-};
-export const createToggleBlockMarkOnRange = (markType, getAttrs, allowedBlocks) => (from, to, tr, state) => {
-  let markApplied = false;
+  return false
+}
+export const createToggleBlockMarkOnRange = (
+  markType,
+  getAttrs,
+  allowedBlocks
+) => (from, to, tr, state) => {
+  let markApplied = false
   state.doc.nodesBetween(from, to, (node, pos, parent) => {
     if (!node.type.isBlock) {
-      return false;
+      return false
     }
 
-    if ((!allowedBlocks || (Array.isArray(allowedBlocks) ? allowedBlocks.indexOf(node.type) > -1 : allowedBlocks(state.schema, node, parent))) && parent.type.allowsMarkType(markType)) {
-      const oldMarks = node.marks.filter(mark => mark.type === markType);
-      const prevAttrs = oldMarks.length ? oldMarks[0].attrs : undefined;
-      const newAttrs = getAttrs(prevAttrs, node);
+    if (
+      (!allowedBlocks ||
+        (Array.isArray(allowedBlocks)
+          ? allowedBlocks.indexOf(node.type) > -1
+          : allowedBlocks(state.schema, node, parent))) &&
+      parent.type.allowsMarkType(markType)
+    ) {
+      const oldMarks = node.marks.filter(mark => mark.type === markType)
+      const prevAttrs = oldMarks.length ? oldMarks[0].attrs : undefined
+      const newAttrs = getAttrs(prevAttrs, node)
 
       if (newAttrs !== undefined) {
-        tr.setNodeMarkup(pos, node.type, node.attrs, node.marks.filter(mark => !markType.excludes(mark.type)).concat(newAttrs === false ? [] : markType.create(newAttrs)));
-        markApplied = true;
+        tr.setNodeMarkup(
+          pos,
+          node.type,
+          node.attrs,
+          node.marks
+            .filter(mark => !markType.excludes(mark.type))
+            .concat(newAttrs === false ? [] : markType.create(newAttrs))
+        )
+        markApplied = true
       }
     }
 
-    return;
-  });
-  return markApplied;
-};
+    return
+  })
+  return markApplied
+}
 /**
  * Toggles block mark based on the return type of `getAttrs`.
  * This is similar to ProseMirror's `getAttrs` from `AttributeSpec`
@@ -251,42 +267,46 @@ export const createToggleBlockMarkOnRange = (markType, getAttrs, allowedBlocks) 
  * return an `object` to update the mark.
  */
 
-export const toggleBlockMark = (markType, getAttrs, allowedBlocks) => (state, dispatch) => {
-  let markApplied = false;
-  const tr = state.tr;
-  const toggleBlockMarkOnRange = createToggleBlockMarkOnRange(markType, getAttrs, allowedBlocks);
+export const toggleBlockMark = (markType, getAttrs, allowedBlocks) => (
+  state,
+  dispatch
+) => {
+  let markApplied = false
+  const tr = state.tr
+  const toggleBlockMarkOnRange = createToggleBlockMarkOnRange(
+    markType,
+    getAttrs,
+    allowedBlocks
+  )
 
   if (state.selection instanceof CellSelection) {
     state.selection.forEachCell((cell, pos) => {
-      markApplied = toggleBlockMarkOnRange(pos, pos + cell.nodeSize, tr, state);
-    });
+      markApplied = toggleBlockMarkOnRange(pos, pos + cell.nodeSize, tr, state)
+    })
   } else {
-    const {
-      from,
-      to
-    } = state.selection;
-    markApplied = toggleBlockMarkOnRange(from, to, tr, state);
+    const { from, to } = state.selection
+    markApplied = toggleBlockMarkOnRange(from, to, tr, state)
   }
 
   if (markApplied && tr.docChanged) {
     if (dispatch) {
-      dispatch(tr.scrollIntoView());
+      dispatch(tr.scrollIntoView())
     }
 
-    return true;
+    return true
   }
 
-  return false;
-};
+  return false
+}
 export const clearEditorContent = (state, dispatch) => {
-  const tr = state.tr;
-  tr.replace(0, state.doc.nodeSize - 2);
-  tr.setSelection(Selection.atStart(tr.doc));
+  const tr = state.tr
+  tr.replace(0, state.doc.nodeSize - 2)
+  tr.setSelection(Selection.atStart(tr.doc))
 
   if (dispatch) {
-    dispatch(tr);
-    return true;
+    dispatch(tr)
+    return true
   }
 
-  return false;
-};
+  return false
+}

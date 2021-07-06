@@ -1,131 +1,135 @@
-import React from 'react';
-import { findDomRefAtPos } from 'prosemirror-utils';
-import { status } from '@atlaskit/adf-schema';
-import WithPluginState from '../../ui/WithPluginState';
-import { ACTION, ACTION_SUBJECT, ACTION_SUBJECT_ID, addAnalytics, EVENT_TYPE, INPUT_METHOD } from '../analytics';
-import { messages } from '../insert-block/ui/ToolbarInsertBlock/messages';
-import { IconStatus } from '../quick-insert/assets';
-import { commitStatusPicker, createStatus, updateStatus } from './actions';
-import { keymapPlugin } from './keymap';
-import createStatusPlugin from './plugin';
-import { pluginKey } from './plugin-key';
-import StatusPicker from './ui/statusPicker';
+import React from 'react'
+import { findDomRefAtPos } from 'prosemirror-utils'
+import { status } from '@atlaskit/adf-schema'
+import WithPluginState from '../../ui/WithPluginState'
+import {
+  ACTION,
+  ACTION_SUBJECT,
+  ACTION_SUBJECT_ID,
+  addAnalytics,
+  EVENT_TYPE,
+  INPUT_METHOD
+} from '../analytics'
+import { messages } from '../insert-block/ui/ToolbarInsertBlock/messages'
+import { IconStatus } from '../quick-insert/assets'
+import { commitStatusPicker, createStatus, updateStatus } from './actions'
+import { keymapPlugin } from './keymap'
+import createStatusPlugin from './plugin'
+import { pluginKey } from './plugin-key'
+import StatusPicker from './ui/statusPicker'
 
 const baseStatusPlugin = options => ({
   name: 'status',
 
   nodes() {
-    return [{
-      name: 'status',
-      node: status
-    }];
+    return [
+      {
+        name: 'status',
+        node: status
+      }
+    ]
   },
 
   pmPlugins() {
-    return [{
-      name: 'status',
-      plugin: ({
-        dispatch,
-        portalProviderAPI,
-        eventDispatcher
-      }) => createStatusPlugin(dispatch, portalProviderAPI, eventDispatcher, options)
-    }, {
-      name: 'statusKeymap',
-      plugin: keymapPlugin
-    }];
+    return [
+      {
+        name: 'status',
+        plugin: ({ dispatch, portalProviderAPI, eventDispatcher }) =>
+          createStatusPlugin(
+            dispatch,
+            portalProviderAPI,
+            eventDispatcher,
+            options
+          )
+      },
+      {
+        name: 'statusKeymap',
+        plugin: keymapPlugin
+      }
+    ]
   },
 
-  contentComponent({
-    editorView
-  }) {
-    const domAtPos = editorView.domAtPos.bind(editorView);
-    return /*#__PURE__*/React.createElement(WithPluginState, {
+  contentComponent({ editorView }) {
+    const domAtPos = editorView.domAtPos.bind(editorView)
+    return /*#__PURE__*/ React.createElement(WithPluginState, {
       plugins: {
         statusState: pluginKey
       },
-      render: ({
-        statusState = {}
-      }) => {
-        const {
-          showStatusPickerAt
-        } = statusState;
+      render: ({ statusState = {} }) => {
+        const { showStatusPickerAt } = statusState
 
         if (typeof showStatusPickerAt !== 'number') {
-          return null;
+          return null
         }
 
-        const target = findDomRefAtPos(showStatusPickerAt, domAtPos);
-        const statusNode = editorView.state.doc.nodeAt(showStatusPickerAt);
+        const target = findDomRefAtPos(showStatusPickerAt, domAtPos)
+        const statusNode = editorView.state.doc.nodeAt(showStatusPickerAt)
 
         if (!statusNode || statusNode.type.name !== 'status') {
-          return null;
+          return null
         }
 
-        const {
-          text,
-          color,
-          localId
-        } = statusNode.attrs;
-        return /*#__PURE__*/React.createElement(StatusPicker, {
+        const { text, color, localId } = statusNode.attrs
+        return /*#__PURE__*/ React.createElement(StatusPicker, {
           isNew: statusState.isNew,
           target: target,
           defaultText: text,
           defaultColor: color,
           defaultLocalId: localId,
           onSelect: status => {
-            updateStatus(status)(editorView.state, editorView.dispatch);
+            updateStatus(status)(editorView.state, editorView.dispatch)
           },
           onTextChanged: status => {
-            updateStatus(status)(editorView.state, editorView.dispatch);
+            updateStatus(status)(editorView.state, editorView.dispatch)
           },
           closeStatusPicker: () => {
-            commitStatusPicker()(editorView);
+            commitStatusPicker()(editorView)
           },
           onEnter: () => {
-            commitStatusPicker()(editorView);
+            commitStatusPicker()(editorView)
           }
-        });
+        })
       }
-    });
+    })
   }
-
-});
+})
 
 const decorateWithPluginOptions = (plugin, options) => {
   if (options.menuDisabled === true) {
-    return plugin;
+    return plugin
   }
 
   plugin.pluginsOptions = {
-    quickInsert: ({
-      formatMessage
-    }) => [{
-      id: 'status',
-      title: formatMessage(messages.status),
-      description: formatMessage(messages.statusDescription),
-      priority: 700,
-      keywords: ['lozenge'],
-      icon: () => /*#__PURE__*/React.createElement(IconStatus, {
-        label: formatMessage(messages.status)
-      }),
+    quickInsert: ({ formatMessage }) => [
+      {
+        id: 'status',
+        title: formatMessage(messages.status),
+        description: formatMessage(messages.statusDescription),
+        priority: 700,
+        keywords: ['lozenge'],
+        icon: () =>
+          /*#__PURE__*/ React.createElement(IconStatus, {
+            label: formatMessage(messages.status)
+          }),
 
-      action(insert, state) {
-        return addAnalytics(state, createStatus()(insert, state), {
-          action: ACTION.INSERTED,
-          actionSubject: ACTION_SUBJECT.DOCUMENT,
-          actionSubjectId: ACTION_SUBJECT_ID.STATUS,
-          attributes: {
-            inputMethod: INPUT_METHOD.QUICK_INSERT
-          },
-          eventType: EVENT_TYPE.TRACK
-        });
+        action(insert, state) {
+          return addAnalytics(state, createStatus()(insert, state), {
+            action: ACTION.INSERTED,
+            actionSubject: ACTION_SUBJECT.DOCUMENT,
+            actionSubjectId: ACTION_SUBJECT_ID.STATUS,
+            attributes: {
+              inputMethod: INPUT_METHOD.QUICK_INSERT
+            },
+            eventType: EVENT_TYPE.TRACK
+          })
+        }
       }
+    ]
+  }
+  return plugin
+}
 
-    }]
-  };
-  return plugin;
-};
+const statusPlugin = options =>
+  decorateWithPluginOptions(baseStatusPlugin(options), options)
 
-const statusPlugin = options => decorateWithPluginOptions(baseStatusPlugin(options), options);
-
-export default statusPlugin;
+export default statusPlugin

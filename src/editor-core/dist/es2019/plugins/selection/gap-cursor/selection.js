@@ -1,15 +1,14 @@
-import _defineProperty from "@babel/runtime/helpers/defineProperty";
-import { Selection } from 'prosemirror-state';
-import { Slice } from 'prosemirror-model';
-import { isValidTargetNode } from './utils/is-valid-target-node';
-export let Side;
+import _defineProperty from '@babel/runtime/helpers/defineProperty'
+import { Selection } from 'prosemirror-state'
+import { Slice } from 'prosemirror-model'
+import { isValidTargetNode } from './utils/is-valid-target-node'
+export let Side
+;(function(Side) {
+  Side['LEFT'] = 'left'
+  Side['RIGHT'] = 'right'
+})(Side || (Side = {}))
 
-(function (Side) {
-  Side["LEFT"] = "left";
-  Side["RIGHT"] = "right";
-})(Side || (Side = {}));
-
-export const JSON_ID = 'gapcursor';
+export const JSON_ID = 'gapcursor'
 export class GapCursorSelection extends Selection {
   /**
    * Construct a GapCursorSelection
@@ -17,96 +16,103 @@ export class GapCursorSelection extends Selection {
    * @param {Side} side side where the gap cursor is drawn
    */
   constructor($pos, side = Side.LEFT) {
-    super($pos, $pos);
+    super($pos, $pos)
 
-    _defineProperty(this, "visible", false);
+    _defineProperty(this, 'visible', false)
 
-    this.side = side;
+    this.side = side
   }
 
   static valid($pos) {
-    const {
-      parent,
-      nodeBefore,
-      nodeAfter
-    } = $pos;
-    const targetNode = isValidTargetNode(nodeBefore) ? nodeBefore : isValidTargetNode(nodeAfter) ? nodeAfter : null;
+    const { parent, nodeBefore, nodeAfter } = $pos
+    const targetNode = isValidTargetNode(nodeBefore)
+      ? nodeBefore
+      : isValidTargetNode(nodeAfter)
+      ? nodeAfter
+      : null
 
     if (!targetNode || parent.isTextblock) {
-      return false;
+      return false
     }
 
-    const deflt = parent.contentMatchAt($pos.index()).defaultType;
-    return deflt && deflt.isTextblock;
+    const deflt = parent.contentMatchAt($pos.index()).defaultType
+    return deflt && deflt.isTextblock
   }
 
   static findFrom($pos, dir, mustMove = false) {
-    const side = dir === 1 ? Side.RIGHT : Side.LEFT;
+    const side = dir === 1 ? Side.RIGHT : Side.LEFT
 
     if (!mustMove && GapCursorSelection.valid($pos)) {
-      return new GapCursorSelection($pos, side);
+      return new GapCursorSelection($pos, side)
     }
 
-    let pos = $pos.pos; // TODO: Fix any, potential issue. ED-5048
+    let pos = $pos.pos // TODO: Fix any, potential issue. ED-5048
 
-    let next = null; // Scan up from this position
+    let next = null // Scan up from this position
 
-    for (let d = $pos.depth;; d--) {
-      const parent = $pos.node(d);
+    for (let d = $pos.depth; ; d--) {
+      const parent = $pos.node(d)
 
-      if (side === Side.RIGHT ? $pos.indexAfter(d) < parent.childCount : $pos.index(d) > 0) {
-        next = parent.maybeChild(side === Side.RIGHT ? $pos.indexAfter(d) : $pos.index(d) - 1);
-        break;
+      if (
+        side === Side.RIGHT
+          ? $pos.indexAfter(d) < parent.childCount
+          : $pos.index(d) > 0
+      ) {
+        next = parent.maybeChild(
+          side === Side.RIGHT ? $pos.indexAfter(d) : $pos.index(d) - 1
+        )
+        break
       } else if (d === 0) {
-        return null;
+        return null
       }
 
-      pos += dir;
-      const $cur = $pos.doc.resolve(pos);
+      pos += dir
+      const $cur = $pos.doc.resolve(pos)
 
       if (GapCursorSelection.valid($cur)) {
-        return new GapCursorSelection($cur, side);
+        return new GapCursorSelection($cur, side)
       }
     } // And then down into the next node
 
-
     for (;;) {
-      next = side === Side.RIGHT ? next.firstChild : next.lastChild;
+      next = side === Side.RIGHT ? next.firstChild : next.lastChild
 
       if (next === null) {
-        break;
+        break
       }
 
-      pos += dir;
-      const $cur = $pos.doc.resolve(pos);
+      pos += dir
+      const $cur = $pos.doc.resolve(pos)
 
       if (GapCursorSelection.valid($cur)) {
-        return new GapCursorSelection($cur, side);
+        return new GapCursorSelection($cur, side)
       }
     }
 
-    return null;
+    return null
   }
 
   static fromJSON(doc, json) {
-    return new GapCursorSelection(doc.resolve(json.pos), json.side);
+    return new GapCursorSelection(doc.resolve(json.pos), json.side)
   }
 
   map(doc, mapping) {
-    const $pos = doc.resolve(mapping.map(this.head));
-    return GapCursorSelection.valid($pos) ? new GapCursorSelection($pos, this.side) : Selection.near($pos);
+    const $pos = doc.resolve(mapping.map(this.head))
+    return GapCursorSelection.valid($pos)
+      ? new GapCursorSelection($pos, this.side)
+      : Selection.near($pos)
   }
 
   eq(other) {
-    return other instanceof GapCursorSelection && other.head === this.head;
+    return other instanceof GapCursorSelection && other.head === this.head
   }
 
   content() {
-    return Slice.empty;
+    return Slice.empty
   }
 
   getBookmark() {
-    return new GapBookmark(this.anchor);
+    return new GapBookmark(this.anchor)
   }
 
   toJSON() {
@@ -114,23 +120,23 @@ export class GapCursorSelection extends Selection {
       pos: this.head,
       type: JSON_ID,
       side: this.side
-    };
+    }
   }
-
 }
-Selection.jsonID(JSON_ID, GapCursorSelection);
+Selection.jsonID(JSON_ID, GapCursorSelection)
 export class GapBookmark {
   constructor(pos) {
-    this.pos = pos;
+    this.pos = pos
   }
 
   map(mapping) {
-    return new GapBookmark(mapping.map(this.pos));
+    return new GapBookmark(mapping.map(this.pos))
   }
 
   resolve(doc) {
-    const $pos = doc.resolve(this.pos);
-    return GapCursorSelection.valid($pos) ? new GapCursorSelection($pos) : Selection.near($pos);
+    const $pos = doc.resolve(this.pos)
+    return GapCursorSelection.valid($pos)
+      ? new GapCursorSelection($pos)
+      : Selection.near($pos)
   }
-
 }

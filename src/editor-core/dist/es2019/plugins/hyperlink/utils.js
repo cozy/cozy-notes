@@ -1,25 +1,28 @@
-import LinkifyIt from 'linkify-it';
-import { mapSlice } from '../../utils/slice';
-import { isSafeUrl } from '@atlaskit/adf-schema';
-export const LINK_REGEXP = /(https?|ftp):\/\/[^\s]+/;
-const linkify = LinkifyIt();
-linkify.add('sourcetree:', 'http:');
-const tlds = 'biz|com|edu|gov|net|org|pro|web|xxx|aero|asia|coop|info|museum|name|shop|рф'.split('|');
-const tlds2Char = 'a[cdefgilmnoqrtuwxz]|b[abdefghijmnorstvwyz]|c[acdfghiklmnoruvwxyz]|d[ejkmoz]|e[cegrstu]|f[ijkmor]|g[abdefghilmnpqrstuwy]|h[kmnrtu]|i[delmnoqrst]|j[emop]|k[eghimnprwyz]|l[abcikrstuvy]|m[acdeghklmnopqrtuvwxyz]|n[acefgilopruz]|om|p[aefghkmnrtw]|qa|r[eosuw]|s[abcdegijklmnrtuvxyz]|t[cdfghjklmnortvwz]|u[agksyz]|v[aceginu]|w[fs]|y[et]|z[amw]';
-tlds.push(tlds2Char);
-linkify.tlds(tlds, false);
+import LinkifyIt from 'linkify-it'
+import { mapSlice } from '../../utils/slice'
+import { isSafeUrl } from '@atlaskit/adf-schema'
+export const LINK_REGEXP = /(https?|ftp):\/\/[^\s]+/
+const linkify = LinkifyIt()
+linkify.add('sourcetree:', 'http:')
+const tlds = 'biz|com|edu|gov|net|org|pro|web|xxx|aero|asia|coop|info|museum|name|shop|рф'.split(
+  '|'
+)
+const tlds2Char =
+  'a[cdefgilmnoqrtuwxz]|b[abdefghijmnorstvwyz]|c[acdfghiklmnoruvwxyz]|d[ejkmoz]|e[cegrstu]|f[ijkmor]|g[abdefghilmnpqrstuwy]|h[kmnrtu]|i[delmnoqrst]|j[emop]|k[eghimnprwyz]|l[abcikrstuvy]|m[acdeghklmnopqrtuvwxyz]|n[acefgilopruz]|om|p[aefghkmnrtw]|qa|r[eosuw]|s[abcdegijklmnrtuvxyz]|t[cdfghjklmnortvwz]|u[agksyz]|v[aceginu]|w[fs]|y[et]|z[amw]'
+tlds.push(tlds2Char)
+linkify.tlds(tlds, false)
 export function getLinkMatch(str) {
   if (!str) {
-    return null;
+    return null
   }
 
-  let match = linkifyMatch(str);
+  let match = linkifyMatch(str)
 
   if (!match.length) {
-    match = linkify.match(str);
+    match = linkify.match(str)
   }
 
-  return match && match[0];
+  return match && match[0]
 }
 /**
  * Instance of class LinkMatcher are used in autoformatting in place of Regex.
@@ -30,21 +33,20 @@ export function getLinkMatch(str) {
 export class LinkMatcher {
   exec(str) {
     if (str.endsWith(' ')) {
-      const chunks = str.slice(0, str.length - 1).split(' ');
-      const lastChunk = chunks[chunks.length - 1];
-      const links = linkify.match(lastChunk);
+      const chunks = str.slice(0, str.length - 1).split(' ')
+      const lastChunk = chunks[chunks.length - 1]
+      const links = linkify.match(lastChunk)
 
       if (links && links.length > 0) {
-        const lastLink = links[links.length - 1];
-        lastLink.input = lastChunk;
-        lastLink.length = lastLink.lastIndex - lastLink.index + 1;
-        return [lastLink];
+        const lastLink = links[links.length - 1]
+        lastLink.input = lastChunk
+        lastLink.length = lastLink.lastIndex - lastLink.index + 1
+        return [lastLink]
       }
     }
 
-    return null;
+    return null
   }
-
 }
 /**
  * Adds protocol to url if needed.
@@ -52,67 +54,75 @@ export class LinkMatcher {
 
 export function normalizeUrl(url) {
   if (!url) {
-    return '';
+    return ''
   }
 
   if (isSafeUrl(url)) {
-    return url;
+    return url
   }
 
-  const match = getLinkMatch(url);
-  return match && match.url || '';
+  const match = getLinkMatch(url)
+  return (match && match.url) || ''
 }
 export function linkifyContent(schema) {
-  return slice => mapSlice(slice, (node, parent) => {
-    const isAllowedInParent = !parent || parent.type !== schema.nodes.codeBlock;
-    const link = node.type.schema.marks.link;
+  return slice =>
+    mapSlice(slice, (node, parent) => {
+      const isAllowedInParent =
+        !parent || parent.type !== schema.nodes.codeBlock
+      const link = node.type.schema.marks.link
 
-    if (isAllowedInParent && node.isText && !link.isInSet(node.marks)) {
-      const linkified = [];
-      const text = node.text;
-      const matches = findLinkMatches(text);
-      let pos = 0;
-      matches.forEach(match => {
-        if (match.start > 0) {
-          linkified.push(node.cut(pos, match.start));
+      if (isAllowedInParent && node.isText && !link.isInSet(node.marks)) {
+        const linkified = []
+        const text = node.text
+        const matches = findLinkMatches(text)
+        let pos = 0
+        matches.forEach(match => {
+          if (match.start > 0) {
+            linkified.push(node.cut(pos, match.start))
+          }
+
+          linkified.push(
+            node.cut(match.start, match.end).mark(
+              link
+                .create({
+                  href: normalizeUrl(match.href)
+                })
+                .addToSet(node.marks)
+            )
+          )
+          pos = match.end
+        })
+
+        if (pos < text.length) {
+          linkified.push(node.cut(pos))
         }
 
-        linkified.push(node.cut(match.start, match.end).mark(link.create({
-          href: normalizeUrl(match.href)
-        }).addToSet(node.marks)));
-        pos = match.end;
-      });
-
-      if (pos < text.length) {
-        linkified.push(node.cut(pos));
+        return linkified
       }
 
-      return linkified;
-    }
-
-    return node;
-  });
+      return node
+    })
 }
 export function getLinkDomain(url) {
   // Remove protocol and www., if either exists
-  const withoutProtocol = url.toLowerCase().replace(/^(.*):\/\//, '');
-  const withoutWWW = withoutProtocol.replace(/^(www\.)/, ''); // Remove port, fragment, path, query string
+  const withoutProtocol = url.toLowerCase().replace(/^(.*):\/\//, '')
+  const withoutWWW = withoutProtocol.replace(/^(www\.)/, '') // Remove port, fragment, path, query string
 
-  return withoutWWW.replace(/[:\/?#](.*)$/, '');
+  return withoutWWW.replace(/[:\/?#](.*)$/, '')
 }
 export function isFromCurrentDomain(url) {
   if (!window || !window.location) {
-    return false;
+    return false
   }
 
-  const currentDomain = window.location.hostname;
-  const linkDomain = getLinkDomain(url);
-  return currentDomain === linkDomain;
+  const currentDomain = window.location.hostname
+  const linkDomain = getLinkDomain(url)
+  return currentDomain === linkDomain
 }
 
 function findLinkMatches(text) {
-  const matches = [];
-  let linkMatches = text && linkify.match(text);
+  const matches = []
+  let linkMatches = text && linkify.match(text)
 
   if (linkMatches && linkMatches.length > 0) {
     linkMatches.forEach(match => {
@@ -121,30 +131,30 @@ function findLinkMatches(text) {
         end: match.lastIndex,
         title: match.raw,
         href: match.url
-      });
-    });
+      })
+    })
   }
 
-  return matches;
+  return matches
 }
 
 export const linkifyMatch = text => {
-  const matches = [];
+  const matches = []
 
   if (!LINK_REGEXP.test(text)) {
-    return matches;
+    return matches
   }
 
-  let startpos = 0;
-  let substr;
+  let startpos = 0
+  let substr
 
-  while (substr = text.substr(startpos)) {
-    const link = (substr.match(LINK_REGEXP) || [''])[0];
+  while ((substr = text.substr(startpos))) {
+    const link = (substr.match(LINK_REGEXP) || [''])[0]
 
     if (link) {
-      const index = substr.search(LINK_REGEXP);
-      const start = index >= 0 ? index + startpos : index;
-      const end = start + link.length;
+      const index = substr.search(LINK_REGEXP)
+      const start = index >= 0 ? index + startpos : index
+      const end = start + link.length
       matches.push({
         index: start,
         lastIndex: end,
@@ -152,12 +162,12 @@ export const linkifyMatch = text => {
         url: link,
         text: link,
         schema: ''
-      });
-      startpos += end;
+      })
+      startpos += end
     } else {
-      break;
+      break
     }
   }
 
-  return matches;
-};
+  return matches
+}

@@ -1,15 +1,15 @@
-import { TableMap } from '@atlaskit/editor-tables/table-map';
-import { findTable, getSelectionRect } from '@atlaskit/editor-tables/utils';
+import { TableMap } from '@atlaskit/editor-tables/table-map'
+import { findTable, getSelectionRect } from '@atlaskit/editor-tables/utils'
 export function getSelectedTableInfo(selection) {
-  let map;
-  let totalRowCount = 0;
-  let totalColumnCount = 0;
-  const table = findTable(selection);
+  let map
+  let totalRowCount = 0
+  let totalColumnCount = 0
+  const table = findTable(selection)
 
   if (table) {
-    map = TableMap.get(table.node);
-    totalRowCount = map.height;
-    totalColumnCount = map.width;
+    map = TableMap.get(table.node)
+    totalRowCount = map.height
+    totalColumnCount = map.width
   }
 
   return {
@@ -17,26 +17,23 @@ export function getSelectedTableInfo(selection) {
     map,
     totalRowCount,
     totalColumnCount
-  };
+  }
 }
 export function getSelectedCellInfo(selection) {
-  let horizontalCells = 1;
-  let verticalCells = 1;
-  let totalCells = 1;
-  const {
-    table,
-    map,
-    totalRowCount,
-    totalColumnCount
-  } = getSelectedTableInfo(selection);
+  let horizontalCells = 1
+  let verticalCells = 1
+  let totalCells = 1
+  const { table, map, totalRowCount, totalColumnCount } = getSelectedTableInfo(
+    selection
+  )
 
   if (table && map) {
-    const rect = getSelectionRect(selection);
+    const rect = getSelectionRect(selection)
 
     if (rect) {
-      totalCells = map.cellsInRect(rect).length;
-      horizontalCells = rect.right - rect.left;
-      verticalCells = rect.bottom - rect.top;
+      totalCells = map.cellsInRect(rect).length
+      horizontalCells = rect.right - rect.left
+      verticalCells = rect.bottom - rect.top
     }
   }
 
@@ -46,5 +43,5 @@ export function getSelectedCellInfo(selection) {
     horizontalCells,
     verticalCells,
     totalCells
-  };
+  }
 }

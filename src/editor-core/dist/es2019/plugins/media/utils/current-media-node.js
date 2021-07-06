@@ -1,20 +1,21 @@
-import { NodeSelection } from 'prosemirror-state';
+import { NodeSelection } from 'prosemirror-state'
 export const currentMediaNode = editorState => {
-  const {
-    doc,
-    selection,
-    schema
-  } = editorState;
+  const { doc, selection, schema } = editorState
 
-  if (!doc || !selection || !(selection instanceof NodeSelection) || selection.node.type !== schema.nodes.mediaSingle) {
-    return;
+  if (
+    !doc ||
+    !selection ||
+    !(selection instanceof NodeSelection) ||
+    selection.node.type !== schema.nodes.mediaSingle
+  ) {
+    return
   }
 
-  const node = doc.nodeAt(selection.$anchor.pos + 1);
+  const node = doc.nodeAt(selection.$anchor.pos + 1)
 
   if (!node || node.type !== schema.nodes.media) {
-    return;
+    return
   }
 
-  return node;
-};
+  return node
+}

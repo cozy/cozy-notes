@@ -1,5 +1,5 @@
-import { traverse } from '@atlaskit/adf-utils';
-import { isResolvingMentionProvider } from '@atlaskit/mention/resource';
+import { traverse } from '@atlaskit/adf-utils'
+import { isResolvingMentionProvider } from '@atlaskit/mention/resource'
 
 /**
  * Sanitises a document where some content should not be in the document (e.g. mention names).
@@ -8,25 +8,21 @@ import { isResolvingMentionProvider } from '@atlaskit/mention/resource';
  * a node view).
  */
 export function sanitizeNodeForPrivacy(json, providerFactory) {
-  const mentionNames = new Map();
-  let hasCacheableMentions = false;
+  const mentionNames = new Map()
+  let hasCacheableMentions = false
   const sanitizedJSON = traverse(json, {
     mention: node => {
       if (node.attrs && node.attrs.text) {
-        hasCacheableMentions = true; // Remove @ prefix
+        hasCacheableMentions = true // Remove @ prefix
 
-        const text = node.attrs.text;
-        const name = text.startsWith('@') ? text.slice(1) : text;
-        mentionNames.set(node.attrs.id, name);
+        const text = node.attrs.text
+        const name = text.startsWith('@') ? text.slice(1) : text
+        mentionNames.set(node.attrs.id, name)
       }
 
-      return { ...node,
-        attrs: { ...node.attrs,
-          text: ''
-        }
-      };
+      return { ...node, attrs: { ...node.attrs, text: '' } }
     }
-  });
+  })
 
   if (hasCacheableMentions && providerFactory) {
     const handler = (_name, providerPromise) => {
@@ -34,17 +30,17 @@ export function sanitizeNodeForPrivacy(json, providerFactory) {
         providerPromise.then(provider => {
           if (isResolvingMentionProvider(provider)) {
             mentionNames.forEach((name, id) => {
-              provider.cacheMentionName(id, name);
-            });
-            mentionNames.clear();
-            providerFactory.unsubscribe('mentionProvider', handler);
+              provider.cacheMentionName(id, name)
+            })
+            mentionNames.clear()
+            providerFactory.unsubscribe('mentionProvider', handler)
           }
-        });
+        })
       }
-    };
+    }
 
-    providerFactory.subscribe('mentionProvider', handler);
+    providerFactory.subscribe('mentionProvider', handler)
   }
 
-  return sanitizedJSON;
+  return sanitizedJSON
 }

@@ -1,6 +1,18 @@
-import { css } from 'styled-components';
-import { panelSharedStyles, PanelSharedCssClassName } from '@atlaskit/editor-common';
-import { SelectionStyle, getSelectionStyles, akEditorDeleteBackground, akEditorDeleteBackgroundWithOpacity, akEditorDeleteBorder, akEditorSelectedBorderSize, akEditorDeleteIconColor, akEditorSelectedNodeClassName } from '@atlaskit/editor-shared-styles';
+import { css } from 'styled-components'
+import {
+  panelSharedStyles,
+  PanelSharedCssClassName
+} from '@atlaskit/editor-common'
+import {
+  SelectionStyle,
+  getSelectionStyles,
+  akEditorDeleteBackground,
+  akEditorDeleteBackgroundWithOpacity,
+  akEditorDeleteBorder,
+  akEditorSelectedBorderSize,
+  akEditorDeleteIconColor,
+  akEditorSelectedNodeClassName
+} from '@atlaskit/editor-shared-styles'
 export const panelStyles = css`
   .ProseMirror {
     .${PanelSharedCssClassName.prefix} {
@@ -39,4 +51,4 @@ export const panelStyles = css`
   .${PanelSharedCssClassName.prefix}.${akEditorSelectedNodeClassName}:not(.danger) {
     ${getSelectionStyles([SelectionStyle.BoxShadow, SelectionStyle.Blanket])}
   }
-`;
+`

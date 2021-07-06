@@ -1,5 +1,5 @@
 // Common Translations will live here
-import { defineMessages } from 'react-intl';
+import { defineMessages } from 'react-intl'
 export const messages = defineMessages({
   unorderedList: {
     id: 'fabric.editor.unorderedList',
@@ -26,4 +26,4 @@ export const messages = defineMessages({
     defaultMessage: 'Lists',
     description: 'Menu shows ordered/bullet list and unordered/numbered lists'
   }
-});
+})

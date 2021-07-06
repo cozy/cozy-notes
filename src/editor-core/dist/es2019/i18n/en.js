@@ -10,7 +10,8 @@ export default {
   'fabric.editor.openLink': 'Open link in a new tab',
   'fabric.editor.unlink': 'Unlink',
   'fabric.editor.editLink': 'Edit link',
-  'fabric.editor.hyperlinkToolbarPlaceholder': 'Paste link or search recently viewed',
+  'fabric.editor.hyperlinkToolbarPlaceholder':
+    'Paste link or search recently viewed',
   'fabric.editor.linkPlaceholder': 'Paste link',
   'fabric.editor.linkAddress': 'Link address',
   'fabric.editor.layoutFixedWidth': 'Back to center',
@@ -31,7 +32,8 @@ export default {
   'fabric.editor.heading2': 'Heading 2',
   'fabric.editor.heading2Description': 'Use this for key sections',
   'fabric.editor.heading3': 'Heading 3',
-  'fabric.editor.heading3Description': 'Use this for sub sections and group headings',
+  'fabric.editor.heading3Description':
+    'Use this for sub sections and group headings',
   'fabric.editor.heading4': 'Heading 4',
   'fabric.editor.heading4Description': 'Use this for deep headings',
   'fabric.editor.heading5': 'Heading 5',
@@ -41,15 +43,18 @@ export default {
   'fabric.editor.blockquote': 'Quote',
   'fabric.editor.blockquote.description': 'Insert a quote or citation',
   'fabric.editor.codeblock': 'Code snippet',
-  'fabric.editor.codeblock.description': 'Display code with syntax highlighting',
+  'fabric.editor.codeblock.description':
+    'Display code with syntax highlighting',
   'fabric.editor.infoPanel': 'Info panel',
-  'fabric.editor.infoPanel.description': 'Highlight information in a colored panel',
+  'fabric.editor.infoPanel.description':
+    'Highlight information in a colored panel',
   'fabric.editor.notePanel': 'Note panel',
   'fabric.editor.notePanel.description': 'Add a note in a colored panel',
   'fabric.editor.successPanel': 'Success panel',
   'fabric.editor.successPanel.description': 'Add tips in a colored panel',
   'fabric.editor.warningPanel': 'Warning panel',
-  'fabric.editor.warningPanel.description': 'Add a note of caution in a colored panel',
+  'fabric.editor.warningPanel.description':
+    'Add a note of caution in a colored panel',
   'fabric.editor.errorPanel': 'Error panel',
   'fabric.editor.errorPanel.description': 'Call out errors in a colored panel',
   'fabric.editor.other': 'Others...',
@@ -60,7 +65,8 @@ export default {
   'fabric.editor.selectLanguage': 'Select language',
   'fabric.editor.edit': 'Edit',
   'fabric.editor.editorHelp': 'Editor help',
-  'fabric.editor.helpDialogTips': 'Press {keyMap} to quickly open this dialog at any time',
+  'fabric.editor.helpDialogTips':
+    'Press {keyMap} to quickly open this dialog at any time',
   'fabric.editor.keyboardShortcuts': 'Keyboard shortcuts',
   'fabric.editor.markdown': 'Markdown',
   'fabric.editor.undo': 'Undo',
@@ -77,20 +83,26 @@ export default {
   'fabric.editor.link': 'Link',
   'fabric.editor.link.description': 'Insert a link',
   'fabric.editor.filesAndImages': 'Files & images',
-  'fabric.editor.filesAndImages.description': 'Add images and other files to your page',
+  'fabric.editor.filesAndImages.description':
+    'Add images and other files to your page',
   'fabric.editor.image': 'Image',
   'fabric.editor.mention': 'Mention',
-  'fabric.editor.mention.description': 'Mention someone to send them a notification',
+  'fabric.editor.mention.description':
+    'Mention someone to send them a notification',
   'fabric.editor.emoji': 'Emoji',
-  'fabric.editor.emoji.description': 'Use emojis to express ideas 🎉 and emotions 😄',
+  'fabric.editor.emoji.description':
+    'Use emojis to express ideas 🎉 and emotions 😄',
   'fabric.editor.table': 'Table',
   'fabric.editor.table.description': 'Insert a table',
   'fabric.editor.decision': 'Decision',
-  'fabric.editor.decision.description': 'Capture decisions so they’re easy to track',
+  'fabric.editor.decision.description':
+    'Capture decisions so they’re easy to track',
   'fabric.editor.feedbackDialog': 'Give feedback',
-  'fabric.editor.feedbackDialog.description': 'Tell us about your experience using the new editor',
+  'fabric.editor.feedbackDialog.description':
+    'Tell us about your experience using the new editor',
   'fabric.editor.horizontalRule': 'Divider',
-  'fabric.editor.horizontalRule.description': 'Separate content with a horizontal line',
+  'fabric.editor.horizontalRule.description':
+    'Separate content with a horizontal line',
   'fabric.editor.date': 'Date',
   'fabric.editor.date.description': 'Add a date using a calendar',
   'fabric.editor.placeholderText': 'Placeholder text',
@@ -131,14 +143,17 @@ export default {
   'fabric.editor.clearCells': '{0, plural, one{Clear cell} other{Clear cells}}',
   'fabric.editor.sortColumnASC': 'Sort column A → Z',
   'fabric.editor.sortColumnDESC': 'Sort column Z → A',
-  'fabric.editor.canNotSortTable': "⚠️ You can't sort a table with merged cells",
+  'fabric.editor.canNotSortTable':
+    "⚠️ You can't sort a table with merged cells",
   'fabric.editor.insertColumn': 'Insert column',
-  'fabric.editor.removeColumns': '{0, plural, one{Remove column} other{Remove columns}}',
+  'fabric.editor.removeColumns':
+    '{0, plural, one{Remove column} other{Remove columns}}',
   'fabric.editor.insertRow': 'Insert row',
   'fabric.editor.removeRows': '{0, plural, one{Remove row} other{Remove rows}}',
   'fabric.editor.cellOptions': 'Cell options',
   'fabric.editor.decisionPlaceholder': 'Add a decision…',
-  'fabric.editor.taskPlaceholder': "Type your action, use '@' to assign to someone.",
+  'fabric.editor.taskPlaceholder':
+    "Type your action, use '@' to assign to someone.",
   'fabric.editor.textColor': 'Text color',
   'fabric.editor.underline': 'Underline',
   'fabric.editor.strike': 'Strikethrough',
@@ -172,4 +187,4 @@ export default {
   'fabric.theme.dark-yellow': 'Dark yellow',
   'fabric.theme.dark-red': 'Dark red',
   'fabric.theme.dark-purple': 'Dark purple'
-};
+}

@@ -1,48 +1,67 @@
-import { wrappedLayouts, shouldAddDefaultWrappedWidth, calcPxFromColumns } from '@atlaskit/editor-common';
-import { findParentNodeOfTypeClosestToPos } from 'prosemirror-utils';
-import { akEditorBreakoutPadding } from '@atlaskit/editor-shared-styles';
-export const nonWrappedLayouts = ['center', 'wide', 'full-width'];
-export const floatingLayouts = ['wrap-left', 'wrap-right'];
+import {
+  wrappedLayouts,
+  shouldAddDefaultWrappedWidth,
+  calcPxFromColumns
+} from '@atlaskit/editor-common'
+import { findParentNodeOfTypeClosestToPos } from 'prosemirror-utils'
+import { akEditorBreakoutPadding } from '@atlaskit/editor-shared-styles'
+export const nonWrappedLayouts = ['center', 'wide', 'full-width']
+export const floatingLayouts = ['wrap-left', 'wrap-right']
 export const isRichMediaInsideOfBlockNode = (view, pos) => {
   if (typeof pos !== 'number' || isNaN(pos) || !view) {
-    return false;
+    return false
   }
 
-  const $pos = view.state.doc.resolve(pos);
-  const {
+  const $pos = view.state.doc.resolve(pos)
+  const { expand, nestedExpand, layoutColumn } = view.state.schema.nodes
+  return !!findParentNodeOfTypeClosestToPos($pos, [
     expand,
     nestedExpand,
     layoutColumn
-  } = view.state.schema.nodes;
-  return !!findParentNodeOfTypeClosestToPos($pos, [expand, nestedExpand, layoutColumn]);
-};
-export const alignAttributes = (layout, oldAttrs, gridSize = 12, originalWidth, lineLength) => {
-  let width = oldAttrs.width;
-  const oldLayout = oldAttrs.layout;
-  const oldLayoutIsNonWrapped = nonWrappedLayouts.indexOf(oldLayout) > -1;
-  const newLayoutIsNonWrapped = nonWrappedLayouts.indexOf(layout) > -1;
-  const newLayoutIsWrapped = wrappedLayouts.indexOf(layout) > -1;
-  const oldLayoutIsWrapped = wrappedLayouts.indexOf(oldLayout) > -1;
+  ])
+}
+export const alignAttributes = (
+  layout,
+  oldAttrs,
+  gridSize = 12,
+  originalWidth,
+  lineLength
+) => {
+  let width = oldAttrs.width
+  const oldLayout = oldAttrs.layout
+  const oldLayoutIsNonWrapped = nonWrappedLayouts.indexOf(oldLayout) > -1
+  const newLayoutIsNonWrapped = nonWrappedLayouts.indexOf(layout) > -1
+  const newLayoutIsWrapped = wrappedLayouts.indexOf(layout) > -1
+  const oldLayoutIsWrapped = wrappedLayouts.indexOf(oldLayout) > -1
 
-  if (oldLayoutIsNonWrapped && shouldAddDefaultWrappedWidth(layout, originalWidth, lineLength)) {
+  if (
+    oldLayoutIsNonWrapped &&
+    shouldAddDefaultWrappedWidth(layout, originalWidth, lineLength)
+  ) {
     // 'full-width' or 'wide' or 'center' -> 'wrap-left' or 'wrap-right' or 'align-end' or 'align-start'
-    if (!width || width >= 100 || oldLayout !== 'center' // == 'full-width' or 'wide'
+    if (
+      !width ||
+      width >= 100 ||
+      oldLayout !== 'center' // == 'full-width' or 'wide'
     ) {
-        width = 50;
-      }
-  } else if (layout !== oldLayout && ['full-width', 'wide'].indexOf(oldLayout) > -1) {
+      width = 50
+    }
+  } else if (
+    layout !== oldLayout &&
+    ['full-width', 'wide'].indexOf(oldLayout) > -1
+  ) {
     // 'full-width' -> 'center' or 'wide'
     // 'wide' -> 'center' or 'full-width'
     // unset width
-    width = undefined;
+    width = undefined
   } else if (width) {
-    const cols = Math.round(width / 100 * gridSize);
-    let targetCols = cols;
+    const cols = Math.round((width / 100) * gridSize)
+    let targetCols = cols
 
     if (oldLayoutIsWrapped && newLayoutIsNonWrapped) {
       // wrap -> center needs to align to even grid
-      targetCols = Math.floor(targetCols / 2) * 2;
-      width = undefined;
+      targetCols = Math.floor(targetCols / 2) * 2
+      width = undefined
     } else if (oldLayoutIsNonWrapped && newLayoutIsWrapped) {
       // Can be here only if
       // 'full-width' or 'wide' or 'center' -> 'wrap-left' or 'wrap-right' or 'align-end' or 'align-start'
@@ -52,22 +71,19 @@ export const alignAttributes = (layout, oldAttrs, gridSize = 12, originalWidth, 
       // width defined!
       // cannot resize to full column width, and cannot resize to 1 column
       if (cols <= 1) {
-        targetCols = 2;
+        targetCols = 2
       } else if (cols >= gridSize) {
-        targetCols = 10;
+        targetCols = 10
       }
     }
 
     if (targetCols !== cols) {
-      width = targetCols / gridSize * 100;
+      width = (targetCols / gridSize) * 100
     }
   }
 
-  return { ...oldAttrs,
-    layout,
-    width
-  };
-};
+  return { ...oldAttrs, layout, width }
+}
 export function calculateSnapPoints({
   $pos,
   akEditorWideLayoutWidth,
@@ -82,36 +98,36 @@ export function calculateSnapPoints({
   offsetLeft,
   wrappedLayout
 }) {
-  const snapTargets = [];
+  const snapTargets = []
 
   for (let i = 0; i < gridWidth; i++) {
-    const pxFromColumns = calcPxFromColumns(i, lineLength, gridWidth);
-    snapTargets.push(insideLayout ? pxFromColumns : pxFromColumns - offsetLeft);
+    const pxFromColumns = calcPxFromColumns(i, lineLength, gridWidth)
+    snapTargets.push(insideLayout ? pxFromColumns : pxFromColumns - offsetLeft)
   } // full width
 
-
-  snapTargets.push(lineLength - offsetLeft);
-  const columns = wrappedLayout || insideInlineLike ? 1 : 2;
-  const minimumWidth = calcPxFromColumns(columns, lineLength, gridSize);
-  let snapPoints = snapTargets.filter(width => width >= minimumWidth);
+  snapTargets.push(lineLength - offsetLeft)
+  const columns = wrappedLayout || insideInlineLike ? 1 : 2
+  const minimumWidth = calcPxFromColumns(columns, lineLength, gridSize)
+  let snapPoints = snapTargets.filter(width => width >= minimumWidth)
 
   if (!$pos) {
-    return snapPoints;
+    return snapPoints
   }
 
-  snapPoints = isVideoFile ? snapPoints.filter(width => width > 320) : snapPoints;
-  const isTopLevel = $pos.parent.type.name === 'doc';
+  snapPoints = isVideoFile
+    ? snapPoints.filter(width => width > 320)
+    : snapPoints
+  const isTopLevel = $pos.parent.type.name === 'doc'
 
   if (isTopLevel && allowBreakoutSnapPoints) {
-    snapPoints.push(akEditorWideLayoutWidth);
-    const fullWidthPoint = containerWidth - akEditorBreakoutPadding;
+    snapPoints.push(akEditorWideLayoutWidth)
+    const fullWidthPoint = containerWidth - akEditorBreakoutPadding
 
     if (fullWidthPoint > akEditorWideLayoutWidth) {
-      snapPoints.push(fullWidthPoint);
+      snapPoints.push(fullWidthPoint)
     }
   } // EDM-1107: Ensure new snapPoints are sorted with existing points
 
-
-  snapPoints = snapPoints.sort((a, b) => a - b);
-  return snapPoints;
+  snapPoints = snapPoints.sort((a, b) => a - b)
+  return snapPoints
 }

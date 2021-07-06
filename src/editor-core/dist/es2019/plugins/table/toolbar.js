@@ -1,11 +1,16 @@
-import { defineMessages } from 'react-intl';
-import RemoveIcon from '@atlaskit/icon/glyph/editor/remove';
-import commonMessages from '../../messages';
-import { clearHoverSelection, hoverTable } from './commands';
-import { deleteTableWithAnalytics, toggleHeaderColumnWithAnalytics, toggleHeaderRowWithAnalytics, toggleNumberColumnWithAnalytics } from './commands-with-analytics';
-import { pluginKey } from './pm-plugins/plugin-factory';
-import { pluginKey as tableResizingPluginKey } from './pm-plugins/table-resizing';
-import { checkIfNumberColumnEnabled } from './utils';
+import { defineMessages } from 'react-intl'
+import RemoveIcon from '@atlaskit/icon/glyph/editor/remove'
+import commonMessages from '../../messages'
+import { clearHoverSelection, hoverTable } from './commands'
+import {
+  deleteTableWithAnalytics,
+  toggleHeaderColumnWithAnalytics,
+  toggleHeaderRowWithAnalytics,
+  toggleNumberColumnWithAnalytics
+} from './commands-with-analytics'
+import { pluginKey } from './pm-plugins/plugin-factory'
+import { pluginKey as tableResizingPluginKey } from './pm-plugins/table-resizing'
+import { checkIfNumberColumnEnabled } from './utils'
 export const messages = defineMessages({
   tableOptions: {
     id: 'fabric.editor.tableOptions',
@@ -27,74 +32,80 @@ export const messages = defineMessages({
     defaultMessage: 'Numbered column',
     description: 'Adds an auto-numbering column to your table'
   }
-});
-export const getToolbarMenuConfig = (config, state, {
-  formatMessage
-}) => {
-  const options = [{
-    title: formatMessage(messages.headerRow),
-    onClick: toggleHeaderRowWithAnalytics(),
-    selected: state.isHeaderRowEnabled,
-    hidden: !config.allowHeaderRow
-  }, {
-    title: formatMessage(messages.headerColumn),
-    onClick: toggleHeaderColumnWithAnalytics(),
-    selected: state.isHeaderColumnEnabled,
-    hidden: !config.allowHeaderColumn
-  }, {
-    title: formatMessage(messages.numberedColumn),
-    onClick: toggleNumberColumnWithAnalytics(),
-    selected: state.isNumberColumnEnabled,
-    hidden: !config.allowNumberColumn
-  }];
+})
+export const getToolbarMenuConfig = (config, state, { formatMessage }) => {
+  const options = [
+    {
+      title: formatMessage(messages.headerRow),
+      onClick: toggleHeaderRowWithAnalytics(),
+      selected: state.isHeaderRowEnabled,
+      hidden: !config.allowHeaderRow
+    },
+    {
+      title: formatMessage(messages.headerColumn),
+      onClick: toggleHeaderColumnWithAnalytics(),
+      selected: state.isHeaderColumnEnabled,
+      hidden: !config.allowHeaderColumn
+    },
+    {
+      title: formatMessage(messages.numberedColumn),
+      onClick: toggleNumberColumnWithAnalytics(),
+      selected: state.isNumberColumnEnabled,
+      hidden: !config.allowNumberColumn
+    }
+  ]
   return {
     type: 'dropdown',
     title: formatMessage(messages.tableOptions),
     hidden: options.every(option => option.hidden),
     options
-  };
-};
-export const getToolbarConfig = (state, {
-  formatMessage
-}) => {
-  const tableState = pluginKey.getState(state);
-  const resizeState = tableResizingPluginKey.getState(state);
+  }
+}
+export const getToolbarConfig = (state, { formatMessage }) => {
+  const tableState = pluginKey.getState(state)
+  const resizeState = tableResizingPluginKey.getState(state)
 
   if (tableState && tableState.tableRef && tableState.pluginConfig) {
-    const {
-      pluginConfig
-    } = tableState;
-    const menu = getToolbarMenuConfig({
-      allowHeaderRow: pluginConfig.allowHeaderRow,
-      allowHeaderColumn: pluginConfig.allowHeaderColumn,
-      allowNumberColumn: pluginConfig.allowNumberColumn
-    }, {
-      isHeaderColumnEnabled: tableState.isHeaderColumnEnabled,
-      isHeaderRowEnabled: tableState.isHeaderRowEnabled,
-      isNumberColumnEnabled: checkIfNumberColumnEnabled(state)
-    }, {
-      formatMessage
-    });
+    const { pluginConfig } = tableState
+    const menu = getToolbarMenuConfig(
+      {
+        allowHeaderRow: pluginConfig.allowHeaderRow,
+        allowHeaderColumn: pluginConfig.allowHeaderColumn,
+        allowNumberColumn: pluginConfig.allowNumberColumn
+      },
+      {
+        isHeaderColumnEnabled: tableState.isHeaderColumnEnabled,
+        isHeaderRowEnabled: tableState.isHeaderRowEnabled,
+        isNumberColumnEnabled: checkIfNumberColumnEnabled(state)
+      },
+      {
+        formatMessage
+      }
+    )
     return {
       title: 'Table floating controls',
       getDomRef: () => tableState.tableWrapperTarget,
       nodeType: state.schema.nodes.table,
       offset: [0, 3],
-      items: [menu, {
-        type: 'separator',
-        hidden: menu.hidden
-      }, {
-        type: 'button',
-        appearance: 'danger',
-        icon: RemoveIcon,
-        onClick: deleteTableWithAnalytics(),
-        disabled: !!resizeState && !!resizeState.dragging,
-        onMouseEnter: hoverTable(true),
-        onMouseLeave: clearHoverSelection(),
-        title: formatMessage(commonMessages.remove)
-      }]
-    };
+      items: [
+        menu,
+        {
+          type: 'separator',
+          hidden: menu.hidden
+        },
+        {
+          type: 'button',
+          appearance: 'danger',
+          icon: RemoveIcon,
+          onClick: deleteTableWithAnalytics(),
+          disabled: !!resizeState && !!resizeState.dragging,
+          onMouseEnter: hoverTable(true),
+          onMouseLeave: clearHoverSelection(),
+          title: formatMessage(commonMessages.remove)
+        }
+      ]
+    }
   }
 
-  return;
-};
+  return
+}

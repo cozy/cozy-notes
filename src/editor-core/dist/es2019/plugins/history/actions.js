@@ -1,5 +1,4 @@
-export let HistoryActionTypes;
-
-(function (HistoryActionTypes) {
-  HistoryActionTypes["UPDATE"] = "UPDATE";
-})(HistoryActionTypes || (HistoryActionTypes = {}));
+export let HistoryActionTypes
+;(function(HistoryActionTypes) {
+  HistoryActionTypes['UPDATE'] = 'UPDATE'
+})(HistoryActionTypes || (HistoryActionTypes = {}))

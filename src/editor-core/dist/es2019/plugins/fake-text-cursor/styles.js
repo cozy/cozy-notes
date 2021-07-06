@@ -1,5 +1,5 @@
-import { css } from 'styled-components';
-import { B75 } from '@atlaskit/theme/colors';
+import { css } from 'styled-components'
+import { B75 } from '@atlaskit/theme/colors'
 export const fakeCursorStyles = css`
   .ProseMirror {
     .ProseMirror-fake-text-cursor {
@@ -23,4 +23,4 @@ export const fakeCursorStyles = css`
       background-color: ${B75};
     }
   }
-`;
+`

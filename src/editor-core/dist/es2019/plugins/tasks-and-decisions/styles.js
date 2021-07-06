@@ -1,6 +1,13 @@
-import { css } from 'styled-components';
-import { TaskDecisionSharedCssClassName } from '@atlaskit/editor-common';
-import { SelectionStyle, getSelectionStyles, akEditorDeleteBackgroundWithOpacity, akEditorDeleteBorder, akEditorSelectedBorderSize, akEditorSelectedNodeClassName } from '@atlaskit/editor-shared-styles';
+import { css } from 'styled-components'
+import { TaskDecisionSharedCssClassName } from '@atlaskit/editor-common'
+import {
+  SelectionStyle,
+  getSelectionStyles,
+  akEditorDeleteBackgroundWithOpacity,
+  akEditorDeleteBorder,
+  akEditorSelectedBorderSize,
+  akEditorSelectedNodeClassName
+} from '@atlaskit/editor-shared-styles'
 export const taskDecisionStyles = css`
   [data-decision-wrapper] {
     cursor: pointer;
@@ -22,4 +29,4 @@ export const taskDecisionStyles = css`
       }
     }
   }
-`;
+`

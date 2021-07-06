@@ -1,7 +1,7 @@
-import { css } from 'styled-components';
-import { N30A, B200 } from '@atlaskit/theme/colors';
-import { akEditorGridLineZIndex } from '@atlaskit/editor-shared-styles';
-export const GRID_GUTTER = 12;
+import { css } from 'styled-components'
+import { N30A, B200 } from '@atlaskit/theme/colors'
+import { akEditorGridLineZIndex } from '@atlaskit/editor-shared-styles'
+export const GRID_GUTTER = 12
 export const gridStyles = css`
   .gridParent {
     width: calc(100% + ${GRID_GUTTER * 2}px);
@@ -32,4 +32,4 @@ export const gridStyles = css`
   .highlight {
     border-left: 1px solid ${B200};
   }
-`;
+`

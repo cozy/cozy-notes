@@ -1,1 +1,1 @@
-export const stepHasSlice = step => step && step.hasOwnProperty('slice');
+export const stepHasSlice = step => step && step.hasOwnProperty('slice')
