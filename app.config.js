@@ -13,6 +13,10 @@ const extraConfig = {
   resolve: {
     modules: ['node_modules', SRC_DIR],
     alias: {
+      'prosemirror-utils': path.resolve(
+        __dirname,
+        './node_modules/@atlaskit/editor-core/node_modules/prosemirror-utils/dist/index.js'
+      ),
       '@atlaskit/editor-core': path.resolve(
         SRC_DIR,
         './editor-core/dist/es2019'

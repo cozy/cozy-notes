@@ -11,9 +11,6 @@ export const Wrapper = styled.div`
     dark: DN50
   })};
   border-radius: ${borderRadius()}px;
-  color: ${themed({
-    dark: DN700
-  })};
   position: relative;
   vertical-align: middle;
   font-size: ${fontSize()}px;

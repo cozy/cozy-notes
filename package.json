@@ -17,7 +17,9 @@
     "start": "cs start --browser",
     "deploy": "git-directory-deploy --directory build/ --branch ${DEPLOY_BRANCH:-build} --repo ${DEPLOY_REPOSITORY:-https://cozy-bot:$GITHUB_TOKEN@github.com/cozy/cozy-notes}",
     "test": "env NODE_ENV='test' cs test --verbose",
-    "cozyPublish": "cs publish --token $REGISTRY_TOKEN --build-commit $(git rev-parse ${DEPLOY_BRANCH:-build})"
+    "cozyPublish": "cs publish --token $REGISTRY_TOKEN --build-commit $(git rev-parse ${DEPLOY_BRANCH:-build})",
+    "stack:docker:dev": "COZY_STACK_HOST=cozy.tools docker run --rm -it -p 8080:8080 -p 5984:5984 -e COZY_DISABLE_CSP=1 -v $(pwd)/build:/data/cozy-app/app cozy/cozy-app-dev",
+    "kill": "npx kill-port 8888"
   },
   "repository": {
     "type": "git",
@@ -47,10 +49,10 @@
     "stylint": "1.5.9"
   },
   "dependencies": {
-    "@atlaskit/editor-core": "134.0.1",
+    "@atlaskit/editor-core": "145.0.3",
     "@atlaskit/media-core": "32.1.2",
-    "@atlaskit/media-editor": "38.1.4",
-    "@atlaskit/media-picker": "^57.1.2",
+    "@atlaskit/media-editor": "38.1.0",
+    "@atlaskit/media-picker": "57.5.0",
     "@atlaskit/smart-card": "14.6.1",
     "@material-ui/core": "4",
     "@material-ui/styles": "4.10.0",
