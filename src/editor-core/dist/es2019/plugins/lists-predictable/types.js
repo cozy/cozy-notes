@@ -1,1 +1,0 @@
-export const MAX_NESTED_LIST_INDENTATION = 6

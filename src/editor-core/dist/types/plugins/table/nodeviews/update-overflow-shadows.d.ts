@@ -1,1 +1,0 @@
-export declare const updateOverflowShadows: (wrapper?: HTMLElement | null | undefined, table?: HTMLElement | null | undefined, rightShadows?: NodeListOf<HTMLElement> | null | undefined, leftShadows?: NodeListOf<HTMLElement> | null | undefined) => void;

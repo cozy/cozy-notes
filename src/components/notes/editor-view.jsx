@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useEffect, useMemo } from 'react'
 
-import { Editor, WithEditorActions, EditorContext } from '../../vendor/editor'
+import { Editor, WithEditorActions, EditorContext } from '@atlaskit/editor-core'
 import { MainTitle } from 'cozy-ui/transpiled/react/Text'
 import Textarea from 'cozy-ui/transpiled/react/Textarea'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'

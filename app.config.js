@@ -17,10 +17,7 @@ const extraConfig = {
         __dirname,
         './node_modules/@atlaskit/editor-core/node_modules/prosemirror-utils/dist/index.js'
       ),
-      '@atlaskit/editor-core': path.resolve(
-        SRC_DIR,
-        './editor-core/dist/es2019'
-      )
+      '@atlaskit/editor-core': path.resolve(SRC_DIR, './vendor/editor')
     }
   }
 }

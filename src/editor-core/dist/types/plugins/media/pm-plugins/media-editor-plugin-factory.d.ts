@@ -1,5 +1,0 @@
-import { PluginKey } from 'prosemirror-state';
-import { MediaEditorAction, MediaEditorState } from '../types';
-export declare const pluginKey: PluginKey<any, any>;
-export declare const reducer: (state: MediaEditorState, action: MediaEditorAction) => MediaEditorState;
-export declare const createPluginState: (dispatch: import("../../../event-dispatcher").Dispatch<any>, initialState: MediaEditorState | ((state: import("prosemirror-state").EditorState<any>) => MediaEditorState)) => import("prosemirror-state").StateField<MediaEditorState, import("prosemirror-model").Schema<any, any>>, createCommand: <A = MediaEditorAction>(action: A | ((state: Readonly<import("prosemirror-state").EditorState<any>>) => false | A), transform?: ((tr: import("prosemirror-state").Transaction<any>, state: import("prosemirror-state").EditorState<any>) => import("prosemirror-state").Transaction<any>) | undefined) => import("../../..").Command, getPluginState: (state: import("prosemirror-state").EditorState<any>) => MediaEditorState;

@@ -20,7 +20,7 @@
     "cozyPublish": "cs publish --token $REGISTRY_TOKEN --build-commit $(git rev-parse ${DEPLOY_BRANCH:-build})",
     "stack:docker:dev": "COZY_STACK_HOST=cozy.tools docker run --rm -it -p 8080:8080 -p 5984:5984 -e COZY_DISABLE_CSP=1 -v $(pwd)/build:/data/cozy-app/app cozy/cozy-app-dev",
     "kill": "npx kill-port 8888",
-    "build:editor": "rm -rf ./src/vendor/editor/ && tsc -w -p src/editor-core-ts/tsconfig.json"
+    "build:editor": "rm -rf ./src/vendor/editor/ && tsc -w -p src/editor-core/tsconfig.json"
   },
   "repository": {
     "type": "git",

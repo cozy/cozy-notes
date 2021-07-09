@@ -1,10 +1,10 @@
 import React from 'react'
 import { createPlugin } from './pm-plugins/main'
-import inputRulePlugin from './pm-plugins/input-rule'
 import FileInput from 'cozy-ui/transpiled/react/FileInput'
 import { insertExternalImage, startImageUpload } from './pm-plugins/commands'
 import { stateKey } from './pm-plugins/plugin-key'
-import WithPluginState from '../../editor-core/dist/es2019/ui/WithPluginState'
+import WithPluginState from '../../vendor/editor/ui/WithPluginState'
+import { inputRulePlugin } from '@atlaskit/editor-core/plugins/image-upload/pm-plugins/input-rule'
 
 const onUpload = files => {
   console.warn('attentions files', files)

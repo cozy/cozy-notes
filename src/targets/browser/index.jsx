@@ -29,13 +29,13 @@ import {
 
 const manifest = require('../../../manifest.webapp')
 
-const frenchAtlaskit = require('../../editor-core/dist/es2019/i18n/fr').default
+const frenchAtlaskit = require('../../vendor/editor/i18n/fr').default
 const frenchAtlaskitCozy = require(`locales/atlassian_missing_french.json`)
 
 const locales = {
   en: {
     react: require('react-intl/locale-data/en'),
-    atlaskit: require('../../editor-core/dist/es2019/i18n/en').default
+    atlaskit: require('../../vendor/editor/i18n/en').default
   },
   fr: {
     react: require('react-intl/locale-data/fr'),
