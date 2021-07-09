@@ -23,6 +23,6 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": false,
-    "outDir": "../src/vendor/editor"
+    "outDir": "../vendor/editor"
   }
 }
