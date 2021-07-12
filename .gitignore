@@ -7,7 +7,7 @@ yarn-error.log
 # Build
 build/
 build.*/
-editor-core/*
+editor-core
 
 # Coverage
 coverage/

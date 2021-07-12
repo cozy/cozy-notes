@@ -12,7 +12,7 @@ import {
   StylesProvider,
   createGenerateClassName
 } from '@material-ui/core/styles'
-import atlasKitI18N from '@atlaskit/editor-core/dist/es2019/i18n'
+import { fr, en } from '../../../editor-core/src/i18n'
 
 import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
 import CozyClient, { CozyProvider } from 'cozy-client'
@@ -32,19 +32,14 @@ const manifest = require('../../../manifest.webapp')
 
 const frenchAtlaskitCozy = require(`locales/atlassian_missing_french.json`)
 
-const {
-  fr: { frDefault },
-  en: { enDefault }
-} = atlasKitI18N
-
 const locales = {
   en: {
     react: require('react-intl/locale-data/en'),
-    atlaskit: frDefault
+    atlaskit: fr.default
   },
   fr: {
     react: require('react-intl/locale-data/fr'),
-    atlaskit: { ...enDefault, ...frenchAtlaskitCozy }
+    atlaskit: { ...en.default, ...frenchAtlaskitCozy }
   }
 }
 

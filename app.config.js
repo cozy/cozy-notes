@@ -13,7 +13,7 @@ const extraConfig = {
   resolve: {
     modules: ['node_modules', SRC_DIR],
     alias: {
-      '@atlaskit/editor-core': path.resolve(SRC_DIR, './editor-core/dist')
+      '@atlaskit/editor-core': path.resolve('./editor-core/src/index.ts')
     }
   }
 }
