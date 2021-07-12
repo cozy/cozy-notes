@@ -7,7 +7,7 @@ yarn-error.log
 # Build
 build/
 build.*/
-vendor/
+editor-core/*
 
 # Coverage
 coverage/
@@ -58,4 +58,4 @@ mobile/Preview.html
 
 # Default
 # /!\ KEEP THIS SECTION THE LAST ONE
-!.gitkeep
+!*.gitkeep

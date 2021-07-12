@@ -20,7 +20,7 @@
     "cozyPublish": "cs publish --token $REGISTRY_TOKEN --build-commit $(git rev-parse ${DEPLOY_BRANCH:-build})",
     "stack:docker:dev": "COZY_STACK_HOST=cozy.tools docker run --rm -it -p 8080:8080 -p 5984:5984 -e COZY_DISABLE_CSP=1 -v $(pwd)/build:/data/cozy-app/app cozy/cozy-app-dev",
     "kill": "npx kill-port 8888",
-    "build:editor": "rm -rf ./src/vendor/editor/ && tsc -w -p src/editor-core/tsconfig.json"
+    "build:editor": "rm -rf ./editor-core/dist && tsc -w"
   },
   "repository": {
     "type": "git",
@@ -51,7 +51,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@atlaskit/editor-core": "145.0.3",
+    "@atlaskit/editor-core": "146.0.0",
     "@atlaskit/media-core": "32.1.2",
     "@atlaskit/media-editor": "38.1.0",
     "@atlaskit/media-picker": "57.5.0",
