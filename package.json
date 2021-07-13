@@ -21,7 +21,7 @@
     "tx": "tx pull --all || true",
     "watch:browser": "cs watch --browser",
     "watch:mobile": "cs watch --mobile",
-    "watch": "yarn watch:browser",
+    "watch": "yarn watch:browser"
   },
   "repository": {
     "type": "git",
