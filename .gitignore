@@ -3,28 +3,28 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
-
 # Build
 build/
 build.*/
-editor-core
+
+# Editor-core hacks
+editor-core/*
+!editor-core/src
+editor-core/src/*
+!*/plugins/text-color/ui/ToolbarTextColor/icon.tsx
 
 # Coverage
 coverage/
-
 
 # Locales
 #**/locales/*
 #!**/locales/en.json
 
-
 # transifex
 .transifexrc
 
-
 # Coverage
 coverage/
-
 
 # OS generated files
 .DS_Store
@@ -35,7 +35,6 @@ coverage/
 ehthumbs.db
 Thumbs.db
 desktop.ini
-
 
 # Mobile
 targets/mobile/hooks
@@ -54,7 +53,6 @@ mobile/fastlane/report.xml
 mobile/fastlane/Error*.png
 mobile/fastlane/Preview.html
 mobile/Preview.html
-
 
 # Default
 # /!\ KEEP THIS SECTION THE LAST ONE
