@@ -28,8 +28,6 @@ export function useDebugValue(name, value) {
  * when the flag 'swicher' is activated
  */
 export function useFlagSwitcher() {
-  if (!useFlag) return
-
   useFlag('switcher')
   return FlagSwitcher
 }

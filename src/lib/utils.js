@@ -35,13 +35,7 @@ export async function generateReturnUrlToNotesIndex(client, doc) {
   const back = window.location.toString()
   const dest = new URL(await rawUrl)
   dest.searchParams.set(returnUrlKey, back)
-
-  const { origin: tempOrigin } = new URL(back)
-  const { origin } = dest
-
-  return tempOrigin !== origin
-    ? `${dest}`.replace(origin, tempOrigin)
-    : `${dest}`
+  return dest.toString()
 }
 
 /**

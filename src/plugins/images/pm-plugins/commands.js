@@ -3,7 +3,7 @@ import { createExternalMediaNode } from '../utils'
 import { startUpload } from './actions'
 import { stateKey } from './plugin-key'
 export const insertExternalImage = options => (state, dispatch) => {
-  console.error('insertExternalImage')
+  console.log('insertExternalImage')
   const pluginState = stateKey.getState(state)
 
   if (!pluginState.enabled || !options.src) {
@@ -11,11 +11,11 @@ export const insertExternalImage = options => (state, dispatch) => {
   }
   console.log('options', options)
   const mediaNode = createExternalMediaNode(options, state.schema)
-  console.error({ mediaNode })
+  console.log({ mediaNode })
   if (!mediaNode) {
     return false
   }
-  console.error('state', state)
+  console.log('state', state)
   if (dispatch) {
     dispatch(
       safeInsert(mediaNode, state.selection.$to.pos)(state.tr).scrollIntoView()

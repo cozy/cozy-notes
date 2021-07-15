@@ -1,10 +1,10 @@
 import React from 'react'
 import { createPlugin } from './pm-plugins/main'
 import FileInput from 'cozy-ui/transpiled/react/FileInput'
-import { insertExternalImage, startImageUpload } from './pm-plugins/commands'
+import { startImageUpload } from './pm-plugins/commands'
 import { stateKey } from './pm-plugins/plugin-key'
 import { inputRulePlugin } from '@atlaskit/editor-core/plugins/image-upload/pm-plugins/input-rule'
-import { WithPluginState } from '@atlaskit/editor-core'
+import WithPluginState from '../../../editor-core/src/ui/WithPluginState'
 
 const onUpload = files => {
   console.warn('attentions files', files)
@@ -43,11 +43,11 @@ const CozyImagePlugin = () => ({
               label={'toto'}
               onChange={e => {
                 const { state, dispatch } = editorView
-                console.error('startUpload')
+                console.log('startUpload')
                 startImageUpload(e)(state, dispatch)
-                console.error('onUpload ?')
+                console.log('onUpload ?')
                 //onUpload()
-                //console.error('insertManuel ?!')
+                //console.log('insertManuel ?!')
                 /* insertExternalImage({
                   src:
                     'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1920px-Image_created_with_a_mobile_phone.png'
@@ -73,7 +73,7 @@ const CozyImagePlugin = () => ({
     popupsBoundariesElement,
     popupsScrollableElement
   }) {
-    console.error('Content Component')
+    console.log('Content Component')
     const { state, dispatch } = editorView
     return (
       <WithPluginState
@@ -81,7 +81,7 @@ const CozyImagePlugin = () => ({
           cozyImage: stateKey
         }}
         render={props => {
-          console.error('content component', props)
+          console.log('content component', props)
           return <span>toto</span>
         }}
       />

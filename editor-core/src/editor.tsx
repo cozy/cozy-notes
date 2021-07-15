@@ -376,8 +376,9 @@ export default class Editor extends React.Component<EditorProps, State> {
       autoformattingProvider,
       searchProvider,
       UNSAFE_cards,
+      cozyImageUploader
     } = props;
-
+    console.log('cozyImageUploader props editor', cozyImageUploader)
     const { extensionProvider, quickInsertProvider } = this.state;
 
     this.providerFactory.setProvider('emojiProvider', emojiProvider);
@@ -396,6 +397,11 @@ export default class Editor extends React.Component<EditorProps, State> {
       'imageUploadProvider',
       legacyImageUploadProvider,
     );
+    console.log('setProvider', cozyImageUploader)
+    this.providerFactory.setProvider(
+      'CozyImageUploadProvider',
+      cozyImageUploader
+    )
     this.providerFactory.setProvider(
       'collabEditProvider',
       collabEdit && collabEdit.provider
@@ -429,6 +435,8 @@ export default class Editor extends React.Component<EditorProps, State> {
         quickInsertProvider,
       );
     }
+
+    console.log('this.providerFactory', this.providerFactory)
   }
 
   private getBaseFontSize() {
@@ -459,6 +467,8 @@ export default class Editor extends React.Component<EditorProps, State> {
       analyticsHandler: undefined,
     };
 
+    console.log('Compoenent', Component)
+    console.log('this.props', this.props)
     const editor = (
       <FabricEditorAnalyticsContext
         data={{

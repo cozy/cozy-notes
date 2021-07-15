@@ -44,7 +44,7 @@ export const createPlugin = ({ dispatch, providerFactory }) => {
         const newActive = isMediaSelected(newState)
         const newEnabled = canInsertMedia(newState)
         const newActiveUpload = getNewActiveUpload(tr, pluginState)
-        console.error('apply !', tr, pluginState, _oldState, newState)
+        console.log('apply !', tr, pluginState, _oldState, newState)
         if (
           newActive !== pluginState.active ||
           newEnabled !== pluginState.enabled ||
@@ -66,23 +66,23 @@ export const createPlugin = ({ dispatch, providerFactory }) => {
     key: stateKey,
     view: () => {
       const handleProvider = async (name, provider) => {
-        console.error('name', name)
-        console.error('provider', provider)
+        console.log('name', name)
+        console.log('provider', provider)
         if (name !== 'CozyImageUploadProvider' || !provider) {
-          console.error('exit')
+          console.log('exit')
           return
         }
 
         try {
-          console.error('try ? ')
+          console.log('try ? ')
           uploadHandler = await provider
         } catch (e) {
           uploadHandler = undefined
         }
       }
-      console.error('ici ?')
+      console.log('ici ?')
       providerFactory.subscribe('CozyImageUploadProvider', (name, provider) => {
-        console.error('après subscription ?', name, provider)
+        console.log('après subscription ?', name, provider)
         return handleProvider(name, provider)
       })
       return {
@@ -97,10 +97,10 @@ export const createPlugin = ({ dispatch, providerFactory }) => {
             currentState.activeUpload &&
             uploadHandler
           ) {
-            console.error('uploadHandler', uploadHandler)
+            console.log('uploadHandler', uploadHandler)
             uploadHandler(currentState.activeUpload.event, options => {
-              console.error('insertExternalImage Ici ?')
-              console.error('options', options)
+              console.log('insertExternalImage Ici ?')
+              console.log('options', options)
               // Upload to Cozy backend
               const o = {
                 ...options,
