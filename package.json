@@ -50,6 +50,7 @@
     "@atlaskit/editor-core": "134.0.1",
     "@atlaskit/media-core": "32.1.2",
     "@atlaskit/media-editor": "38.1.4",
+    "@atlaskit/media-picker": "^57.1.2",
     "@atlaskit/smart-card": "14.6.1",
     "@material-ui/core": "4",
     "@material-ui/styles": "4.10.0",
@@ -75,6 +76,7 @@
     "utf-8-validate": "5.0.2"
   },
   "resolutions": {
-    "prosemirror-model": "1.11.0"
+    "prosemirror-model": "1.11.0",
+    "prosemirror-tables": "0.9.5"
   }
 }

@@ -30,31 +30,13 @@ import { Schema } from 'prosemirror-model'
 
 // if you edit the schema, please upgrade this schemaVersion
 
-export const schemaVersion = 1
+export const schemaVersion = 2
 
 export const getSchemaVersion = () => {
   return schemaVersion
 }
 
 export const nodes = [
-  [
-    'date',
-    {
-      inline: true,
-      group: 'inline',
-      selectable: true,
-      attrs: {
-        timestamp: {
-          default: ''
-        }
-      },
-      parseDOM: [
-        {
-          tag: 'span[data-node-type="date"]'
-        }
-      ]
-    }
-  ],
   [
     'status',
     {
@@ -69,7 +51,7 @@ export const nodes = [
           default: ''
         },
         localId: {
-          default: '046b16b8-790a-4097-881d-eb377338287b'
+          default: 'd25eecb0-0808-4ffe-a971-385acf81c093'
         },
         style: {
           default: ''
@@ -143,7 +125,7 @@ export const nodes = [
     'listItem',
     {
       content:
-        '(paragraph | codeBlock) (paragraph | bulletList | orderedList | codeBlock)*',
+        '(paragraph | mediaSingle | codeBlock) (paragraph | bulletList | orderedList | mediaSingle | codeBlock)*',
       marks: 'link unsupportedMark unsupportedNodeAttribute',
       defining: true,
       selectable: false,
@@ -370,6 +352,30 @@ export const nodes = [
     }
   ],
   [
+    'mediaSingle',
+    {
+      inline: false,
+      group: 'block',
+      selectable: true,
+      atom: true,
+      content: 'media',
+      attrs: {
+        width: {
+          default: null
+        },
+        layout: {
+          default: 'center'
+        }
+      },
+      marks: 'unsupportedMark unsupportedNodeAttribute link',
+      parseDOM: [
+        {
+          tag: 'div[data-node-type="mediaSingle"]'
+        }
+      ]
+    }
+  ],
+  [
     'table',
     {
       content: 'tableRow+',
@@ -397,11 +403,73 @@ export const nodes = [
     }
   ],
   [
+    'media',
+    {
+      selectable: true,
+      attrs: {
+        id: {
+          default: ''
+        },
+        type: {
+          default: 'file'
+        },
+        collection: {
+          default: ''
+        },
+        occurrenceKey: {
+          default: null
+        },
+        alt: {
+          default: null
+        },
+        width: {
+          default: null
+        },
+        height: {
+          default: null
+        },
+        url: {
+          default: null
+        },
+        __fileName: {
+          default: null
+        },
+        __fileSize: {
+          default: null
+        },
+        __fileMimeType: {
+          default: null
+        },
+        __displayType: {
+          default: null
+        },
+        __contextId: {
+          default: null
+        },
+        __external: {
+          default: false
+        }
+      },
+      parseDOM: [
+        {
+          tag: 'div[data-node-type="media"]'
+        },
+        {
+          tag: 'img[src^="data:image"]',
+          ignore: true
+        },
+        {
+          tag: 'img:not(.smart-link-icon)'
+        }
+      ]
+    }
+  ],
+  [
     'tableHeader',
     {
       selectable: false,
       content:
-        '(paragraph | panel | blockquote | orderedList | bulletList | rule | heading | codeBlock )+',
+        '(paragraph | panel | blockquote | orderedList | bulletList | rule | heading | codeBlock | mediaSingle )+',
       attrs: {
         colspan: {
           default: 1
@@ -445,7 +513,7 @@ export const nodes = [
     {
       selectable: false,
       content:
-        '(paragraph | panel | blockquote | orderedList | bulletList | rule | heading | codeBlock | unsupportedBlock)+',
+        '(paragraph | panel | blockquote | orderedList | bulletList | rule | heading | codeBlock | mediaSingle | unsupportedBlock)+',
       attrs: {
         colspan: {
           default: 1

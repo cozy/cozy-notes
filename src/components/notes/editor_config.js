@@ -1,3 +1,13 @@
+export const imageUploadHandler = (e, fn) => {
+  // ED-3294: we cannot insert base64 images so we just simulate inserting an image
+  console.error('fn', fn)
+  console.error('e', e)
+  //const imageUrl = prompt('Enter the image URL to insert:')
+  //if (imageUrl) {
+  fn()
+  //}
+}
+
 // if you change something here,
 // you should update /lib/collab/schema.js
 // otherwise the server part won't work
@@ -20,7 +30,9 @@ const editorConfig = {
   allowPanel: true,
   allowStatus: true,
   allowRule: true,
-  allowDate: true
+  //allowDate: true,
+
+  cozyImage: true
 }
 
 export default editorConfig
