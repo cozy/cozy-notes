@@ -8,10 +8,49 @@ build/
 build.*/
 
 # Editor-core hacks
+# Very ugly but this is temporary
 editor-core/*
+
 !editor-core/src
 editor-core/src/*
-!*/plugins/text-color/ui/ToolbarTextColor/icon.tsx
+
+!editor-core/src/editor.tsx
+
+!editor-core/src/actions
+editor-core/src/actions/*
+
+!editor-core/src/actions/index.ts
+
+!editor-core/src/create-editor
+editor-core/src/create-editor/*
+
+!editor-core/src/create-editor/create-plugins-list.ts
+!editor-core/src/create-editor/ReactEditorView.tsx
+!editor-core/src/create-editor/create-schema.ts
+
+!editor-core/src/plugins
+editor-core/src/plugins/*
+
+!editor-core/src/plugins/rank.ts
+
+!editor-core/src/plugins/media
+editor-core/src/plugins/media/*
+
+!editor-core/src/plugins/media/nodeviews
+editor-core/src/plugins/media/nodeviews/*
+
+!editor-core/src/plugins/media/nodeviews/mediaGroup.tsx
+!editor-core/src/plugins/media/nodeviews/mediaSingle.tsx
+
+!editor-core/src/plugins/media/nodeviews/mediaNodeView
+editor-core/src/plugins/media/nodeviews/mediaNodeView/*
+
+!editor-core/src/plugins/media/nodeviews/mediaNodeView/index.tsx
+
+!editor-core/src/plugins/media/commands
+editor-core/src/plugins/media/commands/*
+
+!editor-core/src/plugins/media/commands/helpers.ts
 
 # Coverage
 coverage/

@@ -1,14 +1,14 @@
 {
-  "include": ["./editor-core/src/**/*.ts", "./editor-core/src/**/*.tsx"],
+  "include": ["./editor-core/src/**/*.ts", "./editor-core/src/**/*.tsx", "./src/**/*.tsx"],
   "exclude": [
     "./editor-core/**/__tests__/*",
     "./editor-core/src/**/*.test.ts",
     "./editor-core/src/**/*.test.tsx"
   ],
   "compilerOptions": {
-    "allowJs": false,
+    "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "./",
+    "baseUrl": ".",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
@@ -19,10 +19,9 @@
     "noEmit": false,
     "noFallthroughCasesInSwitch": true,
     "outDir": "./editor-core/dist",
-    "paths": {},
+    "paths": { "@atlaskit/editor-core": ["./editor-core/src/index.ts"] },
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "strict": false,
     "target": "es5"
   }
 }

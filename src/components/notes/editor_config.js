@@ -29,10 +29,10 @@ const editorConfig = {
   },
   allowPanel: true,
   allowStatus: true,
-  allowRule: true,
+  allowRule: true
   //allowDate: true,
 
-  cozyImage: true
+  //cozyImage: true
 }
 
 export default editorConfig

@@ -3,8 +3,8 @@ import { createPlugin } from './pm-plugins/main'
 import FileInput from 'cozy-ui/transpiled/react/FileInput'
 import { insertExternalImage, startImageUpload } from './pm-plugins/commands'
 import { stateKey } from './pm-plugins/plugin-key'
-import WithPluginState from '../../vendor/editor/ui/WithPluginState'
 import { inputRulePlugin } from '@atlaskit/editor-core/plugins/image-upload/pm-plugins/input-rule'
+import { WithPluginState } from '@atlaskit/editor-core'
 
 const onUpload = files => {
   console.warn('attentions files', files)

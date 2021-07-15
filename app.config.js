@@ -60,7 +60,7 @@ const extraConfig = {
       '@atlaskit/editor-tables': path.resolve(
         './node_modules/@atlaskit/editor-tables'
       ),
-      '@atlaskit/editor-core': path.resolve('./editor-core/src/index.ts')
+      '@atlaskit/editor-core': path.resolve('./editor-core/src')
     }
   }
 }
