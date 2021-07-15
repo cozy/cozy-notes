@@ -3,7 +3,8 @@
     "./editor-core/src/**/*.ts",
     "./editor-core/src/**/*.tsx",
     "./src/**/*.ts",
-    "./src/**/*.tsx"
+    "./src/**/*.tsx",
+    "src/components/notes/editor-view.jsx"
   ],
   "exclude": [
     "./editor-core/**/__tests__/*",
@@ -24,7 +25,10 @@
     "noEmit": false,
     "noFallthroughCasesInSwitch": true,
     "outDir": "./editor-core/dist",
-    "paths": { "@atlaskit/editor-core": ["./editor-core/src/index.ts"] },
+    "paths": {
+      "@atlaskit/editor-core": ["./editor-core/src/index.ts"],
+      "@editor-core/*": ["./editor-core/src/*"]
+    },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "target": "es5"
