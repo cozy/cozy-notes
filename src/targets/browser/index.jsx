@@ -35,11 +35,11 @@ const frenchAtlaskitCozy = require(`locales/atlassian_missing_french.json`)
 const locales = {
   en: {
     react: require('react-intl/locale-data/en'),
-    atlaskit: en.default
+    atlaskit: en
   },
   fr: {
     react: require('react-intl/locale-data/fr'),
-    atlaskit: { ...fr.default, ...frenchAtlaskitCozy }
+    atlaskit: { ...fr, ...frenchAtlaskitCozy }
   }
 }
 

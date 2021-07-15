@@ -30,8 +30,6 @@ const editorConfig = {
   allowPanel: true,
   allowStatus: true,
   allowRule: true
-  //allowDate: true,
-
   //cozyImage: true
 }
 

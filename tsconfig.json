@@ -1,5 +1,10 @@
 {
-  "include": ["./editor-core/src/**/*.ts", "./editor-core/src/**/*.tsx", "./src/**/*.tsx"],
+  "include": [
+    "./editor-core/src/**/*.ts",
+    "./editor-core/src/**/*.tsx",
+    "./src/**/*.ts",
+    "./src/**/*.tsx"
+  ],
   "exclude": [
     "./editor-core/**/__tests__/*",
     "./editor-core/src/**/*.test.ts",
