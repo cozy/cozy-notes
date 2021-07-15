@@ -1,1 +1,0 @@
-export declare const codeBlockStyles: import("styled-components").FlattenInterpolation<import("styled-components").ThemedStyledProps<import("@atlaskit/theme").AtlaskitThemeProps | import("@atlaskit/theme").CustomThemeProps | import("@atlaskit/theme").NoThemeProps | undefined, any>>[];
