@@ -74,7 +74,11 @@ export class ServiceClient {
    * @returns {string} path for an API route on the cozy-stack
    */
   path(id, sub) {
-    return id ? (sub ? `/notes/${id}/${sub}` : `/notes/${id}`) : '/notes'
+    return id
+      ? sub
+        ? `http://cozy.localhost:8080/notes/${id}/${sub}`
+        : `http://cozy.localhost:8080/notes/${id}`
+      : 'http://cozy.localhost:8080/notes'
   }
 
   /**
@@ -381,6 +385,15 @@ export class ServiceClient {
       'PUT',
       this.path(noteId, 'telepointer'),
       telepointerDoc
+    )
+  }
+
+  async postImage(name, noteId, file) {
+    return this.stackClient.fetchJSON(
+      'POST',
+      this.path(noteId, `images?Name=${name}`),
+      file,
+      { headers: { 'Content-Type': 'image/jpeg' } }
     )
   }
 }

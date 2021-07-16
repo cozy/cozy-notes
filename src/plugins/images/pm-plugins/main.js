@@ -4,6 +4,8 @@ import { isDroppedFile } from '@atlaskit/editor-core/utils/drag-drop'
 import { canInsertMedia, isMediaSelected } from '../utils'
 import { insertExternalImage, startImageUpload } from './commands'
 import { stateKey } from './plugin-key'
+import ServiceClient from 'lib/collab/stack-client'
+import CozyClient from 'cozy-client/dist/CozyClient'
 
 const createDOMHandler = (pred, eventName) => (view, event) => {
   if (!pred(event)) {
@@ -28,7 +30,7 @@ const getNewActiveUpload = (tr, pluginState) => {
   return pluginState.activeUpload
 }
 
-export const createPlugin = ({ dispatch, providerFactory }) => {
+export const createPlugin = ({ dispatch, providerFactory }, callback) => {
   let uploadHandler
   return new Plugin({
     state: {
@@ -44,7 +46,6 @@ export const createPlugin = ({ dispatch, providerFactory }) => {
         const newActive = isMediaSelected(newState)
         const newEnabled = canInsertMedia(newState)
         const newActiveUpload = getNewActiveUpload(tr, pluginState)
-        console.log('apply !', tr, pluginState, _oldState, newState)
         if (
           newActive !== pluginState.active ||
           newEnabled !== pluginState.enabled ||
@@ -66,23 +67,17 @@ export const createPlugin = ({ dispatch, providerFactory }) => {
     key: stateKey,
     view: () => {
       const handleProvider = async (name, provider) => {
-        console.log('name', name)
-        console.log('provider', provider)
         if (name !== 'CozyImageUploadProvider' || !provider) {
-          console.log('exit')
           return
         }
 
         try {
-          console.log('try ? ')
           uploadHandler = await provider
         } catch (e) {
           uploadHandler = undefined
         }
       }
-      console.log('ici ?')
       providerFactory.subscribe('CozyImageUploadProvider', (name, provider) => {
-        console.log('après subscription ?', name, provider)
         return handleProvider(name, provider)
       })
       return {
@@ -91,24 +86,46 @@ export const createPlugin = ({ dispatch, providerFactory }) => {
           const currentState = stateKey.getState(editorState) // if we've add a new upload to the state, execute the uploadHandler
 
           const oldState = stateKey.getState(prevState)
-
           if (
             currentState.activeUpload !== oldState.activeUpload &&
             currentState.activeUpload &&
             uploadHandler
           ) {
-            console.log('uploadHandler', uploadHandler)
             uploadHandler(currentState.activeUpload.event, options => {
-              console.log('insertExternalImage Ici ?')
-              console.log('options', options)
-              // Upload to Cozy backend
-              const o = {
-                ...options,
-                src:
-                  'https://media.routard.com/image/67/1/fb-canada-parcs.1473671.jpg',
-                id: '1'
+              const fromDom = CozyClient.fromDOM()
+              const serviceClient = new ServiceClient({
+                userId: 'cozy.localhost34',
+                userName: 'cozy.localhost34',
+                cozyClient: fromDom
+              })
+
+              const getBlob = () => {
+                return new Promise(resolve => {
+                  const file = window.document.querySelector([
+                    '[data-file-input]'
+                  ]).files[0]
+                  const reader = new window.FileReader()
+
+                  reader.readAsDataURL(file)
+
+                  reader.onloadend = () => resolve(reader.result)
+                })
               }
-              return insertExternalImage(o)(view.state, view.dispatch)
+
+              getBlob().then(result => {
+                serviceClient
+                  .postImage(
+                    Math.random(),
+                    'a48c026755d28bff57d9307d4802a4a8',
+                    result
+                  )
+                  .then(server => {
+                    insertExternalImage({
+                      ...options,
+                      src: `http://cozy.localhost:8080${server.data.links.medium}`
+                    })(view.state, view.dispatch)
+                  })
+              })
             })
           }
         },

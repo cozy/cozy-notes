@@ -35,6 +35,7 @@ export default function Editor(props) {
     userName: props.userName,
     cozyClient
   })
+
   const serviceClient = useServiceClient({ userId, userName, cozyClient })
   const { loading, title, doc, setTitle } = useNote({
     serviceClient,

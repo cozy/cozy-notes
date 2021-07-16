@@ -240,8 +240,7 @@ export default class MediaSingleNode extends Component {
             attrs: {
               ...this.props.node.firstChild.attrs,
               type: 'external',
-              url:
-                'https://d3vn5rg72hh8yg.cloudfront.net/cdn/imagesource/previews/7578/478f058cb01cd128073ce700f540e4c5/3/0e619273cea51f91ce3c0354b6b0c61e/2273376.jpg'
+              url: ''
             }
           }
         }

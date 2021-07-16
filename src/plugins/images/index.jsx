@@ -6,9 +6,6 @@ import { stateKey } from './pm-plugins/plugin-key'
 import { inputRulePlugin } from '@atlaskit/editor-core/plugins/image-upload/pm-plugins/input-rule'
 import WithPluginState from '../../../editor-core/src/ui/WithPluginState'
 
-const onUpload = files => {
-  console.warn('attentions files', files)
-}
 const CozyImagePlugin = () => ({
   pmPlugins() {
     return [
@@ -23,66 +20,23 @@ const CozyImagePlugin = () => ({
     ]
   },
 
-  primaryToolbarComponent({
-    editorView,
-    popupsMountPoint,
-    popupsBoundariesElement,
-    popupsScrollableElement,
-    disabled,
-    isToolbarReducedSpacing
-  }) {
+  primaryToolbarComponent({ editorView }) {
     return (
       <WithPluginState
         plugins={{
           cozyImage: stateKey
         }}
-        render={props => {
-          console.log('props render', props)
+        render={() => {
           return (
             <FileInput
-              label={'toto'}
+              data-file-input
               onChange={e => {
                 const { state, dispatch } = editorView
-                console.log('startUpload')
                 startImageUpload(e)(state, dispatch)
-                console.log('onUpload ?')
-                //onUpload()
-                //console.log('insertManuel ?!')
-                /* insertExternalImage({
-                  src:
-                    'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1920px-Image_created_with_a_mobile_phone.png'
-                })(state, dispatch) */
               }}
-              data-test-id="upload-btn"
-              value={[]}
-              // FileInput needs to stay rendered until the onChange event, so we prevent the event from bubbling
               onClick={e => e.stopPropagation()}
-            >
-              <span>Test</span>
-            </FileInput>
+            ></FileInput>
           )
-        }}
-      />
-    )
-  },
-
-  contentComponent({
-    editorView,
-    dispatchAnalyticsEvent,
-    popupsMountPoint,
-    popupsBoundariesElement,
-    popupsScrollableElement
-  }) {
-    console.log('Content Component')
-    const { state, dispatch } = editorView
-    return (
-      <WithPluginState
-        plugins={{
-          cozyImage: stateKey
-        }}
-        render={props => {
-          console.log('content component', props)
-          return <span>toto</span>
         }}
       />
     )

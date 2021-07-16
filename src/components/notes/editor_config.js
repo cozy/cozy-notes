@@ -1,11 +1,6 @@
 export const imageUploadHandler = (e, fn) => {
-  // ED-3294: we cannot insert base64 images so we just simulate inserting an image
-  console.log('fn', fn)
-  console.log('e', e)
-  //const imageUrl = prompt('Enter the image URL to insert:')
-  //if (imageUrl) {
+  window.document.querySelector(['[data-file-input]']).click()
   fn()
-  //}
 }
 
 // if you change something here,
