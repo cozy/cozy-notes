@@ -3,27 +3,67 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
-
 # Build
 build/
 build.*/
 
+# Editor-core hacks
+# Very ugly but this is temporary
+editor-core/*
+
+# 1
+!editor-core/src
+editor-core/src/*
+
+!editor-core/src/editor.tsx
+
+# 2
+!editor-core/src/create-editor
+editor-core/src/create-editor/*
+
+!editor-core/src/create-editor/create-plugins-list.ts
+!editor-core/src/create-editor/ReactEditorView.tsx
+!editor-core/src/create-editor/create-schema.ts
+
+# 3
+!editor-core/src/plugins
+editor-core/src/plugins/*
+
+!editor-core/src/plugins/rank.ts
+
+# 4
+!editor-core/src/plugins/media
+editor-core/src/plugins/media/*
+!editor-core/src/plugins/media/nodeviews
+editor-core/src/plugins/media/nodeviews/*
+
+!editor-core/src/plugins/media/nodeviews/mediaGroup.tsx
+!editor-core/src/plugins/media/nodeviews/mediaSingle.tsx
+
+# 5
+!editor-core/src/plugins/media/nodeviews/mediaNodeView
+editor-core/src/plugins/media/nodeviews/mediaNodeView/*
+
+!editor-core/src/plugins/media/nodeviews/mediaNodeView/index.tsx
+
+# 6
+!editor-core/src/plugins/media/commands
+editor-core/src/plugins/media/commands/*
+
+!editor-core/src/plugins/media/commands/helpers.ts
+
 # Coverage
 coverage/
-
 
 # Locales
 #**/locales/*
 #!**/locales/en.json
 
-
 # transifex
 .transifexrc
 
-
 # Coverage
 coverage/
-
 
 # OS generated files
 .DS_Store
@@ -34,7 +74,6 @@ coverage/
 ehthumbs.db
 Thumbs.db
 desktop.ini
-
 
 # Mobile
 targets/mobile/hooks
@@ -54,7 +93,6 @@ mobile/fastlane/Error*.png
 mobile/fastlane/Preview.html
 mobile/Preview.html
 
-
 # Default
 # /!\ KEEP THIS SECTION THE LAST ONE
-!.gitkeep
+!*.gitkeep

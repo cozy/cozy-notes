@@ -1,3 +1,8 @@
+export const imageUploadHandler = (e, fn) => {
+  window.document.querySelector(['[data-file-input]']).click()
+  fn()
+}
+
 // if you change something here,
 // you should update /lib/collab/schema.js
 // otherwise the server part won't work
@@ -20,7 +25,9 @@ const editorConfig = {
   allowPanel: true,
   allowStatus: true,
   allowRule: true,
-  allowDate: true
+  //allowDate: true,
+
+  cozyImage: true
 }
 
 export default editorConfig
