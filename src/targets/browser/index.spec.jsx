@@ -11,6 +11,11 @@ jest.mock('react-dom', () => ({
   render: jest.fn()
 }))
 
+jest.mock('@atlaskit/editor-core/i18n', () => ({
+  fr: {},
+  en: {}
+}))
+
 describe('app init', () => {
   afterEach(() => {
     jest.resetAllMocks()

@@ -1,6 +1,6 @@
 import { useMemo, useContext } from 'react'
 import IsPublicContext from 'components/IsPublicContext'
-import { getParentFolderLink } from 'lib/utils.js'
+import { getParentFolderLink } from 'lib/utils'
 
 function useReturnUrl({ returnUrl, cozyClient, doc }) {
   const isPublic = useContext(IsPublicContext)

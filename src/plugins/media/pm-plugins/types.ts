@@ -7,8 +7,8 @@ import { MediaOptions, MediaState } from '../types'
 import { MediaPluginOptions } from '../media-plugin-options'
 import { EditorView } from 'prosemirror-view'
 import PickerFacade, { MediaStateEventSubscriber } from '../picker-facade'
-import { Dispatch } from '../../../event-dispatcher'
-import { ProsemirrorGetPosHandler } from '../../../nodeviews/types'
+import { Dispatch } from '@atlaskit/editor-core/event-dispatcher'
+import { ProsemirrorGetPosHandler } from '@atlaskit/editor-core/nodeviews/types'
 
 export interface MediaNodeWithPosHandler {
   node: PMNode

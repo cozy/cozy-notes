@@ -1,6 +1,6 @@
 import { useMemo, useContext } from 'react'
 import IsPublicContext from 'components/IsPublicContext'
-import { getShortNameFromClient, getUserNameFromUrl } from 'lib/utils.js'
+import { getShortNameFromClient, getUserNameFromUrl } from 'lib/utils'
 
 function useUser({ userName: providedUserName, cozyClient }) {
   const isPublic = useContext(IsPublicContext)

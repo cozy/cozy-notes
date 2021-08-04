@@ -10,6 +10,7 @@ import useEventListener from 'cozy-ui/transpiled/react/hooks/useEventListener'
 import editorConfig from 'components/notes/editor_config'
 import HeaderMenu from 'components/header_menu'
 import styles from 'components/notes/editor-view.styl'
+import { imageUploadProvider } from 'lib/image-upload-provider'
 
 function updateTextareaHeight(target) {
   if (target) target.style.height = `${target.scrollHeight}px`
@@ -74,14 +75,15 @@ function EditorView(props) {
       />
       <section className="note-editor-container">
         <Editor
+          {...editorConfig}
           disabled={collabProvider ? false : readOnly}
           collabEdit={collabEdit}
           onChange={onContentChange || nullCallback}
           defaultValue={defaultValue}
-          {...editorConfig}
           appearance="full-page"
           placeholder={t('Notes.EditorView.main_placeholder')}
           shouldFocus={!readOnly}
+          legacyImageUploadProvider={imageUploadProvider(collabProvider)}
           contentComponents={
             <WithEditorActions
               render={() => (

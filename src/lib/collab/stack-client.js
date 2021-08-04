@@ -383,5 +383,13 @@ export class ServiceClient {
       telepointerDoc
     )
   }
+
+  postImage = async (name, noteId, file, type) =>
+    this.stackClient.fetchJSON(
+      'POST',
+      this.path(noteId, `images?Name=${name}`),
+      file,
+      { headers: { 'Content-Type': type } }
+    )
 }
 export default ServiceClient
