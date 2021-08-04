@@ -1,5 +1,4 @@
 import React from 'react'
-import { MediaProvider } from '@atlaskit/editor-common/provider-factory'
 import {
   media,
   mediaGroup,
@@ -10,11 +9,7 @@ import {
   EditorPlugin,
   PMPluginFactoryParams
 } from '@atlaskit/editor-core/types'
-import {
-  stateKey as pluginKey,
-  createPlugin,
-  MediaState
-} from './pm-plugins/main'
+import { stateKey as pluginKey, createPlugin } from './pm-plugins/main'
 import { createPlugin as createMediaEditorPlugin } from './pm-plugins/media-editor'
 import { pluginKey as mediaEditorPluginKey } from './pm-plugins/media-editor-plugin-factory'
 import { createPlugin as createMediaAltTextPlugin } from './pm-plugins/alt-text'
@@ -26,7 +21,7 @@ import linkingPlugin from './pm-plugins/linking'
 import ToolbarMedia from './ui/ToolbarMedia'
 import { ReactMediaGroupNode } from './nodeviews/mediaGroup'
 import { ReactMediaSingleNode } from './nodeviews/mediaSingle'
-import { CustomMediaPicker, MediaEditorState, MediaOptions } from './types'
+import { MediaEditorState, MediaOptions } from './types'
 import { floatingToolbar } from './toolbar'
 
 import {
@@ -43,6 +38,7 @@ import MediaEditor from './ui/MediaEditor'
 import { MediaPickerComponents } from './ui/MediaPicker'
 import { messages } from '@atlaskit/editor-core/plugins/insert-block/ui/ToolbarInsertBlock/messages'
 import { ReactMediaNode } from './nodeviews/mediaNodeView'
+import { cozyMediaOptions } from 'config/cozy-media-options'
 
 export * from './types'
 export { insertMediaSingleNode } from './utils/media-single'
@@ -54,7 +50,7 @@ const mediaPlugin = (options?: MediaOptions): EditorPlugin => ({
     const {
       allowMediaGroup = true,
       allowMediaSingle = false,
-      UNSAFE_allowImageCaptions = false
+      UNSAFE_allowImageCaptions = cozyMediaOptions.UNSAFE_allowImageCaptions
     } = options || {}
 
     const mediaSingleNode = UNSAFE_allowImageCaptions
@@ -190,7 +186,6 @@ const mediaPlugin = (options?: MediaOptions): EditorPlugin => ({
           )}
         />
       ) : null
-
     return (
       <>
         <WithPluginState
@@ -249,13 +244,13 @@ const mediaPlugin = (options?: MediaOptions): EditorPlugin => ({
     floatingToolbar: (state, intl, providerFactory) =>
       floatingToolbar(state, intl, {
         providerFactory,
-        allowResizing: options && options.allowResizing,
-        allowResizingInTables: options && options.allowResizingInTables,
-        allowAnnotation: options && options.allowAnnotation,
-        allowLinking: options && options.allowLinking,
+        allowResizing: cozyMediaOptions.allowResizing,
+        allowResizingInTables: cozyMediaOptions.allowResizingInTables,
+        allowAnnotation: cozyMediaOptions.allowAnnotation,
+        allowLinking: cozyMediaOptions.allowLinking,
         allowAdvancedToolBarOptions:
-          options && options.allowAdvancedToolBarOptions,
-        allowAltTextOnImages: options && options.allowAltTextOnImages,
+          cozyMediaOptions.allowAdvancedToolBarOptions,
+        allowAltTextOnImages: cozyMediaOptions.allowAltTextOnImages,
         altTextValidator: options && options.altTextValidator
       })
   }

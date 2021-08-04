@@ -10,6 +10,7 @@ import { EventDispatcher } from '../../../event-dispatcher'
 import { MediaOptions } from '../types'
 import { DispatchAnalyticsEvent } from '../../analytics'
 import { MediaPluginState } from '../pm-plugins/types'
+import { CollabEditProvider } from '@atlaskit/editor-core/src'
 
 export interface MediaSingleNodeProps {
   view: EditorView
@@ -22,6 +23,7 @@ export interface MediaSingleNodeProps {
   mediaOptions: MediaOptions
   mediaProvider?: Promise<MediaProvider>
   contextIdentifierProvider?: Promise<ContextIdentifierProvider>
+  collabEditProvider?: Promise<CollabEditProvider>
   fullWidthMode?: boolean
   mediaPluginState: MediaPluginState
   dispatchAnalyticsEvent: DispatchAnalyticsEvent

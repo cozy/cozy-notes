@@ -30,8 +30,8 @@ import { stateKey as mediaStateKey } from '../../pm-plugins/plugin-key'
 import { MediaOptions } from '../../types'
 import { MediaNodeViewProps } from '../types'
 import MediaNode from './media'
-import { getAttrsFromUrl } from '@atlaskit/media-client'
-import { isMediaBlobUrlFromAttrs } from '../../utils/media-common'
+import { cozyMediaOptions } from 'config/cozy-media-options'
+import CollabProvider from 'lib/collab/provider'
 
 class MediaNodeView extends SelectionBasedNodeView<MediaNodeViewProps> {
   createDomRef(): HTMLElement {
@@ -72,11 +72,6 @@ class MediaNodeView extends SelectionBasedNodeView<MediaNodeViewProps> {
     return attrs as MediaADFAttrs
   }
 
-  isMediaBlobUrl(): boolean {
-    const attrs = this.getAttrs()
-    return isMediaBlobUrlFromAttrs(attrs)
-  }
-
   uploadComplete() {
     return isMobileUploadCompleted(
       mediaStateKey.getState(this.view.state),
@@ -86,7 +81,8 @@ class MediaNodeView extends SelectionBasedNodeView<MediaNodeViewProps> {
 
   renderMediaNodeWithState = (
     mediaProvider?: Promise<MediaProvider>,
-    contextIdentifierProvider?: Promise<ContextIdentifierProvider>
+    contextIdentifierProvider?: Promise<ContextIdentifierProvider>,
+    collabEditProvider?: Promise<CollabProvider>
   ) => {
     return ({ width: editorWidth }: { width: WidthPluginState }) => {
       const getPos = this.getPos as getPosHandlerNode
@@ -98,17 +94,9 @@ class MediaNodeView extends SelectionBasedNodeView<MediaNodeViewProps> {
         (selection instanceof NodeSelection && selection.from === getPos())
 
       const attrs = this.getAttrs()
-      const url = attrs.type === 'external' ? attrs.url : ''
 
       let { width, height } = attrs
-      if (this.isMediaBlobUrl()) {
-        const urlAttrs = getAttrsFromUrl(url)
-        if (urlAttrs) {
-          const { width: urlWidth, height: urlHeight } = urlAttrs
-          width = width || urlWidth
-          height = height || urlHeight
-        }
-      }
+
       width = width || DEFAULT_IMAGE_WIDTH
       height = height || DEFAULT_IMAGE_HEIGHT
 
@@ -130,11 +118,11 @@ class MediaNodeView extends SelectionBasedNodeView<MediaNodeViewProps> {
           selected={isSelected()}
           originalDimensions={originalDimensions}
           maxDimensions={maxDimensions}
-          url={url}
           mediaProvider={mediaProvider}
           contextIdentifierProvider={contextIdentifierProvider}
           uploadComplete={this.uploadComplete()}
           mediaOptions={mediaOptions}
+          collabEditProvider={collabEditProvider}
         />
       )
     }
@@ -142,7 +130,8 @@ class MediaNodeView extends SelectionBasedNodeView<MediaNodeViewProps> {
 
   renderMediaNodeWithProviders = ({
     mediaProvider,
-    contextIdentifierProvider
+    contextIdentifierProvider,
+    collabEditProvider
   }: Providers) => {
     return (
       <WithPluginState
@@ -152,7 +141,8 @@ class MediaNodeView extends SelectionBasedNodeView<MediaNodeViewProps> {
         }}
         render={this.renderMediaNodeWithState(
           mediaProvider,
-          contextIdentifierProvider
+          contextIdentifierProvider,
+          (collabEditProvider as unknown) as Promise<CollabProvider>
         )}
       />
     )
@@ -163,7 +153,11 @@ class MediaNodeView extends SelectionBasedNodeView<MediaNodeViewProps> {
 
     return (
       <WithProviders
-        providers={['mediaProvider', 'contextIdentifierProvider']}
+        providers={[
+          'mediaProvider',
+          'contextIdentifierProvider',
+          'collabEditProvider'
+        ]}
         providerFactory={providerFactory}
         renderNode={this.renderMediaNodeWithProviders}
       />
@@ -186,7 +180,7 @@ export const ReactMediaNode = (
     {
       eventDispatcher,
       providerFactory,
-      mediaOptions
+      mediaOptions: { ...mediaOptions, ...cozyMediaOptions }
     }
   ).init()
 }

@@ -3,7 +3,7 @@ import CollabProvider from 'lib/collab/provider'
 
 /**
  * @typedef {object} useCollabProviderParams
- * @property {integer|undefined} docVersion - current version of the doc
+ * @property {integer|undefined} doc - current version of the doc
  * @property {string} noteId - uuid of the io.cozy.files for the note
  * @property {ServiceClient|undefined} serviceClient - ServiceClient instance
  */

@@ -18,12 +18,18 @@ import { Node as PMNode } from 'prosemirror-model'
 import { CellSelection } from '@atlaskit/editor-tables/cell-selection'
 import { EditorView } from 'prosemirror-view'
 import React, { Component } from 'react'
-import { ProsemirrorGetPosHandler, ReactNodeProps } from '../../../../nodeviews'
-import { setNodeSelection, setTextSelection } from '../../../../utils'
+import {
+  ProsemirrorGetPosHandler,
+  ReactNodeProps
+} from '@atlaskit/editor-core/nodeviews'
+import { setNodeSelection, setTextSelection } from '@atlaskit/editor-core/utils'
 import { stateKey as mediaStateKey } from '../../pm-plugins/plugin-key'
 import { MediaPluginState } from '../../pm-plugins/types'
 import { MediaCardWrapper } from '../styles'
 import { MediaOptions } from '../../types'
+import { RealTimeEvent, CozyDoctypes, Errors } from 'constants/strings'
+import CollabProvider from 'lib/collab/provider'
+import { Q } from 'cozy-client'
 
 // This is being used by DropPlaceholder now
 export const MEDIA_HEIGHT = 125
@@ -34,6 +40,7 @@ export interface MediaNodeProps extends ReactNodeProps, ImageLoaderProps {
   node: PMNode
   getPos: ProsemirrorGetPosHandler
   contextIdentifierProvider?: Promise<ContextIdentifierProvider>
+  collabEditProvider?: Promise<CollabProvider>
   originalDimensions: NumericalCardDimensions
   maxDimensions: CardDimensions
   isMediaSingle?: boolean
@@ -47,12 +54,22 @@ export interface MediaNodeProps extends ReactNodeProps, ImageLoaderProps {
 interface MediaNodeState {
   viewMediaClientConfig?: MediaClientConfig
   contextIdentifierProvider?: ContextIdentifierProvider
+  collabEditProvider?: CollabProvider
+  imageUrl: string
+  imageError: any
+  imageLoading: boolean
 }
 
 export class MediaNode extends Component<MediaNodeProps, MediaNodeState> {
   private mediaPluginState: MediaPluginState
 
-  state: MediaNodeState = {}
+  state: MediaNodeState = {
+    imageUrl: '',
+    imageError: '',
+    imageLoading: true
+  }
+
+  realtimeSubscription?: any
 
   constructor(props: MediaNodeProps) {
     super(props)
@@ -64,6 +81,9 @@ export class MediaNode extends Component<MediaNodeProps, MediaNodeState> {
     const hasNewViewMediaClientConfig =
       !this.state.viewMediaClientConfig && nextState.viewMediaClientConfig
     if (
+      this.state.imageLoading !== nextState.imageLoading ||
+      this.state.imageUrl !== nextState.imageUrl ||
+      this.state.imageError !== nextState.imageError ||
       this.props.selected !== nextProps.selected ||
       this.props.uploadComplete !== nextProps.uploadComplete ||
       this.props.node.attrs.id !== nextProps.node.attrs.id ||
@@ -84,16 +104,20 @@ export class MediaNode extends Component<MediaNodeProps, MediaNodeState> {
   async componentDidMount() {
     this.handleNewNode(this.props)
 
-    const { contextIdentifierProvider } = this.props
+    const { contextIdentifierProvider, collabEditProvider } = this.props
+
     this.setState({
-      contextIdentifierProvider: await contextIdentifierProvider
+      contextIdentifierProvider: await contextIdentifierProvider,
+      collabEditProvider: await collabEditProvider
     })
 
+    await this.fetchCozyImage()
     await this.setViewMediaClientConfig()
   }
 
   componentWillUnmount() {
     const { node } = this.props
+    this.realtimeSubscription?.unsubscribe()
     this.mediaPluginState.handleMediaNodeUnmount(node)
   }
 
@@ -148,6 +172,57 @@ export class MediaNode extends Component<MediaNodeProps, MediaNodeState> {
     }
   }
 
+  fetchCozyImage = async () => {
+    if (!this.state.collabEditProvider) throw Error(Errors.MissingCollabEdit)
+
+    const {
+      serviceClient,
+      config: { noteId }
+    } = this.state.collabEditProvider
+
+    try {
+      const res: {
+        included: {
+          attributes: {
+            willBeResized: boolean
+          }
+          id: string
+          links: { self: string }
+        }[]
+      } = await serviceClient.cozyClient.query(Q(CozyDoctypes.Files).getById(noteId))
+
+      if (!res) throw Error(Errors.CouldNotGetNoteImages)
+
+      const imageObject = res.included.find(
+        ({ id }) => id === this.props.node.attrs.url
+      )
+
+      if (!imageObject) throw Error(Errors.CouldNotFindFileInCurrentNote)
+
+      const imageLoading = imageObject.attributes.willBeResized
+
+      this.setState(
+        {
+          imageUrl: `${serviceClient.stackClient.uri}${imageObject.links.self}`,
+          imageError: '',
+          imageLoading
+        },
+        imageLoading && this.subscribeToImageUpdate()
+      )
+    } catch (error) {
+      this.setState({ imageError: error.message })
+    }
+  }
+
+  subscribeToImageUpdate = () =>
+    (this.realtimeSubscription = this.state.collabEditProvider?.serviceClient.realtime.subscribe(
+      RealTimeEvent.Updated,
+      CozyDoctypes.NoteEvents,
+      ({ _id }: { _id: string }) =>
+        this.props.node.attrs.url.includes(_id) &&
+        this.setState({ imageLoading: false })
+    ))
+
   render() {
     const {
       node,
@@ -164,6 +239,9 @@ export class MediaNode extends Component<MediaNodeProps, MediaNodeState> {
     const { id, type, collection, url, alt } = node.attrs
 
     if (
+      this.state.imageLoading ||
+      !this.state.imageUrl ||
+      this.state.imageError ||
       isLoading ||
       (type !== 'external' &&
         (!viewMediaClientConfig ||
@@ -181,7 +259,7 @@ export class MediaNode extends Component<MediaNodeProps, MediaNodeState> {
     const identifier: Identifier =
       type === 'external'
         ? {
-            dataURI: url!,
+            dataURI: this.state.imageUrl,
             name: url,
             mediaItemType: 'external-image'
           }

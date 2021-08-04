@@ -44,8 +44,7 @@ import {
   floatingLayouts,
   isRichMediaInsideOfBlockNode
 } from '@atlaskit/editor-core/utils/rich-media-utils'
-import { getAttrsFromUrl } from '@atlaskit/media-client'
-import { isMediaBlobUrlFromAttrs } from '../utils/media-common'
+import { cozyMediaOptions } from 'config/cozy-media-options'
 
 export interface MediaSingleNodeState {
   width?: number
@@ -225,26 +224,6 @@ export default class MediaSingleNode extends Component<
     const attrs = childNode.attrs as MediaADFAttrs
     let { width, height } = attrs
 
-    if (attrs.type === 'external') {
-      if (isMediaBlobUrlFromAttrs(attrs)) {
-        const urlAttrs = getAttrsFromUrl(attrs.url)
-        if (urlAttrs) {
-          const { width: urlWidth, height: urlHeight } = urlAttrs
-          width = width || urlWidth
-          height = height || urlHeight
-        }
-      }
-      const { width: stateWidth, height: stateHeight } = this.state
-
-      if (width === null) {
-        width = stateWidth || DEFAULT_IMAGE_WIDTH
-      }
-
-      if (height === null) {
-        height = stateHeight || DEFAULT_IMAGE_HEIGHT
-      }
-    }
-
     if (!width || !height) {
       width = DEFAULT_IMAGE_WIDTH
       height = DEFAULT_IMAGE_HEIGHT
@@ -417,9 +396,15 @@ class MediaSingleNodeView extends ReactNodeView<MediaSingleNodeViewProps> {
 
     return (
       <WithProviders
-        providers={['mediaProvider', 'contextIdentifierProvider']}
+        providers={[
+          'mediaProvider',
+          'contextIdentifierProvider',
+        ]}
         providerFactory={providerFactory}
-        renderNode={({ mediaProvider, contextIdentifierProvider }) => {
+        renderNode={({
+          mediaProvider,
+          contextIdentifierProvider,
+        }) => {
           return (
             <WithPluginState
               editorView={this.view}
@@ -436,7 +421,7 @@ class MediaSingleNodeView extends ReactNodeView<MediaSingleNodeViewProps> {
                     getPos={getPos}
                     mediaProvider={mediaProvider}
                     contextIdentifierProvider={contextIdentifierProvider}
-                    mediaOptions={mediaOptions}
+                    mediaOptions={{ ...mediaOptions, ...cozyMediaOptions }}
                     view={this.view}
                     fullWidthMode={fullWidthMode}
                     selected={this.isNodeSelected}

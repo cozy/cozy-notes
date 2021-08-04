@@ -15,6 +15,7 @@ const returnUrlKey = 'returnUrl'
 
 export function getReturnUrl() {
   const searchParams = new URLSearchParams(window.location.search)
+  // eslint-disable-next-line no-unused-vars
   for (const [key, value] of searchParams) {
     if (key === returnUrlKey) {
       return value
