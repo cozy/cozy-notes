@@ -6078,16 +6078,16 @@ cozy-bar@7.7.8:
     redux-thunk "2.3.0"
 
 cozy-client@^23.17.3:
-  version "23.17.3"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-23.17.3.tgz#143da2bb1815effcb468ce0c483feb913026f563"
-  integrity sha512-xOGzqoVf7TAGMHJ7EpUmcuwFpYRRwpGNbJL0ol/BAvdiVAalk3CEaoKdZvJUw6Abb9U8YnYF44Ug6hwNzMZGGg==
+  version "23.18.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-23.18.0.tgz#f61ed118d0764755ee9a3c2dfd3eef42e37a73ae"
+  integrity sha512-OVxYMg/h/fZ7LrFhqQNlSKaN8m5tNe19mRGx7iLrPY2U2sYbp7uxvtEAea5qOfaAdUMy02Zoe1yE0LjFVXOSsQ==
   dependencies:
     "@cozy/minilog" "1.0.0"
     btoa "^1.2.1"
     cozy-device-helper "^1.12.0"
     cozy-flags "2.7.1"
     cozy-logger "^1.6.0"
-    cozy-stack-client "^23.17.0"
+    cozy-stack-client "^23.18.0"
     json-stable-stringify "^1.0.1"
     lodash "^4.17.13"
     microee "^0.0.6"
@@ -6371,10 +6371,10 @@ cozy-sharing@3.3.1:
     react-autosuggest "^9.4.3"
     react-tooltip "^3.11.1"
 
-cozy-stack-client@^23.17.0:
-  version "23.17.0"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-23.17.0.tgz#db95568c7989e8a5e7961eb81249ca5bd6d14220"
-  integrity sha512-b/cWNBvGw3dyogQLS9hvVrQyOFm4qXVdHXj9RU1aLjywy6O+Bt3OlMJh5RFeLFKuDrv51D0/G1bDXQ8iC163jQ==
+cozy-stack-client@^23.18.0:
+  version "23.18.0"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-23.18.0.tgz#d80e3b3c27cd6d14b8130292e06c2f1c10131f2e"
+  integrity sha512-bnZpPeg0ps/pA+xn9n/qSIZR+KLMB+E/FPYjfkmeks0cWVoyJ+qxERUDu1TGrnFXNNiu8oTJ9gd8Lbu0Gy31DQ==
   dependencies:
     cozy-flags "2.7.1"
     detect-node "^2.0.4"
