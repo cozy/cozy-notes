@@ -25,7 +25,7 @@ const extraConfig = {
       )]: path.resolve(__dirname, './src/plugins/media/index.tsx'),
       ['@atlaskit/editor-core']: path.resolve(
         __dirname,
-        'node_modules/@atlaskit/editor-core/src'
+        'node_modules/cozy-editor-core/src'
       ),
       // The app will not work if we don't use a single version
       // Updating every atlaskit dependency at the same time should help
