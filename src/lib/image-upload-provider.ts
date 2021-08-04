@@ -21,6 +21,8 @@ export const imageUploadProvider = (
   Promise.resolve<ImageUploadProvider>((_event, insertImageFn) => {
     const inputElement = document.createElement(ElementType.Input)
 
+    inputElement.setAttribute('accept', 'image/*')
+
     inputElement.type = InputType.File
 
     inputElement.dispatchEvent(new MouseEvent(EventType.Click))
