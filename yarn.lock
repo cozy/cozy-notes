@@ -5866,17 +5866,17 @@ cozy-editor-core@134.0.3:
     uuid "^3.1.0"
     w3c-keyname "^2.1.0"
 
-cozy-flags@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-flags/-/cozy-flags-2.1.0.tgz#46eda64317da44f357d37241cc160189b83878c9"
-  integrity sha512-oESKiuBzcJxrnH4Md/qWoeo3oteZNIjPzzugYU8OG6lXtbxcP5fvoFe26M2B7YAw3PDIIQuLicukao8g+yc+0g==
-  dependencies:
-    microee "^0.0.6"
-
 cozy-flags@2.7.1:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/cozy-flags/-/cozy-flags-2.7.1.tgz#f37251fee248ef9bef079a22bc52954f1a892dfc"
   integrity sha512-TtVhuyMSRADRr4q5LSaRjq6u03S5m1zkZRc8n3q8bfad86FizqGC02m3e/Zh4kWTwnsO0pVW+mzeVSsBqDVT/g==
+  dependencies:
+    microee "^0.0.6"
+
+cozy-flags@2.7.2:
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/cozy-flags/-/cozy-flags-2.7.2.tgz#eb0138c7538a1be3eaf94c28358075208f43351a"
+  integrity sha512-ZGuuVTiZXVlCEQ+ZWlpyCna4xb50qcgDMR7IuLd0n4O2XkUCkND6awjepGqq4F1/EE/ydZb4Zj2JGcLjUluxuQ==
   dependencies:
     microee "^0.0.6"
 
