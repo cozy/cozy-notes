@@ -36,7 +36,7 @@
     "@testing-library/react": "9.5.0",
     "@testing-library/react-hooks": "3.7.0",
     "babel-jest": "24.9.0",
-    "babel-preset-cozy-app": "1.7.0",
+    "babel-preset-cozy-app": "1.11.0",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.5",
     "eslint-plugin-prettier": "3.4.0",
