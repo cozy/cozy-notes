@@ -21,7 +21,7 @@ const extraConfig = {
       ),
       [path.resolve(
         __dirname,
-        'node_modules/@atlaskit/editor-core/src/plugins/media/index.tsx'
+        'node_modules/cozy-editor-core/src/plugins/media/index.tsx'
       )]: path.resolve(__dirname, './src/plugins/media/index.tsx'),
       ['@atlaskit/editor-core']: path.resolve(
         __dirname,
