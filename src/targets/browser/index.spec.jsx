@@ -22,13 +22,13 @@ describe('app init', () => {
   })
 
   it('loads with the users locale', () => {
-    getDataset.mockReturnValue({ cozyLocale: 'fr' })
+    getDataset.mockReturnValue({ locale: 'fr', app: {} })
     const { appLocale } = initApp()
     expect(appLocale).toEqual('fr')
   })
 
   it('falls back to a supported locale', () => {
-    getDataset.mockReturnValue({ cozyLocale: 'made-up-locale' })
+    getDataset.mockReturnValue({ locale: 'made-up-locale', app: {} })
     const { appLocale } = initApp()
     expect(appLocale).toEqual('en')
   })

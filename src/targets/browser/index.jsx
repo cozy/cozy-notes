@@ -86,36 +86,35 @@ const renderApp = function(appLocale, client, isPublic) {
 // initial rendering of the application
 export const initApp = () => {
   const data = getDataset()
-
   const appIcon = getDataOrDefault(
-    data.cozyIconPath,
+    data.app.icon,
     require('../vendor/assets/icon.svg')
   )
   const appNamePrefix = getDataOrDefault(
-    data.cozyAppNamePrefix || manifest.name_prefix,
+    data.app.prefix || manifest.name_prefix,
     ''
   )
-  const appName = getDataOrDefault(data.cozyAppName, manifest.name)
-  const appSlug = getDataOrDefault(data.cozyAppSlug, manifest.slug)
-  const appVersion = getDataOrDefault(data.cozyAppVersion, manifest.version)
+  const appName = getDataOrDefault(data.app.name, manifest.name)
+  const appSlug = getDataOrDefault(data.app.slug, manifest.slug)
+  const appVersion = getDataOrDefault(data.app.version, manifest.version)
 
   const supportedLocales = ['en', 'fr']
 
   addLocaleData(locales.en.react)
   addLocaleData(locales.fr.react)
 
-  const userLocale = getDataOrDefault(data.cozyLocale, 'en')
+  const userLocale = getDataOrDefault(data.locale, 'en')
   const appLocale = supportedLocales.includes(userLocale) ? userLocale : 'en'
 
   const protocol = window.location ? window.location.protocol : 'https:'
 
   const shareCode = getPublicSharecode()
-  const token = shareCode || data.cozyToken
+  const token = shareCode || data.token
   const isPublic = shareCode || !token || token == ''
 
   // initialize the client to interact with the cozy stack
   const client = new CozyClient({
-    uri: `${protocol}//${data.cozyDomain}`,
+    uri: `${protocol}//${data.domain}`,
     token: token,
     appMetadata: {
       slug: appSlug,

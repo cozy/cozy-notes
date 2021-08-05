@@ -122,14 +122,14 @@ export function getFolderLink(id) {
 
 export function getDriveLink(client, id = null) {
   const cozyURL = new URL(client.getStackClient().uri)
-  const { cozySubdomainType } = client.getInstanceOptions()
+  const { subdomain } = client.getInstanceOptions()
   const driveSlug = 'drive'
   const pathForDrive = id !== null ? getFolderLink(id) : ''
 
   const webUrl = generateWebLink({
     cozyUrl: cozyURL.origin,
     slug: driveSlug,
-    subDomainType: cozySubdomainType,
+    subDomainType: subdomain,
     nativePath: pathForDrive
   })
 
@@ -143,10 +143,10 @@ export function getParentFolderLink(client, file) {
 export function getAppFullName() {
   const dataset = getDataset()
   const appNamePrefix = getDataOrDefault(
-    dataset.cozyAppNamePrefix || manifest.name_prefix,
+    dataset.app.prefix || manifest.name_prefix,
     ''
   )
-  const appName = getDataOrDefault(dataset.cozyAppName, manifest.name)
+  const appName = getDataOrDefault(dataset.app.name, manifest.name)
   return appNamePrefix != '' ? `${appNamePrefix} ${appName}` : appName
 }
 
