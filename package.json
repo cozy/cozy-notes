@@ -39,7 +39,7 @@
     "babel-preset-cozy-app": "1.7.0",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.5",
-    "eslint-plugin-prettier": "3.1.2",
+    "eslint-plugin-prettier": "3.4.0",
     "eslint-plugin-react": "7.24.0",
     "git-directory-deploy": "1.5.1",
     "install-peers": "1.0.3",
