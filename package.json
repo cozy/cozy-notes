@@ -34,7 +34,7 @@
   "homepage": "https://github.com/cozy/cozy-notes#readme",
   "devDependencies": {
     "@testing-library/react": "9.5.0",
-    "@testing-library/react-hooks": "3.2.1",
+    "@testing-library/react-hooks": "3.7.0",
     "babel-jest": "24.9.0",
     "babel-preset-cozy-app": "1.7.0",
     "enzyme": "3.11.0",
