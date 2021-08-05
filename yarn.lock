@@ -565,7 +565,7 @@
     react-uid "^2.2.0"
     tiny-invariant "^0.0.3"
 
-"@atlaskit/icon-file-type@^6.0.0", "@atlaskit/icon-file-type@^6.1.0", "@atlaskit/icon-file-type@^6.3.0":
+"@atlaskit/icon-file-type@^6.1.0", "@atlaskit/icon-file-type@^6.3.0":
   version "6.3.4"
   resolved "https://registry.yarnpkg.com/@atlaskit/icon-file-type/-/icon-file-type-6.3.4.tgz#a569675bbbb5017f3f79cdb0cd4c8ac7ed0f60b7"
   integrity sha512-Vnu2uq+JETt3ZGm6GzuWBQBVDNVemxXJ+AaNyt8bnQutXOi7ZKQsmm+if6aiku2ZQ/69gfOB4io3PZYmNFg5Gw==
@@ -573,7 +573,7 @@
     "@atlaskit/icon" "^21.5.0"
     "@babel/runtime" "^7.0.0"
 
-"@atlaskit/icon-object@^6.0.0", "@atlaskit/icon-object@^6.0.1", "@atlaskit/icon-object@^6.1.0", "@atlaskit/icon-object@^6.2.0":
+"@atlaskit/icon-object@^6.0.1", "@atlaskit/icon-object@^6.1.0", "@atlaskit/icon-object@^6.2.0":
   version "6.2.5"
   resolved "https://registry.yarnpkg.com/@atlaskit/icon-object/-/icon-object-6.2.5.tgz#bdbac368d1514b1ef2481cf023bc63bd8094702c"
   integrity sha512-S1H7Fu14bYefITaB9Cc/rZx0TNChp5omDzBiiQuvAjEkCHbAeUf3y5cDEYTuRiLXsOSEXgsHxy1JqNA9Uet4mA==
@@ -879,40 +879,6 @@
     url "^0.11.0"
     uuid "^3.1.0"
     uuid-validate "^0.0.3"
-
-"@atlaskit/media-ui@^14.3.0":
-  version "14.4.0"
-  resolved "https://registry.yarnpkg.com/@atlaskit/media-ui/-/media-ui-14.4.0.tgz#cef4263db18cc41876b47b2d16a8930e130b6457"
-  integrity sha512-w9teZTdU6wddDLuW1IzFmrLfL5cE8r7IAJGHtLrar9R3fDE7UjKRsDFXn7T00c1KZxjj5gmVWhD8gjgaWELGfQ==
-  dependencies:
-    "@atlaskit/avatar" "^20.0.0"
-    "@atlaskit/avatar-group" "^8.0.0"
-    "@atlaskit/button" "^15.1.0"
-    "@atlaskit/droplist" "^11.0.0"
-    "@atlaskit/field-base" "^15.0.0"
-    "@atlaskit/icon" "^21.1.0"
-    "@atlaskit/icon-file-type" "^6.0.0"
-    "@atlaskit/item" "^12.0.0"
-    "@atlaskit/lozenge" "^10.0.0"
-    "@atlaskit/media-common" "^2.4.0"
-    "@atlaskit/modal-dialog" "^11.2.0"
-    "@atlaskit/page" "^12.0.0"
-    "@atlaskit/select" "^13.1.0"
-    "@atlaskit/spinner" "^15.0.0"
-    "@atlaskit/textfield" "^4.0.0"
-    "@atlaskit/theme" "^11.0.0"
-    "@atlaskit/tooltip" "^17.1.0"
-    "@atlaskit/width-detector" "^3.0.0"
-    "@babel/runtime" "^7.0.0"
-    "@emotion/core" "^10.0.9"
-    blueimp-load-image "2.19.0"
-    bytes "^2.4.0"
-    exenv "^1.2.2"
-    facepaint "^1.2.1"
-    lodash "^4.17.15"
-    png-chunks-extract "^1.0.0"
-    react-render-image "^1.1.3"
-    react-video-renderer "^2.4.5"
 
 "@atlaskit/media-ui@^15.2.0":
   version "15.3.2"
@@ -1250,33 +1216,7 @@
     react-uid "^2.2.0"
     shallow-equal "^1.0.0"
 
-"@atlaskit/smart-card@14.6.1":
-  version "14.6.1"
-  resolved "https://registry.yarnpkg.com/@atlaskit/smart-card/-/smart-card-14.6.1.tgz#199229f4b7b8a5320735c1c814ff87547ad74efd"
-  integrity sha512-VFnHEcUET4jZW1Cs2ALdYxpDj4WnjOmsoPhEzuSO/rzSz/3Q1uK25yyvYV6tDifg0D4r/OaLcF3BIdoq7tKAqw==
-  dependencies:
-    "@atlaskit/analytics-gas-types" "^5.0.0"
-    "@atlaskit/analytics-next" "^8.0.0"
-    "@atlaskit/button" "^15.1.0"
-    "@atlaskit/icon" "^21.1.0"
-    "@atlaskit/icon-file-type" "^6.0.0"
-    "@atlaskit/icon-object" "^6.0.0"
-    "@atlaskit/logo" "^13.0.0"
-    "@atlaskit/media-ui" "^14.3.0"
-    "@atlaskit/outbound-auth-flow-client" "^3.1.0"
-    "@atlaskit/theme" "^11.0.0"
-    "@babel/runtime" "^7.0.0"
-    "@testing-library/react-hooks" "^1.0.4"
-    async-retry "^1.2.3"
-    bottleneck "^2.19.5"
-    dataloader "^1.4.0"
-    json-ld-types "^2.1.7"
-    react-lazily-render "^1.2.0"
-    react-loadable "^5.1.0"
-    redux "^3.7.2"
-    uuid "^3.1.0"
-
-"@atlaskit/smart-card@^14.6.0":
+"@atlaskit/smart-card@14.8.5", "@atlaskit/smart-card@^14.6.0":
   version "14.8.5"
   resolved "https://registry.yarnpkg.com/@atlaskit/smart-card/-/smart-card-14.8.5.tgz#b7285f6432c3ffe6b46bcae80d4cf32d39fcf77d"
   integrity sha512-Or38z/ziRUHY5NTcP2RMn9+wsnB14Jnar1+fx8u/+0bJRgXPCVJHlmaCO5+3LrQKnVoBDQhcj9aldVlj8F/K9A==
@@ -13317,7 +13257,7 @@ react-uid@^2.2.0:
   dependencies:
     tslib "^1.10.0"
 
-react-video-renderer@^2.4.5, react-video-renderer@^2.4.8:
+react-video-renderer@^2.4.8:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/react-video-renderer/-/react-video-renderer-2.5.1.tgz#af12947ca1af60252c9b4701b35b5dbba7363b25"
   integrity sha512-Vey+5fgEg9AbWM+p5lofWu8XihhxVJAKeNyXLgUlDDBkgupmtSgx+oZM7v9avd/8pHmLH6PintG8Ygi0I0+JuA==
