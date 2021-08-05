@@ -758,10 +758,10 @@
     "@atlaskit/section-message" "^6.0.0"
     "@babel/runtime" "^7.0.0"
 
-"@atlaskit/media-core@32.1.2":
-  version "32.1.2"
-  resolved "https://registry.yarnpkg.com/@atlaskit/media-core/-/media-core-32.1.2.tgz#1b3b5ff8e96f1f4e97afe114854e23a41e0c4e66"
-  integrity sha512-cjP1kbGT1JJrPwrNPl3aWrgFghN5WGsDYmRE/AAQNPFEuzrDKqigIrfm87OTBtMoD0e8OS2BuvkuLggSRzq+Jg==
+"@atlaskit/media-core@32.2.0":
+  version "32.2.0"
+  resolved "https://registry.yarnpkg.com/@atlaskit/media-core/-/media-core-32.2.0.tgz#63a0ecb7998d48b49f8ea901398872a732f50623"
+  integrity sha512-QAAO0gOvWGj/0Qoe6DL/DCsOpELDNPnr49P2bTHY8z3wB6c77EcBB+zHpr/d/Zbv+wFs/9M8+p3/UZ/9Tze6ug==
   dependencies:
     "@babel/runtime" "^7.0.0"
     eventemitter2 "^4.1.0"
@@ -10787,13 +10787,7 @@ mini-css-extract-plugin@0.5.0:
     schema-utils "^1.0.0"
     webpack-sources "^1.1.0"
 
-minilog@3.1.0:
-  version "3.1.0"
-  resolved "git+https://github.com/cozy/minilog.git#6da0aa58759c4f1a1a7e0fd093dbe2a67c035c55"
-  dependencies:
-    microee "0.0.6"
-
-"minilog@https://github.com/cozy/minilog.git#master":
+minilog@3.1.0, "minilog@https://github.com/cozy/minilog.git#master":
   version "3.1.0"
   uid "6da0aa58759c4f1a1a7e0fd093dbe2a67c035c55"
   resolved "https://github.com/cozy/minilog.git#6da0aa58759c4f1a1a7e0fd093dbe2a67c035c55"
