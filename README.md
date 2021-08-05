@@ -31,18 +31,29 @@ $ yarn install
 Cozy's apps use a standard set of _npm scripts_ to run common tasks, like watch, lint, test, build…
 
 
-### Run it inside a Cozy using Docker
+### Run it inside the VM
 
-You can run your application inside a Cozy thanks to the [cozy-stack docker image][cozy-stack-docker]:
+First, you need to install `docker` and our `cozy-app-dev` image. See how to in our [install the development environment documentation][setup]
+
+Then, you need to build at least once the `Notes` app before running the docker image:
 
 ```sh
-# in a terminal, run your app in watch mode with a docker running Cozy
-$ cd cozy-notes
 $ yarn start
 ```
 
-After the build and the stack launched, your app is now available at http://cozy-notes.cozy.tools:8080.
+Then, in an other process, you can run the docker image: 
 
+```sh
+$ yarn stack:docker:dev
+```
+
+Your app is now available at http://app.cozy.localhost:8080.
+
+Password is `cozy` by default.
+
+This command uses the [cozy-stack docker image][cozy-stack-docker].
+
+By launching this `stack:docker:dev` command, you disable our Content Security Policy (CSP) (which are very restrictive by default) to have access to the HMR. Don't forget to test your builded application (not watched) using `stack:docker:prod` to activate them.
 
 ### Living on the edge
 
