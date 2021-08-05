@@ -51,7 +51,7 @@
   "dependencies": {
     "@atlaskit/icon": "21.1.0",
     "@atlaskit/media-core": "32.1.2",
-    "@atlaskit/smart-card": "14.6.1",
+    "@atlaskit/smart-card": "14.8.5",
     "@babel/preset-env": "^7.14.7",
     "@babel/preset-typescript": "^7.14.5",
     "@babel/runtime": "^7.0.0",
