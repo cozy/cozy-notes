@@ -66,7 +66,7 @@ export class MediaNode extends Component<MediaNodeProps, MediaNodeState> {
   state: MediaNodeState = {
     imageUrl: '',
     imageError: '',
-    imageLoading: true
+    imageLoading: true,
   }
 
   realtimeSubscription?: any
@@ -81,7 +81,6 @@ export class MediaNode extends Component<MediaNodeProps, MediaNodeState> {
     const hasNewViewMediaClientConfig =
       !this.state.viewMediaClientConfig && nextState.viewMediaClientConfig
     if (
-      this.state.imageLoading !== nextState.imageLoading ||
       this.state.imageUrl !== nextState.imageUrl ||
       this.state.imageError !== nextState.imageError ||
       this.props.selected !== nextProps.selected ||
@@ -111,7 +110,13 @@ export class MediaNode extends Component<MediaNodeProps, MediaNodeState> {
       collabEditProvider: await collabEditProvider
     })
 
+    // Subscribe as soon as we have collabEditProvider
+    // This will allow realtime management of the image during the lifecycle of the component
+    this.realtimeSubscription = this.subscribeToImageUpdate()
+
+    // In any case we can try to fetch the image ASAP because it might be ready (page refresh/load)
     await this.fetchCozyImage()
+
     await this.setViewMediaClientConfig()
   }
 
@@ -172,7 +177,10 @@ export class MediaNode extends Component<MediaNodeProps, MediaNodeState> {
     }
   }
 
-  fetchCozyImage = async () => {
+  // We will display the node image only if the server has finished converting it
+  fetchCozyImage = async (): Promise<void> => {
+    this.setState({imageError: ''})
+
     if (!this.state.collabEditProvider) throw Error(Errors.MissingCollabEdit)
 
     const {
@@ -181,6 +189,10 @@ export class MediaNode extends Component<MediaNodeProps, MediaNodeState> {
     } = this.state.collabEditProvider
 
     try {
+      // Type casting the response inline is not the best solution
+      // It still has to be improved upon asap
+      // Maybe the best way here is to create an interface from scratch
+      // for the collabEditProvider specific to the Cozy-Notes application
       const res: {
         included: {
           attributes: {
@@ -189,7 +201,9 @@ export class MediaNode extends Component<MediaNodeProps, MediaNodeState> {
           id: string
           links: { self: string }
         }[]
-      } = await serviceClient.cozyClient.query(Q(CozyDoctypes.Files).getById(noteId))
+      } = await serviceClient.cozyClient.query(
+        Q(CozyDoctypes.Files).getById(noteId)
+      )
 
       if (!res) throw Error(Errors.CouldNotGetNoteImages)
 
@@ -199,29 +213,27 @@ export class MediaNode extends Component<MediaNodeProps, MediaNodeState> {
 
       if (!imageObject) throw Error(Errors.CouldNotFindFileInCurrentNote)
 
-      const imageLoading = imageObject.attributes.willBeResized
-
-      this.setState(
-        {
+      !imageObject.attributes.willBeResized &&
+        this.setState({
           imageUrl: `${serviceClient.stackClient.uri}${imageObject.links.self}`,
-          imageError: '',
-          imageLoading
-        },
-        imageLoading && this.subscribeToImageUpdate()
-      )
+          imageLoading: false
+        })
     } catch (error) {
       this.setState({ imageError: error.message })
     }
   }
 
-  subscribeToImageUpdate = () =>
-    (this.realtimeSubscription = this.state.collabEditProvider?.serviceClient.realtime.subscribe(
+  // Should create a type for CC WebSocket subscriptions
+  // Void is kinda correct for now
+  subscribeToImageUpdate = (): void =>
+    this.state.collabEditProvider?.serviceClient.realtime.subscribe(
       RealTimeEvent.Updated,
       CozyDoctypes.NoteEvents,
-      ({ _id }: { _id: string }) =>
-        this.props.node.attrs.url.includes(_id) &&
-        this.setState({ imageLoading: false })
-    ))
+      this.state.collabEditProvider.config.noteId,
+      ({ image_id }: { image_id: string }) =>{
+        this.props.node.attrs.url.includes(image_id) &&
+        this.setState({ imageLoading: true }, this.fetchCozyImage)}
+    )
 
   render() {
     const {
