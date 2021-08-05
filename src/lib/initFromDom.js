@@ -2,7 +2,7 @@ import 'url-search-params-polyfill'
 
 export const getDataset = function() {
   const root = document.querySelector('[role=application]')
-  return root.dataset
+  return JSON.parse(root.dataset.cozy)
 }
 
 // return a defaultData if the template hasn't been replaced by cozy-stack

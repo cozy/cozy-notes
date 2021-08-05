@@ -96,7 +96,7 @@ const App = ({ isPublic }) => {
   let appName = ''
   if (isMobile) {
     const data = client.getInstanceOptions()
-    appName = getDataOrDefault(data.cozyAppName, manifest.name)
+    appName = getDataOrDefault(data.app.name, manifest.name)
   }
   const { BarCenter } = cozy.bar
   const FlagSwitcher = useFlagSwitcher()
