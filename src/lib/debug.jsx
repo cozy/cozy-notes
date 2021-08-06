@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
-import { useFlag } from 'cozy-flags'
+import useFlag from 'cozy-flags/dist/useFlag'
+import FlagSwitcher from 'cozy-flags/dist/FlagSwitcher'
 import set from 'lodash/set'
 import get from 'lodash/get'
-import flag, { FlagSwitcher } from 'cozy-flags'
+import flag from 'cozy-flags'
 
 import { getVersion, sendableSteps } from 'prosemirror-collab'
 
