@@ -35,6 +35,8 @@
   "devDependencies": {
     "@testing-library/react": "9.5.0",
     "@testing-library/react-hooks": "3.7.0",
+    "@babel/preset-env": "^7.15.0",
+    "@babel/preset-typescript": "^7.15.0",
     "babel-jest": "24.9.0",
     "babel-preset-cozy-app": "1.11.0",
     "enzyme": "3.11.0",
@@ -52,14 +54,11 @@
     "@atlaskit/icon": "21.1.0",
     "@atlaskit/media-core": "32.2.0",
     "@atlaskit/smart-card": "14.8.5",
-    "@babel/preset-env": "^7.14.7",
-    "@babel/preset-typescript": "^7.14.5",
-    "@babel/runtime": "^7.0.0",
     "@material-ui/core": "4.12.3",
     "@material-ui/styles": "4.11.4",
     "classnames": "2.3.1",
     "cozy-bar": "7.16.0",
-    "cozy-client": "23.18.0",
+    "cozy-client": "23.18.1",
     "cozy-device-helper": "1.12.0",
     "cozy-doctypes": "1.82.2",
     "cozy-editor-core": "134.0.3",
@@ -75,11 +74,10 @@
     "react-dom": "16.12.0",
     "react-intl": "2.9.0",
     "react-router-dom": "5.2.0",
-    "react-select": "4.3.1",
     "rxjs": "5.5.12",
     "styled-components": "3.4.10",
     "url-search-params-polyfill": "7.0.1",
-    "utf-8-validate": "5.0.2"
+    "utf-8-validate": "5.0.5"
   },
   "resolutions": {
     "prosemirror-model": "1.11.0"

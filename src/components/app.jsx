@@ -93,13 +93,14 @@ const App = ({ isPublic }) => {
   const { isMobile } = useBreakpoints
   const { ClientErrors } = useClientErrors()
 
-  let appName = ''
-  if (isMobile) {
-    const data = client.getInstanceOptions()
-    appName = getDataOrDefault(data.app.name, manifest.name)
-  }
+  const appName = isMobile
+    ? getDataOrDefault(client.getInstanceOptions().app.name, manifest.name)
+    : ''
+
   const { BarCenter } = cozy.bar
+
   const FlagSwitcher = useFlagSwitcher()
+
   return (
     <BreakpointsProvider>
       <HashRouter>
