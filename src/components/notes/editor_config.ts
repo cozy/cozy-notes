@@ -1,5 +1,4 @@
-import { EditorProps } from '@atlaskit/editor-core/src'
-import { PermittedLayoutsDescriptor } from '@atlaskit/editor-core/src/plugins/table/types'
+import { EditorProps } from '@atlaskit/editor-core'
 
 // if you change something here,
 // you should update /lib/collab/schema.js
@@ -17,7 +16,7 @@ const editorConfig: EditorProps = {
     allowBackgroundColor: true,
     allowHeaderRow: true,
     allowHeaderColumn: true,
-    permittedLayouts: 'all' as PermittedLayoutsDescriptor,
+    permittedLayouts: 'all',
     stickToolbarToBottom: true
   },
   allowPanel: true,

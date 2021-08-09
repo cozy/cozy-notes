@@ -10,7 +10,8 @@ interface CollabProvider {
     postImage: (
       name: string,
       noteId: string,
-      file: ArrayBuffer
+      file: ArrayBuffer,
+      type: string
     ) => Promise<{ data: { id: string } }>
   }
 }
@@ -35,7 +36,7 @@ export const imageUploadProvider = (
 
       reader.readAsArrayBuffer(file)
 
-      reader.onloadend = async () => {
+      reader.onloadend = async (): Promise<void> => {
         const processedFile = processFile(reader.result)
 
         if (!processedFile) throw Error(Errors.FileNotProcessable)
