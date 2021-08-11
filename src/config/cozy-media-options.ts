@@ -1,4 +1,4 @@
-import { MediaOptions } from '@atlaskit/editor-core/src'
+import { MediaOptions } from '@atlaskit/editor-core'
 
 export const cozyMediaOptions: MediaOptions = {
   allowResizing: true,
