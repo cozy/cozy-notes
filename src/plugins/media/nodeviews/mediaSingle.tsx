@@ -45,6 +45,11 @@ import {
   isRichMediaInsideOfBlockNode
 } from '@atlaskit/editor-core/utils/rich-media-utils'
 import { cozyMediaOptions } from 'config/cozy-media-options'
+import {
+  firefoxElement,
+  initFirefoxDrag,
+  removeFirefoxDrag
+} from 'lib/patches/firefox-drag'
 
 export interface MediaSingleNodeState {
   width?: number
@@ -162,6 +167,15 @@ export default class MediaSingleNode extends Component<
     this.setState({
       contextIdentifierProvider: await contextIdentifierProvider
     })
+
+    // ❗ If we're not in a Firefox context, this will not throw but return undefined
+    // This patch is necessary or images can disappear when dropping them on paragraphs
+    initFirefoxDrag(firefoxElement())
+  }
+
+  componentWillUnmount() {
+    // Good memory management requires that we opt for removing the Firefox listeners when unmounting
+    removeFirefoxDrag(firefoxElement())
   }
 
   selectMediaSingle = ({ event }: CardEvent) => {
@@ -396,15 +410,9 @@ class MediaSingleNodeView extends ReactNodeView<MediaSingleNodeViewProps> {
 
     return (
       <WithProviders
-        providers={[
-          'mediaProvider',
-          'contextIdentifierProvider',
-        ]}
+        providers={['mediaProvider', 'contextIdentifierProvider']}
         providerFactory={providerFactory}
-        renderNode={({
-          mediaProvider,
-          contextIdentifierProvider,
-        }) => {
+        renderNode={({ mediaProvider, contextIdentifierProvider }) => {
           return (
             <WithPluginState
               editorView={this.view}
