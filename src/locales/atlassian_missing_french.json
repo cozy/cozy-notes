@@ -6,5 +6,8 @@
     "fabric.editor.linkAddress": "Adresse du lien",
     "fabric.editor.layoutWide": "Élargir",
     "fabric.editor.layoutFullWidth": "Pleine largeur",
-    "fabric.editor.layoutFixedWidth": "Retour au centre"
+    "fabric.editor.layoutFixedWidth": "Retour au centre",
+    "fabric.editor.alignImageLeft": "Aligner l'image à gauche",
+    "fabric.editor.alignImageCenter": "Centrer l'image",
+    "fabric.editor.alignImageRight": "Aligner l'image à droite"
 }
