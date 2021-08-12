@@ -89,7 +89,9 @@
     "unshared_text": "Le propriétaire a peut-être révoqué ce partage. Vous ne pouvez plus éditer de note à cette adresse.",
     "loading_error_title": "La note n'a pas pu être chargée",
     "loading_error_text_noReturnUrl": "Cette note n'existe peut-être plus, ou nos serveurs ont peut-être un moment d'égarrement. Merci de retenter plus tard.",
-    "loading_error_text_returnUrl": "Cette note n'existe peut-être plus, ou nos serveurs ont peut-être un moment d'égarrement. Merci revenir <a href='%{url}'>en arrière</a> et de retenter plus tard."
+    "loading_error_text_returnUrl": "Cette note n'existe peut-être plus, ou nos serveurs ont peut-être un moment d'égarrement. Merci revenir <a href='%{url}'>en arrière</a> et de retenter plus tard.",
+    "422": "Seules les images sont acceptées",
+    "unknown_error": "Une erreur inattendue s'est produite"
   },
   "manifest": {
     "short_description": "Cozy Notes est votre application de prise de notes personnelles et collaboratives.",

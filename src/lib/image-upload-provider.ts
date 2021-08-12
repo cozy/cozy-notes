@@ -1,6 +1,8 @@
 import { ImageUploadProvider } from '@atlaskit/editor-common/dist/types/provider-factory'
 import { ElementType, Errors, EventType, InputType } from 'constants/strings'
 import { processFile } from 'lib/utils/process-file'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import { isCozyStackError } from 'types/guards'
 
 interface CollabProvider {
   config: {
@@ -17,7 +19,8 @@ interface CollabProvider {
 }
 
 export const imageUploadProvider = (
-  collabProvider: CollabProvider
+  collabProvider: CollabProvider,
+  t: (error: string) => string
 ): Promise<ImageUploadProvider> =>
   Promise.resolve<ImageUploadProvider>((_event, insertImageFn) => {
     const inputElement = document.createElement(ElementType.Input)
@@ -41,16 +44,26 @@ export const imageUploadProvider = (
 
         if (!processedFile) throw Error(Errors.FileNotProcessable)
 
-        const {
-          data: { id: src }
-        } = await collabProvider.serviceClient.postImage(
-          file.name,
-          collabProvider.config.noteId,
-          processedFile,
-          file.type
-        )
+        try {
+          const {
+            data: { id: src }
+          } = await collabProvider.serviceClient.postImage(
+            file.name,
+            collabProvider.config.noteId,
+            processedFile,
+            file.type
+          )
 
-        insertImageFn({ src })
+          insertImageFn({ src })
+        } catch (error) {
+          Alerter.error(
+            t(
+              isCozyStackError(error)
+                ? `Error.${error.status}`
+                : 'Error.unknown_error'
+            )
+          )
+        }
       }
     })
   })
