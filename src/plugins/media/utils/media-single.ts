@@ -307,7 +307,7 @@ export const calcMediaPxWidth = (opts: {
         }
         return calculatedPctWidth
       }
-      return Math.min(calculatedPctWidth, origWidth)
+      return Math.max(calculatedPctWidth, origWidth)
     }
     if (calculatedResizedPctWidth) {
       return calculatedResizedPctWidth
