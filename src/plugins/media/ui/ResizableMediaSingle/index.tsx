@@ -24,6 +24,7 @@ import { calcMediaPxWidth } from '../../utils/media-single'
 import { getPluginState } from '@atlaskit/editor-core/plugins/table/pm-plugins/table-resizing/plugin-factory'
 import { ColumnResizingPluginState } from '@atlaskit/editor-core/plugins/table/types'
 import { calculateSnapPoints } from '@atlaskit/editor-core/utils/rich-media-utils'
+import { SNAP_POINTS } from 'constants/media'
 
 type State = {
   offsetLeft: number
@@ -70,6 +71,11 @@ export default class ResizableMediaSingle extends React.Component<
     if (viewMediaClientConfig) {
       await this.checkVideoFile(viewMediaClientConfig)
     }
+
+    // Without this, the component doesn't know the image has been resized and will always go back to the min width if we recenter the image.
+    // We have to use state and not props directly because the sizing algo rely on it. So it's simpler to patch the didMount than the algorithm
+    this.props.pctWidth &&
+      this.setState({ resizedPctWidth: this.props.pctWidth })
   }
 
   UNSAFE_componentWillReceiveProps(nextProps: Props) {
@@ -373,7 +379,7 @@ export default class ResizableMediaSingle extends React.Component<
           selected={selected}
           enable={enable}
           calcNewSize={this.calcNewSize}
-          snapPoints={calculateSnapPoints(snapPointsProps)}
+          snapPoints={SNAP_POINTS}
           scaleFactor={!this.wrappedLayout && !this.insideInlineLike ? 2 : 1}
           highlights={this.highlights}
           handleResizeStart={() => {

@@ -9,8 +9,6 @@ import {
 import {
   MediaSingle,
   WithProviders,
-  DEFAULT_IMAGE_HEIGHT,
-  DEFAULT_IMAGE_WIDTH,
   browser,
   ProviderFactory,
   ContextIdentifierProvider
@@ -50,6 +48,12 @@ import {
   initFirefoxDrag,
   removeFirefoxDrag
 } from 'lib/patches/firefox-drag'
+import {
+  DEFAULT_IMAGE_HEIGHT,
+  DEFAULT_IMAGE_WIDTH,
+  DEFAULT_LINE_LENGTH,
+  DEFAULT_PCT_WIDTH
+} from 'constants/media'
 
 export interface MediaSingleNodeState {
   width?: number
@@ -248,8 +252,8 @@ export default class MediaSingleNode extends Component<
       width,
       height,
       containerWidth: this.props.width,
-      lineLength: this.props.lineLength,
-      pctWidth: mediaSingleWidth,
+      lineLength: this.props.lineLength || DEFAULT_LINE_LENGTH,
+      pctWidth: mediaSingleWidth || DEFAULT_PCT_WIDTH,
       fullWidthMode
     }
 
@@ -269,7 +273,7 @@ export default class MediaSingleNode extends Component<
     }
 
     const lineLength =
-      this.getLineLength(view, getPos()) || this.props.lineLength
+      this.getLineLength(view, getPos()) || mediaSingleProps.lineLength
 
     return canResize ? (
       <ResizableMediaSingle
