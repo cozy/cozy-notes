@@ -3,6 +3,7 @@ import { ElementType, Errors, EventType, InputType } from 'constants/strings'
 import { processFile } from 'lib/utils/process-file'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { isCozyStackError } from 'types/guards'
+import { TOASTER_DURATION } from 'constants/interface'
 
 interface CollabProvider {
   config: {
@@ -61,7 +62,8 @@ export const imageUploadProvider = (
               isCozyStackError(error)
                 ? `Error.${error.status}`
                 : 'Error.unknown_error'
-            )
+            ),
+            { duration: TOASTER_DURATION }
           )
         }
       }
