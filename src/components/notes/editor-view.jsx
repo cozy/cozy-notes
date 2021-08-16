@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useEffect, useMemo } from 'react'
+import React, { useCallback, useRef, useEffect, useMemo, useState } from 'react'
 
 import { Editor, WithEditorActions } from '@atlaskit/editor-core'
 
@@ -6,6 +6,8 @@ import { MainTitle } from 'cozy-ui/transpiled/react/Text'
 import Textarea from 'cozy-ui/transpiled/react/Textarea'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import useEventListener from 'cozy-ui/transpiled/react/hooks/useEventListener'
+import Overlay from 'cozy-ui/transpiled/react/Overlay'
+import Spinner from 'cozy-ui/transpiled/react/Spinner'
 
 import editorConfig from 'components/notes/editor_config'
 import HeaderMenu from 'components/header_menu'
@@ -65,8 +67,15 @@ function EditorView(props) {
 
   useEventListener(titleEl.current, 'blur', onTitleBlur)
 
+  const [isUploading, setUploading] = useState(false)
+
   return (
     <article className={styles['note-article']}>
+      {isUploading && (
+        <Overlay>
+          <Spinner size="xxlarge" middle />
+        </Overlay>
+      )}
       <style>#coz-bar {'{ display: none }'}</style>
       <HeaderMenu
         left={leftComponent}
@@ -83,7 +92,11 @@ function EditorView(props) {
           appearance="full-page"
           placeholder={t('Notes.EditorView.main_placeholder')}
           shouldFocus={!readOnly}
-          legacyImageUploadProvider={imageUploadProvider(collabProvider, t)}
+          legacyImageUploadProvider={imageUploadProvider(
+            collabProvider,
+            t,
+            setUploading
+          )}
           contentComponents={
             <WithEditorActions
               render={() => (

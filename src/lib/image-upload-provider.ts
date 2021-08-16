@@ -21,7 +21,8 @@ interface CollabProvider {
 
 export const imageUploadProvider = (
   collabProvider: CollabProvider,
-  t: (error: string) => string
+  t: (error: string) => string,
+  setUploading: (set: boolean) => void
 ): Promise<ImageUploadProvider> =>
   Promise.resolve<ImageUploadProvider>((_event, insertImageFn) => {
     const inputElement = document.createElement(ElementType.Input)
@@ -46,6 +47,8 @@ export const imageUploadProvider = (
         if (!processedFile) throw Error(Errors.FileNotProcessable)
 
         try {
+          setUploading(true)
+
           const {
             data: { id: src }
           } = await collabProvider.serviceClient.postImage(
@@ -65,6 +68,8 @@ export const imageUploadProvider = (
             ),
             { duration: TOASTER_DURATION }
           )
+        } finally {
+          setUploading(false)
         }
       }
     })
