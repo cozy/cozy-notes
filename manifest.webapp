@@ -48,6 +48,14 @@
       "description": "Required to have access to the sharings in realtime",
       "type": "io.cozy.sharings",
       "verbs": ["GET"]
-    }	
+    },
+    "contacts": {
+      "type": "io.cozy.contacts",
+      "verbs": ["GET"]
+    },
+    "groups": {
+      "type": "io.cozy.contacts.groups",
+      "verbs": ["GET"]
+    }
   }
 }
