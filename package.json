@@ -33,9 +33,9 @@
   },
   "homepage": "https://github.com/cozy/cozy-notes#readme",
   "devDependencies": {
-    "@babel/eslint-parser": "^7.15.0",
-    "@babel/preset-env": "^7.15.0",
-    "@babel/preset-typescript": "^7.15.0",
+    "@babel/eslint-parser": "7.15.0",
+    "@babel/preset-env": "7.15.0",
+    "@babel/preset-typescript": "7.15.0",
     "@testing-library/react": "9.5.0",
     "@testing-library/react-hooks": "3.7.0",
     "@typescript-eslint/eslint-plugin": "^4.29.0",
