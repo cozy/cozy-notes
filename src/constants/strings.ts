@@ -29,3 +29,7 @@ export enum CozyDoctypes {
   NoteEvents = 'io.cozy.notes.events',
   Thumbnails = 'io.cozy.files.thumbnails'
 }
+
+export enum Slugs {
+  Drive = 'drive'
+}

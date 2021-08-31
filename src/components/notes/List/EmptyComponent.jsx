@@ -8,6 +8,8 @@ import icon from 'assets/icons/icon_note_empty.svg'
 import useReferencedFolderForNote from 'hooks/useReferencedFolderForNote'
 
 import AppLinker from 'cozy-ui/transpiled/react/AppLinker'
+import { Slugs } from 'constants/strings'
+
 const EmptyComponent = ({ t, client }) => {
   const { notesFolder } = useReferencedFolderForNote(client)
   return (
@@ -17,7 +19,7 @@ const EmptyComponent = ({ t, client }) => {
         icon={icon}
         title={t('Notes.Empty.welcome')}
         text={
-          <AppLinker href={notesFolder} slug="drive">
+          <AppLinker href={notesFolder} slug={Slugs.Drive}>
             {({ href, onClick }) => {
               return (
                 <span className="u-mb-half">

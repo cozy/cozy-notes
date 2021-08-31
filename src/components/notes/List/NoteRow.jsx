@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
 import { CozyFile } from 'cozy-doctypes'
 import { withClient } from 'cozy-client'
 import { SharedRecipients } from 'cozy-sharing'
@@ -10,10 +10,14 @@ import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import FilePathLink from 'cozy-ui/transpiled/react/FilePathLink'
+import AppLinker from 'cozy-ui/transpiled/react/AppLinker'
 
-import styles from 'components/notes/List/list.styl'
-import { generateReturnUrlToNotesIndex } from 'lib/utils'
+import { generateReturnUrlToNotesIndex, getDriveLink } from 'lib/utils'
 import NoteIcon from 'assets/icons/icon-note-32.svg'
+import { Slugs } from 'constants/strings'
+import { stopPropagation } from 'lib/helpers'
+import styles from 'components/notes/List/list.styl'
 
 const NoteRow = ({ note, f, t, client }) => {
   const { filename, extension } = CozyFile.splitFilename(note)
@@ -38,6 +42,11 @@ const NoteRow = ({ note, f, t, client }) => {
       Alerter.error(t('Notes.Delete.failed'))
     }
   }, [client, note, t, setMenuOpen])
+
+  const drivePath = useMemo(() => getDriveLink(client, note.dir_id), [
+    client,
+    note
+  ])
 
   const menuTriggerRef = React.createRef()
 
@@ -76,7 +85,20 @@ const NoteRow = ({ note, f, t, client }) => {
                 time: f(note.updated_at, 'HH:mm')
               })}
             </TableCell>
-            <TableCell className={styles.tableCell}>—</TableCell>
+            <TableCell className={`${styles.tableCell} u-flex-shrink-0`}>
+              <AppLinker href={drivePath} slug={Slugs.Drive}>
+                {({ href }) => (
+                  <FilePathLink
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={stopPropagation}
+                  >
+                    {note.path}
+                  </FilePathLink>
+                )}
+              </AppLinker>
+            </TableCell>
             <TableCell className={styles.tableCell}>
               <SharedRecipients docId={note._id} size="small" />
             </TableCell>
