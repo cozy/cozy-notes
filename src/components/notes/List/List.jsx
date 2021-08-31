@@ -46,7 +46,7 @@ const List = ({ t, notes, fetchStatus }) => {
               <TableHeader className={styles.tableCell}>
                 {t('Notes.List.updated_at')}
               </TableHeader>
-              <TableHeader className={styles.tableCell}>
+              <TableHeader className={`${styles.tableCell} u-flex-shrink-0`}>
                 {t('Notes.List.location')}
               </TableHeader>
               <TableHeader className={styles.tableCell}>
