@@ -51,7 +51,7 @@
     },
     "contacts": {
       "type": "io.cozy.contacts",
-      "verbs": ["GET"]
+      "verbs": ["GET", "POST"]
     },
     "groups": {
       "type": "io.cozy.contacts.groups",

@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useCallback, useRef } from 'react'
 import PropTypes from 'prop-types'
 
 import { useClient } from 'cozy-client'
+import { SharingBannerPlugin } from 'cozy-sharing'
 
 import EditorView from 'components/notes/editor-view'
 import EditorCorner from 'components/notes/EditorCorner'
@@ -92,6 +93,7 @@ export default function Editor(props) {
   } else if (doc) {
     return (
       <>
+        <SharingBannerPlugin />
         <EditorView
           bannerRef={bannerRef}
           readOnly={readOnly}
