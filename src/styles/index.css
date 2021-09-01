@@ -38,7 +38,7 @@ html {
     --note-border-radius: 8px;
     --note-header-height: 3rem;
     --note-header-margin-left: 7rem;
-    --note-header-margin-right: 10rem;
+    --note-header-margin-right: 12rem;
     color: var(--note-base-color);
 }
 @media (max-width: 800px) {
@@ -85,19 +85,20 @@ html .akEditor > div:first-child > div:first-child {
     overflow: visible; /* important for dropdowns */
 }
 
-/* avatars */
+/* second header block (contains sharing banner) */
 html .akEditor > div:first-child > div:first-child + div {
-    display: none;
+    display: block;
+    position: absolute;
+    top: 100%;
+    transform: translateX(calc(-1 * var(--note-header-margin-left)));
+    width: calc(100% + var(--note-header-margin-left) + var(--note-header-margin-right));
 }
-
-
 
 /* icon for text color in the toolbar was not correctly aligned */
 .sc-gxMtzJ {
     position: relative;
     top: 0.2rem;
 }
-
 
 /* auto size for the toolbar ... sizes for 5+5rem as margin */
 [data-testid="ak-editor-main-toolbar"] > div > div:nth-child(2) {
@@ -168,7 +169,7 @@ html .akEditor > div:first-child > div:first-child + div {
 .note-header-menu--editing {
   display: flex;
   justify-content: space-between;
-  padding: 0 1rem;
+  padding: 0 1rem; 
   margin: 0;
   align-items: center;
   box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(50, 54, 63, 0.08);
@@ -178,7 +179,6 @@ html .akEditor > div:first-child > div:first-child + div {
 }
 .note-header-menu--editing .page-header-menu--left {
   display: flex;
-  flex-grow: 1;
   align-items: center;
 }
 .note-header-menu--editing .page-header-menu--right {
@@ -202,7 +202,7 @@ html .ProseMirror {
 }
 
 /* Titres */
-html body .note-editor-container .akEditor p,
+html body .note-editor-container .ak-editor-content-area p,
 html body .note-editor-container .akEditor li {
     font-size: var(--note-base-size) !important;
     line-height: var(--note-base-lh) !important;
@@ -252,7 +252,7 @@ html body .note-editor-container .akEditor > div:first-child  h6 {
 
 
 /* spacing between blocks */
-html body .note-editor-container .akEditor p,
+html body .note-editor-container .ak-editor-content-area p,
 html body .note-editor-container .akEditor ul,
 html body .note-editor-container .akEditor ol,
 html body .note-editor-container .akEditor blockquote,
