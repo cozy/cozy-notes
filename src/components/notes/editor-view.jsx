@@ -8,6 +8,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import useEventListener from 'cozy-ui/transpiled/react/hooks/useEventListener'
 import Overlay from 'cozy-ui/transpiled/react/Overlay'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
+import { SharingBannerPlugin } from 'cozy-sharing'
 
 import editorConfig from 'components/notes/editor_config'
 import HeaderMenu from 'components/header_menu'
@@ -97,6 +98,7 @@ function EditorView(props) {
             t,
             setUploading
           )}
+          primaryToolbarComponents={<SharingBannerPlugin />}
           contentComponents={
             <WithEditorActions
               render={() => (
