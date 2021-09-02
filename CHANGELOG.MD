@@ -1,3 +1,9 @@
+# 1.17.1
+
+## 🐛 Bug Fixes
+
+* Update ProseMirror schema to accept Date nodetype which was previously removed
+
 # 1.17.0
 
 ## 🐛 Bug Fixes
