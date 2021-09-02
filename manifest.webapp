@@ -6,7 +6,7 @@
   "categories": [
     "cozy"
   ],
-  "version": "1.18.0",
+  "version": "1.17.1",
   "licence": "AGPL-3.0",
   "editor": "Cozy",
   "source": "https://github.com/cozy/cozy-notes.git@build",
@@ -57,18 +57,6 @@
     "sharings": {
       "description": "Required to have access to the sharings in realtime",
       "type": "io.cozy.sharings",
-      "verbs": [
-        "GET"
-      ]
-    },
-    "contacts": {
-      "type": "io.cozy.contacts",
-      "verbs": [
-        "GET"
-      ]
-    },
-    "groups": {
-      "type": "io.cozy.contacts.groups",
       "verbs": [
         "GET"
       ]
