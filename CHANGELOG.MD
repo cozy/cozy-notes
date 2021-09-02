@@ -1,3 +1,9 @@
+# 1.18.0
+
+## ✨ Features
+
+* Add Cozy-to-Cozy sharing
+
 # 1.17.0
 
 ## 🐛 Bug Fixes
