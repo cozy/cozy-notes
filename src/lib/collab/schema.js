@@ -30,13 +30,31 @@ import { Schema } from 'prosemirror-model'
 
 // if you edit the schema, please upgrade this schemaVersion
 
-export const schemaVersion = 2
+export const schemaVersion = 3
 
 export const getSchemaVersion = () => {
   return schemaVersion
 }
 
 export const nodes = [
+  [
+    'date',
+    {
+      inline: true,
+      group: 'inline',
+      selectable: true,
+      attrs: {
+        timestamp: {
+          default: ''
+        }
+      },
+      parseDOM: [
+        {
+          tag: 'span[data-node-type="date"]'
+        }
+      ]
+    }
+  ],
   [
     'status',
     {
@@ -51,7 +69,7 @@ export const nodes = [
           default: ''
         },
         localId: {
-          default: 'd25eecb0-0808-4ffe-a971-385acf81c093'
+          default: 'adf1f61a-da02-4a41-a6c3-183fdcac102d'
         },
         style: {
           default: ''
@@ -358,7 +376,7 @@ export const nodes = [
       group: 'block',
       selectable: true,
       atom: true,
-      content: 'media',
+      content: 'media | media ( unsupportedBlock)',
       attrs: {
         width: {
           default: null
