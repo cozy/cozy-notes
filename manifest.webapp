@@ -27,6 +27,11 @@
       "folder": "/",
       "index": "index.html",
       "public": true
+    },
+    "/preview": {
+      "folder": "/",
+      "index": "index.html",
+      "public": true
     }
   },
   "permissions": {
