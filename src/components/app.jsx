@@ -4,6 +4,7 @@ import { Route, Switch, HashRouter, withRouter } from 'react-router-dom'
 import { useClient } from 'cozy-client'
 import useClientErrors from 'cozy-client/dist/hooks/useClientErrors'
 
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { Layout, Main, Content } from 'cozy-ui/transpiled/react/Layout'
 import { Sprite as IconSprite } from 'cozy-ui/transpiled/react/Icon'
@@ -92,6 +93,7 @@ const App = ({ isPublic }) => {
   const client = useClient()
   const { isMobile } = useBreakpoints
   const { ClientErrors } = useClientErrors()
+  const { t } = useI18n()
 
   const appName = isMobile
     ? getDataOrDefault(client.getInstanceOptions().app.name, manifest.name)
@@ -116,7 +118,7 @@ const App = ({ isPublic }) => {
             </Content>
           </Main>
           <IconSprite />
-          <Alerter />
+          <Alerter t={t} />
           <FlagSwitcher />
         </Layout>
       </HashRouter>
