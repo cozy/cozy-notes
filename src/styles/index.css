@@ -3,7 +3,6 @@
     font-size: 1rem;
 }
 
-
 html {
     --documentMaxWidth: 48rem;
     --documentDividerColor: #D6D8DA;
@@ -37,15 +36,15 @@ html {
     --note-title6-color: var(--coolGrey);
     --note-border-radius: 8px;
     --note-header-height: 3rem;
-    --note-header-margin-left: 7rem;
-    --note-header-margin-right: 12rem;
     color: var(--note-base-color);
 }
+
 @media (max-width: 800px) {
     html {
         --documentPadding: var(--note-base-size);
     }
 }
+
 @media (max-width: 420px) {
     html {
         --note-base-size: 1rem;
@@ -64,34 +63,37 @@ html {
     z-index: 2;
     background-color: var(--white);
 }
+
 html .akEditor > div:first-child {
     position: sticky;
     top: 0;
     z-index: 3;
 }
+
 .note-editor-container {
     height: calc(100% - 48px);
 }
 
 /* prose mirror toolbar in the upper bar */
 html .akEditor > div:first-child {
-    margin-left: var(--note-header-margin-left);
-    margin-right: var(--note-header-margin-right);
     margin-bottom: 0;
-    height: var(--note-header-height);
+    flex-wrap: wrap;
+    height: auto;
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(50, 54, 63, 0.08);
 }
+
 html .akEditor > div:first-child > div:first-child {
     margin: auto;
     overflow: visible; /* important for dropdowns */
 }
 
-/* second header block (contains sharing banner) */
 html .akEditor > div:first-child > div:first-child + div {
     display: block;
-    position: absolute;
-    top: 100%;
-    transform: translateX(calc(-1 * var(--note-header-margin-left)));
-    width: calc(100% + var(--note-header-margin-left) + var(--note-header-margin-right));
+    width: 100%;
+}
+
+html .akEditor > div:first-child > div:first-child + div hr {
+    margin-bottom: 0;
 }
 
 /* icon for text color in the toolbar was not correctly aligned */
@@ -105,54 +107,57 @@ html .akEditor > div:first-child > div:first-child + div {
     width: 730px; /* full toolbar */
     max-width: 100%;
     margin: auto;
+    padding: 1rem 0;
 }
+
+[data-testid="ak-editor-main-toolbar"] + div {
+    height: calc(100% - 130px);
+}
+
 @media (max-width: 1023px) {
   html {
     --useless: auto;
    /* FIXME : without this block, the next rule is not taken into account */
   }
 }
+
 @media (max-width: 1023px) {
   html {
     --notes-share-button-label: none; /* do not display the label in sharing button */
-    --note-header-margin-left: 5rem; /* remove margin to leave space for the toolbar */
-    --note-header-margin-right: 5rem;
   }
 }
+
 @media (max-width: 810px) {
     html .akEditor > div:first-child > div:first-child > div:first-child > div:first-child {
         width: 480px; /* condensed view */
     }
 }
+
 @media (max-width: 740px) {
     html .akEditor > div:first-child > div:first-child > div:first-child > div:first-child {
         width: 390px; /* block style as icon */
     }
 }
+
 @media (max-width: 660px) {
     html .akEditor > div:first-child > div:first-child > div:first-child > div:first-child {
         width: 380px; /* merge ol and ul as dropdown */
     }
 }
+
 @media (max-width: 610px) {
     html .akEditor > div:first-child > div:first-child > div:first-child > div:first-child {
         width: 350px; /* left icons as dropdown */
     }
 }
+
 @media (max-width: 530px) {
     html .akEditor > div:first-child > div:first-child > div:first-child > div:first-child {
         width: 280px; /* more left icons as dropdown */
     }
 }
-@media (max-width: 480px) {
-    html {
-        --note-header-margin-left: 3rem;
-    }
-}
+
 @media (max-width: 375px) {
-    html {
-        --note-header-margin-left: 2.5rem;
-    }
     .page-header-menu--right {
         position: relative;
         left: 0.5rem;
@@ -167,21 +172,21 @@ html .akEditor > div:first-child > div:first-child + div {
 }
 
 .note-header-menu--editing {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 1rem; 
-  margin: 0;
-  align-items: center;
-  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(50, 54, 63, 0.08);
-  z-index: 3;
-  height: var(--note-header-height);
-  margin-bottom: calc(0px - var(--note-header-height));
+  z-index: 4;
 }
+
 .note-header-menu--editing .page-header-menu--left {
+  top: 0.75rem;
+  left: 1rem;
+  position: absolute;
   display: flex;
   align-items: center;
 }
+
 .note-header-menu--editing .page-header-menu--right {
+  top: 1rem;
+  right: 1rem;
+  position: absolute;
   display: flex;
   align-items: center;
 }
@@ -192,6 +197,7 @@ html .note-editor-container {
     flex-direction: column;
     flex-grow: 1;
 }
+
 html .notes-list-container .page-header-menu {
     margin-left: 2rem;
     margin-right: 2rem;
@@ -208,6 +214,7 @@ html body .note-editor-container .akEditor li {
     line-height: var(--note-base-lh) !important;
     color: var(--note-base-color);
 }
+
 html body .note-editor-container .akEditor h1 {
     border-top: 1px solid var(--silver);
     padding-top: var(--note-block-spacing);
@@ -215,16 +222,19 @@ html body .note-editor-container .akEditor h1 {
     line-height: var(--note-title1-lh) !important;
     color: var(--note-title1-color);
 }
+
 html body .note-editor-container .akEditor h2 {
     font-size: var(--note-title2-fs) !important;
     line-height: var(--note-title2-lh) !important;
     color: var(--note-title2-color);
 }
+
 html body .note-editor-container .akEditor h3 {
     font-size: var(--note-title3-fs) !important;
     line-height: var(--note-title3-lh) !important;
     color: var(--note-title3-color);
 }
+
 html body .note-editor-container .akEditor h4 {
     font-size: var(--note-title4-fs) !important;
     line-height: var(--note-title4-lh) !important;
@@ -250,7 +260,6 @@ html body .note-editor-container .akEditor > div:first-child  h6 {
     margin-bottom: 0;
 }
 
-
 /* spacing between blocks */
 html body .note-editor-container .ak-editor-content-area p,
 html body .note-editor-container .akEditor ul,
@@ -268,6 +277,7 @@ html body .note-editor-container .akEditor h6 {
     margin-top: 0;
     margin-bottom: var(--note-block-spacing);
 }
+
 html body .note-editor-container .akEditor .ak-editor-panel__content > :last-child,
 html body .note-editor-container .akEditor li > * {
     margin-bottom: 0;
@@ -280,10 +290,12 @@ html body .note-editor-container .akEditor blockquote {
     border-left: 4px solid var(--silver);
     font-style: italic;
 }
+
 html body .note-editor-container .akEditor blockquote i,
 html body .note-editor-container .akEditor blockquote em {
     font-style: normal;
 }
+
 html body .note-editor-container .akEditor blockquote::before {
     display: none;
 }
@@ -298,37 +310,45 @@ html body .note-editor-container .akEditor hr {
 html body .note-editor-container .akEditor .tableView-content-wrap {
     margin-top: -1.8rem;
 }
+
 html body .note-editor-container .akEditor .pm-table-wrapper > table {
     border-collapse: separate;
     border-spacing: 0;
     border-width: 0;
 }
+
 html body .note-editor-container .akEditor .pm-table-wrapper > table td,
 html body .note-editor-container .akEditor .pm-table-wrapper > table th {
     border: 1px solid #C1C7D0;
     border-bottom-width: 0;
     border-right-width: 0;
 }
+
 html body .note-editor-container .akEditor .pm-table-wrapper > table tr:last-child td,
 html body .note-editor-container .akEditor .pm-table-wrapper > table tr:last-child th {
     border-bottom-width: 1px;
 }
+
 html body .note-editor-container .akEditor .pm-table-wrapper > table td:last-child,
 html body .note-editor-container .akEditor .pm-table-wrapper > table th:last-child {
     border-right-width: 1px;
 }
+
 html body .note-editor-container .akEditor tbody > tr:first-child > th:first-child,
 html body .note-editor-container .akEditor tbody > tr:first-child > td:first-child {
     border-top-left-radius: var(--note-border-radius);
 }
+
 html body .note-editor-container .akEditor tbody > tr:first-child > th:last-child,
 html body .note-editor-container .akEditor tbody > tr:first-child > td:last-child {
     border-top-right-radius: var(--note-border-radius);
 }
+
 html body .note-editor-container .akEditor tbody > tr:last-child > th:first-child,
 html body .note-editor-container .akEditor tbody > tr:last-child > td:first-child {
     border-bottom-left-radius: var(--note-border-radius);
 }
+
 html body .note-editor-container .akEditor tbody > tr:last-child > th:last-child,
 html body .note-editor-container .akEditor tbody > tr:last-child > td:last-child {
     border-bottom-right-radius: var(--note-border-radius);
@@ -374,8 +394,6 @@ html .akEditor {
     min-width: calc(320px - 2rem);
 }
 
-
-
 html .fabric-editor-popup-scroll-parent > div > div {
   margin: 0 auto;
   padding: 0;
@@ -398,13 +416,16 @@ html .fabric-editor-popup-scroll-parent > div > div {
 .notes-list {
     width: calc(100% - 20px);
 }
+
 .notes-list td, .notes-list th {
     text-align: left;
     color: var(--coolGrey);
 }
+
 .notes-list tr > th:first-child {
     padding-left: 2rem;
 }
+
 .notes-list tr > td:last-child,
 .notes-list tr > th:last-child {
     padding-right: 2rem;
@@ -413,11 +434,13 @@ html .fabric-editor-popup-scroll-parent > div > div {
 
 .note-item {
     display: flex;
+   
     align-items: center;
 }
 .note-icon {
     margin-right: 1rem;
 }
+
 .note-link {
     text-decoration: none;
     text-transform: none;
