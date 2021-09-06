@@ -83,7 +83,7 @@ html .akEditor > div:first-child {
 }
 
 html .akEditor > div:first-child > div:first-child {
-    margin: auto;
+    margin: 0 15%;
     overflow: visible; /* important for dropdowns */
 }
 
@@ -125,36 +125,6 @@ html .akEditor > div:first-child > div:first-child + div hr {
   html {
     --notes-share-button-label: none; /* do not display the label in sharing button */
   }
-}
-
-@media (max-width: 810px) {
-    html .akEditor > div:first-child > div:first-child > div:first-child > div:first-child {
-        width: 480px; /* condensed view */
-    }
-}
-
-@media (max-width: 740px) {
-    html .akEditor > div:first-child > div:first-child > div:first-child > div:first-child {
-        width: 390px; /* block style as icon */
-    }
-}
-
-@media (max-width: 660px) {
-    html .akEditor > div:first-child > div:first-child > div:first-child > div:first-child {
-        width: 380px; /* merge ol and ul as dropdown */
-    }
-}
-
-@media (max-width: 610px) {
-    html .akEditor > div:first-child > div:first-child > div:first-child > div:first-child {
-        width: 350px; /* left icons as dropdown */
-    }
-}
-
-@media (max-width: 530px) {
-    html .akEditor > div:first-child > div:first-child > div:first-child > div:first-child {
-        width: 280px; /* more left icons as dropdown */
-    }
 }
 
 @media (max-width: 375px) {
