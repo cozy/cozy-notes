@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useCallback, useRef } from 'react'
 import PropTypes from 'prop-types'
 
 import { useClient } from 'cozy-client'
+import { SharingBannerPlugin } from 'cozy-sharing'
 
 import EditorView from 'components/notes/editor-view'
 import EditorCorner from 'components/notes/EditorCorner'
@@ -17,6 +18,7 @@ import useTitleChanges from 'hooks/useTitleChanges'
 import useForceSync from 'hooks/useForceSync'
 import useReturnUrl from 'hooks/useReturnUrl'
 import useUser from 'hooks/useUser'
+import { usePreview } from 'hooks/usePreview'
 import { useDebugValue } from 'lib/debug'
 
 import useConfirmExit from 'cozy-ui/transpiled/react/hooks/useConfirmExit'
@@ -77,6 +79,8 @@ export default function Editor(props) {
     cancelLabel: t('Notes.Editor.exit_confirmation_cancel')
   })
 
+  const isPreview = usePreview(window.location.pathname)
+
   useDebugValue('client', cozyClient)
   useDebugValue('notes.service', serviceClient)
   useDebugValue('notes.collabProvider', collabProvider)
@@ -111,6 +115,7 @@ export default function Editor(props) {
           rightComponent={
             <EditorCorner doc={doc} isPublic={isPublic} isReadOnly={readOnly} />
           }
+          primaryToolbarComponents={isPreview ? <SharingBannerPlugin /> : null}
         />
         <SavingIndicator
           collabProvider={collabProvider}
