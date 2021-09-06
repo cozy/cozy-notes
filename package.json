@@ -68,7 +68,7 @@
     "cozy-flags": "2.7.2",
     "cozy-realtime": "3.13.0",
     "cozy-scripts": "eslint7",
-    "cozy-sharing": "3.4.2",
+    "cozy-sharing": "3.7.0",
     "cozy-ui": "51.6.0",
     "eslint-config-cozy-app": "1.6.0",
     "lodash": "^4.17.15",
