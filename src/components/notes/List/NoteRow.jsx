@@ -100,7 +100,7 @@ const NoteRow = ({ note, f, t, client }) => {
               </AppLinker>
             </TableCell>
             <TableCell className={styles.tableCell}>
-              <SharedRecipients docId={note._id} size="small" />
+              <SharedRecipients docId={note._id} size={24} />
             </TableCell>
           </>
         )}
