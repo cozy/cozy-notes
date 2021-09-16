@@ -36,6 +36,7 @@ html {
     --note-title6-color: var(--coolGrey);
     --note-border-radius: 8px;
     --note-header-height: 3rem;
+    --note-header-height-half: 1.5rem;
     color: var(--note-base-color);
 }
 
@@ -82,6 +83,7 @@ html .akEditor > div:first-child {
     box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(50, 54, 63, 0.08);
 }
 
+/* This is the main toolbar wrapper */
 html .akEditor > div:first-child > div:first-child {
     margin: 0 15%;
     overflow: visible; /* important for dropdowns */
@@ -102,16 +104,28 @@ html .akEditor > div:first-child > div:first-child + div hr {
     top: 0.2rem;
 }
 
+/* This is the main toolbar inner wrapper */
 /* auto size for the toolbar ... sizes for 5+5rem as margin */
 [data-testid="ak-editor-main-toolbar"] > div > div:nth-child(2) {
+    display: flex;
+    align-items: center;
     width: 730px; /* full toolbar */
     max-width: 100%;
     margin: auto;
-    padding: 1rem 0;
+    height: var(--note-header-height);
 }
 
 [data-testid="ak-editor-main-toolbar"] + div {
     height: calc(100% - 130px);
+}
+
+/* 
+   FIXME: get rid of the avatar group plugin when shared editing is live,
+   this is a quick and brittle hack and should be done with React, but isn't trivial to change
+*/
+[aria-label="avatar group"],
+[aria-label="avatar group"] + * {
+    display: none !important;
 }
 
 @media (max-width: 1023px) {
@@ -127,13 +141,6 @@ html .akEditor > div:first-child > div:first-child + div hr {
   }
 }
 
-@media (max-width: 375px) {
-    .page-header-menu--right {
-        position: relative;
-        left: 0.5rem;
-    }
-}
-
 .sto-app-back {
   display: inline-flex;
   align-items: center;
@@ -145,20 +152,33 @@ html .akEditor > div:first-child > div:first-child + div hr {
   z-index: 4;
 }
 
+.note-header-menu--editing .page-header-menu--left,
+.note-header-menu--editing .page-header-menu--right {
+    top: var(--note-header-height-half);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    transform: translateY(-50%);
+}
+
 .note-header-menu--editing .page-header-menu--left {
-  top: 0.75rem;
-  left: 1rem;
-  position: absolute;
-  display: flex;
-  align-items: center;
+    left: 1rem;
 }
 
 .note-header-menu--editing .page-header-menu--right {
-  top: 1rem;
-  right: 1rem;
-  position: absolute;
-  display: flex;
-  align-items: center;
+    right: 1rem;
+}
+
+/* Trying to avoid toolbars overlaps on small viewports */
+/* Breakpoint was taken from Bootstrap's "X-small" breakpoint */
+@media (max-width: 576px) {
+    .note-header-menu--editing .page-header-menu--left {
+        left: 0.25rem;
+    }
+    
+    .note-header-menu--editing .page-header-menu--right {
+        right: 0.25rem;
+    }
 }
 
 html .note-editor-container {
