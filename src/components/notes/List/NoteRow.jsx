@@ -1,29 +1,27 @@
 import React, { useState, useCallback, useMemo } from 'react'
+
 import { CozyFile } from 'cozy-doctypes'
 import { withClient } from 'cozy-client'
 import { SharedRecipients } from 'cozy-sharing'
-
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
-import FilePathLink from 'cozy-ui/transpiled/react/FilePathLink'
-import AppLinker from 'cozy-ui/transpiled/react/AppLinker'
 
 import { generateReturnUrlToNotesIndex, getDriveLink } from 'lib/utils'
 import NoteIcon from 'assets/icons/icon-note-32.svg'
-import { Slugs } from 'constants/strings'
-import { stopPropagation } from 'lib/helpers'
 import styles from 'components/notes/List/list.styl'
+import { WithBreakpoints } from './WithBreakpoints'
+import { Breakpoints } from 'types/enums'
+import { NotePath } from './NotePath'
 
 const NoteRow = ({ note, f, t, client }) => {
   const { filename, extension } = CozyFile.splitFilename(note)
-  const { isMobile } = useBreakpoints()
 
   const [isMenuOpen, setMenuOpen] = useState(false)
+
   const openMenu = useCallback(
     e => {
       setMenuOpen(true)
@@ -31,6 +29,7 @@ const NoteRow = ({ note, f, t, client }) => {
     },
     [setMenuOpen]
   )
+
   const closeMenu = useCallback(() => setMenuOpen(false), [setMenuOpen])
 
   const deleteNote = useCallback(async () => {
@@ -74,36 +73,41 @@ const NoteRow = ({ note, f, t, client }) => {
           className={`${styles.tableCellName} u-flex u-flex-items-center u-fz-medium`}
         >
           <Icon icon={NoteIcon} size={32} className="u-mr-1 u-flex-shrink-0" />
-          <span className="u-charcoalGrey u-ellipsis">{filename}</span>
-          {!isMobile && <span className="u-ellipsis">{extension}</span>}
+
+          <div className="u-flex-grow-1">
+            <span className="u-charcoalGrey u-ellipsis">{filename}</span>
+
+            <WithBreakpoints hideOn={Breakpoints.Mobile}>
+              <span className="u-ellipsis">{extension}</span>
+            </WithBreakpoints>
+
+            <WithBreakpoints showOn={Breakpoints.Mobile}>
+              <NotePath
+                drivePath={drivePath}
+                path={note.path}
+                target="_blank"
+              />
+            </WithBreakpoints>
+          </div>
         </TableCell>
-        {!isMobile && (
-          <>
-            <TableCell className={styles.tableCell}>
-              {t('Notes.List.at', {
-                date: f(note.updated_at, 'DD MMMM'),
-                time: f(note.updated_at, 'HH:mm')
-              })}
-            </TableCell>
-            <TableCell className={`${styles.tableCell} u-flex-shrink-0`}>
-              <AppLinker href={drivePath} slug={Slugs.Drive}>
-                {({ href }) => (
-                  <FilePathLink
-                    href={href}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={stopPropagation}
-                  >
-                    {note.path}
-                  </FilePathLink>
-                )}
-              </AppLinker>
-            </TableCell>
-            <TableCell className={styles.tableCell}>
-              <SharedRecipients docId={note._id} size={24} />
-            </TableCell>
-          </>
-        )}
+
+        <WithBreakpoints hideOn={Breakpoints.Mobile}>
+          <TableCell className={styles.tableCell}>
+            {t('Notes.List.at', {
+              date: f(note.updated_at, 'DD MMMM'),
+              time: f(note.updated_at, 'HH:mm')
+            })}
+          </TableCell>
+
+          <TableCell className={`${styles.tableCell} u-flex-shrink-0`}>
+            <NotePath drivePath={drivePath} path={note.path} target="_blank" />
+          </TableCell>
+
+          <TableCell className={styles.tableCell}>
+            <SharedRecipients docId={note._id} size={24} />
+          </TableCell>
+        </WithBreakpoints>
+
         <TableCell className={styles.tableCell}>
           <span ref={menuTriggerRef}>
             <IconButton onClick={openMenu}>
@@ -112,6 +116,7 @@ const NoteRow = ({ note, f, t, client }) => {
           </span>
         </TableCell>
       </TableRow>
+
       {isMenuOpen && (
         <ActionMenu
           onClose={closeMenu}

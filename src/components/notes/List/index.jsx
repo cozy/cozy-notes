@@ -1,41 +1,45 @@
 /* global cozy */
 import React from 'react'
+
 import Stack from 'cozy-ui/transpiled/react/Stack'
-import {
-  withBreakpoints,
-  BarContextProvider,
-  useI18n
-} from 'cozy-ui/transpiled/react/'
+import { BarContextProvider, useI18n } from 'cozy-ui/transpiled/react/'
 import { Query, Q, useClient } from 'cozy-client'
+
 import AppTitle from 'components/notes/List/AppTitle'
 import List from 'components/notes/List/List'
 import Add, { AddMobile } from 'components/notes/add'
 import styles from 'components/notes/List/list.styl'
+import { WithBreakpoints } from './WithBreakpoints'
+import { Breakpoints } from 'types/enums'
+
 const shouldDisplayAddButton = (fetchStatus, notes) =>
   fetchStatus === 'loaded' && notes.length > 0
 
-const ListView = ({ breakpoints: { isMobile } }) => {
+const ListView = () => {
   const { BarRight } = cozy.bar
   const i18n = useI18n()
   const client = useClient()
 
   return (
     <Query query={() => Q('io.cozy.notes')}>
-      {({ data: notes, fetchStatus }) => {
-        return (
-          <>
-            <Stack className="u-mt-1 u-mt-0-m">
+      {({ data: notes, fetchStatus }) => (
+        <>
+          <Stack>
+            <WithBreakpoints hideOn={Breakpoints.Mobile}>
               <div
-                className={`${styles.appHeader} u-flex u-flex-justify-between u-flex-items-center`}
+                className={`${styles.appHeader} u-flex u-flex-justify-between u-flex-items-center u-mt-1`}
               >
                 <AppTitle />
-                {!isMobile && shouldDisplayAddButton(fetchStatus, notes) && (
-                  <Add />
-                )}
+
+                {shouldDisplayAddButton(fetchStatus, notes) && <Add />}
               </div>
-              <List notes={notes} fetchStatus={fetchStatus} />
-            </Stack>
-            {isMobile && shouldDisplayAddButton(fetchStatus, notes) && (
+            </WithBreakpoints>
+
+            <List notes={notes} fetchStatus={fetchStatus} />
+          </Stack>
+
+          {shouldDisplayAddButton(fetchStatus, notes) && (
+            <WithBreakpoints showOn={Breakpoints.Mobile}>
               <BarRight>
                 <BarContextProvider
                   store={client.store}
@@ -45,12 +49,12 @@ const ListView = ({ breakpoints: { isMobile } }) => {
                   <AddMobile />
                 </BarContextProvider>
               </BarRight>
-            )}
-          </>
-        )
-      }}
+            </WithBreakpoints>
+          )}
+        </>
+      )}
     </Query>
   )
 }
 
-export default withBreakpoints()(ListView)
+export default ListView

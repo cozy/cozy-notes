@@ -1,4 +1,5 @@
 import React from 'react'
+
 import {
   Table,
   TableHead,
@@ -8,13 +9,14 @@ import {
   TableCell
 } from 'cozy-ui/transpiled/react/Table'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
-
 import { translate } from 'cozy-ui/transpiled/react/I18n'
+
 import EmptyComponent from 'components/notes/List/EmptyComponent'
 import NoteRow from 'components/notes/List/NoteRow'
-
 import styles from 'components/notes/List/list.styl'
+import { WithBreakpoints } from './WithBreakpoints'
+import { Breakpoints } from 'types/enums'
+
 const EmptyTableRow = () => (
   <TableRow className={styles.tableSpecialRow}>
     <TableCell className={styles.tableCellEmpty}>
@@ -31,43 +33,42 @@ const LoadingTableRow = () => (
   </TableRow>
 )
 
-const List = ({ t, notes, fetchStatus }) => {
-  const { isMobile } = useBreakpoints()
+const List = ({ t, notes, fetchStatus }) => (
+  <Table className={styles.table}>
+    <TableHead>
+      <TableRow>
+        <TableHeader className={styles.tableCellName}>
+          {t('Notes.List.name')}
+        </TableHeader>
 
-  return (
-    <Table>
-      <TableHead>
-        <TableRow>
-          <TableHeader className={styles.tableCellName}>
-            {t('Notes.List.name')}
+        <WithBreakpoints hideOn={Breakpoints.Mobile}>
+          <TableHeader className={styles.tableCell}>
+            {t('Notes.List.updated_at')}
           </TableHeader>
-          {!isMobile && (
-            <>
-              <TableHeader className={styles.tableCell}>
-                {t('Notes.List.updated_at')}
-              </TableHeader>
-              <TableHeader className={`${styles.tableCell} u-flex-shrink-0`}>
-                {t('Notes.List.location')}
-              </TableHeader>
-              <TableHeader className={styles.tableCell}>
-                {t('Notes.List.sharings')}
-              </TableHeader>
-            </>
-          )}
-          <TableHeader className={styles.tableCell} />
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {fetchStatus === 'loading' ? (
-          <LoadingTableRow />
-        ) : notes.length === 0 ? (
-          <EmptyTableRow />
-        ) : (
-          notes.map(note => <NoteRow note={note} key={note._id} />)
-        )}
-      </TableBody>
-    </Table>
-  )
-}
+
+          <TableHeader className={`${styles.tableCell} u-flex-shrink-0`}>
+            {t('Notes.List.location')}
+          </TableHeader>
+
+          <TableHeader className={styles.tableCell}>
+            {t('Notes.List.sharings')}
+          </TableHeader>
+        </WithBreakpoints>
+
+        <TableHeader className={styles.tableCell} />
+      </TableRow>
+    </TableHead>
+
+    <TableBody>
+      {fetchStatus === 'loading' ? (
+        <LoadingTableRow />
+      ) : notes.length === 0 ? (
+        <EmptyTableRow />
+      ) : (
+        notes.map(note => <NoteRow note={note} key={note._id} />)
+      )}
+    </TableBody>
+  </Table>
+)
 
 export default translate()(List)
