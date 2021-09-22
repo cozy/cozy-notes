@@ -1,17 +1,22 @@
 @require 'settings/breakpoints.styl'
+
 //Cozy UI table add 1rem padding to the first column
 //We want to aligne App Title and first column header
 $PADDING_TABLE_FIRST_COLUMN=2rem
+
 .empty
     position: relative
     transform: translateZ(0)
     height: 500px
     display: flex
+
     a
         color: var(--dodgerBlue)
+
 .appHeader
     padding-left $PADDING_TABLE_FIRST_COLUMN
     padding-right $PADDING_TABLE_FIRST_COLUMN
+
 .tableSpecialRow
     flex 1
     height 100%
@@ -19,24 +24,34 @@ $PADDING_TABLE_FIRST_COLUMN=2rem
     //Since when we display the empty row we have only one,
     //let's hide it
     border-bottom 0 !important
+
     &:hover
         background-color inherit
+
     +small-screen()
         border-top 0 !important
+
 .tableCellEmpty
     flex-grow 1
+
 .tableCellName
     width 40%
     overflow hidden
     flex-shrink 0
+
     +gt-mobile()
         padding-left $PADDING_TABLE_FIRST_COLUMN
+
     +small-screen()
         width 80%
+
 .tableCell
     width 20%
 
 +small-screen()
+    .tableRow
+        height auto
+
     .tableRow:nth-of-type(1)
         border-top 0
 
