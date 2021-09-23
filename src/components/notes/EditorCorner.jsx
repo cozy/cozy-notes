@@ -7,9 +7,9 @@ import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
 import SharingWidget from 'components/notes/sharing'
 
-const EditorCorner = ({ doc, isPublic, isReadOnly }) => {
+const EditorCorner = ({ doc, isPublic, isReadOnly, title }) => {
   const { t } = useI18n()
-  if (!isPublic) return <SharingWidget file={doc.file} />
+  if (!isPublic) return <SharingWidget file={doc.file} title={title} />
   else if (isReadOnly) {
     return (
       <Tooltip title={t('Notes.Editor.read_only')}>
