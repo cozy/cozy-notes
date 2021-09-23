@@ -113,7 +113,12 @@ export default function Editor(props) {
             />
           }
           rightComponent={
-            <EditorCorner doc={doc} isPublic={isPublic} isReadOnly={readOnly} />
+            <EditorCorner
+              doc={doc}
+              isPublic={isPublic}
+              isReadOnly={readOnly}
+              title={title}
+            />
           }
           primaryToolbarComponents={isPreview ? <SharingBannerPlugin /> : null}
         />

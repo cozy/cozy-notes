@@ -14,10 +14,7 @@ export default function SharingWidget(props) {
 
   if (!file) return null
 
-  const {
-    id: noteId,
-    attributes: { name }
-  } = file
+  const { id: noteId } = file
 
   return (
     <>
@@ -30,10 +27,10 @@ export default function SharingWidget(props) {
       />
       {showModal && (
         <ShareModal
-          document={{ ...file, name }}
+          document={{ ...file, name: props.title }}
           documentType="Files"
           onClose={onClose}
-          sharingDesc={name}
+          sharingDesc={props.title}
         />
       )}
     </>
