@@ -4,7 +4,7 @@ import FilePathLink from 'cozy-ui/transpiled/react/FilePathLink'
 import AppLinker from 'cozy-ui/transpiled/react/AppLinker'
 
 import { Slugs } from 'constants/strings'
-import { stopPropagation } from 'lib/helpers'
+import { removeFilename, stopPropagation } from 'lib/helpers'
 
 export const NotePath: React.FC<{
   drivePath: string
@@ -20,7 +20,7 @@ export const NotePath: React.FC<{
           ? { target: '_blank', rel: 'noreferrer noopener' }
           : { target })}
       >
-        {path}
+        {removeFilename(path)}
       </FilePathLink>
     )}
   </AppLinker>
