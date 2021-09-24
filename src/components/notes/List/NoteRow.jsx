@@ -2,13 +2,14 @@ import React, { useState, useCallback, useMemo } from 'react'
 
 import { CozyFile } from 'cozy-doctypes'
 import { withClient } from 'cozy-client'
-import { SharedRecipients } from 'cozy-sharing'
+import { SharedRecipients, ShareModal } from 'cozy-sharing'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'
+import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'
 
 import { generateReturnUrlToNotesIndex, getDriveLink } from 'lib/utils'
 import NoteIcon from 'assets/icons/icon-note-32.svg'
@@ -19,8 +20,10 @@ import { NotePath } from './NotePath'
 
 const NoteRow = ({ note, f, t, client }) => {
   const { filename, extension } = CozyFile.splitFilename(note)
-
   const [isMenuOpen, setMenuOpen] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const onShowModal = setShowModal(true)
+  const onCloseModal = setShowModal(false)
 
   const openMenu = useCallback(
     e => {
@@ -125,10 +128,31 @@ const NoteRow = ({ note, f, t, client }) => {
             strategy: 'fixed'
           }}
         >
+          <ActionMenuItem
+            onClick={onShowModal}
+            left={<Icon icon={ShareIcon} />}
+            right={
+              <WithBreakpoints showOn={Breakpoints.Mobile}>
+                <SharedRecipients docId={note.id} size="small" />
+              </WithBreakpoints>
+            }
+          >
+            {t('Notes.Files.share.cta')}
+          </ActionMenuItem>
+
           <ActionMenuItem onClick={deleteNote} left={<Icon icon="trash" />}>
             {t('Notes.Delete.delete_note')}
           </ActionMenuItem>
         </ActionMenu>
+      )}
+
+      {showModal && (
+        <ShareModal
+          document={{ ...note, name: note.attributes.name }}
+          documentType="Files"
+          onClose={onCloseModal}
+          sharingDesc={note.attributes.name}
+        />
       )}
     </>
   )

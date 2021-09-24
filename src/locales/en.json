@@ -19,6 +19,11 @@
       "exit_confirmation_cancel": "Cancel",
       "read_only": "This note is in read-only mode."
     },
+    "Files": {
+      "share": {
+        "cta": "Share"
+      }
+    },
     "List": {
       "latest_notes": "Latest Notes",
       "name": "Name",
