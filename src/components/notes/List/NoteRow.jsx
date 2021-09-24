@@ -22,8 +22,8 @@ const NoteRow = ({ note, f, t, client }) => {
   const { filename, extension } = CozyFile.splitFilename(note)
   const [isMenuOpen, setMenuOpen] = useState(false)
   const [showModal, setShowModal] = useState(false)
-  const onShowModal = setShowModal(true)
-  const onCloseModal = setShowModal(false)
+  const onShowModal = useCallback(() => setShowModal(!showModal), [showModal])
+  const onCloseModal = useCallback(() => setShowModal(false), [])
 
   const openMenu = useCallback(
     e => {
