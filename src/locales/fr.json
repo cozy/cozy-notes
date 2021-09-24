@@ -19,6 +19,11 @@
       "exit_confirmation_cancel": "Retour",
       "read_only": "Cette note est en mode lecture-seule."
     },
+    "Files": {
+      "share": {
+        "cta": "Partager"
+      }
+    },
     "List": {
       "latest_notes": "Notes récentes",
       "name": "Nom",

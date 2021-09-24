@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import { ShareButton, ShareModal } from 'cozy-sharing'
 import { useClient } from 'cozy-client'
 
@@ -9,8 +9,8 @@ export default function SharingWidget(props) {
   const client = useClient()
   const file = useFileWithPath({ cozyClient: client, file: props.file })
   const [showModal, setShowModal] = useState(false)
-  const onClick = useCallback(() => setShowModal(!showModal), [showModal])
-  const onClose = useCallback(() => setShowModal(false), [])
+  const onClick = setShowModal(true)
+  const onClose = setShowModal(false)
 
   if (!file) return null
 
