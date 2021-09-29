@@ -42,7 +42,6 @@ import {
   floatingLayouts,
   isRichMediaInsideOfBlockNode
 } from '@atlaskit/editor-core/utils/rich-media-utils'
-import { cozyMediaOptions } from 'config/cozy-media-options'
 import {
   firefoxElement,
   initFirefoxDrag,
@@ -433,7 +432,7 @@ class MediaSingleNodeView extends ReactNodeView<MediaSingleNodeViewProps> {
                     getPos={getPos}
                     mediaProvider={mediaProvider}
                     contextIdentifierProvider={contextIdentifierProvider}
-                    mediaOptions={{ ...mediaOptions, ...cozyMediaOptions }}
+                    mediaOptions={mediaOptions}
                     view={this.view}
                     fullWidthMode={fullWidthMode}
                     selected={this.isNodeSelected}

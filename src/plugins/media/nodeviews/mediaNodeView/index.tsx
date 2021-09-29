@@ -30,7 +30,6 @@ import { stateKey as mediaStateKey } from '../../pm-plugins/plugin-key'
 import { MediaOptions } from '../../types'
 import { MediaNodeViewProps } from '../types'
 import MediaNode from './media'
-import { cozyMediaOptions } from 'config/cozy-media-options'
 import CollabProvider from 'lib/collab/provider'
 
 class MediaNodeView extends SelectionBasedNodeView<MediaNodeViewProps> {
@@ -180,7 +179,7 @@ export const ReactMediaNode = (
     {
       eventDispatcher,
       providerFactory,
-      mediaOptions: { ...mediaOptions, ...cozyMediaOptions }
+      mediaOptions
     }
   ).init()
 }
