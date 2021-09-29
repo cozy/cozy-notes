@@ -47,11 +47,11 @@ const mediaPlugin = (options?: MediaOptions): EditorPlugin => ({
   name: 'media',
 
   nodes() {
-    const {
-      allowMediaGroup = true,
-      allowMediaSingle = false,
-      UNSAFE_allowImageCaptions = cozyMediaOptions.UNSAFE_allowImageCaptions
-    } = options || {}
+      const {
+        allowMediaGroup = true,
+        allowMediaSingle = false,
+        UNSAFE_allowImageCaptions = false,
+      } = options || {};
 
     const mediaSingleNode = UNSAFE_allowImageCaptions
       ? mediaSingleWithCaption
@@ -244,16 +244,16 @@ const mediaPlugin = (options?: MediaOptions): EditorPlugin => ({
     floatingToolbar: (state, intl, providerFactory) =>
       floatingToolbar(state, intl, {
         providerFactory,
-        allowResizing: cozyMediaOptions.allowResizing,
-        allowResizingInTables: cozyMediaOptions.allowResizingInTables,
-        allowAnnotation: cozyMediaOptions.allowAnnotation,
-        allowLinking: cozyMediaOptions.allowLinking,
+        allowResizing: options && options.allowResizing,
+        allowResizingInTables: options && options.allowResizingInTables,
+        allowAnnotation: options && options.allowAnnotation,
+        allowLinking: options && options.allowLinking,
         allowAdvancedToolBarOptions:
-          cozyMediaOptions.allowAdvancedToolBarOptions,
-        allowAltTextOnImages: cozyMediaOptions.allowAltTextOnImages,
-        altTextValidator: options && options.altTextValidator
-      })
+          options && options.allowAdvancedToolBarOptions,
+        allowAltTextOnImages: options && options.allowAltTextOnImages,
+        altTextValidator: options && options.altTextValidator,
+      }),
   }
 })
 
-export default mediaPlugin
+export default (options: MediaOptions): EditorPlugin => mediaPlugin({...options, ...cozyMediaOptions})
