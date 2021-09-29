@@ -9,7 +9,6 @@ import { stateKey } from './plugin-key'
 export const insertExternalImage: (
   options: InsertedImageProperties
 ) => Command = options => (state, dispatch) => {
-  console.log(state.selection.$to.pos)
   const pluginState: ImageUploadPluginState = stateKey.getState(state)
   if (!pluginState.enabled || !options.src) {
     return false

@@ -3,7 +3,11 @@ import { EditorState, Plugin, Transaction } from 'prosemirror-state'
 import { isPastedFile } from '@atlaskit/editor-core/utils/clipboard'
 import { isDroppedFile } from '@atlaskit/editor-core/utils/drag-drop'
 
-import { canInsertMedia, isMediaSelected } from '../utils'
+import {
+  canInsertMedia,
+  isMediaSelected,
+  setSelectionAtDropPoint
+} from '../utils'
 import { ImageUploadPluginAction, ImageUploadPluginState } from '../types'
 import { EditorView } from 'prosemirror-view'
 import { insertExternalImage, startImageUpload } from './commands'
@@ -13,6 +17,7 @@ import {
   Providers
 } from '@atlaskit/editor-common/provider-factory'
 import { stateKey } from './plugin-key'
+import { EventType } from 'constants/strings'
 
 type DOMHandlerPredicate = (e: Event) => boolean
 const createDOMHandler = (pred: DOMHandlerPredicate, eventName: string) => (
@@ -25,6 +30,9 @@ const createDOMHandler = (pred: DOMHandlerPredicate, eventName: string) => (
 
   event.preventDefault()
   event.stopPropagation()
+
+  if (event.type === EventType.Drop)
+    setSelectionAtDropPoint(event as DragEvent, view)
 
   startImageUpload(event)(view.state, view.dispatch)
 

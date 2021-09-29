@@ -1,5 +1,6 @@
-import { EditorState, NodeSelection } from 'prosemirror-state'
+import { EditorState, NodeSelection, TextSelection } from 'prosemirror-state'
 import { Schema, Node } from 'prosemirror-model'
+import { EditorView } from 'prosemirror-view'
 
 export const isMediaSelected = (state: EditorState): boolean => {
   const { media } = state.schema.nodes
@@ -40,3 +41,16 @@ export const createExternalMediaNode = (
   })
   return mediaSingle.createChecked({}, mediaNode)
 }
+
+export const setSelectionAtDropPoint = (
+  { clientX, clientY }: DragEvent,
+  view: EditorView
+): void =>
+  view.dispatch(
+    view.state.tr.setSelection(
+      TextSelection.create(
+        view.state.doc,
+        view.posAtCoords({ left: clientX, top: clientY })?.pos || 0
+      )
+    )
+  )
