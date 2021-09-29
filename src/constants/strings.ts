@@ -16,7 +16,8 @@ export enum InputType {
 
 export enum EventType {
   Click = 'click',
-  Change = 'change'
+  Change = 'change',
+  Drop = 'drop'
 }
 
 export enum RealTimeEvent {
