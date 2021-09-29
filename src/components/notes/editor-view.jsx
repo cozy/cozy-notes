@@ -92,11 +92,11 @@ function EditorView(props) {
           appearance="full-page"
           placeholder={t('Notes.EditorView.main_placeholder')}
           shouldFocus={!readOnly}
-          legacyImageUploadProvider={imageUploadProvider(
+          legacyImageUploadProvider={imageUploadProvider({
             collabProvider,
             t,
             setUploading
-          )}
+          })}
           primaryToolbarComponents={props.primaryToolbarComponents}
           contentComponents={
             <WithEditorActions

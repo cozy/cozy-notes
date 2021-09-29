@@ -4,6 +4,7 @@ import { processFile } from 'lib/helpers'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { isCozyStackError } from 'types/guards'
 import { TOASTER_DURATION } from 'constants/interface'
+import { InsertedImageProperties } from 'cozy-editor-core/src/plugins/image-upload/types'
 
 interface CollabProvider {
   config: {
@@ -19,58 +20,83 @@ interface CollabProvider {
   }
 }
 
-export const imageUploadProvider = (
-  collabProvider: CollabProvider,
-  t: (error: string) => string,
+interface ImageUploadProviderConfig {
+  collabProvider: CollabProvider
+  t: (error: string) => string
   setUploading: (set: boolean) => void
+}
+
+type FileCallback = (file?: File) => void
+
+export const imageUploadProvider = (
+  config: ImageUploadProviderConfig
 ): Promise<ImageUploadProvider> =>
-  Promise.resolve<ImageUploadProvider>((_event, insertImageFn) => {
-    const inputElement = document.createElement(ElementType.Input)
+  Promise.resolve<ImageUploadProvider>((event, insertImageFn) =>
+    handleEvent(event, file => uploadImage(config, insertImageFn, file))
+  )
 
-    inputElement.setAttribute('accept', 'image/*')
+const handleEvent = (event: Event | undefined, cb: FileCallback): void => {
+  if (event === undefined) return handleClick(cb)
+  if (event.type === EventType.Drop) return handleDrop(event as DragEvent, cb)
+}
 
-    inputElement.type = InputType.File
+const handleClick = (cb: FileCallback): void => {
+  const inputElement = document.createElement(ElementType.Input)
 
-    inputElement.dispatchEvent(new MouseEvent(EventType.Click))
+  inputElement.setAttribute('accept', 'image/*')
 
-    inputElement.addEventListener(EventType.Change, () => {
-      const reader = new window.FileReader()
-      const file = inputElement.files?.[0]
+  inputElement.type = InputType.File
 
-      if (!file) throw Error(Errors.NoFileFoundAfterInput)
+  inputElement.dispatchEvent(new MouseEvent(EventType.Click))
 
-      reader.readAsArrayBuffer(file)
+  inputElement.addEventListener(EventType.Change, () =>
+    cb(inputElement.files?.[0])
+  )
+}
 
-      reader.onloadend = async (): Promise<void> => {
-        const processedFile = processFile(reader.result)
+const handleDrop = (event: DragEvent, cb: FileCallback): void =>
+  cb(event.dataTransfer?.files?.[0])
 
-        if (!processedFile) throw Error(Errors.FileNotProcessable)
+const uploadImage = (
+  config: ImageUploadProviderConfig,
+  insertImageFn: (props: InsertedImageProperties) => void,
+  file?: File
+): void => {
+  const reader = new window.FileReader()
 
-        try {
-          setUploading(true)
+  if (!file) throw Error(Errors.NoFileFoundAfterInput)
 
-          const {
-            data: { id: src }
-          } = await collabProvider.serviceClient.postImage(
-            file.name,
-            collabProvider.config.noteId,
-            processedFile,
-            file.type
-          )
+  reader.readAsArrayBuffer(file)
 
-          insertImageFn({ src })
-        } catch (error) {
-          Alerter.error(
-            t(
-              isCozyStackError(error)
-                ? `Error.${error.status}`
-                : 'Error.unknown_error'
-            ),
-            { duration: TOASTER_DURATION }
-          )
-        } finally {
-          setUploading(false)
-        }
-      }
-    })
-  })
+  reader.onloadend = async (): Promise<void> => {
+    const processedFile = processFile(reader.result)
+
+    if (!processedFile) throw Error(Errors.FileNotProcessable)
+
+    try {
+      config.setUploading(true)
+
+      const {
+        data: { id: src }
+      } = await config.collabProvider.serviceClient.postImage(
+        file.name,
+        config.collabProvider.config.noteId,
+        processedFile,
+        file.type
+      )
+
+      insertImageFn({ src })
+    } catch (error) {
+      Alerter.error(
+        config.t(
+          isCozyStackError(error)
+            ? `Error.${error.status}`
+            : 'Error.unknown_error'
+        ),
+        { duration: TOASTER_DURATION }
+      )
+    } finally {
+      config.setUploading(false)
+    }
+  }
+}
