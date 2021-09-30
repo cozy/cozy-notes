@@ -36,8 +36,14 @@ export const imageUploadProvider = (
   )
 
 const handleEvent = (event: Event | undefined, cb: FileCallback): void => {
-  if (event === undefined) return handleClick(cb)
-  if (event.type === EventType.Drop) return handleDrop(event as DragEvent, cb)
+  switch (event?.type) {
+    case EventType.Drop:
+      return handleDrop(event as DragEvent, cb)
+    case EventType.Paste:
+      return handlePaste(event as ClipboardEvent, cb)
+    default:
+      return handleClick(cb)
+  }
 }
 
 const handleClick = (cb: FileCallback): void => {
@@ -56,6 +62,9 @@ const handleClick = (cb: FileCallback): void => {
 
 const handleDrop = (event: DragEvent, cb: FileCallback): void =>
   cb(event.dataTransfer?.files?.[0])
+
+const handlePaste = (event: ClipboardEvent, cb: FileCallback): void =>
+  cb(event.clipboardData?.files?.[0])
 
 const uploadImage = (
   config: ImageUploadProviderConfig,
