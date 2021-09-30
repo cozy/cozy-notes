@@ -5830,10 +5830,10 @@ cozy-client@13.8.3:
     sift "^6.0.0"
     url-search-params-polyfill "^7.0.0"
 
-cozy-client@23.19.1:
-  version "23.19.1"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-23.19.1.tgz#94d3ba189b00fc0ce192060f3b1a5107cb4e2783"
-  integrity sha512-tdu+3840xilc5cvn/CTf1OKrAq1gUzSGRCpue+AF5F2M/jdSE3NxThA6vE9OpTV9MEhazAYWvzrVshqljpUh+Q==
+cozy-client@^24.9.1:
+  version "24.9.1"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-24.9.1.tgz#1c9367bc73c0559da3b26855e2da63eae6ff964c"
+  integrity sha512-X+3xIJPWqStCecWegi2wttD/mACom3jfUNK9OsB/1W/sBdsZ2Y3K9hog6pIWGlqsLG1bpA4QiFyzEZb6MA85Uw==
   dependencies:
     "@cozy/minilog" "1.0.0"
     "@types/jest" "^26.0.20"
@@ -5842,19 +5842,19 @@ cozy-client@23.19.1:
     cozy-device-helper "^1.12.0"
     cozy-flags "2.7.1"
     cozy-logger "^1.6.0"
-    cozy-stack-client "^23.19.0"
+    cozy-stack-client "^24.8.1"
     json-stable-stringify "^1.0.1"
     lodash "^4.17.13"
     microee "^0.0.6"
     node-fetch "^2.6.1"
-    open "^7.0.2"
+    open "7.4.2"
     prop-types "^15.6.2"
     react-redux "^7.2.0"
     redux "3 || 4"
     redux-thunk "^2.3.0"
     server-destroy "^1.0.1"
     sift "^6.0.0"
-    url-search-params-polyfill "^7.0.0"
+    url-search-params-polyfill "^8.0.0"
 
 cozy-device-helper@1.12.0, cozy-device-helper@^1.12.0, cozy-device-helper@^1.7.3:
   version "1.12.0"
@@ -6135,10 +6135,10 @@ cozy-stack-client@^13.8.3:
     mime "^2.4.0"
     qs "^6.7.0"
 
-cozy-stack-client@^23.19.0:
-  version "23.19.0"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-23.19.0.tgz#2972c3dcc151b13c0f65749f341a6349170fe1d3"
-  integrity sha512-oq7/ERKy/Gg3jnxSi0rs3upvBccsGmmfdMiIa9hhJcw/Vxl7NMmjUM2itPnfmBNAMfBax6VlB8HWI1LY87fLuw==
+cozy-stack-client@^24.8.1:
+  version "24.8.1"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-24.8.1.tgz#26ebb121b8cc19eb2853c28279a574d5e920b7f1"
+  integrity sha512-rESFGNMp1QSzcIfR3Z4w4FpT50yxKT/1dqIGawO5AxZlSb5upx2BaTwhi1SkdQAkQ+d1ooDihwju/6Dir6wnTw==
   dependencies:
     cozy-flags "2.7.1"
     detect-node "^2.0.4"
@@ -11698,7 +11698,7 @@ onetime@^5.1.0:
   dependencies:
     mimic-fn "^2.1.0"
 
-open@^7.0.2:
+open@7.4.2, open@^7.0.2:
   version "7.4.2"
   resolved "https://registry.yarnpkg.com/open/-/open-7.4.2.tgz#b8147e26dcf3e426316c730089fd71edd29c2321"
   integrity sha512-MVHddDVweXZF3awtlAS+6pgKLlm/JgxZ90+/NBurBoQctVOOB/zDdVjcyPzQ+0laDGbsWgrRkflI65sQeOgT9Q==
@@ -15570,6 +15570,11 @@ url-search-params-polyfill@7.0.1, url-search-params-polyfill@^7.0.0:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/url-search-params-polyfill/-/url-search-params-polyfill-7.0.1.tgz#b900cd9a0d9d2ff757d500135256f2344879cbff"
   integrity sha512-bAw7L2E+jn9XHG5P9zrPnHdO0yJub4U+yXJOdpcpkr7OBd9T8oll4lUos0iSGRcDvfZoLUKfx9a6aNmIhJ4+mQ==
+
+url-search-params-polyfill@^8.0.0:
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/url-search-params-polyfill/-/url-search-params-polyfill-8.1.1.tgz#9e69e4dba300a71ae7ad3cead62c7717fd99329f"
+  integrity sha512-KmkCs6SjE6t4ihrfW9JelAPQIIIFbJweaaSLTh/4AO+c58JlDcb+GbdPt8yr5lRcFg4rPswRFRRhBGpWwh0K/Q==
 
 url-search-params@^0.10.0:
   version "0.10.2"
