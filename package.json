@@ -84,6 +84,6 @@
   },
   "resolutions": {
     "prosemirror-model": "1.11.0",
-    "cozy-editor-core/@atlaskit/editor-tables": "1.1.3"
+    "cozy-editor-core/@atlaskit/editor-tables": "1.1.5"
   }
 }
