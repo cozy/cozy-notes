@@ -96,7 +96,8 @@
     "loading_error_text_noReturnUrl": "The note may not exists anymore, or our servers may have a temporary glitch. Please try again later.",
     "loading_error_text_returnUrl": "The note may not exists anymore, or our servers may have a temporary glitch. Please go <a href='%{url}'>back</a> and try again later.",
     "422": "Only images are accepted",
-    "unknown_error": "An unexpected error occured"
+    "unknown_error": "An unexpected error occured",
+    "only_one_image": "You cannot drag and drop multiple pictures at the same time"
   },
   "manifest": {
     "short_description": "Cozy Notes is your personal and collaborative note-taking application.",

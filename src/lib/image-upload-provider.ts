@@ -35,7 +35,10 @@ export const imageUploadProvider = (
     handleEvent(event, file => uploadImage(config, insertImageFn, file))
   )
 
-const handleEvent = (event: Event | undefined, cb: FileCallback): void => {
+const handleEvent = (
+  event: Event | undefined,
+  cb: FileCallback
+): void | boolean => {
   switch (event?.type) {
     case EventType.Drop:
       return handleDrop(event as DragEvent, cb)
@@ -60,11 +63,19 @@ const handleClick = (cb: FileCallback): void => {
   )
 }
 
-const handleDrop = (event: DragEvent, cb: FileCallback): void =>
-  cb(event.dataTransfer?.files?.[0])
+const isSingle = (fileList?: FileList): boolean | void =>
+  fileList?.length === 1 || (Alerter.error('Error.only_one_image'), false)
 
-const handlePaste = (event: ClipboardEvent, cb: FileCallback): void =>
-  cb(event.clipboardData?.files?.[0])
+const handleDrop = (
+  { dataTransfer }: DragEvent,
+  cb: FileCallback
+): boolean | void =>
+  isSingle(dataTransfer?.files) && cb(dataTransfer?.files?.[0])
+
+const handlePaste = (
+  { clipboardData }: ClipboardEvent,
+  cb: FileCallback
+): void => cb(clipboardData?.files?.[0])
 
 const uploadImage = (
   config: ImageUploadProviderConfig,
