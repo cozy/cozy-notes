@@ -131,6 +131,7 @@ const NoteRow = ({ note, f, t, client }) => {
           <ActionMenuItem
             onClick={onShowModal}
             left={<Icon icon={ShareIcon} />}
+            autoclose={true}
             right={
               <WithBreakpoints showOn={Breakpoints.Mobile}>
                 <SharedRecipients docId={note.id} size="small" />

@@ -436,3 +436,10 @@ html .fabric-editor-popup-scroll-parent > div > div {
     text-transform: none;
     font-weight: normal;
 }
+
+/* Used to avoid conflicts with sharing modal */
+[aria-label="Media floating controls"],
+.richMedia-resize-handle-left,
+.richMedia-resize-handle-right {
+    z-index: 60 !important;
+}
