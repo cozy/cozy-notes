@@ -437,9 +437,9 @@ html .fabric-editor-popup-scroll-parent > div > div {
     font-weight: normal;
 }
 
-/* Used to avoid conflicts with sharing modal */
+/* Used to avoid conflicts with sharing modal and toolbar */
 [aria-label="Media floating controls"],
 .richMedia-resize-handle-left,
 .richMedia-resize-handle-right {
-    z-index: 60 !important;
+    z-index: auto !important;
 }
