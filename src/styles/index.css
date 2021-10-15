@@ -80,7 +80,7 @@ html .akEditor > div:first-child {
     margin-bottom: 0;
     flex-wrap: wrap;
     height: auto;
-    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(50, 54, 63, 0.08);
+    box-shadow: 0 11px 9px 0 rgba(0, 0, 0, 0.08), 0 3px 3px 0 rgba(50, 54, 63, 0.08);
 }
 
 /* This is the main toolbar wrapper */
