@@ -33,7 +33,9 @@ export enum CozyDoctypes {
 }
 
 export enum Slugs {
-  Drive = 'drive'
+  Drive = 'drive',
+  Home = 'home',
+  Notes = 'notes'
 }
 
 export const SHARING_LOCATION = '/preview'

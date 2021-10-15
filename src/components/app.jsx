@@ -7,7 +7,7 @@ import useClientErrors from 'cozy-client/dist/hooks/useClientErrors'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { Layout, Main, Content } from 'cozy-ui/transpiled/react/Layout'
-import { Sprite as IconSprite } from 'cozy-ui/transpiled/react/Icon'
+import IconSprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import AppTitle from 'cozy-ui/transpiled/react/AppTitle'
 import useBreakpoints, {

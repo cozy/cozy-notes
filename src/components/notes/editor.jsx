@@ -23,6 +23,7 @@ import { useDebugValue } from 'lib/debug'
 
 import useConfirmExit from 'cozy-ui/transpiled/react/hooks/useConfirmExit'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import HeaderMenu from 'components/header_menu'
 
 export default function Editor(props) {
   // base parameters
@@ -105,19 +106,29 @@ export default function Editor(props) {
           defaultTitle={t('Notes.Editor.title_placeholder')}
           defaultValue={{ ...doc.doc, version: doc.version }}
           title={title && title.length > 0 ? title : undefined}
-          leftComponent={
-            <BackFromEditing
-              returnUrl={returnUrl}
-              file={doc.file}
-              requestToLeave={requestToLeave}
-            />
-          }
-          rightComponent={
-            <EditorCorner
-              doc={doc}
+          headerMenu={
+            <HeaderMenu
+              backFromEditing={
+                <BackFromEditing
+                  returnUrl={returnUrl}
+                  file={doc.file}
+                  requestToLeave={requestToLeave}
+                />
+              }
+              editorCorner={
+                <EditorCorner
+                  doc={doc}
+                  isPublic={isPublic}
+                  isReadOnly={readOnly}
+                  title={title}
+                />
+              }
+              homeHref={
+                collabProvider.serviceClient.cozyClient.getStackClient().uri
+              }
               isPublic={isPublic}
-              isReadOnly={readOnly}
-              title={title}
+              file={doc.file}
+              client={collabProvider.serviceClient.cozyClient}
             />
           }
           primaryToolbarComponents={isPreview ? <SharingBannerPlugin /> : null}

@@ -10,7 +10,6 @@ import Overlay from 'cozy-ui/transpiled/react/Overlay'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 
 import editorConfig from 'components/notes/editor_config'
-import HeaderMenu from 'components/header_menu'
 import styles from 'components/notes/editor-view.styl'
 import { imageUploadProvider } from 'lib/image-upload-provider'
 
@@ -28,11 +27,10 @@ function EditorView(props) {
     defaultTitle,
     title,
     collabProvider,
-    leftComponent,
-    rightComponent,
     onContentChange,
     readOnly,
-    bannerRef
+    bannerRef,
+    headerMenu
   } = props
   const { t } = useI18n()
 
@@ -77,11 +75,7 @@ function EditorView(props) {
         </Overlay>
       )}
       <style>#coz-bar {'{ display: none }'}</style>
-      <HeaderMenu
-        left={leftComponent}
-        className="note-header-menu--editing"
-        right={rightComponent}
-      />
+      {headerMenu}
       <section className="note-editor-container">
         <Editor
           {...editorConfig}
