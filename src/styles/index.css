@@ -77,10 +77,19 @@ html .akEditor > div:first-child {
 
 /* prose mirror toolbar in the upper bar */
 html .akEditor > div:first-child {
-    margin-bottom: 0;
+    width: 100%;
     flex-wrap: wrap;
     height: auto;
-    box-shadow: 0 11px 9px 0 rgba(0, 0, 0, 0.08), 0 3px 3px 0 rgba(50, 54, 63, 0.08);
+    position: fixed;
+    top: auto;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+html .akEditor > div:first-child > div > div:last-child {
+    box-shadow: 0px 0px 0px 0.5px rgba(29, 33, 42, 0.12), 0px 2px 4px rgba(29, 33, 42, 0.0793047), 0px 4px 16px rgba(29, 33, 42, 0.06);
+    border-radius: 8px;
 }
 
 /* This is the main toolbar wrapper */
