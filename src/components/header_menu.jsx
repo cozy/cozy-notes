@@ -21,7 +21,8 @@ const HeaderMenu = ({
   editorCorner,
   isPublic,
   file,
-  client
+  client,
+  primaryToolBarComponents
 }) => {
   const drivePath = useMemo(
     () => getDriveLink(client, file.attributes.dir_id),
@@ -62,7 +63,7 @@ const HeaderMenu = ({
           <WithBreakpoints hideOn={Breakpoints.Mobile}>
             <NotePath
               drivePath={drivePath}
-              path={file.attributes.path || drivePath}
+              path={file.attributes.path || drivePath.split('#')[1]}
               target="_blank"
             />
           </WithBreakpoints>
@@ -70,10 +71,12 @@ const HeaderMenu = ({
       </div>
 
       <WithBreakpoints hideOn={Breakpoints.Mobile}>
-        <SharedRecipients docId={file.id} size={24} />
+        <SharedRecipients docId={file.id} size={32} />
       </WithBreakpoints>
 
       {editorCorner}
+
+      {primaryToolBarComponents}
     </header>
   )
 }
