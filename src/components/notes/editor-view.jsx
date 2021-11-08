@@ -91,7 +91,6 @@ function EditorView(props) {
             t,
             setUploading
           })}
-          primaryToolbarComponents={props.primaryToolbarComponents}
           contentComponents={
             <WithEditorActions
               render={() => (
