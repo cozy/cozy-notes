@@ -9,5 +9,7 @@
     "fabric.editor.layoutFixedWidth": "Retour au centre",
     "fabric.editor.alignImageLeft": "Aligner l'image à gauche",
     "fabric.editor.alignImageCenter": "Centrer l'image",
-    "fabric.editor.alignImageRight": "Aligner l'image à droite"
+    "fabric.editor.alignImageRight": "Aligner l'image à droite",
+    "fabric.editor.numberedColumn": "Lignes numérotées"
+
 }

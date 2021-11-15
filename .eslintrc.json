@@ -1,6 +1,6 @@
 {
   "extends": ["cozy-app/react"],
-  "ignorePatterns": ["src/plugins/**/*.ts", "src/plugins/**/*.tsx"],
+  "ignorePatterns": ["src/plugins/**/*.ts", "src/plugins/**/*.tsx", "src/ui/**/*.ts", "src/ui/**/*.tsx"],
   "parser": "@babel/eslint-parser",
   "overrides": [
     {

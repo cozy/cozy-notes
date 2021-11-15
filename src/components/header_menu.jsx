@@ -1,19 +1,19 @@
 import React, { useMemo } from 'react'
 
+import { models } from 'cozy-client'
+import { SharedRecipients } from 'cozy-sharing'
 import AppLinker from 'cozy-ui/transpiled/react/AppLinker'
 import AppIcon from 'cozy-ui/transpiled/react/AppIcon'
 import Divider from 'cozy-ui/transpiled/react/MuiCozyTheme/Divider'
 import Link from 'cozy-ui/transpiled/react/Link'
-import { SharedRecipients } from 'cozy-sharing'
-import { Typography } from '@material-ui/core'
-import { Slugs } from 'constants/strings'
-import { NotePath } from './notes/List/NotePath'
-import { CozyFile } from 'cozy-doctypes'
-import { getDriveLink } from 'lib/utils'
+import Typography from 'cozy-ui/transpiled/react/Typography'
 
-import styles from './header_menu.styl'
-import { WithBreakpoints } from './notes/List/WithBreakpoints'
+import { Slugs } from 'constants/strings'
 import { Breakpoints } from 'types/enums'
+import { getDriveLink } from 'lib/utils'
+import { NotePath } from './notes/List/NotePath'
+import { WithBreakpoints } from './notes/List/WithBreakpoints'
+import styles from './header_menu.styl'
 
 const HeaderMenu = ({
   homeHref,
@@ -28,8 +28,9 @@ const HeaderMenu = ({
     () => getDriveLink(client, file.attributes.dir_id),
     [client, file.attributes.dir_id]
   )
+  const simplifiedDrivePath = drivePath.split('#')[1]
 
-  const { filename } = CozyFile.splitFilename(file.attributes)
+  const { filename } = models.file.splitFilename(file.attributes)
 
   return (
     <header className={styles['header-menu']}>
@@ -42,7 +43,7 @@ const HeaderMenu = ({
           )}
         </AppLinker>
 
-        <Divider orientation="vertical" className={styles['divider']} />
+        <Divider orientation="vertical" className="u-mh-1" />
       </WithBreakpoints>
 
       {backFromEditing && <div className="u-mr-1">{backFromEditing}</div>}
@@ -63,7 +64,7 @@ const HeaderMenu = ({
           <WithBreakpoints hideOn={Breakpoints.Mobile}>
             <NotePath
               drivePath={drivePath}
-              path={file.attributes.path || drivePath.split('#')[1]}
+              path={file.attributes.path || simplifiedDrivePath}
               target="_blank"
             />
           </WithBreakpoints>
