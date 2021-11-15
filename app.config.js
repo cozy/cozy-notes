@@ -27,6 +27,14 @@ const extraConfig = {
         __dirname,
         'node_modules/cozy-editor-core/src/plugins/image-upload'
       )]: path.resolve(__dirname, './src/plugins/image-upload'),
+      [path.resolve(
+        __dirname,
+        'node_modules/cozy-editor-core/src/ui/Dropdown'
+      )]: path.resolve(__dirname, './src/ui/Dropdown'),
+      [path.resolve(
+        __dirname,
+        'node_modules/cozy-editor-core/src/ui/DropdownMenu'
+      )]: path.resolve(__dirname, './src/ui/DropdownMenu'),
       ['@atlaskit/editor-core']: path.resolve(
         __dirname,
         'node_modules/cozy-editor-core/src'

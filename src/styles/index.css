@@ -35,7 +35,7 @@ html {
     --note-title5-color: var(--coolGrey);
     --note-title6-color: var(--coolGrey);
     --note-border-radius: 8px;
-    --note-header-height: 3rem;
+    --note-header-height: 64px;
     --note-header-height-half: 1.5rem;
     color: var(--note-base-color);
 }
@@ -72,7 +72,7 @@ html .akEditor > div:first-child {
 }
 
 .note-editor-container {
-    height: calc(100% - 48px);
+    overflow: hidden;
 }
 
 /* prose mirror toolbar in the upper bar */
@@ -82,16 +82,19 @@ html .akEditor > div:first-child {
     height: auto;
     position: fixed;
     top: auto;
-    bottom: 1rem;
+    bottom: calc(env(safe-area-inset-bottom, 1rem) + 1rem);
     left: 50%;
     transform: translateX(-50%);
+    background: none;
+    box-shadow: none;
 }
 
 /* toolbar inner wrapper */
 html .akEditor > div:first-child > div > div:last-child {
     box-shadow: 0px 0px 0px 0.5px rgba(29, 33, 42, 0.12), 0px 2px 4px rgba(29, 33, 42, 0.0793047), 0px 4px 16px rgba(29, 33, 42, 0.06);
     border-radius: 8px;
-    padding: 0 0.5rem;
+    padding: 0.5rem;
+    background: white;
 }
 
 /* This is the main toolbar wrapper */
@@ -120,14 +123,12 @@ html .akEditor > div:first-child > div:first-child + div hr {
 [data-testid="ak-editor-main-toolbar"] > div > div:nth-child(2) {
     display: flex;
     align-items: center;
-    width: 730px; /* full toolbar */
-    max-width: 100%;
+    max-width: 768px;
     margin: auto;
-    height: var(--note-header-height);
 }
 
 [data-testid="ak-editor-main-toolbar"] + div {
-    height: calc(100% - 130px);
+    height: calc(100%);
 }
 
 /* 
@@ -402,7 +403,7 @@ html .fabric-editor-popup-scroll-parent > div > div {
 }
 
 html .ak-editor-content-area {
-    padding: var(--documentTopPadding) var(--documentPadding) var(--documentPadding) var(--documentPadding) !important;
+    padding: var(--documentTopPadding) var(--documentPadding) calc(3 * var(--note-base-size)) var(--documentPadding) !important;
     background-color: var(--white);
 }
 
@@ -453,4 +454,15 @@ html .fabric-editor-popup-scroll-parent > div > div {
 .richMedia-resize-handle-left,
 .richMedia-resize-handle-right {
     z-index: auto !important;
+}
+
+/* Required for toolbar's popups because unidentified internals miscalculate the popups position */
+/* Since we always display the toolbar at the bottom of the screen we do not care about any other top position than zero */
+[data-testid="ak-editor-main-toolbar"] [aria-label*="Popup"] {
+    top: 0 !important;
+}
+
+/* Weird overflow linked to the floating toolbar, could not locate the exact origin of the problem */
+body {
+    overflow-x: hidden;
 }
