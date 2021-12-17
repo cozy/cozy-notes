@@ -56,8 +56,12 @@ const NoteRow = ({ note, f, t, client }) => {
   const menuTriggerRef = React.createRef()
 
   const goToNote = async () => {
-    const url = await generateReturnUrlToNotesIndex(client, note)
-    window.location.href = url
+    try {
+      const url = await generateReturnUrlToNotesIndex(client, note)
+      window.location.href = url
+    } catch (error) {
+      Alerter.error(t('Error.loading_error_title'))
+    }
   }
 
   const handleKeyDown = e => {
