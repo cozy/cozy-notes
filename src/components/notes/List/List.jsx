@@ -34,30 +34,32 @@ const LoadingTableRow = () => (
 )
 
 const List = ({ t, notes, fetchStatus }) => (
-  <Table className={styles.table}>
-    <TableHead>
-      <TableRow>
-        <TableHeader className={styles.tableCellName}>
-          {t('Notes.List.name')}
-        </TableHeader>
-
-        <WithBreakpoints hideOn={Breakpoints.Mobile}>
-          <TableHeader className={styles.tableCell}>
-            {t('Notes.List.updated_at')}
+  <Table className={`${styles.table} ${notes.length === 0 && styles.notable}`}>
+    {notes.length > 0 && (
+      <TableHead>
+        <TableRow>
+          <TableHeader className={styles.tableCellName}>
+            {t('Notes.List.name')}
           </TableHeader>
 
-          <TableHeader className={`${styles.tableCell} u-flex-shrink-0`}>
-            {t('Notes.List.location')}
-          </TableHeader>
+          <WithBreakpoints hideOn={Breakpoints.Mobile}>
+            <TableHeader className={styles.tableCell}>
+              {t('Notes.List.updated_at')}
+            </TableHeader>
 
-          <TableHeader className={styles.tableCell}>
-            {t('Notes.List.sharings')}
-          </TableHeader>
-        </WithBreakpoints>
+            <TableHeader className={`${styles.tableCell} u-flex-shrink-0`}>
+              {t('Notes.List.location')}
+            </TableHeader>
 
-        <TableHeader className={styles.tableCell} />
-      </TableRow>
-    </TableHead>
+            <TableHeader className={styles.tableCell}>
+              {t('Notes.List.sharings')}
+            </TableHeader>
+          </WithBreakpoints>
+
+          <TableHeader className={styles.tableCell} />
+        </TableRow>
+      </TableHead>
+    )}
 
     <TableBody>
       {fetchStatus === 'loading' ? (
