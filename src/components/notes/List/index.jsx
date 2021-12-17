@@ -27,9 +27,12 @@ const ListView = () => {
           <Stack>
             <WithBreakpoints hideOn={Breakpoints.Mobile}>
               <div
-                className={`${styles.appHeader} u-flex u-flex-justify-between u-flex-items-center u-mt-1`}
+                className={
+                  notes.length > 0 &&
+                  `${styles.appHeader} u-flex u-flex-justify-between u-flex-items-center u-mt-1`
+                }
               >
-                <AppTitle />
+                {notes.length > 0 && <AppTitle />}
 
                 {shouldDisplayAddButton(fetchStatus, notes) && <Add />}
               </div>
