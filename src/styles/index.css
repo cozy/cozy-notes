@@ -131,12 +131,8 @@ html .akEditor > div:first-child > div:first-child + div hr {
     height: calc(100%);
 }
 
-/* 
-   FIXME: get rid of the avatar group plugin when shared editing is live,
-   this is a quick and brittle hack and should be done with React, but isn't trivial to change
-*/
-[aria-label="avatar group"],
-[aria-label="avatar group"] + * {
+/* Hacky CSS to hide anything that isn't the toolbar in the atlaskit toolbar wrapper (avatar component for instance) */
+[data-testid="ak-editor-main-toolbar"] > :not(:first-child) {
     display: none !important;
 }
 
