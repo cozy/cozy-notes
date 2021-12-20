@@ -18,8 +18,8 @@ import { useFetchIcons } from 'hooks/useFetchIcons'
 
 const HeaderMenu = ({
   homeHref,
-  backFromEditing,
-  editorCorner,
+  leftComponent,
+  rightComponent,
   isPublic,
   file,
   client,
@@ -51,7 +51,7 @@ const HeaderMenu = ({
         <Divider orientation="vertical" className="u-mh-1" />
       </WithBreakpoints>
 
-      {backFromEditing && <div className="u-mr-1">{backFromEditing}</div>}
+      {leftComponent}
 
       <div className={styles['file-infos']}>
         <WithBreakpoints hideOn={Breakpoints.Mobile}>
@@ -81,7 +81,7 @@ const HeaderMenu = ({
         <SharedRecipients docId={file.id} size={32} />
       </WithBreakpoints>
 
-      {editorCorner}
+      {rightComponent}
 
       {primaryToolBarComponents}
     </header>
