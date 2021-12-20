@@ -110,7 +110,7 @@ export const initApp = () => {
 
   const shareCode = getPublicSharecode()
   const token = shareCode || data.token
-  const isPublic = shareCode || !token || token == ''
+  const isPublic = Boolean(shareCode || !token || token == '')
 
   // initialize the client to interact with the cozy stack
   const client = new CozyClient({

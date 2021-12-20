@@ -38,10 +38,9 @@ describe('EditorCorner', () => {
       <WithStyles(ForwardRef(Tooltip))
         title="This note is in read-only mode."
       >
-        <Icon
+        <ForwardRef(ForwardedIcon)
           color="var(--primaryTextColor)"
           icon="lock"
-          spin={false}
         />
       </WithStyles(ForwardRef(Tooltip))>
     `)

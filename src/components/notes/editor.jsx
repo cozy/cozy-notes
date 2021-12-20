@@ -152,5 +152,5 @@ Editor.propTypes = {
   noteId: PropTypes.string.isRequired,
   readOnly: PropTypes.bool.isRequired,
   userName: PropTypes.string,
-  returnUrl: PropTypes.string
+  returnUrl: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired
 }
