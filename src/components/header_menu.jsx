@@ -14,6 +14,7 @@ import { getDriveLink } from 'lib/utils'
 import { NotePath } from './notes/List/NotePath'
 import { WithBreakpoints } from './notes/List/WithBreakpoints'
 import styles from './header_menu.styl'
+import { useFetchIcons } from 'hooks/useFetchIcons'
 
 const HeaderMenu = ({
   homeHref,
@@ -29,7 +30,7 @@ const HeaderMenu = ({
     [client, file.attributes.dir_id]
   )
   const simplifiedDrivePath = drivePath.split('#')[1]
-
+  const { fetchHomeIcon, fetchNoteIcon } = useFetchIcons()
   const { filename } = models.file.splitFilename(file.attributes)
 
   return (
@@ -38,7 +39,11 @@ const HeaderMenu = ({
         <AppLinker slug={Slugs.Home} href={homeHref}>
           {({ href }) => (
             <Link {...(!isPublic && { href })} className={styles['home-link']}>
-              <AppIcon app={Slugs.Home} alt={Slugs.Home} />
+              <AppIcon
+                app={Slugs.Home}
+                alt={Slugs.Home}
+                fetchIcon={fetchHomeIcon}
+              />
             </Link>
           )}
         </AppLinker>
@@ -53,6 +58,7 @@ const HeaderMenu = ({
           <AppIcon
             app={file.attributes.cozyMetadata.createdByApp}
             className={styles['app-icon']}
+            fetchIcon={fetchNoteIcon}
           />
         </WithBreakpoints>
 
