@@ -453,7 +453,7 @@ html .fabric-editor-popup-scroll-parent > div > div {
 [aria-label="Media floating controls"],
 .richMedia-resize-handle-left,
 .richMedia-resize-handle-right {
-    z-index: auto !important;
+    z-index: 1 !important;
 }
 
 /* Required for toolbar's popups because unidentified internals miscalculate the popups position */
