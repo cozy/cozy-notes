@@ -108,14 +108,16 @@ export default function Editor(props) {
           title={title && title.length > 0 ? title : undefined}
           headerMenu={
             <HeaderMenu
-              backFromEditing={
-                <BackFromEditing
-                  returnUrl={returnUrl}
-                  file={doc.file}
-                  requestToLeave={requestToLeave}
-                />
+              leftComponent={
+                <div className="u-mr-1">
+                  <BackFromEditing
+                    returnUrl={returnUrl}
+                    file={doc.file}
+                    requestToLeave={requestToLeave}
+                  />
+                </div>
               }
-              editorCorner={
+              rightComponent={
                 <EditorCorner
                   doc={doc}
                   isPublic={isPublic}
