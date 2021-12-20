@@ -3,7 +3,6 @@ import { models } from 'cozy-client'
 
 function useFileWithPath({ cozyClient, file }) {
   const [fileWithPath, setFileWithPath] = useState(undefined)
-
   useEffect(() => {
     async function getParent(rawFile) {
       const file = models.file.normalize(rawFile)

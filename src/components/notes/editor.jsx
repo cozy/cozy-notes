@@ -130,7 +130,6 @@ export default function Editor(props) {
               }
               isPublic={isPublic}
               file={doc.file}
-              client={collabProvider.serviceClient.cozyClient}
               primaryToolbarComponents={
                 isPreview ? <SharingBannerPlugin /> : null
               }

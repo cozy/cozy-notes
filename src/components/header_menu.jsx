@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 
 import { models } from 'cozy-client'
 import { SharedRecipients } from 'cozy-sharing'
@@ -10,11 +10,10 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 
 import { Slugs } from 'constants/strings'
 import { Breakpoints } from 'types/enums'
-import { getDriveLink } from 'lib/utils'
-import { NotePath } from './notes/List/NotePath'
 import { WithBreakpoints } from './notes/List/WithBreakpoints'
 import styles from './header_menu.styl'
 import { useFetchIcons } from 'hooks/useFetchIcons'
+import { HeaderNotePath } from './HeaderNotePath'
 
 const HeaderMenu = ({
   homeHref,
@@ -22,14 +21,8 @@ const HeaderMenu = ({
   rightComponent,
   isPublic,
   file,
-  client,
   primaryToolBarComponents
 }) => {
-  const drivePath = useMemo(
-    () => getDriveLink(client, file.attributes.dir_id),
-    [client, file.attributes.dir_id]
-  )
-  const simplifiedDrivePath = drivePath.split('#')[1]
   const { fetchHomeIcon, fetchNoteIcon } = useFetchIcons()
   const { filename } = models.file.splitFilename(file.attributes)
 
@@ -67,13 +60,7 @@ const HeaderMenu = ({
             <strong>{filename}</strong>
           </Typography>
 
-          <WithBreakpoints hideOn={Breakpoints.Mobile}>
-            <NotePath
-              drivePath={drivePath}
-              path={file.attributes.path || simplifiedDrivePath}
-              target="_blank"
-            />
-          </WithBreakpoints>
+          {!isPublic && <HeaderNotePath file={file} />}
         </div>
       </div>
 
