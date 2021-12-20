@@ -7,13 +7,22 @@ import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
 import SharingWidget from 'components/notes/sharing'
 
+// https://mui.com/components/tooltips/#custom-child-element
+const ForwardedIcon = React.forwardRef(function ForwardedIcon(props, ref) {
+  return (
+    <div ref={ref}>
+      <Icon {...props} />
+    </div>
+  )
+})
+
 const EditorCorner = ({ doc, isPublic, isReadOnly, title }) => {
   const { t } = useI18n()
   if (!isPublic) return <SharingWidget file={doc.file} title={title} />
   else if (isReadOnly) {
     return (
       <Tooltip title={t('Notes.Editor.read_only')}>
-        <Icon icon="lock" color="var(--primaryTextColor)" />
+        <ForwardedIcon icon="lock" color="var(--primaryTextColor)" />
       </Tooltip>
     )
   } else return null
