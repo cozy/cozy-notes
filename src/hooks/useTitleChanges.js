@@ -6,6 +6,12 @@ function useTitleChanges({ noteId, title, setTitle, serviceClient }) {
   const onLocalTitleChange = useCallback(
     serviceClient
       ? e => {
+          // Let the user tab out of the title when using the 'Enter' key
+          if (e.nativeEvent?.inputType === 'insertLineBreak')
+            return window.dispatchEvent(
+              new KeyboardEvent('keydown', { key: 9 })
+            )
+
           // forbid line feed and non standard spaces in title
           const modifiedTitle = e.target.value.replace(/[\r\t\n\xa0]+/g, ' ')
           if (title != modifiedTitle) {
