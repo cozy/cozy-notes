@@ -20,6 +20,7 @@ import { RealtimePlugin } from 'cozy-realtime'
 import { I18n } from 'cozy-ui/transpiled/react/I18n'
 import { Document } from 'cozy-doctypes'
 import SharingProvider from 'cozy-sharing'
+import { WebviewIntentProvider } from 'cozy-intent'
 
 import IsPublicContext from 'components/IsPublicContext'
 import {
@@ -67,12 +68,17 @@ const renderApp = function(appLocale, client, isPublic) {
           <CozyProvider client={client}>
             <MuiCozyTheme>
               <IsPublicContext.Provider value={isPublic}>
-                {!isPublic && (
-                  <SharingProvider doctype="io.cozy.files" documentType="Notes">
-                    <App isPublic={isPublic} />
-                  </SharingProvider>
-                )}
-                {isPublic && <App isPublic={isPublic} />}
+                <WebviewIntentProvider>
+                  {!isPublic && (
+                    <SharingProvider
+                      doctype="io.cozy.files"
+                      documentType="Notes"
+                    >
+                      <App isPublic={isPublic} />
+                    </SharingProvider>
+                  )}
+                  {isPublic && <App isPublic={isPublic} />}
+                </WebviewIntentProvider>
               </IsPublicContext.Provider>
             </MuiCozyTheme>
           </CozyProvider>
