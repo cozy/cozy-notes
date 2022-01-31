@@ -66,6 +66,7 @@
     "cozy-doctypes": "1.82.2",
     "cozy-editor-core": "134.0.3",
     "cozy-flags": "2.7.2",
+    "cozy-intent": "^1.7.0",
     "cozy-realtime": "3.13.0",
     "cozy-scripts": "eslint7",
     "cozy-sharing": "3.12.10",
