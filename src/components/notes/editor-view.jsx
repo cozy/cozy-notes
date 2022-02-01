@@ -44,10 +44,10 @@ function EditorView(props) {
   )
 
   // put the provider in readonly mode if requested and react to changes of values
-  useMemo(() => collabProvider && collabProvider.setReadOnly(!!readOnly), [
-    readOnly,
-    collabProvider
-  ])
+  useMemo(
+    () => collabProvider && collabProvider.setReadOnly(!!readOnly),
+    [readOnly, collabProvider]
+  )
 
   const collabEdit = useMemo(
     () =>

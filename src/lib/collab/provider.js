@@ -14,7 +14,7 @@ const jsonTransformer = new JSONTransformer()
 // This patch fixes this unique case, creating a correct empty document with
 // an empty paragraph
 const oldEncode = jsonTransformer.encode.bind(jsonTransformer)
-jsonTransformer.encode = function(doc) {
+jsonTransformer.encode = function (doc) {
   const transformed = oldEncode(doc)
   if (transformed.content.length === 0 && doc.content.length != 0) {
     return {

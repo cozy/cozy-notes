@@ -48,10 +48,10 @@ const NoteRow = ({ note, f, t, client }) => {
     }
   }, [client, note, t, setMenuOpen])
 
-  const drivePath = useMemo(() => getDriveLink(client, note.dir_id), [
-    client,
-    note
-  ])
+  const drivePath = useMemo(
+    () => getDriveLink(client, note.dir_id),
+    [client, note]
+  )
 
   const menuTriggerRef = React.createRef()
 

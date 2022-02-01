@@ -55,7 +55,7 @@ const generateClassName = createGenerateClassName({
   disableGlobal: true
 })
 
-const renderApp = function(appLocale, client, isPublic) {
+const renderApp = function (appLocale, client, isPublic) {
   const App = require('components/app').default
 
   render(

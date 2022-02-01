@@ -47,7 +47,7 @@ function stripSessionId(arr) {
 function hasReceivedSteps(fn, steps, version) {
   expect(fn).toHaveBeenCalled()
   const strippedSteps = stripSessionId(steps)
-  const reduce = function(prev, curr) {
+  const reduce = function (prev, curr) {
     const given = curr[0]
     if (prev) return true
     if (version && given.version != version) return false

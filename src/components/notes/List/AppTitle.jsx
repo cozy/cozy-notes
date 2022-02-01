@@ -3,8 +3,8 @@ import { MainTitle } from 'cozy-ui/transpiled/react/Text'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { withBreakpoints } from 'cozy-ui/transpiled/react'
 
-//We don't not display the Title this way in Mobile.
-//We use Bar.centrer
+// We don't not display the Title this way in Mobile.
+// We use Bar.centrer
 const AppTitle = ({ t, breakpoints: { isMobile } }) => {
   return !isMobile && <MainTitle>{t('Notes.List.latest_notes')}</MainTitle>
 }

@@ -80,11 +80,7 @@ describe('EditorView', () => {
       it('should have a readonly title', async () => {
         const collabProvider = setupCollabProvider()
         const editorView = mountEditorView({ collabProvider, readOnly })
-        const title = editorView
-          .find(MainTitle)
-          .first()
-          .find(Textarea)
-          .first()
+        const title = editorView.find(MainTitle).first().find(Textarea).first()
         expect(title.prop('readOnly')).toBeTruthy()
       })
 
@@ -118,11 +114,7 @@ describe('EditorView', () => {
       it('should not have a readonly title', async () => {
         const collabProvider = setupCollabProvider()
         const editorView = mountEditorView({ collabProvider, readOnly })
-        const title = editorView
-          .find(MainTitle)
-          .first()
-          .find(Textarea)
-          .first()
+        const title = editorView.find(MainTitle).first().find(Textarea).first()
         expect(title.prop('readOnly')).toBeFalsy()
       })
 

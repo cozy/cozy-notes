@@ -47,7 +47,7 @@ describe('Channel', () => {
       it('should resolve immediatly when no failures', async () => {
         const channel = new Channel(config, service)
         const race = Promise.race([
-          new Promise(function(resolve) {
+          new Promise(function (resolve) {
             window.setTimeout(() => resolve('backoff is > 100ms'), 100)
           }),
           channel.afterBackoff().then(() => 'backoff is < 100ms')
@@ -60,7 +60,7 @@ describe('Channel', () => {
         channel.increaseBackoff()
         channel.increaseBackoff()
         const race = Promise.race([
-          new Promise(function(resolve) {
+          new Promise(function (resolve) {
             window.setTimeout(() => resolve('backoff is > 50ms'), 50)
           }),
           channel.afterBackoff().then(() => 'backoff is < 50ms')
@@ -78,7 +78,7 @@ describe('Channel', () => {
         channel.increaseBackoff()
         channel.resetBackoff()
         const race = Promise.race([
-          new Promise(function(resolve) {
+          new Promise(function (resolve) {
             window.setTimeout(() => resolve('backoff is > 100ms'), 100)
           }),
           channel.afterBackoff().then(() => 'backoff is < 100ms')
@@ -234,7 +234,7 @@ describe('Channel', () => {
         channel.increaseBackoff()
         channel.increaseBackoff()
         const data = channel.processQueue()
-        const time = new Promise(function(resolve) {
+        const time = new Promise(function (resolve) {
           window.setTimeout(() => resolve(), 100)
         })
         const race = Promise.race([
@@ -466,7 +466,7 @@ describe('Channel', () => {
       const channel = new Channel(config, service)
       expect(channel.hasQueuedSteps()).toBeFalsy()
       const race = Promise.race([
-        new Promise(function(resolve) {
+        new Promise(function (resolve) {
           window.setTimeout(() => resolve('ensureEmptyQueue is > 50ms'), 50)
         }),
         channel.ensureEmptyQueue().then(() => 'ensureEmptyQueue is < 50ms')
@@ -487,7 +487,10 @@ describe('Channel', () => {
         steps.state,
         steps.localSteps
       )
-      channel.ensureEmptyQueue().then(callback)
+      channel
+        .ensureEmptyQueue()
+        .then(callback)
+        .catch(e => e)
       expect(callback).not.toHaveBeenCalled()
       await send
       expect(callback).toHaveBeenCalled()
@@ -498,7 +501,10 @@ describe('Channel', () => {
       const channel = new Channel(config, service)
       const callback = jest.fn()
       channel.enqueueSteps(steps)
-      channel.ensureEmptyQueue().then(callback)
+      channel
+        .ensureEmptyQueue()
+        .then(callback)
+        .catch(e => e)
       expect(callback).not.toHaveBeenCalled()
       await channel.processQueue()
       expect(callback).toHaveBeenCalled()
@@ -516,9 +522,12 @@ describe('Channel', () => {
       const channel = new Channel(config, service)
       const callback = jest.fn()
       channel.enqueueSteps(steps)
-      channel.ensureEmptyQueue().then(callback)
+      channel
+        .ensureEmptyQueue()
+        .then(callback)
+        .catch(e => e)
       const process = channel.processQueue()
-      await new Promise(function(resolve) {
+      await new Promise(function (resolve) {
         window.setTimeout(() => resolve(), 500)
       })
       expect(callback).not.toHaveBeenCalled()

@@ -31,7 +31,7 @@ function createOnClick(requestToLeave, href, onClick) {
     if (onClick) onClick(ev)
     if (!ev.prevented) document.location = href
   }
-  return function(ev) {
+  return function (ev) {
     ev.preventDefault()
     requestToLeave(go)
   }

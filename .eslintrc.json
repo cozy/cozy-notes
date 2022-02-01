@@ -1,24 +1,7 @@
 {
   "extends": ["cozy-app/react"],
   "ignorePatterns": ["src/plugins/**/*.ts", "src/plugins/**/*.tsx", "src/ui/**/*.ts", "src/ui/**/*.tsx"],
-  "parser": "@babel/eslint-parser",
-  "overrides": [
-    {
-      "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/recommended-requiring-type-checking"
-      ],
-      
-      "files": ["**/*.ts", "**/*.tsx"],
-      "parser": "@typescript-eslint/parser",
-      "parserOptions": { "project": "./tsconfig.json" },
-      "plugins": ["@typescript-eslint"],
-      "rules":  {
-        "@typescript-eslint/no-explicit-any": "error",
-        "@typescript-eslint/explicit-function-return-type": "error"
-      }
-    }
-  ]
+  "parserOptions": {
+    "project": "tsconfig.json"
+  }
 }
