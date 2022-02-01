@@ -49,7 +49,7 @@ function setupClient(verbs = [], ids = ['first', 'other']) {
     }),
     query: async data => data,
     collection: () => ({
-      getOwnPermissions: async () => ({
+      fetchOwnPermissions: async () => ({
         data: {
           id: '9385e37389cb9f71a230168f245df2f8',
           _id: '9385e37389cb9f71a230168f245df2f8',
@@ -123,19 +123,23 @@ describe('fetchIfIsNoteReadOnly', () => {
   ;[
     ['only one individual file permission', ['only'], 'only'],
     ['a permission for this file', ['first', 'second'], 'first'],
-    ['a permission for an ancestor', ['first', 'second'], 'first-ggchild']
+    ['a permission for an ancestor', ['first', 'second'], 'second']
   ].forEach(data => {
     describe(`when there is ${data[0]}`, () => {
       describe('when we have a PATCH permission', () => {
         it('should return read-write', async () => {
           const client = setupClient(['GET', 'PATCH'], data[1])
-          expect(fetchIfIsNoteReadOnly(client, data[2])).resolves.toBeFalsy()
+          await expect(
+            fetchIfIsNoteReadOnly(client, data[2])
+          ).resolves.toBeFalsy()
         })
       })
       describe('when we only have a GET permission', () => {
         it('should return read-only', async () => {
           const client = setupClient(['GET'], data[1])
-          expect(fetchIfIsNoteReadOnly(client, data[2])).resolves.toBeTruthy()
+          await expect(
+            fetchIfIsNoteReadOnly(client, data[2])
+          ).resolves.toBeTruthy()
         })
       })
     })
