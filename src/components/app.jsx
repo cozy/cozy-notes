@@ -10,11 +10,9 @@ import { Layout, Main, Content } from 'cozy-ui/transpiled/react/Layout'
 import IconSprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import AppTitle from 'cozy-ui/transpiled/react/AppTitle'
-import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
 import useBreakpoints, {
   BreakpointsProvider
 } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
-import { useWebviewIntent } from 'cozy-intent'
 
 const manifest = require('../../manifest.webapp')
 import { List, Editor, Unshared } from 'components/notes'
@@ -96,7 +94,6 @@ const App = ({ isPublic }) => {
   const { isMobile } = useBreakpoints
   const { ClientErrors } = useClientErrors()
   const { t } = useI18n()
-  const webviewService = useWebviewIntent()
 
   const appName = isMobile
     ? getDataOrDefault(client.getInstanceOptions().app.name, manifest.name)
@@ -111,11 +108,9 @@ const App = ({ isPublic }) => {
       <HashRouter>
         <Layout monoColumn={true}>
           {!isPublic && isMobile && (
-            <BarContextProvider webviewService={webviewService}>
-              <BarCenter>
-                <AppTitle>{appName}</AppTitle>
-              </BarCenter>
-            </BarContextProvider>
+            <BarCenter>
+              <AppTitle>{appName}</AppTitle>
+            </BarCenter>
           )}
           <Main>
             <Content>
