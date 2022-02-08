@@ -47,7 +47,7 @@ export async function generateReturnUrlToNotesIndex(client, doc) {
 async function getFilesOwnPermissions(client) {
   const permissionsData = await client
     .collection('io.cozy.permissions')
-    .getOwnPermissions()
+    .fetchOwnPermissions()
   const permissionObject = get(permissionsData, 'data.attributes.permissions')
   if (!permissionObject) throw `can't get self permissions`
   const permissions = Object.values(permissionObject)
