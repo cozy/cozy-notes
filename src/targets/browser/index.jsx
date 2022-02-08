@@ -68,7 +68,11 @@ const renderApp = function(appLocale, client, isPublic) {
             <MuiCozyTheme>
               <IsPublicContext.Provider value={isPublic}>
                 {!isPublic && (
-                  <SharingProvider doctype="io.cozy.files" documentType="Notes">
+                  <SharingProvider
+                    doctype="io.cozy.files"
+                    documentType="Notes"
+                    previewPath="/preview/"
+                  >
                     <App isPublic={isPublic} />
                   </SharingProvider>
                 )}
