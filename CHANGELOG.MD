@@ -1,3 +1,11 @@
+# 1.19.0
+## 🐛 Bug Fixes
+
+* Fix preview for cozy to cozy sharing
+
+## 🔧 Tech
+
+* Upgrade cozy-sharing lib
 # 1.18.0
 
 ## ✨ Features
