@@ -5869,19 +5869,19 @@ cozy-client@27.6.5:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
-cozy-device-helper@1.12.0, cozy-device-helper@^1.12.0, cozy-device-helper@^1.7.3:
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.12.0.tgz#619a24b0d3caf2d3f616a1524daef7c7b71eab7a"
-  integrity sha512-7pFbltgkD8rSO0PEf8pd6aBB37RUnNYH7fb3pkbcvo5rk4quCfSLREV94gZwXxowzP4vjZcAumTM09DfI42mJA==
-  dependencies:
-    lodash "^4.17.19"
-
 cozy-device-helper@1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.8.0.tgz#17b41d0ea28a504b906669a43449952e72615abb"
   integrity sha512-XomsjdCCWcS01x1QK/Wc4EI4zTxJN8Ouh7956wm2AEQyjj4lN+7cj8tqEBlb8fLWm68/3S3Z4V3iSJDgnJHu6A==
   dependencies:
     lodash "4.17.15"
+
+cozy-device-helper@^1.12.0, cozy-device-helper@^1.7.3:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.12.0.tgz#619a24b0d3caf2d3f616a1524daef7c7b71eab7a"
+  integrity sha512-7pFbltgkD8rSO0PEf8pd6aBB37RUnNYH7fb3pkbcvo5rk4quCfSLREV94gZwXxowzP4vjZcAumTM09DfI42mJA==
+  dependencies:
+    lodash "^4.17.19"
 
 cozy-device-helper@^1.17.0:
   version "1.17.0"
@@ -6030,6 +6030,13 @@ cozy-flags@2.7.2:
   integrity sha512-ZGuuVTiZXVlCEQ+ZWlpyCna4xb50qcgDMR7IuLd0n4O2XkUCkND6awjepGqq4F1/EE/ydZb4Zj2JGcLjUluxuQ==
   dependencies:
     microee "^0.0.6"
+
+cozy-intent@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/cozy-intent/-/cozy-intent-1.8.0.tgz#dce5fe4dfc547be9a809000f23c9a7070eaf05c8"
+  integrity sha512-c5KsEFV21I/CAooyNKBuwt18FWdfPOtnxK/rDQVZm8JhTj2EZ9dxVNSZR5dsKohBN+czA9Rwl0icmvsvFiNT+A==
+  dependencies:
+    post-me "0.4.5"
 
 cozy-interapp@0.4.9:
   version "0.4.9"
@@ -12345,6 +12352,11 @@ posix-character-classes@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/posix-character-classes/-/posix-character-classes-0.1.1.tgz#01eac0fe3b5af71a2a6c02feabb8c1fef7e00eab"
   integrity sha1-AerA/jta9xoqbAL+q7jB/vfgDqs=
+
+post-me@0.4.5:
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/post-me/-/post-me-0.4.5.tgz#6171b721c7b86230c51cfbe48ddea047ef8831ce"
+  integrity sha512-XgPdktF/2M5jglgVDULr9NUb/QNv3bY3g6RG22iTb5MIMtB07/5FJB5fbVmu5Eaopowc6uZx7K3e7x1shPwnXw==
 
 postcss-assets-webpack-plugin@3.0.0:
   version "3.0.0"

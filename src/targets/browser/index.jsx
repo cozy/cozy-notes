@@ -20,6 +20,7 @@ import { RealtimePlugin } from 'cozy-realtime'
 import { I18n } from 'cozy-ui/transpiled/react/I18n'
 import { Document } from 'cozy-doctypes'
 import SharingProvider from 'cozy-sharing'
+import { WebviewIntentProvider } from 'cozy-intent'
 
 import IsPublicContext from 'components/IsPublicContext'
 import {
@@ -58,31 +59,36 @@ const renderApp = function(appLocale, client, isPublic) {
   const App = require('components/app').default
 
   render(
-    <I18n
-      lang={appLocale}
-      dictRequire={appLocale => require(`locales/${appLocale}`)}
-    >
-      <StylesProvider generateClassName={generateClassName}>
-        <IntlProvider locale={appLocale} messages={locales[appLocale].atlaskit}>
-          <CozyProvider client={client}>
-            <MuiCozyTheme>
-              <IsPublicContext.Provider value={isPublic}>
-                {!isPublic && (
-                  <SharingProvider
-                    doctype="io.cozy.files"
-                    documentType="Notes"
-                    previewPath="/preview/"
-                  >
-                    <App isPublic={isPublic} />
-                  </SharingProvider>
-                )}
-                {isPublic && <App isPublic={isPublic} />}
-              </IsPublicContext.Provider>
-            </MuiCozyTheme>
-          </CozyProvider>
-        </IntlProvider>
-      </StylesProvider>
-    </I18n>,
+    <WebviewIntentProvider>
+      <I18n
+        lang={appLocale}
+        dictRequire={appLocale => require(`locales/${appLocale}`)}
+      >
+        <StylesProvider generateClassName={generateClassName}>
+          <IntlProvider
+            locale={appLocale}
+            messages={locales[appLocale].atlaskit}
+          >
+            <CozyProvider client={client}>
+              <MuiCozyTheme>
+                <IsPublicContext.Provider value={isPublic}>
+                  {!isPublic && (
+                    <SharingProvider
+                      doctype="io.cozy.files"
+                      documentType="Notes"
+                      previewPath="/preview/"
+                    >
+                      <App isPublic={isPublic} />
+                    </SharingProvider>
+                  )}
+                  {isPublic && <App isPublic={isPublic} />}
+                </IsPublicContext.Provider>
+              </MuiCozyTheme>
+            </CozyProvider>
+          </IntlProvider>
+        </StylesProvider>
+      </I18n>
+    </WebviewIntentProvider>,
     document.querySelector('[role=application]')
   )
 }
