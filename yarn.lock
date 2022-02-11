@@ -5869,6 +5869,13 @@ cozy-client@27.6.5:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
+cozy-device-helper@1.17.0, cozy-device-helper@^1.17.0:
+  version "1.17.0"
+  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.17.0.tgz#fbce9737ea83c67969b2b173163b37299a36283c"
+  integrity sha512-G61i75dPe/JwLUxN0foWG34lnm+0iybMu05AjoXv/UU2fRsTPfNnsHH4ZRi5JS6OPK4ccuj+ffRmabdywo23TA==
+  dependencies:
+    lodash "^4.17.19"
+
 cozy-device-helper@1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.8.0.tgz#17b41d0ea28a504b906669a43449952e72615abb"
@@ -5880,13 +5887,6 @@ cozy-device-helper@^1.12.0, cozy-device-helper@^1.7.3:
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.12.0.tgz#619a24b0d3caf2d3f616a1524daef7c7b71eab7a"
   integrity sha512-7pFbltgkD8rSO0PEf8pd6aBB37RUnNYH7fb3pkbcvo5rk4quCfSLREV94gZwXxowzP4vjZcAumTM09DfI42mJA==
-  dependencies:
-    lodash "^4.17.19"
-
-cozy-device-helper@^1.17.0:
-  version "1.17.0"
-  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.17.0.tgz#fbce9737ea83c67969b2b173163b37299a36283c"
-  integrity sha512-G61i75dPe/JwLUxN0foWG34lnm+0iybMu05AjoXv/UU2fRsTPfNnsHH4ZRi5JS6OPK4ccuj+ffRmabdywo23TA==
   dependencies:
     lodash "^4.17.19"
 
@@ -6031,7 +6031,7 @@ cozy-flags@2.7.2:
   dependencies:
     microee "^0.0.6"
 
-cozy-intent@^1.9.1:
+cozy-intent@1.9.1:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/cozy-intent/-/cozy-intent-1.9.1.tgz#cea6fb94ccc3f416850709ce11428a3a85862c7a"
   integrity sha512-fgicf39Qx9NiZLIja/EerSs3y0b/9ZngKD6m0tsrnifnvMG219YHlKjyQTkj8vT9Kbmgv0Aa9j890mSca+hKow==
@@ -6146,7 +6146,7 @@ cozy-scripts@eslint7:
     webpack-dev-server "3.10.3"
     webpack-merge "4.2.2"
 
-cozy-sharing@^4.0.5:
+cozy-sharing@4.0.5:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-4.0.5.tgz#c65d3719f548fcfc34891bffc38213e7894eb75b"
   integrity sha512-UzedSKS+LhPrzYES7OXH7do9BgOL5YOP9le/ApUnR9OmTaVw/JZhsWA8tODa+yrAtls0gr3m6QNBKHRF9oflYA==
