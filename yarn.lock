@@ -278,6 +278,13 @@
   dependencies:
     "@babel/runtime" "^7.0.0"
 
+"@atlaskit/codemod-utils@^3.4.0":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@atlaskit/codemod-utils/-/codemod-utils-3.4.0.tgz#8ec854b6b935e290eafe701b83167450af9c2efa"
+  integrity sha512-cmKbsIQXA52HhMJf5qau8WZyqwvFvc7ToADa3Omv2KHY3DdBK2KBPg1YWVtw7I+FnzPRBLFyWNVaQTlHsUstew==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+
 "@atlaskit/date@^0.8.0":
   version "0.8.8"
   resolved "https://registry.yarnpkg.com/@atlaskit/date/-/date-0.8.8.tgz#966314cc3661c48d294f0636dd9e4a99f43504a1"
@@ -342,6 +349,13 @@
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@atlaskit/ds-lib/-/ds-lib-1.2.0.tgz#fd76a9ffd45823041ffd51388e25707252fe4ced"
   integrity sha512-T8h+m3KvowIV7yNSMsPpEUg3KGxOBTg2ZACaMUiGweDoEH75CFTxdFPuyMOfRlR/RnJ/4x9UARR45Fx+R1lbZg==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+
+"@atlaskit/ds-lib@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@atlaskit/ds-lib/-/ds-lib-1.3.0.tgz#663eff27a7166db376269ea82c087f3524a97d41"
+  integrity sha512-gRjwoEcFo22fwLwRJy96b6ZEERMAUobgn4mYbRj/MNE8h7Tc6gJ3gOVzYT2RqgYaiDzp+A0mO8C0+MiIhMN+/w==
   dependencies:
     "@babel/runtime" "^7.0.0"
 
@@ -581,14 +595,15 @@
     "@atlaskit/icon" "^21.5.0"
     "@babel/runtime" "^7.0.0"
 
-"@atlaskit/icon@21.1.0":
-  version "21.1.0"
-  resolved "https://registry.yarnpkg.com/@atlaskit/icon/-/icon-21.1.0.tgz#822e3fc1739d2ea7da63075677e9e5d4f9c0de81"
-  integrity sha512-iE/rIA/iR28swPq5iNnMQT10guGIFcHqQKpevkrU6bBCbgnvVhkGy/f6FMRzn5YRgHcdz30cK3J31CWkc/f4aQ==
+"@atlaskit/icon@21.10.2":
+  version "21.10.2"
+  resolved "https://registry.yarnpkg.com/@atlaskit/icon/-/icon-21.10.2.tgz#687fa252bc376f237085b5b8904c7383a8f3bc04"
+  integrity sha512-bzGZISz6tKEdNr3F96pAi/Y4YctNq6Mh2Ww1I+uhoWlG6X7TQBRYkl8Rxrrjw8exiiGR4gRtr14W9yEtn4jcrw==
   dependencies:
-    "@atlaskit/theme" "^10.0.0"
-    tslib "^2.0.0"
-    uuid "^3.1.0"
+    "@atlaskit/theme" "^12.1.0"
+    "@atlaskit/tokens" "^0.6.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/core" "^10.0.9"
 
 "@atlaskit/icon@^21.0.0", "@atlaskit/icon@^21.1.0", "@atlaskit/icon@^21.2.0", "@atlaskit/icon@^21.3.0", "@atlaskit/icon@^21.4.0", "@atlaskit/icon@^21.5.0", "@atlaskit/icon@^21.6.0", "@atlaskit/icon@^21.7.0":
   version "21.7.3"
@@ -1334,15 +1349,6 @@
     "@babel/runtime" "^7.0.0"
     "@emotion/core" "^10.0.9"
 
-"@atlaskit/theme@^10.0.0":
-  version "10.0.5"
-  resolved "https://registry.yarnpkg.com/@atlaskit/theme/-/theme-10.0.5.tgz#38cf35354dc77f014bb808198200e1f478e683bb"
-  integrity sha512-cgRhVQtN+EX/q5wayTlDs/M8uZqNJqWM6o0BcnaNk6ngQ5acbdL8G8ua956Uuhic9Hx+cR1zWqgJdVre93gZfg==
-  dependencies:
-    exenv "^1.2.2"
-    prop-types "^15.5.10"
-    tslib "^2.0.0"
-
 "@atlaskit/theme@^11.0.0", "@atlaskit/theme@^11.1.0", "@atlaskit/theme@^11.2.0", "@atlaskit/theme@^11.3.0", "@atlaskit/theme@^11.4.0":
   version "11.4.0"
   resolved "https://registry.yarnpkg.com/@atlaskit/theme/-/theme-11.4.0.tgz#03f22bd266d6640d33abd26eedb6aae912e936f6"
@@ -1352,6 +1358,15 @@
     "@babel/runtime" "^7.0.0"
     exenv "^1.2.2"
     prop-types "^15.5.10"
+
+"@atlaskit/theme@^12.1.0":
+  version "12.1.2"
+  resolved "https://registry.yarnpkg.com/@atlaskit/theme/-/theme-12.1.2.tgz#e466e46d12395804b6c02783c08152a7a2bc6455"
+  integrity sha512-nZvt0fLof2XZJf6t8XR+HPqyeiMF3mQ/NlOFtuS/XVd8Aysl9TOiR3xZTizHcCx8CaoeB/tqoFLg47smMaEibg==
+  dependencies:
+    "@atlaskit/codemod-utils" "^3.4.0"
+    "@atlaskit/tokens" "^0.6.0"
+    "@babel/runtime" "^7.0.0"
 
 "@atlaskit/toggle@^12.0.0":
   version "12.2.2"
@@ -1370,6 +1385,16 @@
   integrity sha512-GS85MXutBTkyV7g0p2p0Qb9dRoLwkH0wUMVxLaSIrvx3EVYlwJe9nZH/4ZBbvEodVKb4glzzelkEEXjQvJOxXA==
   dependencies:
     "@babel/runtime" "^7.0.0"
+
+"@atlaskit/tokens@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@atlaskit/tokens/-/tokens-0.6.0.tgz#5987e0b34b9639b8d66f808ea1551c870932436f"
+  integrity sha512-L48TCh1nHOpyc/4NN8ZyVYw+TZRrngyHTt/7R8BW+ntT4DejI9hfPlzgA5cgCZkTojUyKUvRAOiIo6m+H8cnGA==
+  dependencies:
+    "@atlaskit/ds-lib" "^1.3.0"
+    "@babel/runtime" "^7.0.0"
+    "@babel/traverse" "^7.15.0"
+    "@babel/types" "^7.15.0"
 
 "@atlaskit/tooltip@^17.0.0", "@atlaskit/tooltip@^17.1.0", "@atlaskit/tooltip@^17.2.0", "@atlaskit/tooltip@^17.3.0":
   version "17.3.1"
