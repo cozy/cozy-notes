@@ -67,7 +67,7 @@
     "cozy-editor-core": "134.0.3",
     "cozy-flags": "2.8.4",
     "cozy-intent": "1.9.1",
-    "cozy-realtime": "3.13.0",
+    "cozy-realtime": "3.14.4",
     "cozy-scripts": "eslint7",
     "cozy-sharing": "4.0.5",
     "cozy-ui": "51.12.0",
