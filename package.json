@@ -61,7 +61,7 @@
     "@material-ui/styles": "4.11.4",
     "classnames": "2.3.1",
     "cozy-bar": "7.16.0",
-    "cozy-client": "27.6.5",
+    "cozy-client": "27.15.0",
     "cozy-device-helper": "1.17.0",
     "cozy-doctypes": "1.82.2",
     "cozy-editor-core": "134.0.3",
