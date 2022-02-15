@@ -12,10 +12,10 @@ module.exports = {
     '^@atlaskit/editor-core(.*)$':
       '<rootDir>/node_modules/cozy-editor-core/src$1'
   },
-  transformIgnorePatterns: ['node_modules/(?!cozy-(ui|sharing))'],
+  transformIgnorePatterns: ['node_modules/(?!cozy-(ui|sharing|harvest-lib))'],
   transform: {
     '^.+\\.webapp$': '<rootDir>/test/jestLib/json-transformer.js',
-    '^.+\\.(ts|tsx|js|jsx)?$': '<rootDir>/test/jestLib/babel-transformer.js'
+    '^.+\\.(ts|tsx|js|jsx)?$': 'babel-jest'
   },
   globals: {
     __ALLOW_HTTP__: false,

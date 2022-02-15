@@ -8,8 +8,8 @@ import { Schema } from 'prosemirror-model'
 
 // To get the schema, we need to log the values from node_modules/@atlaskit/editor-core/dist/esm/create-editor/create-schema
 // itself just before the call on new Schema({nodes, marks}) and then
-//console.log({nodes})
-//console.log({marks})
+// console.log({nodes})
+// console.log({marks})
 // to be able to copy paste the value in this file, click right on the log -> store as global value
 // then copy(temp1) and then past it in the method written below.
 
@@ -26,7 +26,7 @@ import { Schema } from 'prosemirror-model'
 // Don't know yet why and if we can't reuse a code from atlaskit to do that transformation
 // since they have to do it somewhere I think
 
-//https://github.com/cozy/cozy-notes/pull/2/commits/202e529cdb1e71996c2cab43057984c9f885b61a
+// https://github.com/cozy/cozy-notes/pull/2/commits/202e529cdb1e71996c2cab43057984c9f885b61a
 
 // if you edit the schema, please upgrade this schemaVersion
 
