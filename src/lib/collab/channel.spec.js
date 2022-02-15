@@ -487,6 +487,7 @@ describe('Channel', () => {
         steps.state,
         steps.localSteps
       )
+      // eslint-disable-next-line promise/catch-or-return
       channel.ensureEmptyQueue().then(callback)
       expect(callback).not.toHaveBeenCalled()
       await send
@@ -498,6 +499,7 @@ describe('Channel', () => {
       const channel = new Channel(config, service)
       const callback = jest.fn()
       channel.enqueueSteps(steps)
+      // eslint-disable-next-line promise/catch-or-return
       channel.ensureEmptyQueue().then(callback)
       expect(callback).not.toHaveBeenCalled()
       await channel.processQueue()
@@ -516,6 +518,7 @@ describe('Channel', () => {
       const channel = new Channel(config, service)
       const callback = jest.fn()
       channel.enqueueSteps(steps)
+      // eslint-disable-next-line promise/catch-or-return
       channel.ensureEmptyQueue().then(callback)
       const process = channel.processQueue()
       await new Promise(function(resolve) {
