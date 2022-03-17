@@ -6629,14 +6629,15 @@ cozy-app-publish@^0.27.2:
     request "^2.88.0"
     tar "^4.4.13"
 
-cozy-bar@7.17.5:
-  version "7.17.5"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-7.17.5.tgz#c947c5509b2919d1305b5262c70a51e73e0545c6"
-  integrity sha512-JQX1mr1f5rU95Td+cr6CiM1DSn3hO4k9MrebiycvT3IX2J/1ZGoahbiK6gnb95YzHN3MxR9i2P2nccRg5xm2Eg==
+cozy-bar@7.17.7:
+  version "7.17.7"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-7.17.7.tgz#d1dd7985fdbb29819bbebfeced03ce757b0cac9a"
+  integrity sha512-ZwUrOphiH2dJohZsQoePiVAPXsLm4Fg/kvyPqwpkoxMpGtCMsGHGs+gZ2oX/bOiyb3z7I7KNun7HZ+/VZ8D3uQ==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     cozy-client "^27.14.4"
     cozy-device-helper "^1.16.1"
+    cozy-flags "^2.8.5"
     cozy-interapp "0.4.9"
     cozy-realtime "^4.0.5"
     cozy-ui "22.3.1"
@@ -6645,6 +6646,7 @@ cozy-bar@7.17.5:
     lerna-changelog "0.8.2"
     localforage "1.7.3"
     lodash.debounce "4.0.8"
+    lodash.set "^4.3.2"
     lodash.unionwith "4.6.0"
     piwik-react-router "0.12.1"
     prop-types "15.7.2"
@@ -6842,6 +6844,13 @@ cozy-flags@2.8.4:
   dependencies:
     microee "^0.0.6"
 
+cozy-flags@^2.8.5:
+  version "2.8.6"
+  resolved "https://registry.yarnpkg.com/cozy-flags/-/cozy-flags-2.8.6.tgz#8739c5cf411bf75a99423fa8b2273925c510af73"
+  integrity sha512-gq//cSdWoh3JItZwbOChogJZRdKHbwiRNcSGmp+1O3IKhj8BAHXzdG1XC2NykDHXYF8JB+t+ay/bLviLPI8YgQ==
+  dependencies:
+    microee "^0.0.6"
+
 cozy-harvest-lib@7.2.3:
   version "7.2.3"
   resolved "https://registry.yarnpkg.com/cozy-harvest-lib/-/cozy-harvest-lib-7.2.3.tgz#af5426d3cb03d5bbfa1e5dbaa0c9236f44253735"
@@ -6861,10 +6870,10 @@ cozy-harvest-lib@7.2.3:
     react-markdown "^4.2.2"
     uuid "^3.3.2"
 
-cozy-intent@1.10.0:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/cozy-intent/-/cozy-intent-1.10.0.tgz#ca03f8ff92b3a5a68973c20d357f5564287a35cb"
-  integrity sha512-mFG227YbYcxEE9030LyX56LOzulZNZdW3crEHtblI+4IvZsIImhW1xiXi6M477rPlfSq15lOG2v21yFOORCpwA==
+cozy-intent@^1.13.2:
+  version "1.13.2"
+  resolved "https://registry.yarnpkg.com/cozy-intent/-/cozy-intent-1.13.2.tgz#9eea319345b9c1abb8c978762c5d7af356ea2854"
+  integrity sha512-T5QZEuB3VKCoBktbd6C8JGOJ3Uujrgaa+p/8BbgOEUDWWBr6FMRyLtHnaViheOQISWk9rf0A5yUN/4cRJzqwQg==
   dependencies:
     post-me "0.4.5"
 
@@ -11773,6 +11782,11 @@ lodash.rest@^4.0.0:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/lodash.rest/-/lodash.rest-4.0.5.tgz#954ef75049262038c96d1fc98b28fdaf9f0772aa"
   integrity sha1-lU73UEkmIDjJbR/Jiyj9r58Hcqo=
+
+lodash.set@^4.3.2:
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/lodash.set/-/lodash.set-4.3.2.tgz#d8757b1da807dde24816b0d6a84bea1a76230b23"
+  integrity sha1-2HV7HagH3eJIFrDWqEvqGnYjCyM=
 
 lodash.truncate@^4.4.2:
   version "4.4.2"
