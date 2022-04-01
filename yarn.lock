@@ -6659,10 +6659,10 @@ cozy-app-publish@^0.27.2:
     request "^2.88.0"
     tar "^4.4.13"
 
-cozy-bar@7.17.7:
-  version "7.17.7"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-7.17.7.tgz#d1dd7985fdbb29819bbebfeced03ce757b0cac9a"
-  integrity sha512-ZwUrOphiH2dJohZsQoePiVAPXsLm4Fg/kvyPqwpkoxMpGtCMsGHGs+gZ2oX/bOiyb3z7I7KNun7HZ+/VZ8D3uQ==
+cozy-bar@7.17.8:
+  version "7.17.8"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-7.17.8.tgz#1927ce424183747b226dd8941d4505702546e600"
+  integrity sha512-yOWSwt7UwvnAjG6jteDbEmZBFm/hFNKD3xidoi9XEeWIkrNSBEr2kkTQ0C90lbn9T6Dbzqswuf55qHEjb+yg7Q==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     cozy-client "^27.14.4"
@@ -12428,9 +12428,10 @@ ms@^2.0.0, ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
 
-"mui-bottom-sheet@git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.6":
+"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.6":
   version "1.0.6"
-  resolved "git+https://github.com/cozy/mui-bottom-sheet.git#494c40416ecde95732c864f9b921e7e545075aa5"
+  uid "494c40416ecde95732c864f9b921e7e545075aa5"
+  resolved "https://github.com/cozy/mui-bottom-sheet.git#494c40416ecde95732c864f9b921e7e545075aa5"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
     jest-environment-jsdom-sixteen "^1.0.3"
