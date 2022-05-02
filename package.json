@@ -63,7 +63,7 @@
     "cozy-editor-core": "134.0.3",
     "cozy-flags": "2.8.4",
     "cozy-harvest-lib": "7.2.3",
-    "cozy-intent": "^1.13.2",
+    "cozy-intent": "^1.17.1",
     "cozy-realtime": "4.0.5",
     "cozy-scripts": "6.1.1",
     "cozy-sharing": "4.1.0",
