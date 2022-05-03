@@ -27,7 +27,13 @@ export default function SharingWidget(props) {
       />
       {showModal && (
         <ShareModal
-          document={{ ...file, name: props.title }}
+          // If the user didn't write any title, then the props.title is undefined
+          // In that case, we fallback to the file.attributes.names. It'll be something
+          // like "New Note ...."
+          document={{
+            ...file,
+            name: props.title ? props.title : file.attributes.name
+          }}
           documentType="Files"
           onClose={onClose}
           sharingDesc={props.title}
