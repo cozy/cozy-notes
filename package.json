@@ -65,7 +65,7 @@
     "cozy-harvest-lib": "7.2.3",
     "cozy-intent": "^1.17.1",
     "cozy-realtime": "4.0.5",
-    "cozy-scripts": "6.1.1",
+    "cozy-scripts": "^6.3.1",
     "cozy-sharing": "4.1.0",
     "cozy-ui": "^62.2.0",
     "lodash": "4.17.21",
