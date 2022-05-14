@@ -4,22 +4,39 @@ import FilePathLink from 'cozy-ui/transpiled/react/FilePathLink'
 import AppLinker from 'cozy-ui/transpiled/react/AppLinker'
 
 import { Slugs } from 'constants/strings'
-import { removeFilename, stopPropagation } from 'lib/helpers'
+import { removeFilename } from 'lib/helpers'
 
-export const NotePath: React.FC<{
+interface NotePathProps {
   drivePath: string
   path: string
   target?: string
-}> = ({ drivePath, path, target }) => (
+}
+
+interface AppLinkerCallback {
+  href: string
+  onClick: () => void
+}
+
+type TargetParam =
+  | Record<string, never>
+  | { target: string; rel: string }
+  | { target: string }
+
+const makeTarget = (target?: string): TargetParam =>
+  typeof target !== 'string'
+    ? {}
+    : target === '_blank'
+    ? { target: '_blank', rel: 'noreferrer noopener' }
+    : { target }
+
+export const NotePath: React.FC<NotePathProps> = ({
+  drivePath,
+  path,
+  target
+}) => (
   <AppLinker href={drivePath} slug={Slugs.Drive}>
-    {({ href }: { href: string }): React.ReactElement => (
-      <FilePathLink
-        href={href}
-        onClick={stopPropagation}
-        {...(target && target === '_blank'
-          ? { target: '_blank', rel: 'noreferrer noopener' }
-          : { target })}
-      >
+    {({ href, onClick }: AppLinkerCallback): React.ReactElement => (
+      <FilePathLink href={href} onClick={onClick} {...makeTarget(target)}>
         {removeFilename(path)}
       </FilePathLink>
     )}

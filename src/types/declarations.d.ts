@@ -22,3 +22,7 @@ declare module 'cozy-ui/transpiled/react/hooks/useBreakpoints' {
     isMobile: boolean
   }
 }
+
+declare module 'cozy-ui/transpiled/react/FilePathLink'
+
+declare module 'cozy-ui/transpiled/react/AppLinker'
