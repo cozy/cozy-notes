@@ -91,7 +91,7 @@ const PublicContext = () => {
 
 const App = ({ isPublic }) => {
   const client = useClient()
-  const { isMobile } = useBreakpoints
+  const { isMobile } = useBreakpoints()
   const { ClientErrors } = useClientErrors()
   const { t } = useI18n()
 
@@ -104,7 +104,7 @@ const App = ({ isPublic }) => {
   const FlagSwitcher = useFlagSwitcher()
 
   return (
-    <BreakpointsProvider>
+    <>
       <HashRouter>
         <Layout monoColumn={true}>
           {!isPublic && isMobile && (
@@ -123,8 +123,14 @@ const App = ({ isPublic }) => {
         </Layout>
       </HashRouter>
       <ClientErrors />
-    </BreakpointsProvider>
+    </>
   )
 }
 
-export default App
+const WrappedApp = props => (
+  <BreakpointsProvider>
+    <App {...props} />
+  </BreakpointsProvider>
+)
+
+export default WrappedApp
