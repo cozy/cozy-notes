@@ -9,7 +9,8 @@ import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { Layout, Main, Content } from 'cozy-ui/transpiled/react/Layout'
 import IconSprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
-import AppTitle from 'cozy-ui/transpiled/react/AppTitle'
+import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
+import BarTitle from 'cozy-ui/transpiled/react/BarTitle'
 import useBreakpoints, {
   BreakpointsProvider
 } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
@@ -109,16 +110,22 @@ const App = ({ isPublic }) => {
         <Layout monoColumn={true}>
           {!isPublic && isMobile && (
             <BarCenter>
-              <AppTitle>{appName}</AppTitle>
+              <MuiCozyTheme>
+                <BarTitle>{appName}</BarTitle>
+              </MuiCozyTheme>
             </BarCenter>
           )}
+
           <Main>
             <Content>
               {isPublic ? <PublicContext /> : <PrivateContext />}
             </Content>
           </Main>
+
           <IconSprite />
+
           <Alerter t={t} />
+
           <FlagSwitcher />
         </Layout>
       </HashRouter>
