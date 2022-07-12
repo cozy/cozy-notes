@@ -1,32 +1,31 @@
 import React, { useState, useCallback, useMemo } from 'react'
+import { Link, useLocation, useHistory } from 'react-router-dom'
 
-import { CozyFile } from 'cozy-doctypes'
-import { withClient } from 'cozy-client'
-import { SharedRecipients, ShareModal } from 'cozy-sharing'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconButton from 'cozy-ui/transpiled/react/IconButton'
-import Alerter from 'cozy-ui/transpiled/react/Alerter'
-import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
-import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'
 import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'
+import { CozyFile } from 'cozy-doctypes'
+import { SharedRecipients } from 'cozy-sharing'
+import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { withClient } from 'cozy-client'
 
-import { generateReturnUrlToNotesIndex, getDriveLink } from 'lib/utils'
 import NoteIcon from 'assets/icons/icon-note-32.svg'
 import styles from 'components/notes/List/list.styl'
-import { WithBreakpoints } from './WithBreakpoints'
 import { Breakpoints } from 'types/enums'
 import { NotePath } from './NotePath'
+import { WithBreakpoints } from './WithBreakpoints'
+import { generateReturnUrlToNotesIndex, getDriveLink } from 'lib/utils'
+import { Routes } from 'constants/routes'
+import { DocumentTypes } from 'constants/strings'
 
 const NoteRow = ({ note, f, t, client }) => {
+  const location = useLocation()
+  const history = useHistory()
   const { filename, extension } = CozyFile.splitFilename(note)
   const [isMenuOpen, setMenuOpen] = useState(false)
-  const [showModal, setShowModal] = useState(false)
-  const onShowModal = useCallback(
-    () => (setShowModal(!showModal), setMenuOpen(false)),
-    [showModal]
-  )
-  const onCloseModal = useCallback(() => setShowModal(false), [])
 
   const openMenu = useCallback(
     e => {
@@ -135,32 +134,38 @@ const NoteRow = ({ note, f, t, client }) => {
             strategy: 'fixed'
           }}
         >
-          <ActionMenuItem
-            onClick={onShowModal}
-            left={<Icon icon={ShareIcon} />}
-            autoclose={true}
-            right={
-              <WithBreakpoints showOn={Breakpoints.Mobile}>
-                <SharedRecipients docId={note.id} size="small" />
-              </WithBreakpoints>
-            }
+          <Link
+            onClick={closeMenu}
+            to={{
+              pathname: `/${Routes.ShareFromList}`,
+              state: {
+                background: location,
+                modalProps: {
+                  document: { ...note, name: note.attributes.name },
+                  documentType: DocumentTypes.Files,
+                  onClose: history.goBack,
+                  sharingDesc: note.attributes.name
+                }
+              }
+            }}
           >
-            {t('Notes.Files.share.cta')}
-          </ActionMenuItem>
+            <ActionMenuItem
+              left={<Icon icon={ShareIcon} />}
+              autoclose={true}
+              right={
+                <WithBreakpoints showOn={Breakpoints.Mobile}>
+                  <SharedRecipients docId={note.id} size="small" />
+                </WithBreakpoints>
+              }
+            >
+              {t('Notes.Files.share.cta')}
+            </ActionMenuItem>
+          </Link>
 
           <ActionMenuItem onClick={deleteNote} left={<Icon icon="trash" />}>
             {t('Notes.Delete.delete_note')}
           </ActionMenuItem>
         </ActionMenu>
-      )}
-
-      {showModal && (
-        <ShareModal
-          document={{ ...note, name: note.attributes.name }}
-          documentType="Files"
-          onClose={onCloseModal}
-          sharingDesc={note.attributes.name}
-        />
       )}
     </>
   )

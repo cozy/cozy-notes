@@ -1,27 +1,34 @@
 /* global cozy */
 import React, { useState, useEffect, useMemo } from 'react'
-import { Route, Switch, HashRouter, withRouter } from 'react-router-dom'
-import { useClient } from 'cozy-client'
-import useClientErrors from 'cozy-client/dist/hooks/useClientErrors'
+import {
+  Route,
+  Switch,
+  HashRouter,
+  withRouter,
+  useLocation
+} from 'react-router-dom'
 
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
-import { Layout, Main, Content } from 'cozy-ui/transpiled/react/Layout'
-import IconSprite from 'cozy-ui/transpiled/react/Icon/Sprite'
-import Spinner from 'cozy-ui/transpiled/react/Spinner'
-import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
 import BarTitle from 'cozy-ui/transpiled/react/BarTitle'
+import IconSprite from 'cozy-ui/transpiled/react/Icon/Sprite'
+import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
+import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import useBreakpoints, {
   BreakpointsProvider
 } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import useClientErrors from 'cozy-client/dist/hooks/useClientErrors'
+import { Layout, Main, Content } from 'cozy-ui/transpiled/react/Layout'
+import { ShareModal } from 'cozy-sharing'
+import { useClient } from 'cozy-client'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
 const manifest = require('../../manifest.webapp')
 import { List, Editor, Unshared } from 'components/notes'
 import { getReturnUrl, getSharedDocument } from 'lib/utils'
 import { useFlagSwitcher } from 'lib/debug'
-
 import { getDataOrDefault } from 'lib/initFromDom'
-import { fetchIfIsNoteReadOnly } from '../lib/utils'
+import { fetchIfIsNoteReadOnly } from 'lib/utils'
+import { Routes } from 'constants/routes'
 
 const RoutedEditor = withRouter(props => {
   const returnUrl = getReturnUrl()
@@ -35,12 +42,23 @@ const RoutedEditor = withRouter(props => {
   )
 })
 
-const PrivateContext = () => (
-  <Switch>
-    <Route path="/n/:id" component={RoutedEditor} />
-    <Route path="/" component={List} />
-  </Switch>
-)
+const PrivateContext = () => {
+  const location = useLocation()
+  const background = location.state?.background
+
+  return (
+    <>
+      <Switch>
+        <Route path="/n/:id" component={RoutedEditor} />
+        <Route path="/" component={List} />
+      </Switch>
+
+      {background && (
+        <Route path={`/${Routes.ShareFromList}`} component={ShareModal} />
+      )}
+    </>
+  )
+}
 
 const PublicContext = () => {
   const client = useClient()

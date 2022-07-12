@@ -39,3 +39,7 @@ export enum Slugs {
 }
 
 export const SHARING_LOCATION = '/preview/'
+
+export enum DocumentTypes {
+  Files = 'Files'
+}
