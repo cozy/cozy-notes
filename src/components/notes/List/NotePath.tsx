@@ -34,7 +34,7 @@ export const NotePath: React.FC<NotePathProps> = ({
   path,
   target
 }) => (
-  <AppLinker href={drivePath} slug={Slugs.Drive}>
+  <AppLinker href={drivePath} app={{ slug: Slugs.Drive }}>
     {({ href, onClick }: AppLinkerCallback): React.ReactElement => (
       <FilePathLink href={href} onClick={onClick} {...makeTarget(target)}>
         {removeFilename(path)}

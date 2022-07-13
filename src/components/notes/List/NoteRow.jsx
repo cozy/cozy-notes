@@ -135,6 +135,7 @@ const NoteRow = ({ note, f, t, client }) => {
           }}
         >
           <Link
+            className={styles.actionMenuItem}
             onClick={closeMenu}
             to={{
               pathname: `/${Routes.ShareFromList}`,

@@ -29,7 +29,7 @@ const HeaderMenu = ({
   return (
     <header className={styles['header-menu']}>
       <WithBreakpoints hideOn={Breakpoints.Mobile}>
-        <AppLinker slug={Slugs.Home} href={homeHref}>
+        <AppLinker app={{ slug: Slugs.Home }} href={homeHref}>
           {({ href }) => (
             <Link {...(!isPublic && { href })} className={styles['home-link']}>
               <AppIcon

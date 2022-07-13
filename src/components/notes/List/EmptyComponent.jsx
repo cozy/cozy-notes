@@ -19,7 +19,7 @@ const EmptyComponent = ({ t, client }) => {
         icon={icon}
         title={t('Notes.Empty.welcome')}
         text={
-          <AppLinker href={notesFolder} slug={Slugs.Drive}>
+          <AppLinker href={notesFolder} app={{ slug: Slugs.Drive }}>
             {({ href, onClick }) => {
               return (
                 <span className="u-mb-half">

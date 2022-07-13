@@ -54,7 +54,11 @@ export default function BackFromEditing({ returnUrl, file, requestToLeave }) {
     const folderId = models.file.getParentFolderId(file)
     const nativePath = getFolderLink(folderId)
     return (
-      <AppLinker slug={Slugs.Drive} href={returnUrl} nativePath={nativePath}>
+      <AppLinker
+        app={{ slug: Slugs.Drive }}
+        href={returnUrl}
+        nativePath={nativePath}
+      >
         {({ onClick, href }) => {
           return (
             <ButtonLink

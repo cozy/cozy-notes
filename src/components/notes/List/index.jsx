@@ -28,8 +28,9 @@ const ListView = () => {
             <WithBreakpoints hideOn={Breakpoints.Mobile}>
               <div
                 className={
-                  notes.length > 0 &&
-                  `${styles.appHeader} u-flex u-flex-justify-between u-flex-items-center u-mt-1`
+                  notes.length > 0
+                    ? `${styles.appHeader} u-flex u-flex-justify-between u-flex-items-center u-mt-1`
+                    : ''
                 }
               >
                 {notes.length > 0 && <AppTitle />}
