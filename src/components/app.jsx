@@ -1,12 +1,12 @@
 /* global cozy */
 import React, { useState, useEffect, useMemo } from 'react'
 import {
+  useNavigate,
   Route,
-  Switch,
-  HashRouter,
+  Routes,
   useLocation,
   useParams,
-  useRouteMatch
+  BrowserRouter
 } from 'react-router-dom'
 
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
@@ -29,7 +29,7 @@ import { getReturnUrl, getSharedDocument } from 'lib/utils'
 import { useFlagSwitcher } from 'lib/debug'
 import { getDataOrDefault } from 'lib/initFromDom'
 import { fetchIfIsNoteReadOnly } from 'lib/utils'
-import { Routes } from 'constants/routes'
+import { AppRoutes } from 'constants/routes'
 
 const RoutedEditor = () => {
   const { id } = useParams()
@@ -40,22 +40,25 @@ const RoutedEditor = () => {
 
 const PrivateContext = () => {
   const location = useLocation()
-  const background = location.state?.background
-  const matchShare = useRouteMatch(`/${Routes.ShareFromList}`)
+  const navigate = useNavigate()
+  const state = location.state
 
   return (
     <>
-      <Switch>
-        <Route path="/n/:id">
-          <RoutedEditor />
-        </Route>
+      <Routes location={state?.backgroundLocation || location}>
+        <Route path={AppRoutes.Root} element={<List />} />
 
-        <Route path="/">
-          <List />
-        </Route>
-      </Switch>
+        <Route path={AppRoutes.Editor} element={<RoutedEditor />} />
+      </Routes>
 
-      {background && matchShare && <ShareModal />}
+      {state?.backgroundLocation && (
+        <Routes>
+          <Route
+            path={AppRoutes.ShareFromList}
+            element={<ShareModal onClose={() => navigate(-1)} />}
+          />
+        </Routes>
+      )}
     </>
   )
 }
@@ -124,7 +127,7 @@ const App = ({ isPublic }) => {
 
   return (
     <>
-      <HashRouter>
+      <BrowserRouter>
         <Layout monoColumn={true}>
           {!isPublic && isMobile && (
             <BarCenter>
@@ -146,7 +149,7 @@ const App = ({ isPublic }) => {
 
           <FlagSwitcher />
         </Layout>
-      </HashRouter>
+      </BrowserRouter>
       <ClientErrors />
     </>
   )

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react'
-import { Link, useLocation, useHistory } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
@@ -18,12 +18,11 @@ import { Breakpoints } from 'types/enums'
 import { NotePath } from './NotePath'
 import { WithBreakpoints } from './WithBreakpoints'
 import { generateReturnUrlToNotesIndex, getDriveLink } from 'lib/utils'
-import { Routes } from 'constants/routes'
+import { AppRoutes } from 'constants/routes'
 import { DocumentTypes } from 'constants/strings'
 
 const NoteRow = ({ note, f, t, client }) => {
   const location = useLocation()
-  const history = useHistory()
   const { filename, extension } = CozyFile.splitFilename(note)
   const [isMenuOpen, setMenuOpen] = useState(false)
 
@@ -137,16 +136,13 @@ const NoteRow = ({ note, f, t, client }) => {
           <Link
             className={styles.actionMenuItem}
             onClick={closeMenu}
-            to={{
-              pathname: `/${Routes.ShareFromList}`,
-              state: {
-                background: location,
-                modalProps: {
-                  document: { ...note, name: note.attributes.name },
-                  documentType: DocumentTypes.Notes,
-                  onClose: history.goBack,
-                  sharingDesc: note.attributes.name
-                }
+            to={AppRoutes.ShareFromList}
+            state={{
+              backgroundLocation: location,
+              modalProps: {
+                document: { ...note, name: note.attributes.name },
+                documentType: DocumentTypes.Files,
+                sharingDesc: note.attributes.name
               }
             }}
           >
@@ -162,7 +158,6 @@ const NoteRow = ({ note, f, t, client }) => {
               {t('Notes.Files.share.cta')}
             </ActionMenuItem>
           </Link>
-
           <ActionMenuItem onClick={deleteNote} left={<Icon icon="trash" />}>
             {t('Notes.Delete.delete_note')}
           </ActionMenuItem>
