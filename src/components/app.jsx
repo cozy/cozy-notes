@@ -4,8 +4,9 @@ import {
   Route,
   Switch,
   HashRouter,
-  withRouter,
-  useLocation
+  useLocation,
+  useParams,
+  useRouteMatch
 } from 'react-router-dom'
 
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
@@ -30,32 +31,31 @@ import { getDataOrDefault } from 'lib/initFromDom'
 import { fetchIfIsNoteReadOnly } from 'lib/utils'
 import { Routes } from 'constants/routes'
 
-const RoutedEditor = withRouter(props => {
+const RoutedEditor = () => {
+  const { id } = useParams()
   const returnUrl = getReturnUrl()
 
-  return (
-    <Editor
-      noteId={props.match.params.id}
-      returnUrl={returnUrl}
-      readOnly={false}
-    />
-  )
-})
+  return <Editor noteId={id} returnUrl={returnUrl} readOnly={false} />
+}
 
 const PrivateContext = () => {
   const location = useLocation()
   const background = location.state?.background
+  const matchShare = useRouteMatch(`/${Routes.ShareFromList}`)
 
   return (
     <>
       <Switch>
-        <Route path="/n/:id" component={RoutedEditor} />
-        <Route path="/" component={List} />
+        <Route path="/n/:id">
+          <RoutedEditor />
+        </Route>
+
+        <Route path="/">
+          <List />
+        </Route>
       </Switch>
 
-      {background && (
-        <Route path={`/${Routes.ShareFromList}`} component={ShareModal} />
-      )}
+      {background && matchShare && <ShareModal />}
     </>
   )
 }
