@@ -1,5 +1,6 @@
 /* global cozy */
 import React from 'react'
+import { Outlet } from 'react-router-dom'
 
 import Stack from 'cozy-ui/transpiled/react/Stack'
 import { BarContextProvider, useI18n } from 'cozy-ui/transpiled/react/'
@@ -55,6 +56,8 @@ const ListView = () => {
               </BarRight>
             </WithBreakpoints>
           )}
+
+          <Outlet />
         </>
       )}
     </Query>
