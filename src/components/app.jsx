@@ -1,12 +1,12 @@
 /* global cozy */
 import React, { useState, useEffect, useMemo } from 'react'
 import {
-  useNavigate,
+  HashRouter,
   Route,
   Routes,
   useLocation,
-  useParams,
-  BrowserRouter
+  useNavigate,
+  useParams
 } from 'react-router-dom'
 
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
@@ -127,7 +127,7 @@ const App = ({ isPublic }) => {
 
   return (
     <>
-      <BrowserRouter>
+      <HashRouter>
         <Layout monoColumn={true}>
           {!isPublic && isMobile && (
             <BarCenter>
@@ -149,7 +149,7 @@ const App = ({ isPublic }) => {
 
           <FlagSwitcher />
         </Layout>
-      </BrowserRouter>
+      </HashRouter>
       <ClientErrors />
     </>
   )
