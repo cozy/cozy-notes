@@ -143,7 +143,7 @@ const NoteRow = ({ note, f, t, client }) => {
                 background: location,
                 modalProps: {
                   document: { ...note, name: note.attributes.name },
-                  documentType: DocumentTypes.Files,
+                  documentType: DocumentTypes.Notes,
                   onClose: history.goBack,
                   sharingDesc: note.attributes.name
                 }
