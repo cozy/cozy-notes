@@ -4,6 +4,7 @@ import { useClient } from 'cozy-client'
 
 import useFileWithPath from 'hooks/useFileWithPath'
 import styles from 'components/notes/sharing.styl'
+import { DocumentTypes } from 'constants/strings'
 
 export default function SharingWidget(props) {
   const client = useClient()
@@ -34,7 +35,7 @@ export default function SharingWidget(props) {
             ...file,
             name: props.title ? props.title : file.attributes.name
           }}
-          documentType="Files"
+          documentType={DocumentTypes.Notes}
           onClose={onClose}
           sharingDesc={props.title}
         />
