@@ -1,3 +1,23 @@
+
+# 1.20.0
+## ✨ Features
+* Handle sharing modal as route 
+
+## 🐛 Bug Fixes
+
+* Don't open mobile browser on click 
+* Display AppTitle on mobile 
+* Improve title styling in mobile 
+* Sharing note with empty title 
+* Update cozy-sharing to remove email sharing 
+* Apply correct documentType on shareModals 
+
+
+## 🔧 Tech
+
+Update dependencies : cozy-bar, cozy-intent, cozy-ui, minimist, cozy-scripts, cozy-doctypes, eventsource and cozy-client
+
+
 # 1.19.0
 ## 🐛 Bug Fixes
 
