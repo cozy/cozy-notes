@@ -1,6 +1,6 @@
 {
   "name": "cozy-notes",
-  "version": "1.20.0",
+  "version": "1.21.0",
   "scripts": {
     "build:browser:dev": "cs build --browser --development",
     "build:browser": "cs build --browser",
