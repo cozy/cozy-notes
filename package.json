@@ -60,7 +60,7 @@
     "cozy-bar": "7.17.9",
     "cozy-client": "^32.1.0",
     "cozy-device-helper": "^2.2.1",
-    "cozy-doctypes": "1.83.8",
+    "cozy-doctypes": "1.85.0",
     "cozy-editor-core": "134.0.3",
     "cozy-flags": "2.8.4",
     "cozy-harvest-lib": "7.2.3",
