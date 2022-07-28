@@ -1,17 +1,15 @@
-/* global cozy */
 import React from 'react'
-import { Outlet } from 'react-router-dom'
 
 import Stack from 'cozy-ui/transpiled/react/Stack'
 import { BarContextProvider, useI18n } from 'cozy-ui/transpiled/react/'
 import { Query, Q, useClient } from 'cozy-client'
 
+import Add, { AddMobile } from 'components/notes/add'
 import AppTitle from 'components/notes/List/AppTitle'
 import List from 'components/notes/List/List'
-import Add, { AddMobile } from 'components/notes/add'
 import styles from 'components/notes/List/list.styl'
-import { WithBreakpoints } from './WithBreakpoints'
 import { Breakpoints } from 'types/enums'
+import { WithBreakpoints } from './WithBreakpoints'
 
 const shouldDisplayAddButton = (fetchStatus, notes) =>
   fetchStatus === 'loaded' && notes.length > 0
@@ -56,8 +54,6 @@ const ListView = () => {
               </BarRight>
             </WithBreakpoints>
           )}
-
-          <Outlet />
         </>
       )}
     </Query>

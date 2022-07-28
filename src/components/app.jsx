@@ -1,5 +1,4 @@
-/* global cozy */
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import {
   HashRouter,
   Route,
@@ -24,12 +23,12 @@ import { useClient } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
 const manifest = require('../../manifest.webapp')
+import { AppRoutes } from 'constants/routes'
 import { List, Editor, Unshared } from 'components/notes'
+import { fetchIfIsNoteReadOnly } from 'lib/utils'
+import { getDataOrDefault } from 'lib/initFromDom'
 import { getReturnUrl, getSharedDocument } from 'lib/utils'
 import { useFlagSwitcher } from 'lib/debug'
-import { getDataOrDefault } from 'lib/initFromDom'
-import { fetchIfIsNoteReadOnly } from 'lib/utils'
-import { AppRoutes } from 'constants/routes'
 
 const RoutedEditor = () => {
   const { id } = useParams()
@@ -51,11 +50,16 @@ const PrivateContext = () => {
         <Route path={AppRoutes.Editor} element={<RoutedEditor />} />
       </Routes>
 
-      {state?.backgroundLocation && (
+      {state?.backgroundLocation && state?.shareModalProps && (
         <Routes>
           <Route
             path={AppRoutes.ShareFromList}
-            element={<ShareModal onClose={() => navigate(-1)} />}
+            element={
+              <ShareModal
+                onClose={() => navigate(-1)}
+                {...state.shareModalProps}
+              />
+            }
           />
         </Routes>
       )}
