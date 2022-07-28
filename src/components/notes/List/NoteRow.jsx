@@ -14,12 +14,12 @@ import { withClient } from 'cozy-client'
 
 import NoteIcon from 'assets/icons/icon-note-32.svg'
 import styles from 'components/notes/List/list.styl'
+import { AppRoutes } from 'constants/routes'
 import { Breakpoints } from 'types/enums'
+import { DocumentTypes } from 'constants/strings'
 import { NotePath } from './NotePath'
 import { WithBreakpoints } from './WithBreakpoints'
 import { generateReturnUrlToNotesIndex, getDriveLink } from 'lib/utils'
-import { AppRoutes } from 'constants/routes'
-import { DocumentTypes } from 'constants/strings'
 
 const NoteRow = ({ note, f, t, client }) => {
   const location = useLocation()
@@ -139,9 +139,9 @@ const NoteRow = ({ note, f, t, client }) => {
             to={AppRoutes.ShareFromList}
             state={{
               backgroundLocation: location,
-              modalProps: {
+              shareModalProps: {
                 document: { ...note, name: note.attributes.name },
-                documentType: DocumentTypes.Files,
+                documentType: DocumentTypes.Notes,
                 sharingDesc: note.attributes.name
               }
             }}
@@ -158,6 +158,7 @@ const NoteRow = ({ note, f, t, client }) => {
               {t('Notes.Files.share.cta')}
             </ActionMenuItem>
           </Link>
+
           <ActionMenuItem onClick={deleteNote} left={<Icon icon="trash" />}>
             {t('Notes.Delete.delete_note')}
           </ActionMenuItem>
