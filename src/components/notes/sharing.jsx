@@ -1,45 +1,49 @@
-import React, { useState, useCallback } from 'react'
-import { ShareButton, ShareModal } from 'cozy-sharing'
+import React, { useCallback } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+
+import { ShareButton } from 'cozy-sharing'
 import { useClient } from 'cozy-client'
 
-import useFileWithPath from 'hooks/useFileWithPath'
 import styles from 'components/notes/sharing.styl'
+import useFileWithPath from 'hooks/useFileWithPath'
+import { AppRoutes } from 'constants/routes'
 import { DocumentTypes } from 'constants/strings'
 
-export default function SharingWidget(props) {
+export const SharingWidget = props => {
   const client = useClient()
   const file = useFileWithPath({ cozyClient: client, file: props.file })
-  const [showModal, setShowModal] = useState(false)
-  const onClick = useCallback(() => setShowModal(!showModal), [showModal])
-  const onClose = useCallback(() => setShowModal(false), [])
+  const handleClick = useCallback(() => {}, [])
+  const location = useLocation()
 
   if (!file) return null
 
   const { id: noteId } = file
 
   return (
-    <>
+    <Link
+      to={AppRoutes.ShareFromList}
+      state={{
+        backgroundLocation: location,
+        shareModalProps: {
+          document: {
+            ...file,
+            name: props.title || file.attributes.name
+          },
+          documentType: DocumentTypes.Notes,
+          sharingDesc: props.title
+        }
+      }}
+      style={{ textDecoration: 'none' }}
+    >
       <ShareButton
         theme="primary"
         docId={noteId}
-        onClick={onClick}
+        onClick={handleClick}
         extension="narrow"
         className={styles['sharing-button']}
       />
-      {showModal && (
-        <ShareModal
-          // If the user didn't write any title, then the props.title is undefined
-          // In that case, we fallback to the file.attributes.names. It'll be something
-          // like "New Note ...."
-          document={{
-            ...file,
-            name: props.title ? props.title : file.attributes.name
-          }}
-          documentType={DocumentTypes.Notes}
-          onClose={onClose}
-          sharingDesc={props.title}
-        />
-      )}
-    </>
+    </Link>
   )
 }
+
+export default SharingWidget

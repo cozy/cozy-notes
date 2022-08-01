@@ -42,6 +42,10 @@ const PrivateContext = () => {
   const navigate = useNavigate()
   const state = location.state
 
+  const ModalElement = () => (
+    <ShareModal onClose={() => navigate(-1)} {...state.shareModalProps} />
+  )
+
   return (
     <>
       <Routes location={state?.backgroundLocation || location}>
@@ -52,15 +56,9 @@ const PrivateContext = () => {
 
       {state?.backgroundLocation && state?.shareModalProps && (
         <Routes>
-          <Route
-            path={AppRoutes.ShareFromList}
-            element={
-              <ShareModal
-                onClose={() => navigate(-1)}
-                {...state.shareModalProps}
-              />
-            }
-          />
+          <Route path={AppRoutes.ShareFromEditor} element={<ModalElement />} />
+
+          <Route path={AppRoutes.ShareFromList} element={<ModalElement />} />
         </Routes>
       )}
     </>
