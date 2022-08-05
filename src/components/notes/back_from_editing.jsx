@@ -3,7 +3,7 @@ import { Button, ButtonLink } from 'cozy-ui/transpiled/react/Button'
 import IsPublicContext from 'components/IsPublicContext'
 import AppLinker from 'cozy-ui/transpiled/react/AppLinker'
 import { getFolderLink } from 'lib/utils'
-import { models } from 'cozy-client'
+import { deconstructCozyWebLinkWithSlug, models, useClient } from 'cozy-client'
 import { Slugs } from 'constants/strings'
 
 /**
@@ -37,6 +37,18 @@ function createOnClick(requestToLeave, href, onClick) {
   }
 }
 
+const getSlugFromUrl = (client, url) => {
+  try {
+    const { subdomain } = client.getInstanceOptions()
+
+    const { slug } = deconstructCozyWebLinkWithSlug(url, subdomain)
+
+    return slug
+  } catch (e) {
+    return Slugs.Notes
+  }
+}
+
 /**
  * React component, draws a button to go back, outside of the editor
  *
@@ -49,16 +61,16 @@ function createOnClick(requestToLeave, href, onClick) {
  */
 export default function BackFromEditing({ returnUrl, file, requestToLeave }) {
   const isPublic = useContext(IsPublicContext)
+  const client = useClient()
 
   if (returnUrl) {
     const folderId = models.file.getParentFolderId(file)
     const nativePath = getFolderLink(folderId)
+
+    const slug = getSlugFromUrl(client, returnUrl)
+
     return (
-      <AppLinker
-        app={{ slug: Slugs.Drive }}
-        href={returnUrl}
-        nativePath={nativePath}
-      >
+      <AppLinker app={{ slug: slug }} href={returnUrl} nativePath={nativePath}>
         {({ onClick, href }) => {
           return (
             <ButtonLink
