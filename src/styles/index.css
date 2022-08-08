@@ -151,6 +151,12 @@ html .akEditor>div:first-child>div:first-child+div hr {
     }
 }
 
+@supports (-webkit-touch-callout: none) {
+    body {
+        -webkit-text-size-adjust: 100%
+    }
+}
+
 .sto-app-back {
     display: inline-flex;
     align-items: center;
