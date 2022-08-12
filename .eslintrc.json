@@ -6,5 +6,13 @@
   },
   "globals": {
     "cozy": "readonly"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.spec.js[x]"],
+      "rules": {
+        "react/display-name": "off"
+      }
+    }
+  ]
 }

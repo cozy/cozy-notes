@@ -1,0 +1,153 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SavingIndicator when dirtySince is falsy when lastSave is 1 day ago should match snapshot 1`] = `
+<div>
+  <div
+    class="u-text saving-indicator"
+  >
+    Notes.SavingIndicator.saved.default
+  </div>
+</div>
+`;
+
+exports[`SavingIndicator when dirtySince is falsy when lastSave is 1 hour ago should match snapshot 1`] = `
+<div>
+  <div
+    class="u-text saving-indicator"
+  >
+    Notes.SavingIndicator.saved.default
+  </div>
+</div>
+`;
+
+exports[`SavingIndicator when dirtySince is falsy when lastSave is 1 min ago should match snapshot 1`] = `
+<div>
+  <div
+    class="u-text saving-indicator"
+  >
+    Notes.SavingIndicator.saved.default
+  </div>
+</div>
+`;
+
+exports[`SavingIndicator when dirtySince is falsy when lastSave is 3 hour ago should match snapshot 1`] = `
+<div>
+  <div
+    class="u-text saving-indicator"
+  >
+    Notes.SavingIndicator.saved.default
+  </div>
+</div>
+`;
+
+exports[`SavingIndicator when dirtySince is falsy when lastSave is 5 min ago should match snapshot 1`] = `
+<div>
+  <div
+    class="u-text saving-indicator"
+  >
+    Notes.SavingIndicator.saved.default
+  </div>
+</div>
+`;
+
+exports[`SavingIndicator when dirtySince is falsy when lastSave is 10 day ago should match snapshot 1`] = `
+<div>
+  <div
+    class="u-text saving-indicator"
+  >
+    Notes.SavingIndicator.saved.default
+  </div>
+</div>
+`;
+
+exports[`SavingIndicator when dirtySince is falsy when lastSave is 15 min ago should match snapshot 1`] = `
+<div>
+  <div
+    class="u-text saving-indicator"
+  >
+    Notes.SavingIndicator.saved.default
+  </div>
+</div>
+`;
+
+exports[`SavingIndicator when dirtySince is falsy when lastSave is 28 min ago should match snapshot 1`] = `
+<div>
+  <div
+    class="u-text saving-indicator"
+  >
+    Notes.SavingIndicator.saved.default
+  </div>
+</div>
+`;
+
+exports[`SavingIndicator when dirtySince is falsy when lastSave is 45 sec ago should match snapshot 1`] = `
+<div>
+  <div
+    class="u-text saving-indicator"
+  >
+    Notes.SavingIndicator.saved.default
+  </div>
+</div>
+`;
+
+exports[`SavingIndicator when dirtySince is falsy when lastSave is 50 min ago should match snapshot 1`] = `
+<div>
+  <div
+    class="u-text saving-indicator"
+  >
+    Notes.SavingIndicator.saved.default
+  </div>
+</div>
+`;
+
+exports[`SavingIndicator when dirtySince is falsy when lastSave is few seconds ago should match snapshot 1`] = `
+<div>
+  <div
+    class="u-text saving-indicator"
+  >
+    Notes.SavingIndicator.saved.default
+  </div>
+</div>
+`;
+
+exports[`SavingIndicator when dirtySince is truthy when dirtySince is a few minutes ago should match snapshot 1`] = `
+<div>
+  <div
+    aria-describedby="mui-90830"
+    class="u-text saving-indicator"
+  >
+    Notes.SavingIndicator.saving_impossible.just_now
+  </div>
+</div>
+`;
+
+exports[`SavingIndicator when dirtySince is truthy when dirtySince is a few seconds ago should match snapshot 1`] = `
+<div>
+  <div
+    class="u-text saving-indicator"
+  >
+    Notes.SavingIndicator.saving
+  </div>
+</div>
+`;
+
+exports[`SavingIndicator when offline should match snapshot 1`] = `
+<div>
+  <div
+    aria-describedby="mui-18216"
+    class="u-text saving-indicator"
+  >
+    Notes.SavingIndicator.out_of_sync.just_now
+  </div>
+</div>
+`;
+
+exports[`SavingIndicator when online should match snapshot 1`] = `
+<div>
+  <div
+    class="u-text saving-indicator"
+  >
+    Notes.SavingIndicator.saved.default
+  </div>
+</div>
+`;

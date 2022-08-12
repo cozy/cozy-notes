@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditorView readOnly when false without a collabProvider should not disable the editor 1`] = `
+<div>
+  <article
+    class="note-article"
+  >
+    <style>
+      #coz-bar 
+      { display: none }
+    </style>
+    <section
+      class="note-editor-container"
+    >
+      <div
+        data-disabled="false"
+        data-should-focus="true"
+        data-testid="Editor"
+      >
+        <div>
+          <aside
+            class="banner"
+          />
+          <h1
+            class="u-title-h1 title"
+          >
+            <textarea
+              class="styles__c-textarea___D7EEH styles__c-textarea--fullwidth___Ih_mg titleInput"
+              placeholder="placeholder"
+              rows="1"
+              style="height: 0px;"
+            >
+              title
+            </textarea>
+          </h1>
+        </div>
+      </div>
+    </section>
+  </article>
+</div>
+`;
