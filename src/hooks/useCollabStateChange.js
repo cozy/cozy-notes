@@ -9,6 +9,7 @@ const throttleValue = 200 // milliseconds
  */
 export default function useCollabStateChange(collabProvider) {
   const [, setCollabStateChange] = useState(null)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const onCollabStateChange = useCallback(
     throttle(() => setCollabStateChange(new Date()), throttleValue),
     [setCollabStateChange]

@@ -1,20 +1,17 @@
 import React from 'react'
-import { I18n } from 'cozy-ui/transpiled/react/I18n'
-import { mount } from 'enzyme'
+import { render } from '@testing-library/react'
 
 import EditorView from './editor-view'
 import CollabProvider from 'lib/collab/provider'
-import en from '../../locales/en.json'
 
-import { MainTitle } from 'cozy-ui/transpiled/react/Text'
-import Textarea from 'cozy-ui/transpiled/react/Textarea'
-
-// eslint-disable-next-line no-unused-vars
-import { Editor, WithEditorActions } from '@atlaskit/editor-core'
 jest.mock('@atlaskit/editor-core', () => ({
   Editor: function Editor(props) {
     return (
-      <div>
+      <div
+        data-testid="Editor"
+        data-should-focus={props.shouldFocus}
+        data-disabled={props.disabled}
+      >
         {props.contentComponents}
         {props.children}
       </div>
@@ -55,21 +52,14 @@ function setupCollabProvider() {
 }
 
 function mountEditorView({ readOnly, collabProvider }) {
-  return mount(
+  return render(
     <EditorView
       readOnly={readOnly}
       collabProvider={collabProvider}
       defaultTitle="placeholder"
       defaultValue={{ doc: {}, version: 42 }}
       title="title"
-    />,
-    {
-      wrappingComponent: I18n,
-      wrappingComponentProps: {
-        lang: 'en',
-        dictRequire: () => en
-      }
-    }
+    />
   )
 }
 
@@ -80,19 +70,18 @@ describe('EditorView', () => {
       it('should have a readonly title', async () => {
         const collabProvider = setupCollabProvider()
         const editorView = mountEditorView({ collabProvider, readOnly })
-        const title = editorView
-          .find(MainTitle)
-          .first()
-          .find(Textarea)
-          .first()
-        expect(title.prop('readOnly')).toBeTruthy()
+        expect(
+          editorView.container.querySelector('textarea').attributes['readonly']
+        ).toBeTruthy()
       })
 
       it('should not focus the editor', async () => {
         const collabProvider = setupCollabProvider()
         const editorView = mountEditorView({ collabProvider, readOnly })
-        const editor = editorView.find(Editor).first()
-        expect(editor.prop('shouldFocus')).toBeFalsy()
+        expect(editorView.getByTestId('Editor')).toHaveAttribute(
+          'data-should-focus',
+          'false'
+        )
       })
 
       describe('with a collabProvider', () => {
@@ -107,8 +96,10 @@ describe('EditorView', () => {
         it('should disable the editor', async () => {
           const collabProvider = undefined
           const editorView = mountEditorView({ collabProvider, readOnly })
-          const editor = editorView.find(Editor).first()
-          expect(editor.prop('disabled')).toBeTruthy()
+          expect(editorView.getByTestId('Editor')).toHaveAttribute(
+            'data-disabled',
+            'true'
+          )
         })
       })
     })
@@ -118,19 +109,18 @@ describe('EditorView', () => {
       it('should not have a readonly title', async () => {
         const collabProvider = setupCollabProvider()
         const editorView = mountEditorView({ collabProvider, readOnly })
-        const title = editorView
-          .find(MainTitle)
-          .first()
-          .find(Textarea)
-          .first()
-        expect(title.prop('readOnly')).toBeFalsy()
+        expect(
+          editorView.container.querySelector('textarea').attributes['readonly']
+        ).toBeFalsy()
       })
 
       it('should focus the editor', async () => {
         const collabProvider = setupCollabProvider()
         const editorView = mountEditorView({ collabProvider, readOnly })
-        const editor = editorView.find(Editor).first()
-        expect(editor.prop('shouldFocus')).toBeTruthy()
+        expect(editorView.getByTestId('Editor')).toHaveAttribute(
+          'data-should-focus',
+          'true'
+        )
       })
 
       describe('with a collabProvider', () => {
@@ -145,8 +135,11 @@ describe('EditorView', () => {
         it('should not disable the editor', async () => {
           const collabProvider = undefined
           const editorView = mountEditorView({ collabProvider, readOnly })
-          const editor = editorView.find(Editor).first()
-          expect(editor.prop('disabled')).toBeFalsy()
+          expect(editorView.container).toMatchSnapshot()
+          expect(editorView.getByTestId('Editor')).toHaveAttribute(
+            'data-disabled',
+            'false'
+          )
         })
       })
     })

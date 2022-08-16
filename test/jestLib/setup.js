@@ -1,7 +1,4 @@
-import { configure } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-
-configure({ adapter: new Adapter() })
+import '@testing-library/jest-dom'
 
 // polyfill for requestAnimationFrame
 /* istanbul ignore next */
@@ -17,3 +14,25 @@ global.cozy = {
     setTheme: () => null
   }
 }
+
+expect.addSnapshotSerializer({
+  test: function(val) {
+    return val && typeof val === 'string' && val.indexOf('mui-') >= 0
+  },
+  print: function(val) {
+    let str = val
+    str = str.replace(/mui-[0-9]*/g, 'mui-00000')
+
+    return `"${str}"`
+  }
+})
+
+jest.mock('cozy-ui/transpiled/react/I18n', () => ({
+  createUseI18n: () => ({ t: x => x }),
+  translate: () => () => ({ t: x => x }),
+  useI18n: () => ({ t: x => x })
+}))
+
+jest.mock('prosemirror-collab', () => {
+  return { getVersion: jest.fn(), sendableSteps: jest.fn() }
+})

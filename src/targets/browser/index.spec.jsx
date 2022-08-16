@@ -6,11 +6,6 @@ jest.mock('lib/initFromDom', () => ({
   getDataset: jest.fn().mockReturnValue({})
 }))
 
-jest.mock('react-dom', () => ({
-  ...jest.requireActual('react-dom'),
-  render: jest.fn()
-}))
-
 jest.mock('@atlaskit/editor-core/i18n', () => ({
   fr: {},
   en: {}

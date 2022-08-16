@@ -2,10 +2,6 @@ import { CollabProvider } from './provider'
 import { getVersion, sendableSteps } from 'prosemirror-collab'
 import isEqual from 'lodash/isEqual'
 
-jest.mock('prosemirror-collab', () => {
-  return { getVersion: jest.fn(), sendableSteps: jest.fn() }
-})
-
 const noteId = 'myDocId'
 const version = 96
 const userId = 'myuser'

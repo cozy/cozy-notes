@@ -1,9 +1,7 @@
 import React from 'react'
-import { I18n } from 'cozy-ui/transpiled/react/I18n'
-import { mount } from 'enzyme'
+import { render } from '@testing-library/react'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import SavingIndicator from './saving-indicator'
-import en from '../../locales/en.json'
 
 jest.mock('cozy-ui/transpiled/react/hooks/useBreakpoints')
 
@@ -21,37 +19,18 @@ const collabProvider = {
   isDirty,
   getDirtySince,
   getLastSaveOrSync,
-  on
+  on,
+  off: jest.fn()
 }
 
 global.document.createRange = jest.fn()
 
-/**
- * Removes the varying part in MUI IDs,
- * which otherwise changes at each run
- *
- * See https://github.com/mui-org/material-ui/issues/21293
- *
- * @param {string} html
- * @returns {string}
- */
-function normalizeMUI(html) {
-  return html.replace(/(mui-[a-z0-9-]+)"/g, 'mui-"')
-}
-
 function itMatchSnapshot(collabProvider) {
   it('should match snapshot', () => {
-    const component = mount(
-      <SavingIndicator collabProvider={collabProvider} />,
-      {
-        wrappingComponent: I18n,
-        wrappingComponentProps: {
-          lang: 'en',
-          dictRequire: () => en
-        }
-      }
+    const { container } = render(
+      <SavingIndicator collabProvider={collabProvider} />
     )
-    expect(normalizeMUI(component.html())).toMatchSnapshot()
+    expect(container).toMatchSnapshot()
   })
 }
 

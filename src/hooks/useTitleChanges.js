@@ -3,6 +3,7 @@ import { getAppFullName } from 'lib/utils'
 
 function useTitleChanges({ noteId, title, setTitle, serviceClient }) {
   // Title change because of a local change from the editor
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const onLocalTitleChange = useCallback(
     serviceClient
       ? e => {
