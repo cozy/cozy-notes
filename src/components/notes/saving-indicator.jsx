@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
-import { Text } from 'cozy-ui/transpiled/react/Text'
 import usePeriodicRender from 'cozy-ui/transpiled/react/hooks/usePeriodicRender'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import Typography from 'cozy-ui/transpiled/react/Typography'
 import styles from 'components/notes/saving-indicator.styl'
 import { relativeAge } from 'lib/utils'
 import OfflineIndicator from 'components/notes/offline-indicator'
@@ -129,7 +129,11 @@ function SavingIndicator(props) {
   const message = t(`Notes.SavingIndicator.${translation}`, { time })
 
   // actual rendering
-  const text = <Text className={styles['saving-indicator']}>{message}</Text>
+  const text = (
+    <Typography className={styles['saving-indicator']} variant="body1">
+      {message}
+    </Typography>
+  )
   if (isDisconnected) {
     return (
       <OfflineIndicator open={offlineIndicatorOpen} bannerRef={props.bannerRef}>

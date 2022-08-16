@@ -2,152 +2,152 @@
 
 exports[`SavingIndicator when dirtySince is falsy when lastSave is 1 day ago should match snapshot 1`] = `
 <div>
-  <div
-    class="u-text saving-indicator"
+  <p
+    class="MuiTypography-root saving-indicator MuiTypography-body1 MuiTypography-colorTextPrimary"
   >
     Notes.SavingIndicator.saved.default
-  </div>
+  </p>
 </div>
 `;
 
 exports[`SavingIndicator when dirtySince is falsy when lastSave is 1 hour ago should match snapshot 1`] = `
 <div>
-  <div
-    class="u-text saving-indicator"
+  <p
+    class="MuiTypography-root saving-indicator MuiTypography-body1 MuiTypography-colorTextPrimary"
   >
     Notes.SavingIndicator.saved.default
-  </div>
+  </p>
 </div>
 `;
 
 exports[`SavingIndicator when dirtySince is falsy when lastSave is 1 min ago should match snapshot 1`] = `
 <div>
-  <div
-    class="u-text saving-indicator"
+  <p
+    class="MuiTypography-root saving-indicator MuiTypography-body1 MuiTypography-colorTextPrimary"
   >
     Notes.SavingIndicator.saved.default
-  </div>
+  </p>
 </div>
 `;
 
 exports[`SavingIndicator when dirtySince is falsy when lastSave is 3 hour ago should match snapshot 1`] = `
 <div>
-  <div
-    class="u-text saving-indicator"
+  <p
+    class="MuiTypography-root saving-indicator MuiTypography-body1 MuiTypography-colorTextPrimary"
   >
     Notes.SavingIndicator.saved.default
-  </div>
+  </p>
 </div>
 `;
 
 exports[`SavingIndicator when dirtySince is falsy when lastSave is 5 min ago should match snapshot 1`] = `
 <div>
-  <div
-    class="u-text saving-indicator"
+  <p
+    class="MuiTypography-root saving-indicator MuiTypography-body1 MuiTypography-colorTextPrimary"
   >
     Notes.SavingIndicator.saved.default
-  </div>
+  </p>
 </div>
 `;
 
 exports[`SavingIndicator when dirtySince is falsy when lastSave is 10 day ago should match snapshot 1`] = `
 <div>
-  <div
-    class="u-text saving-indicator"
+  <p
+    class="MuiTypography-root saving-indicator MuiTypography-body1 MuiTypography-colorTextPrimary"
   >
     Notes.SavingIndicator.saved.default
-  </div>
+  </p>
 </div>
 `;
 
 exports[`SavingIndicator when dirtySince is falsy when lastSave is 15 min ago should match snapshot 1`] = `
 <div>
-  <div
-    class="u-text saving-indicator"
+  <p
+    class="MuiTypography-root saving-indicator MuiTypography-body1 MuiTypography-colorTextPrimary"
   >
     Notes.SavingIndicator.saved.default
-  </div>
+  </p>
 </div>
 `;
 
 exports[`SavingIndicator when dirtySince is falsy when lastSave is 28 min ago should match snapshot 1`] = `
 <div>
-  <div
-    class="u-text saving-indicator"
+  <p
+    class="MuiTypography-root saving-indicator MuiTypography-body1 MuiTypography-colorTextPrimary"
   >
     Notes.SavingIndicator.saved.default
-  </div>
+  </p>
 </div>
 `;
 
 exports[`SavingIndicator when dirtySince is falsy when lastSave is 45 sec ago should match snapshot 1`] = `
 <div>
-  <div
-    class="u-text saving-indicator"
+  <p
+    class="MuiTypography-root saving-indicator MuiTypography-body1 MuiTypography-colorTextPrimary"
   >
     Notes.SavingIndicator.saved.default
-  </div>
+  </p>
 </div>
 `;
 
 exports[`SavingIndicator when dirtySince is falsy when lastSave is 50 min ago should match snapshot 1`] = `
 <div>
-  <div
-    class="u-text saving-indicator"
+  <p
+    class="MuiTypography-root saving-indicator MuiTypography-body1 MuiTypography-colorTextPrimary"
   >
     Notes.SavingIndicator.saved.default
-  </div>
+  </p>
 </div>
 `;
 
 exports[`SavingIndicator when dirtySince is falsy when lastSave is few seconds ago should match snapshot 1`] = `
 <div>
-  <div
-    class="u-text saving-indicator"
+  <p
+    class="MuiTypography-root saving-indicator MuiTypography-body1 MuiTypography-colorTextPrimary"
   >
     Notes.SavingIndicator.saved.default
-  </div>
+  </p>
 </div>
 `;
 
 exports[`SavingIndicator when dirtySince is truthy when dirtySince is a few minutes ago should match snapshot 1`] = `
 <div>
-  <div
+  <p
     aria-describedby="mui-00000"
-    class="u-text saving-indicator"
+    class="MuiTypography-root saving-indicator MuiTypography-body1 MuiTypography-colorTextPrimary"
   >
     Notes.SavingIndicator.saving_impossible.just_now
-  </div>
+  </p>
 </div>
 `;
 
 exports[`SavingIndicator when dirtySince is truthy when dirtySince is a few seconds ago should match snapshot 1`] = `
 <div>
-  <div
-    class="u-text saving-indicator"
+  <p
+    class="MuiTypography-root saving-indicator MuiTypography-body1 MuiTypography-colorTextPrimary"
   >
     Notes.SavingIndicator.saving
-  </div>
+  </p>
 </div>
 `;
 
 exports[`SavingIndicator when offline should match snapshot 1`] = `
 <div>
-  <div
+  <p
     aria-describedby="mui-00000"
-    class="u-text saving-indicator"
+    class="MuiTypography-root saving-indicator MuiTypography-body1 MuiTypography-colorTextPrimary"
   >
     Notes.SavingIndicator.out_of_sync.just_now
-  </div>
+  </p>
 </div>
 `;
 
 exports[`SavingIndicator when online should match snapshot 1`] = `
 <div>
-  <div
-    class="u-text saving-indicator"
+  <p
+    class="MuiTypography-root saving-indicator MuiTypography-body1 MuiTypography-colorTextPrimary"
   >
     Notes.SavingIndicator.saved.default
-  </div>
+  </p>
 </div>
 `;

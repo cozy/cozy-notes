@@ -22,7 +22,8 @@ exports[`EditorView readOnly when false without a collabProvider should not disa
             class="banner"
           />
           <h1
-            class="u-title-h1 title"
+            class="MuiTypography-root title MuiTypography-h3 MuiTypography-colorTextPrimary"
+            tag="h1"
           >
             <textarea
               class="styles__c-textarea___D7EEH styles__c-textarea--fullwidth___Ih_mg titleInput"
