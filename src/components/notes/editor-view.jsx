@@ -2,13 +2,12 @@ import React, { useCallback, useRef, useEffect, useMemo, useState } from 'react'
 
 import { Editor, WithEditorActions } from '@atlaskit/editor-core'
 
-import { MainTitle } from 'cozy-ui/transpiled/react/Text'
 import Textarea from 'cozy-ui/transpiled/react/Textarea'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import useEventListener from 'cozy-ui/transpiled/react/hooks/useEventListener'
 import Overlay from 'cozy-ui/transpiled/react/Overlay'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
-
+import Typography from 'cozy-ui/transpiled/react/Typography'
 import editorConfig from 'components/notes/editor_config'
 import styles from 'components/notes/editor-view.styl'
 import { imageUploadProvider } from 'lib/image-upload-provider'
@@ -96,7 +95,12 @@ function EditorView(props) {
               render={() => (
                 <>
                   <aside ref={bannerRef} className={styles.banner}></aside>
-                  <MainTitle tag="h1" className={styles.title}>
+                  <Typography
+                    tag="h1"
+                    className={styles.title}
+                    variant="h3"
+                    component="h1"
+                  >
                     <Textarea
                       ref={titleEl}
                       rows="1"
@@ -107,7 +111,7 @@ function EditorView(props) {
                       placeholder={defaultTitle}
                       className={styles.titleInput}
                     />
-                  </MainTitle>
+                  </Typography>
                 </>
               )}
             />
