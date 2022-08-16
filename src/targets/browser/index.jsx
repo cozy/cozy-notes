@@ -4,7 +4,8 @@ import 'cozy-sharing/dist/stylesheet.css'
 import 'styles/index.css'
 
 import React from 'react'
-import ReactDOM, { render } from 'react-dom'
+import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { IntlProvider, addLocaleData } from 'react-intl'
 import memoize from 'lodash/memoize'
 import {
@@ -57,7 +58,10 @@ const generateClassName = createGenerateClassName({
 const renderApp = function(appLocale, client, isPublic) {
   const App = require('components/app').default
 
-  render(
+  const container = document.querySelector('[role=application]')
+  const root = createRoot(container)
+
+  root.render(
     <WebviewIntentProvider>
       <I18n
         lang={appLocale}
@@ -87,8 +91,7 @@ const renderApp = function(appLocale, client, isPublic) {
           </IntlProvider>
         </StylesProvider>
       </I18n>
-    </WebviewIntentProvider>,
-    document.querySelector('[role=application]')
+    </WebviewIntentProvider>
   )
 }
 

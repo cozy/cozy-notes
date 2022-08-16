@@ -1,10 +1,6 @@
 import { Channel } from './channel'
 import { getVersion, sendableSteps } from 'prosemirror-collab'
 
-jest.mock('prosemirror-collab', () => {
-  return { getVersion: jest.fn(), sendableSteps: jest.fn() }
-})
-
 const noteId = 'myNoteId'
 const config = { noteId }
 const service = {
@@ -487,7 +483,7 @@ describe('Channel', () => {
         steps.state,
         steps.localSteps
       )
-      // eslint-disable-next-line promise/catch-or-return
+      // eslint-disable-next-line promise/catch-or-return, promise/no-callback-in-promise
       channel.ensureEmptyQueue().then(callback)
       expect(callback).not.toHaveBeenCalled()
       await send
@@ -499,7 +495,7 @@ describe('Channel', () => {
       const channel = new Channel(config, service)
       const callback = jest.fn()
       channel.enqueueSteps(steps)
-      // eslint-disable-next-line promise/catch-or-return
+      // eslint-disable-next-line promise/catch-or-return, promise/no-callback-in-promise
       channel.ensureEmptyQueue().then(callback)
       expect(callback).not.toHaveBeenCalled()
       await channel.processQueue()
@@ -518,7 +514,7 @@ describe('Channel', () => {
       const channel = new Channel(config, service)
       const callback = jest.fn()
       channel.enqueueSteps(steps)
-      // eslint-disable-next-line promise/catch-or-return
+      // eslint-disable-next-line promise/catch-or-return, promise/no-callback-in-promise
       channel.ensureEmptyQueue().then(callback)
       const process = channel.processQueue()
       await new Promise(function(resolve) {

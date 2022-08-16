@@ -1,58 +1,56 @@
 import React from 'react'
-import { mount } from 'enzyme'
+import { render } from '@testing-library/react'
 
-jest.mock('components/notes/sharing', () => () => null)
-
-import { AppLike } from '../../../test/Applike'
-import SharingWidget from 'components/notes/sharing'
 import EditorCorner from './EditorCorner'
+
+jest.mock('components/notes/sharing', () => {
+  const MockSharing = () => <div data-testid="SharingWidget" />
+  return MockSharing
+})
 
 describe('EditorCorner', () => {
   const mockDoc = {}
-  it('shows the sharing widget on private views', () => {
-    const readOnlyComponent = mount(
-      <EditorCorner doc={mockDoc} isPublic={false} isReadOnly={true} />,
-      {
-        wrappingComponent: AppLike
-      }
+  it('shows the sharing widget on private views - readOnly', () => {
+    const readOnlyComponent = render(
+      <EditorCorner doc={mockDoc} isPublic={false} isReadOnly={true} />
     )
-    expect(readOnlyComponent.find(SharingWidget).length).toBe(1)
+    expect(readOnlyComponent.getByTestId('SharingWidget')).toBeTruthy()
+  })
 
-    const editableComponent = mount(
-      <EditorCorner doc={mockDoc} isPublic={false} isReadOnly={false} />,
-      {
-        wrappingComponent: AppLike
-      }
+  it('shows the sharing widget on private views - editable', () => {
+    const editableComponent = render(
+      <EditorCorner doc={mockDoc} isPublic={false} isReadOnly={false} />
     )
-    expect(editableComponent.find(SharingWidget).length).toBe(1)
+    expect(editableComponent.getByTestId('SharingWidget')).toBeTruthy()
   })
 
   it('shows a read only indication on public views', () => {
-    const component = mount(
-      <EditorCorner doc={mockDoc} isPublic={true} isReadOnly={true} />,
-      {
-        wrappingComponent: AppLike
-      }
+    const component = render(
+      <EditorCorner doc={mockDoc} isPublic={true} isReadOnly={true} />
     )
-    expect(component.children().getElement()).toMatchInlineSnapshot(`
-      <WithStyles(ForwardRef(Tooltip))
-        title="This note is in read-only mode."
-      >
-        <ForwardRef(ForwardedIcon)
-          color="var(--primaryTextColor)"
-          icon="lock"
-        />
-      </WithStyles(ForwardRef(Tooltip))>
+    expect(component.container).toMatchInlineSnapshot(`
+      <div>
+        <div>
+          <svg
+            class="styles__icon___23x3R"
+            height="16"
+            style="fill: var(--primaryTextColor);"
+            title="Notes.Editor.read_only"
+            width="16"
+          >
+            <use
+              xlink:href="#lock"
+            />
+          </svg>
+        </div>
+      </div>
     `)
   })
 
   it('renders nothing on a public view with write permissions', () => {
-    const component = mount(
-      <EditorCorner doc={mockDoc} isPublic={true} isReadOnly={false} />,
-      {
-        wrappingComponent: AppLike
-      }
+    const component = render(
+      <EditorCorner doc={mockDoc} isPublic={true} isReadOnly={false} />
     )
-    expect(component.children().length).toBe(0)
+    expect(component.container).toBeEmptyDOMElement()
   })
 })

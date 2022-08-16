@@ -1,3 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BackFromEditing mounts 1`] = `"<a href=\\"/\\" class=\\"styles__c-btn___-2Vnj styles__c-btn--subtle___OknKf sto-app-back\\"><span><svg class=\\"styles__icon___23x3R\\" width=\\"16\\" height=\\"16\\" aria-hidden=\\"true\\" focusable=\\"false\\"><use xlink:href=\\"#previous\\"></use></svg></span></a>"`;
+exports[`BackFromEditing mounts 1`] = `
+<div>
+  <a
+    class="styles__c-btn___-2Vnj styles__c-btn--subtle___OknKf sto-app-back"
+    href="/"
+  >
+    <span>
+      <svg
+        aria-hidden="true"
+        class="styles__icon___23x3R"
+        focusable="false"
+        height="16"
+        width="16"
+      >
+        <use
+          xlink:href="#previous"
+        />
+      </svg>
+    </span>
+  </a>
+</div>
+`;

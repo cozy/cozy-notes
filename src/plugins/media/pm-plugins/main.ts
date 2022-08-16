@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { Node as PMNode, Schema } from 'prosemirror-model'
 import { EditorState, NodeSelection, Plugin } from 'prosemirror-state'
 import { insertPoint } from 'prosemirror-transform'
@@ -42,15 +42,14 @@ export { stateKey } from './plugin-key'
 
 const createDropPlaceholder = (allowDropLine?: boolean) => {
   const dropPlaceholder = document.createElement('div')
+  const root = createRoot (dropPlaceholder)
   if (allowDropLine) {
-    ReactDOM.render(
+    root.render(
       React.createElement(DropPlaceholder, { type: 'single' } as {
         type: PlaceholderType
-      }),
-      dropPlaceholder
-    )
+      }))
   } else {
-    ReactDOM.render(React.createElement(DropPlaceholder), dropPlaceholder)
+    root.render(React.createElement(DropPlaceholder))
   }
   return dropPlaceholder
 }
@@ -177,7 +176,7 @@ export class MediaPluginStateImplementation implements MediaPluginState {
       )
     } catch (err) {
       const wrappedError = new Error(
-        `Media functionality disabled due to rejected provider: ${err.message}`
+        `Media functionality disabled due to rejected provider: ${(err as Error).message}`
       )
       this.errorReporter.captureException(wrappedError)
 

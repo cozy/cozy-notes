@@ -1,7 +1,9 @@
 module.exports = {
-  testURL: 'http://cozy.localhost:8080/',
+  testEnvironmentOptions: {
+    url: 'http://cozy.localhost:8080/'
+  },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'styl'],
-  setupFiles: ['<rootDir>/test/jestLib/setup.js'],
+  setupFilesAfterEnv: ['<rootDir>/test/jestLib/setup.js'],
   moduleDirectories: ['src', 'node_modules'],
   moduleNameMapper: {
     '\\.(png|gif|jpe?g|svg)$': '<rootDir>/test/__mocks__/fileMock.js',
@@ -12,6 +14,7 @@ module.exports = {
     '^@atlaskit/editor-core(.*)$':
       '<rootDir>/node_modules/cozy-editor-core/src$1'
   },
+  testEnvironment: '<rootDir>/test/jestLib/custom-test-env.js',
   transformIgnorePatterns: ['node_modules/(?!cozy-(ui|sharing|harvest-lib))'],
   transform: {
     '^.+\\.webapp$': '<rootDir>/test/jestLib/json-transformer.js',
