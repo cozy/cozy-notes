@@ -5,7 +5,6 @@ import IsPublicContext from '../components/IsPublicContext'
 import { renderHook } from '@testing-library/react-hooks'
 
 function withPublicContext(value) {
-  // eslint-disable-next-line react/display-name
   return props => (
     <IsPublicContext.Provider value={value}>
       {props.children}

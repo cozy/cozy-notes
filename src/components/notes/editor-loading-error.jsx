@@ -7,7 +7,7 @@ function EditorLoadingError(props) {
 
   return (
     <Empty
-      icon={'cross-small'}
+      icon="cross-small"
       title={t(`Error.loading_error_title`)}
       text={
         <p
