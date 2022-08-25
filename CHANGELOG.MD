@@ -1,3 +1,18 @@
+# 1.21.0
+## ✨ Features
+
+* Add Outlet component
+* Make editor sharing modal a route
+
+## 🐛 Bug Fixes
+
+* Do not force drive slug when clicking on BackFromEditing button  
+* Font size on iOS devices
+
+## 🔧 Tech
+
+* Update : cozy-bar, cozy-doctypes, react-router-dom, eeslint-cozy-app, react 18, cozy-ui, cozy-client
+
 
 # 1.20.0
 ## ✨ Features
