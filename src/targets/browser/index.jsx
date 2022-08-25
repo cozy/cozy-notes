@@ -13,6 +13,7 @@ import {
   createGenerateClassName
 } from '@material-ui/core/styles'
 import { fr, en } from '@atlaskit/editor-core/i18n'
+import { PersistGate } from 'redux-persist/integration/react'
 
 import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
 import CozyClient, { CozyProvider } from 'cozy-client'
@@ -28,6 +29,7 @@ import {
   getDataOrDefault,
   getPublicSharecode
 } from 'lib/initFromDom'
+import configureStore from './configureStore'
 
 const manifest = require('../../../manifest.webapp')
 
@@ -55,7 +57,7 @@ const generateClassName = createGenerateClassName({
   disableGlobal: true
 })
 
-const renderApp = function(appLocale, client, isPublic) {
+const renderApp = function(appLocale, client, isPublic, persistor) {
   const App = require('components/app').default
 
   const container = document.querySelector('[role=application]')
@@ -73,20 +75,22 @@ const renderApp = function(appLocale, client, isPublic) {
             messages={locales[appLocale].atlaskit}
           >
             <CozyProvider client={client}>
-              <MuiCozyTheme>
-                <IsPublicContext.Provider value={isPublic}>
-                  {!isPublic && (
-                    <SharingProvider
-                      doctype="io.cozy.files"
-                      documentType="Notes"
-                      previewPath="/preview/"
-                    >
-                      <App isPublic={isPublic} />
-                    </SharingProvider>
-                  )}
-                  {isPublic && <App isPublic={isPublic} />}
-                </IsPublicContext.Provider>
-              </MuiCozyTheme>
+              <PersistGate loading={null} persistor={persistor}>
+                <MuiCozyTheme>
+                  <IsPublicContext.Provider value={isPublic}>
+                    {!isPublic && (
+                      <SharingProvider
+                        doctype="io.cozy.files"
+                        documentType="Notes"
+                        previewPath="/preview/"
+                      >
+                        <App isPublic={isPublic} />
+                      </SharingProvider>
+                    )}
+                    {isPublic && <App isPublic={isPublic} />}
+                  </IsPublicContext.Provider>
+                </MuiCozyTheme>
+              </PersistGate>
             </CozyProvider>
           </IntlProvider>
         </StylesProvider>
@@ -131,12 +135,17 @@ export const initApp = () => {
     appMetadata: {
       slug: appSlug,
       version: appVersion
-    }
+    },
+    store: false,
+    backgroundFetching: true
   })
+
   if (!Document.cozyClient) {
     Document.registerClient(client)
   }
   client.registerPlugin(RealtimePlugin)
+  const { store, persistor } = configureStore(client)
+  client.setStore(store)
 
   if (!isPublic) {
     // initialize the bar, common of all applications, it allows
@@ -155,13 +164,13 @@ export const initApp = () => {
       isPublic: isPublic
     })
   }
-  return { appLocale, client, isPublic }
+  return { appLocale, client, isPublic, persistor }
 }
 
 const memoizedInit = memoize(initApp)
 const init = () => {
-  const { appLocale, client, isPublic } = memoizedInit()
-  renderApp(appLocale, client, isPublic)
+  const { appLocale, client, isPublic, persistor } = memoizedInit()
+  renderApp(appLocale, client, isPublic, persistor)
 }
 document.addEventListener('DOMContentLoaded', init)
 
