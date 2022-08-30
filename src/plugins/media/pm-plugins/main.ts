@@ -1,5 +1,5 @@
 import React from 'react'
-import { createRoot } from 'react-dom/client'
+import ReactDOM from 'react-dom'
 import { Node as PMNode, Schema } from 'prosemirror-model'
 import { EditorState, NodeSelection, Plugin } from 'prosemirror-state'
 import { insertPoint } from 'prosemirror-transform'
@@ -42,14 +42,15 @@ export { stateKey } from './plugin-key'
 
 const createDropPlaceholder = (allowDropLine?: boolean) => {
   const dropPlaceholder = document.createElement('div')
-  const root = createRoot (dropPlaceholder)
   if (allowDropLine) {
-    root.render(
+    ReactDOM.render(
       React.createElement(DropPlaceholder, { type: 'single' } as {
         type: PlaceholderType
-      }))
+      }),
+      dropPlaceholder
+    )
   } else {
-    root.render(React.createElement(DropPlaceholder))
+    ReactDOM.render(React.createElement(DropPlaceholder), dropPlaceholder)
   }
   return dropPlaceholder
 }
