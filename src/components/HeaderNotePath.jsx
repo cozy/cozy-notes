@@ -10,10 +10,10 @@ import useFileWithPath from 'hooks/useFileWithPath'
 export const HeaderNotePath = ({ file }) => {
   const client = useClient()
   const fileWithPath = useFileWithPath({ cozyClient: client, file })
-  const drivePath = useMemo(() => getDriveLink(client, file.attributes.dirId), [
-    client,
-    file.attributes.dirId
-  ])
+  const drivePath = useMemo(
+    () => getDriveLink(client, file.attributes.dir_id),
+    [client, file.attributes.dir_id]
+  )
 
   return (
     <WithBreakpoints hideOn={Breakpoints.Mobile}>
