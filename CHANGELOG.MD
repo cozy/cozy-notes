@@ -1,3 +1,10 @@
+# 1.22.0
+
+## 🐛 Bug Fixes
+
+* Note folder path in HeaderNotePath
+* UseFileWithPath can handle file without name prop
+
 # 1.21.0
 ## ✨ Features
 
@@ -6,7 +13,7 @@
 
 ## 🐛 Bug Fixes
 
-* Do not force drive slug when clicking on BackFromEditing button  
+* Do not force drive slug when clicking on BackFromEditing button
 * Font size on iOS devices
 
 ## 🔧 Tech
@@ -16,16 +23,16 @@
 
 # 1.20.0
 ## ✨ Features
-* Handle sharing modal as route 
+* Handle sharing modal as route
 
 ## 🐛 Bug Fixes
 
-* Don't open mobile browser on click 
-* Display AppTitle on mobile 
-* Improve title styling in mobile 
-* Sharing note with empty title 
-* Update cozy-sharing to remove email sharing 
-* Apply correct documentType on shareModals 
+* Don't open mobile browser on click
+* Display AppTitle on mobile
+* Improve title styling in mobile
+* Sharing note with empty title
+* Update cozy-sharing to remove email sharing
+* Apply correct documentType on shareModals
 
 
 ## 🔧 Tech
