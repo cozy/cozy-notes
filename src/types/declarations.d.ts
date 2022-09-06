@@ -24,5 +24,5 @@ declare module 'cozy-ui/transpiled/react/hooks/useBreakpoints' {
 }
 
 declare module 'cozy-ui/transpiled/react/FilePathLink'
-
+declare module 'cozy-ui/transpiled/react/FilePath'
 declare module 'cozy-ui/transpiled/react/AppLinker'
