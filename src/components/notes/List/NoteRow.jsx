@@ -94,6 +94,7 @@ const NoteRow = ({ note, f, t, client }) => {
                 drivePath={drivePath}
                 path={note.path}
                 target="_blank"
+                noLink
               />
             </WithBreakpoints>
           </div>

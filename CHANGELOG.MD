@@ -1,5 +1,9 @@
 # 1.22.0
 
+## ✨ Features
+
+* In note list, remove possibility to click on note path on mobile
+
 ## 🐛 Bug Fixes
 
 * Note folder path in HeaderNotePath
