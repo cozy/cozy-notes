@@ -1,11 +1,25 @@
 import { useEffect, useState } from 'react'
 import { models } from 'cozy-client'
 
+export const normalizeAndAddName = rawFile => {
+  const normalizedFile = models.file.normalize(rawFile)
+
+  if (normalizedFile.name) {
+    return normalizedFile
+  }
+
+  return {
+    name: normalizedFile.attributes?.name ?? undefined,
+    ...normalizedFile
+  }
+}
+
 function useFileWithPath({ cozyClient, file }) {
   const [fileWithPath, setFileWithPath] = useState(undefined)
   useEffect(() => {
     async function getParent(rawFile) {
-      const file = models.file.normalize(rawFile)
+      const file = normalizeAndAddName(rawFile)
+
       try {
         const parent = await cozyClient.query(
           cozyClient.get('io.cozy.files', file.attributes.dir_id)
