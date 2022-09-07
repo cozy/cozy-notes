@@ -1,3 +1,9 @@
+# 1.23.0
+
+## 🐛 Bug Fixes
+
+* Force sync when clicking on back button, in the note editor
+
 # 1.22.0
 
 ## ✨ Features
