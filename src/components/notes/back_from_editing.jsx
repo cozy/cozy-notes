@@ -23,10 +23,9 @@ class FakeEvent {
  * that should mimic the original behaviour (onClick +  href)
  * @param {function} requestToLeave - as  in useConfirmExit in cozy-ui
  * @param {string} href - URL to go to
- * @param {function} forceSync - force sync with the io.cozy.file
  * @param {function} onClick -  regular onClick handler for the button or link
  */
-function createOnClick({ requestToLeave, href, forceSync, onClick }) {
+function createOnClick(requestToLeave, href, onClick) {
   const go = () => {
     const ev = new FakeEvent()
     if (onClick) onClick(ev)
@@ -34,7 +33,6 @@ function createOnClick({ requestToLeave, href, forceSync, onClick }) {
   }
   return function(ev) {
     ev.preventDefault()
-    forceSync && forceSync()
     requestToLeave(go)
   }
 }
@@ -59,15 +57,9 @@ const getSlugFromUrl = (client, url) => {
  * @param {string|null} returnUrl - URL to go back to
  * @param {object|null} file - io.cozy.file object to generate a folder link
  * @param {function|null} requestToLeave - function, if present, it should
- * @param {function|null} forceSync - force sync with the io.cozy.file
  * wrap any regular action that should have taken place when clicking the button
  */
-export default function BackFromEditing({
-  returnUrl,
-  file,
-  requestToLeave,
-  forceSync
-}) {
+export default function BackFromEditing({ returnUrl, file, requestToLeave }) {
   const isPublic = useContext(IsPublicContext)
   const client = useClient()
 
@@ -83,12 +75,7 @@ export default function BackFromEditing({
           return (
             <ButtonLink
               icon="previous"
-              onClick={createOnClick({
-                requestToLeave,
-                href,
-                forceSync,
-                onClick
-              })}
+              onClick={createOnClick(requestToLeave, href, onClick)}
               href={href}
               className="sto-app-back"
               subtle

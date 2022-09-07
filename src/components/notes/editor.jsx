@@ -67,10 +67,8 @@ export default function Editor(props) {
     doc,
     collabProvider
   })
-
   // when leaving the component or changing doc
   useEffect(() => forceSync, [noteId, doc, forceSync])
-
   // when quitting the webpage
   const activate = useCallback(() => collabProvider.isDirty(), [collabProvider])
   const { exitConfirmationModal, requestToLeave } = useConfirmExit({
@@ -116,7 +114,6 @@ export default function Editor(props) {
                     returnUrl={returnUrl}
                     file={doc.file}
                     requestToLeave={requestToLeave}
-                    forceSync={forceSync}
                   />
                 </div>
               }
