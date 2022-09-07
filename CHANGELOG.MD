@@ -1,11 +1,5 @@
 # 1.23.0
 
-## 🐛 Bug Fixes
-
-* Force sync when clicking on back button, in the note editor
-
-# 1.22.0
-
 ## ✨ Features
 
 * In note list, remove possibility to click on note path on mobile
@@ -14,6 +8,7 @@
 
 * Note folder path in HeaderNotePath
 * UseFileWithPath can handle file without name prop
+* Force sync when clicking on back button, in the note editor
 
 # 1.21.0
 ## ✨ Features
