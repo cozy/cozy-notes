@@ -8,7 +8,7 @@
 
 * Note folder path in HeaderNotePath
 * UseFileWithPath can handle file without name prop
-* Force sync when clicking on back button, in the note editor
+* Force sync when exiting the note editor
 
 # 1.21.0
 ## ✨ Features

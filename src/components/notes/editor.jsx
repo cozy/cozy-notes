@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import { useClient } from 'cozy-client'
 import { SharingBannerPlugin } from 'cozy-sharing'
+import { useWindowEventListener } from 'rooks/dist/esm/hooks/useWindowEventListener'
 
 import EditorView from 'components/notes/editor-view'
 import EditorCorner from 'components/notes/EditorCorner'
@@ -67,8 +68,15 @@ export default function Editor(props) {
     doc,
     collabProvider
   })
-  // when leaving the component or changing doc
+
+  // when leaving the component
+  useWindowEventListener('beforeunload', () => {
+    forceSync()
+  })
+
+  // when changing doc
   useEffect(() => forceSync, [noteId, doc, forceSync])
+
   // when quitting the webpage
   const activate = useCallback(() => collabProvider.isDirty(), [collabProvider])
   const { exitConfirmationModal, requestToLeave } = useConfirmExit({
