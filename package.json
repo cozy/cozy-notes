@@ -2,6 +2,7 @@
   "name": "cozy-notes",
   "version": "1.23.0",
   "scripts": {
+    "analyze": "COZY_SCRIPTS_ANALYZER=true yarn build",
     "build:browser:dev": "cs build --browser --development",
     "build:browser": "cs build --browser",
     "build:mobile": "cs build --mobile",
