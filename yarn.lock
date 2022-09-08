@@ -16425,6 +16425,14 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
+rooks@7.1.1:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/rooks/-/rooks-7.1.1.tgz#15b7330205357eaa69d89d36feb271d44cd91da5"
+  integrity sha512-0DkSrA238DqQQa4EvIcbMrfiM4KG9Osj4jYxlXDTxXO6eXLW1C7aNtk0wpqrHrMbSMc+JCl264iXE0aJe7wM/g==
+  dependencies:
+    lodash.debounce "^4.0.8"
+    raf "^3.4.1"
+
 rooks@^5.11.2:
   version "5.14.1"
   resolved "https://registry.yarnpkg.com/rooks/-/rooks-5.14.1.tgz#424854e917efc951dd47c4ac9d9e0de5f7648a7e"
