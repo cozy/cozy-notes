@@ -90,12 +90,7 @@ const NoteRow = ({ note, f, t, client }) => {
             </WithBreakpoints>
 
             <WithBreakpoints showOn={Breakpoints.Mobile}>
-              <NotePath
-                drivePath={drivePath}
-                path={note.path}
-                target="_blank"
-                noLink
-              />
+              <NotePath drivePath={drivePath} path={note.path} noLink />
             </WithBreakpoints>
           </div>
         </TableCell>
@@ -108,8 +103,11 @@ const NoteRow = ({ note, f, t, client }) => {
             })}
           </TableCell>
 
-          <TableCell className={`${styles.tableCell} u-flex-shrink-0`}>
-            <NotePath drivePath={drivePath} path={note.path} target="_blank" />
+          <TableCell
+            className={`${styles.tableCell} u-flex-shrink-0`}
+            onClick={e => e.stopPropagation()}
+          >
+            <NotePath drivePath={drivePath} path={note.path} />
           </TableCell>
 
           <TableCell className={styles.tableCell}>
