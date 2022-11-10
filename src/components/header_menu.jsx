@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { models } from 'cozy-client'
-import { SharedRecipients } from 'cozy-sharing'
 import AppLinker from 'cozy-ui/transpiled/react/AppLinker'
 import AppIcon from 'cozy-ui/transpiled/react/AppIcon'
 import Divider from 'cozy-ui/transpiled/react/MuiCozyTheme/Divider'
@@ -63,10 +62,6 @@ const HeaderMenu = ({
           {!isPublic && <HeaderNotePath file={file} />}
         </div>
       </div>
-
-      <WithBreakpoints hideOn={Breakpoints.Mobile}>
-        <SharedRecipients docId={file.id} size={32} />
-      </WithBreakpoints>
 
       {rightComponent}
 
