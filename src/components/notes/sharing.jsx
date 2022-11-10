@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
-import { ShareButton } from 'cozy-sharing'
 import { useClient } from 'cozy-client'
+import { ShareButtonWithRecipients } from 'cozy-sharing'
 
 import styles from 'components/notes/sharing.styl'
 import useFileWithPath from 'hooks/useFileWithPath'
@@ -35,7 +35,7 @@ export const SharingWidget = props => {
       }}
       style={{ textDecoration: 'none' }}
     >
-      <ShareButton
+      <ShareButtonWithRecipients
         theme="primary"
         docId={noteId}
         onClick={handleClick}
