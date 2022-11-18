@@ -28,6 +28,8 @@ import {
   getPublicSharecode
 } from 'lib/initFromDom'
 
+import flag from 'cozy-flags'
+
 const manifest = require('../../../manifest.webapp')
 
 const frenchAtlaskitCozy = require(`locales/atlassian_missing_french.json`)
@@ -134,6 +136,7 @@ export const initApp = () => {
     Document.registerClient(client)
   }
   client.registerPlugin(RealtimePlugin)
+  client.registerPlugin(flag.plugin)
 
   if (!isPublic) {
     // initialize the bar, common of all applications, it allows
