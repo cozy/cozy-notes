@@ -20,52 +20,56 @@ const HeaderMenu = ({
   rightComponent,
   isPublic,
   file,
-  primaryToolBarComponents
+  primaryToolbarComponents
 }) => {
   const { fetchHomeIcon, fetchNoteIcon } = useFetchIcons()
   const { filename } = models.file.splitFilename(file.attributes)
 
   return (
-    <header className={styles['header-menu']}>
-      <WithBreakpoints hideOn={Breakpoints.Mobile}>
-        <AppLinker app={{ slug: Slugs.Home }} href={homeHref}>
-          {({ href }) => (
-            <Link {...(!isPublic && { href })} className={styles['home-link']}>
-              <AppIcon
-                app={Slugs.Home}
-                alt={Slugs.Home}
-                fetchIcon={fetchHomeIcon}
-              />
-            </Link>
-          )}
-        </AppLinker>
-
-        <Divider orientation="vertical" className="u-mh-1" />
-      </WithBreakpoints>
-
-      {leftComponent}
-
-      <div className={styles['file-infos']}>
+    <header>
+      <div className={styles['header-menu']}>
         <WithBreakpoints hideOn={Breakpoints.Mobile}>
-          <AppIcon
-            app={file.attributes.cozyMetadata.createdByApp}
-            className={styles['app-icon']}
-            fetchIcon={fetchNoteIcon}
-          />
+          <AppLinker app={{ slug: Slugs.Home }} href={homeHref}>
+            {({ href }) => (
+              <Link
+                {...(!isPublic && { href })}
+                className={styles['home-link']}
+              >
+                <AppIcon
+                  app={Slugs.Home}
+                  alt={Slugs.Home}
+                  fetchIcon={fetchHomeIcon}
+                />
+              </Link>
+            )}
+          </AppLinker>
+
+          <Divider orientation="vertical" className="u-mh-1" />
         </WithBreakpoints>
 
-        <div>
-          <Typography>
-            <strong>{filename}</strong>
-          </Typography>
+        {leftComponent}
 
-          {!isPublic && <HeaderNotePath file={file} />}
+        <div className={styles['file-infos']}>
+          <WithBreakpoints hideOn={Breakpoints.Mobile}>
+            <AppIcon
+              app={file.attributes.cozyMetadata.createdByApp}
+              className={styles['app-icon']}
+              fetchIcon={fetchNoteIcon}
+            />
+          </WithBreakpoints>
+
+          <div>
+            <Typography>
+              <strong>{filename}</strong>
+            </Typography>
+
+            {!isPublic && <HeaderNotePath file={file} />}
+          </div>
         </div>
+
+        {rightComponent}
       </div>
-
-      {rightComponent}
-
-      {primaryToolBarComponents}
+      {primaryToolbarComponents}
     </header>
   )
 }
