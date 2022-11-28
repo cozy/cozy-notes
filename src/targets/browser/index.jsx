@@ -29,6 +29,7 @@ import {
 } from 'lib/initFromDom'
 
 import flag from 'cozy-flags'
+import { SHARING_LOCATION } from '../../constants/strings'
 
 const manifest = require('../../../manifest.webapp')
 
@@ -77,7 +78,7 @@ const renderApp = function(appLocale, client, isPublic) {
                     <SharingProvider
                       doctype="io.cozy.files"
                       documentType="Notes"
-                      previewPath="/preview/"
+                      previewPath={SHARING_LOCATION}
                     >
                       <App isPublic={isPublic} />
                     </SharingProvider>
