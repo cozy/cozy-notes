@@ -29,6 +29,7 @@ import { fetchIfIsNoteReadOnly } from 'lib/utils'
 import { getDataOrDefault } from 'lib/initFromDom'
 import { getReturnUrl, getSharedDocument } from 'lib/utils'
 import { useFlagSwitcher } from 'lib/debug'
+import RouteNew from 'components/notes/new-route'
 
 const RoutedEditor = () => {
   const { id } = useParams()
@@ -49,8 +50,8 @@ const PrivateContext = () => {
   return (
     <>
       <Routes location={state?.backgroundLocation || location}>
+        <Route path={AppRoutes.New} element={<RouteNew />} />
         <Route path={AppRoutes.Root} element={<List />} />
-
         <Route path={AppRoutes.Editor} element={<RoutedEditor />} />
       </Routes>
 
