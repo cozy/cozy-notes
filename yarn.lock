@@ -7284,10 +7284,10 @@ cozy-bar@7.19.1:
     redux-thunk "2.3.0"
     semver-compare "^1.0.0"
 
-cozy-bi-auth@0.0.24:
-  version "0.0.24"
-  resolved "https://registry.yarnpkg.com/cozy-bi-auth/-/cozy-bi-auth-0.0.24.tgz#b9232e5c5a9828e59c88b6130a8d50043ed050b0"
-  integrity sha512-7Dr08b6uE81x1jjO8jZfy2738mvaQpUS4N+tfZthpO1MB7kSeB0RPlULG+IEMBll+NDlixypjcmVPdJ8ZJUkNA==
+cozy-bi-auth@0.0.25:
+  version "0.0.25"
+  resolved "https://registry.yarnpkg.com/cozy-bi-auth/-/cozy-bi-auth-0.0.25.tgz#00947925dc3cbb664f4fa54cedde80e47d55fdd0"
+  integrity sha512-GsGuQ+tWbD6qhoD3EaAb9+qtGY90dY1F2n3+4Y1GHy5NBjPyRORPygOADaFgQmrX+u6QrrSJLAWh7EMAzxUH6w==
   dependencies:
     cozy-logger "^1.3.0"
     lodash "^4.17.20"
@@ -7390,21 +7390,21 @@ cozy-doctypes@1.85.0:
     lodash "^4.17.19"
     prop-types "^15.7.2"
 
-cozy-doctypes@^1.83.5:
-  version "1.83.5"
-  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.83.5.tgz#2608bbedfbf0d28efa0695423a2ea7c5137f5ef7"
-  integrity sha512-r4YEMoEuLTwl5iJ//rkxjpylkqAvZVIrUhdIHTtEdiFkJ7Oo4vpNQznzOAqP3Jdw8tfZkWE3rR3TE/wk1Elseg==
+cozy-doctypes@^1.85.4:
+  version "1.85.4"
+  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.85.4.tgz#4c1f42d5bab1f15cc7da6431f820c676f21ba036"
+  integrity sha512-Ofk7PMio5lJ+NM0A0B0G7IBU29AYjP6pzct/3nh1ZJ3/DGmWNWDgnaYKYOkiLYIBcO+nC21Vnn95f02gEl+CUA==
   dependencies:
-    cozy-logger "^1.8.0"
+    cozy-logger "^1.9.1"
     date-fns "^1.30.1"
     es6-promise-pool "^2.5.0"
     lodash "^4.17.19"
     prop-types "^15.7.2"
 
-cozy-doctypes@^1.85.4:
-  version "1.85.4"
-  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.85.4.tgz#4c1f42d5bab1f15cc7da6431f820c676f21ba036"
-  integrity sha512-Ofk7PMio5lJ+NM0A0B0G7IBU29AYjP6pzct/3nh1ZJ3/DGmWNWDgnaYKYOkiLYIBcO+nC21Vnn95f02gEl+CUA==
+cozy-doctypes@^1.86.1:
+  version "1.86.1"
+  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.86.1.tgz#e3a9931ef260a08dab6c1174dc72217c4af0361a"
+  integrity sha512-A+bMfL/ifMp6LESSzI66ytsC+SWG+Eew6aIznPH1s+eAQ/7pHz9RRxmOQL5bGjPruiQdIeyK/Zk/4idBE6zE1g==
   dependencies:
     cozy-logger "^1.9.1"
     date-fns "^1.30.1"
@@ -7538,16 +7538,16 @@ cozy-flags@^2.8.5:
   dependencies:
     microee "^0.0.6"
 
-cozy-harvest-lib@7.2.3:
-  version "7.2.3"
-  resolved "https://registry.yarnpkg.com/cozy-harvest-lib/-/cozy-harvest-lib-7.2.3.tgz#af5426d3cb03d5bbfa1e5dbaa0c9236f44253735"
-  integrity sha512-zqTjjM1vGwsaSHLuXYaphJ+zjv3wMB/JNWZJWxZvCsk7Egm0kQZH1ZJEPjIS5h18HMfmGVUuTru8NZevQB64WQ==
+cozy-harvest-lib@9.32.8:
+  version "9.32.8"
+  resolved "https://registry.yarnpkg.com/cozy-harvest-lib/-/cozy-harvest-lib-9.32.8.tgz#c3ce397317b62bb56548dd359e3b72e801be8cdf"
+  integrity sha512-c6xDUUd8u3zCr6zbr+xIlNNq1l0PtdXsli844jT6TMTXNiOjLeeOqqJjjNx2tXVFfMqRZdmjyb3GTs6JeQZ77g==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     "@sentry/browser" "^6.0.1"
-    cozy-bi-auth "0.0.24"
-    cozy-doctypes "^1.83.5"
-    cozy-logger "^1.8.0"
+    cozy-bi-auth "0.0.25"
+    cozy-doctypes "^1.86.1"
+    cozy-logger "^1.9.1"
     date-fns "^1.30.1"
     final-form "^4.18.5"
     lodash "^4.17.19"
@@ -7555,6 +7555,7 @@ cozy-harvest-lib@7.2.3:
     node-polyglot "^2.4.0"
     react-final-form "^3.7.0"
     react-markdown "^4.2.2"
+    use-deep-compare-effect "^1.8.1"
     uuid "^3.3.2"
 
 cozy-intent@^2.0.2:
@@ -7574,7 +7575,7 @@ cozy-interapp@^0.5.4:
   resolved "https://registry.yarnpkg.com/cozy-interapp/-/cozy-interapp-0.5.7.tgz#75cafe1732ad660e2caf1ccf412f302594705f39"
   integrity sha512-laIL/ATYV9oZnmqS+LMoO9qzk8XjJ1v2/YrA1Po2rI8ia/MDgjYO07424x2RuvHhNOBPGjD+JmqwQ0rNDlLW+Q==
 
-cozy-logger@^1.3.0, cozy-logger@^1.8.0:
+cozy-logger@^1.3.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/cozy-logger/-/cozy-logger-1.8.0.tgz#8d37f8e52c0de02a65ca0606ad60b0ebf3a60ed6"
   integrity sha512-0sBNsfwCwO/r23vrOncvj/EGRjDh/0Emh2WqWL0cYriPbOiidWrsULmh11Q9ykCB1IxBZ3z8PEpaqGTvAas2ug==
@@ -8288,6 +8289,11 @@ depd@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.2.tgz#9bcd52e14c097763e749b274c4346ed2e560b5a9"
   integrity sha1-m81S4UwJd2PnSbJ0xDRu0uVgtak=
+
+dequal@^2.0.2:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/dequal/-/dequal-2.0.3.tgz#2644214f1997d39ed0ee0ece72335490a7ac67be"
+  integrity sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==
 
 des.js@^1.0.0:
   version "1.0.1"
@@ -18309,6 +18315,14 @@ use-callback-ref@^1.2.3:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/use-callback-ref/-/use-callback-ref-1.2.5.tgz#6115ed242cfbaed5915499c0a9842ca2912f38a5"
   integrity sha512-gN3vgMISAgacF7sqsLPByqoePooY3n2emTH59Ur5d/M8eg4WTWu1xp8i8DHjohftIyEx0S08RiYxbffr4j8Peg==
+
+use-deep-compare-effect@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/use-deep-compare-effect/-/use-deep-compare-effect-1.8.1.tgz#ef0ce3b3271edb801da1ec23bf0754ef4189d0c6"
+  integrity sha512-kbeNVZ9Zkc0RFGpfMN3MNfaKNvcLNyxOAAd9O4CBZ+kCBXXscn9s/4I+8ytUER4RDpEYs5+O6Rs4PqiZ+rHr5Q==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+    dequal "^2.0.2"
 
 use-memo-one@^1.1.0, use-memo-one@^1.1.1:
   version "1.1.2"
