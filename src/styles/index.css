@@ -487,3 +487,11 @@ html .fabric-editor-popup-scroll-parent>div>div {
 body {
     overflow-x: hidden;
 }
+
+/* We had misalignment between lines and lines number because line-number-gutter doesn't have
+the right padding-top.
+Here we set it to 26px because: 12px (from .code-content padding top) + 14px (from pre margin top)
+*/
+.ProseMirror .code-block .line-number-gutter {
+    padding: 26px 8px !important;
+}
