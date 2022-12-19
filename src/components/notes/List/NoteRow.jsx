@@ -11,7 +11,7 @@ import { SharedRecipients } from 'cozy-sharing'
 import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { withClient } from 'cozy-client'
-
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import NoteIcon from 'assets/icons/icon-note-32.svg'
 import styles from 'components/notes/List/list.styl'
 import { AppRoutes } from 'constants/routes'
@@ -22,6 +22,7 @@ import { WithBreakpoints } from './WithBreakpoints'
 import { generateReturnUrlToNotesIndex, getDriveLink } from 'lib/utils'
 
 const NoteRow = ({ note, f, t, client }) => {
+  const { isMobile } = useBreakpoints()
   const location = useLocation()
   const { filename, extension } = CozyFile.splitFilename(note)
   const [isMenuOpen, setMenuOpen] = useState(false)
@@ -128,9 +129,9 @@ const NoteRow = ({ note, f, t, client }) => {
           </TableCell>
         </WithBreakpoints>
 
-        <TableCell className={styles.tableCell}>
+        <TableCell className={styles.tableCell} onClick={isMobile && openMenu}>
           <span ref={menuTriggerRef}>
-            <IconButton onClick={openMenu}>
+            <IconButton onClick={!isMobile && openMenu}>
               <Icon icon="dots" />
             </IconButton>
           </span>
