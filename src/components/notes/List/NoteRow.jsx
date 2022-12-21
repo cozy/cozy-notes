@@ -83,17 +83,20 @@ const NoteRow = ({ note, f, t, client }) => {
         >
           <Icon icon={NoteIcon} size={32} className="u-mr-1 u-flex-shrink-0" />
 
-          <div className="u-flex-grow-1">
-            <span className="u-charcoalGrey u-ellipsis">{filename}</span>
-
-            <WithBreakpoints hideOn={Breakpoints.Mobile}>
-              <span className="u-ellipsis">{extension}</span>
-            </WithBreakpoints>
-
-            <WithBreakpoints showOn={Breakpoints.Mobile}>
+          {isMobile ? (
+            <div
+              className="u-flex u-flex-column u-flex-grow-1"
+              style={{ minWidth: 0 }}
+            >
+              <span className="u-charcoalGrey u-ellipsis">{filename}</span>
               <NotePath drivePath={drivePath} path={note.path} noLink />
-            </WithBreakpoints>
-          </div>
+            </div>
+          ) : (
+            <div className="u-flex-grow-1">
+              <span className="u-charcoalGrey u-ellipsis">{filename}</span>
+              <span className="u-ellipsis">{extension}</span>
+            </div>
+          )}
         </TableCell>
 
         <WithBreakpoints hideOn={Breakpoints.Mobile}>
