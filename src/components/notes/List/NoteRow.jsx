@@ -111,7 +111,20 @@ const NoteRow = ({ note, f, t, client }) => {
           </TableCell>
 
           <TableCell className={styles.tableCell}>
-            <SharedRecipients docId={note._id} size={24} />
+            <Link
+              onClick={e => e.stopPropagation()}
+              to={AppRoutes.ShareFromList}
+              state={{
+                backgroundLocation: location,
+                shareModalProps: {
+                  document: { ...note, name: note.attributes.name },
+                  documentType: DocumentTypes.Notes,
+                  sharingDesc: note.attributes.name
+                }
+              }}
+            >
+              <SharedRecipients docId={note._id} size={24} />
+            </Link>
           </TableCell>
         </WithBreakpoints>
 
