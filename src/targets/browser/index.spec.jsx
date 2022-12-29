@@ -3,7 +3,8 @@ import { getDataset } from 'lib/initFromDom'
 
 jest.mock('lib/initFromDom', () => ({
   ...jest.requireActual('lib/initFromDom'),
-  getDataset: jest.fn().mockReturnValue({})
+  getDataset: jest.fn().mockReturnValue({}),
+  getPublicSharecode: jest.fn().mockReturnValue('ABCD')
 }))
 
 jest.mock('@atlaskit/editor-core/i18n', () => ({
@@ -12,10 +13,6 @@ jest.mock('@atlaskit/editor-core/i18n', () => ({
 }))
 
 describe('app init', () => {
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
   it('loads with the users locale', () => {
     getDataset.mockReturnValue({ locale: 'fr', app: {} })
     const { appLocale } = initApp()
