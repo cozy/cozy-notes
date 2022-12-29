@@ -121,8 +121,8 @@ export const initApp = () => {
   const protocol = window.location ? window.location.protocol : 'https:'
 
   const shareCode = getPublicSharecode()
-  const token = shareCode || data.token
-  const isPublic = Boolean(shareCode || !token || token == '')
+  const token = data.token
+  const isPublic = Boolean(shareCode)
 
   // initialize the client to interact with the cozy stack
   const client = new CozyClient({
