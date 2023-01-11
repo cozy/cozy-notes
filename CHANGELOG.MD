@@ -1,5 +1,35 @@
+# 1.25.0
+
+### ✨ Features
+
+* Open Share modal on recipient click
+* Increase note row dots menu hit box on mobile
+* Shared note previews are now writable if write access is granted
+
+### 🐛 Bug Fixes
+
+* Fix: Code line number alignment 
+* Fix text ellipsis on mobile note name
+
 # 1.24.0
 
+## 🐛 Bug Fixes
+
+* Sharing link was broken after refreshing page when you had a lot of shared files
+* Open note path into Drive on the current tab
+* Share button appears unshared first
+* In local, clicking on the "add new note" redirect the user to the page "Application not yet available"
+* Activate back the sharing cozy to cozy (behing the flag notes.sharing-cozy-to-cozy)
+
+## ✨ Features
+
+* Add route to create a note
+
+## 🔧 Tech
+
+* Add flag plugin
+* Add PR template
+* Renew Github Token for CI
 
 # 1.23.0
 
