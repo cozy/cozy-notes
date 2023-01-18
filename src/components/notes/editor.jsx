@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import { useClient } from 'cozy-client'
 import { SharingBannerPlugin } from 'cozy-sharing'
+import { useLocation } from 'react-router-dom'
 import { useWindowEventListener } from 'rooks/dist/esm/hooks/useWindowEventListener'
 
 import EditorView from 'components/notes/editor-view'
@@ -32,6 +33,7 @@ export default function Editor(props) {
   const { noteId, readOnly } = props
   const { t } = useI18n()
   const bannerRef = useRef() // where to display banners
+  const location = useLocation()
 
   // plugins and config
   const isPublic = useContext(IsPublicContext)
@@ -47,7 +49,7 @@ export default function Editor(props) {
   })
 
   const returnUrl = useReturnUrl({
-    returnUrl: props.returnUrl,
+    returnUrl: props.returnUrl || location?.state?.returnUrl,
     cozyClient,
     doc
   })
