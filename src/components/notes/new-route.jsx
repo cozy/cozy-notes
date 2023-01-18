@@ -1,40 +1,30 @@
 import React, { useEffect } from 'react'
 import { useClient } from 'cozy-client'
-import { createNoteDocument, generateReturnUrlToNotesIndex } from 'lib/utils'
-import { generateUniversalLink } from 'cozy-ui/transpiled/react/AppLinker/native'
+import { createNoteDocument } from 'lib/utils'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { generateWebLink } from 'cozy-client'
-import { isFlagshipApp } from 'cozy-device-helper'
-import { useWebviewIntent } from 'cozy-intent'
+import { useNavigate } from 'react-router-dom'
 
 const NewRoute = () => {
   const client = useClient()
   const { subdomain: subDomainType } = client.getInstanceOptions()
-  const isFlagship = isFlagshipApp()
-  const webviewIntent = useWebviewIntent()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const createNote = async () => {
-      if (isFlagship && !webviewIntent) return
       const { data: doc } = await createNoteDocument(client)
-      const generateLink = isFlagship ? generateUniversalLink : generateWebLink
-      const returnUrl = generateLink({
+      const returnUrl = generateWebLink({
         slug: 'notes',
         cozyUrl: client.getStackClient().uri,
         subDomainType: subDomainType,
-        pathname: `/`
+        pathname: '/'
       })
-      const link = await generateReturnUrlToNotesIndex(client, doc, returnUrl)
-
-      if (isFlagship && webviewIntent) {
-        return webviewIntent.call('openApp', link, { slug: 'notes' })
-      } else {
-        window.location.href = link
-      }
+      const link = `/n/${doc.id}`
+      navigate(link, { replace: true, state: { returnUrl } })
     }
 
     createNote()
-  }, [client, subDomainType, isFlagship, webviewIntent])
+  }, [client, subDomainType, navigate])
 
   return <Spinner size="xxlarge" middle />
 }
