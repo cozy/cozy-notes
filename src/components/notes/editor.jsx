@@ -32,7 +32,7 @@ export default function Editor(props) {
   const cozyClient = useClient()
   const { noteId, readOnly } = props
   const { t } = useI18n()
-  const bannerRef = useRef() // where to display banners
+  const bannerRef = useRef()
   const location = useLocation()
 
   // plugins and config
