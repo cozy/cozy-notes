@@ -1,0 +1,30 @@
+{
+  "baseDir": "./build",
+  "files": [
+    {
+      "path": "app/notes.<hash>.js",
+      "maxSize": "62 KB"
+    },
+    {
+      "path": "intents/notes.<hash>.js",
+      "maxSize": "1 KB"
+    },
+    {
+      "path": "public/notes.<hash>.js",
+      "maxSize": "40 KB"
+    },
+    {
+      "path": "vendors/notes.<hash>.js",
+      "maxSize": "3 MB"
+    },
+    {
+      "path": "app-notes.<hash>.min.css",
+      "maxSize": "4 KB"
+    },
+    {
+      "path": "vendors-notes.<hash>.0.min.css",
+      "maxSize": "36 KB"
+    }
+  ],
+  "reportOutput": ["github"]
+}

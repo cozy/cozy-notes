@@ -27,6 +27,7 @@ script:
   - yarn lint
   - yarn test --coverage
   - yarn build
+  - yarn bundlemon
 before_deploy:
   - yarn add cozy-app-publish
 deploy:
