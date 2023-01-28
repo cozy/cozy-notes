@@ -7400,7 +7400,7 @@ cozy-device-helper@^2.6.0:
   dependencies:
     lodash "^4.17.19"
 
-cozy-doctypes@1.86.1:
+cozy-doctypes@1.86.1, cozy-doctypes@^1.86.1:
   version "1.86.1"
   resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.86.1.tgz#e3a9931ef260a08dab6c1174dc72217c4af0361a"
   integrity sha512-A+bMfL/ifMp6LESSzI66ytsC+SWG+Eew6aIznPH1s+eAQ/7pHz9RRxmOQL5bGjPruiQdIeyK/Zk/4idBE6zE1g==
@@ -7417,17 +7417,6 @@ cozy-doctypes@^1.83.5:
   integrity sha512-r4YEMoEuLTwl5iJ//rkxjpylkqAvZVIrUhdIHTtEdiFkJ7Oo4vpNQznzOAqP3Jdw8tfZkWE3rR3TE/wk1Elseg==
   dependencies:
     cozy-logger "^1.8.0"
-    date-fns "^1.30.1"
-    es6-promise-pool "^2.5.0"
-    lodash "^4.17.19"
-    prop-types "^15.7.2"
-
-cozy-doctypes@^1.85.4:
-  version "1.85.4"
-  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.85.4.tgz#4c1f42d5bab1f15cc7da6431f820c676f21ba036"
-  integrity sha512-Ofk7PMio5lJ+NM0A0B0G7IBU29AYjP6pzct/3nh1ZJ3/DGmWNWDgnaYKYOkiLYIBcO+nC21Vnn95f02gEl+CUA==
-  dependencies:
-    cozy-logger "^1.9.1"
     date-fns "^1.30.1"
     es6-promise-pool "^2.5.0"
     lodash "^4.17.19"
@@ -7702,16 +7691,16 @@ cozy-scripts@7.0.2:
     webpack-dev-server "3.10.3"
     webpack-merge "4.2.2"
 
-cozy-sharing@^4.7.0:
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-4.7.0.tgz#e3e9e5870f146e02d5d65fbd98bbd1d84fae5b98"
-  integrity sha512-dRKG+Tzx5Chh/1WN2mpHY6qWl0ZE0W+Y0+UrrpNxvcH27iuf4tnLYsmlBCzFOGi6/zgITmnN15sXCNSrvbLYTQ==
+cozy-sharing@^4.9.0:
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-4.9.0.tgz#c900f0792888a24f96cebd7ef1905b71726ded58"
+  integrity sha512-dqwTDbffZbFzalNiSH7l7PFPK2vLwUs3/Tck5LYIEmHBHvs4GxG9ndmcWbGMCEuHH5jfx3aTR3D9ORBR8iYnvQ==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     classnames "^2.2.6"
     copy-text-to-clipboard "^2.1.1"
     cozy-device-helper "^2.6.0"
-    cozy-doctypes "^1.85.4"
+    cozy-doctypes "^1.86.1"
     lodash "^4.17.19"
     react-autosuggest "^9.4.3"
     react-tooltip "^3.11.1"

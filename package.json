@@ -71,7 +71,7 @@
     "cozy-logger": "^1.9.0",
     "cozy-realtime": "4.0.5",
     "cozy-scripts": "7.0.2",
-    "cozy-sharing": "^4.7.0",
+    "cozy-sharing": "^4.9.0",
     "cozy-ui": "^77.6.0",
     "lodash": "4.17.21",
     "prop-types": "15.8.1",
