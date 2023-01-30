@@ -6,7 +6,7 @@ function useReturnUrl({ returnUrl, cozyClient, doc }) {
   const isPublic = useContext(IsPublicContext)
 
   return useMemo(() => {
-    if (returnUrl !== undefined) {
+    if (returnUrl) {
       return returnUrl
     } else if (doc) {
       return getParentFolderLink(cozyClient, doc.file)
