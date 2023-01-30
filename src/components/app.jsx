@@ -104,7 +104,7 @@ const PublicContext = () => {
       <Editor
         readOnly={readOnly}
         noteId={sharedDocumentId}
-        returnUrl={returnUrl || false}
+        returnUrl={returnUrl}
       />
     )
   } else if (sharedDocumentId !== null) {

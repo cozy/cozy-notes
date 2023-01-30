@@ -63,6 +63,10 @@ export default function BackFromEditing({ returnUrl, file, requestToLeave }) {
   const isPublic = useContext(IsPublicContext)
   const client = useClient()
 
+  if (isPublic) {
+    return null
+  }
+
   if (returnUrl) {
     const folderId = models.file.getParentFolderId(file)
     const nativePath = getFolderLink(folderId)
@@ -84,7 +88,7 @@ export default function BackFromEditing({ returnUrl, file, requestToLeave }) {
         }}
       </AppLinker>
     )
-  } else if (!isPublic) {
+  } else {
     const href = '#/'
     return (
       <Button
@@ -95,7 +99,5 @@ export default function BackFromEditing({ returnUrl, file, requestToLeave }) {
         subtle
       />
     )
-  } else {
-    return null
   }
 }
