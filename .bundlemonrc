@@ -26,5 +26,19 @@
       "maxSize": "36 KB"
     }
   ],
+  "groups": [
+    {
+      "path": "app/**"
+    },
+    {
+      "path": "public/**"
+    },
+    {
+      "path": "intents/**"
+    },
+    {
+      "path": "vendors/**"
+    }
+  ],
   "reportOutput": ["github"]
 }
