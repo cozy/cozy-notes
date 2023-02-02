@@ -3,9 +3,7 @@ const SRC_DIR = path.resolve(__dirname, './src')
 
 const configurationFiles = []
 
-configurationFiles.push(
-  require('cozy-scripts/config/webpack.bundle.default.js')
-)
+configurationFiles.push(require('./config/webpack.bundle.default.js'))
 configurationFiles.push(
   require('cozy-scripts/config/webpack.config.css-modules')
 )
