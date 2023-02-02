@@ -6,7 +6,7 @@
   "categories": [
     "cozy"
   ],
-  "version": "1.27.0",
+  "version": "1.26.0",
   "licence": "AGPL-3.0",
   "editor": "Cozy",
   "source": "https://github.com/cozy/cozy-notes.git@build",
@@ -29,12 +29,12 @@
       "public": false
     },
     "/public": {
-      "folder": "/",
+      "folder": "/public",
       "index": "index.html",
       "public": true
     },
     "/preview": {
-      "folder": "/",
+      "folder": "/public",
       "index": "index.html",
       "public": true
     }
