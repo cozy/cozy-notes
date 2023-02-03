@@ -7,8 +7,6 @@ configurationFiles.push(require('./config/webpack.bundle.default.js'))
 configurationFiles.push(
   require('cozy-scripts/config/webpack.config.css-modules')
 )
-configurationFiles.push(require('./config/public.config.js'))
-
 const extraConfig = {
   resolve: {
     modules: ['node_modules', SRC_DIR],

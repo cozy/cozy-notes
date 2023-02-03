@@ -11,7 +11,7 @@
     },
     {
       "path": "public/notes.<hash>.js",
-      "maxSize": "1.5 MB"
+      "maxSize": "40 KB"
     },
     {
       "path": "vendors/notes.<hash>.js",
