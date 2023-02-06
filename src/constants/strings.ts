@@ -38,7 +38,7 @@ export enum Slugs {
   Notes = 'notes'
 }
 
-export const SHARING_LOCATION = '/preview'
+export const SHARING_LOCATION = '/preview/'
 
 export enum DocumentTypes {
   Files = 'Files',

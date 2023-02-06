@@ -26,6 +26,7 @@ import { useDebugValue } from 'lib/debug'
 import useConfirmExit from 'cozy-ui/transpiled/react/hooks/useConfirmExit'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import HeaderMenu from 'components/header_menu'
+import { SHARING_LOCATION } from '../../constants/strings'
 
 export default function Editor(props) {
   // base parameters
@@ -141,7 +142,9 @@ export default function Editor(props) {
               isPublic={isPublic}
               file={doc.file}
               primaryToolbarComponents={
-                isPreview ? <SharingBannerPlugin /> : null
+                isPreview ? (
+                  <SharingBannerPlugin previewPath={SHARING_LOCATION} />
+                ) : null
               }
             />
           }
