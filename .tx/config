@@ -1,8 +1,8 @@
 [main]
 host = https://www.transifex.com
 
-[<project_slug.resource_slug>]
+[o:cozy:p:cozy-notes:r:enjson]
 file_filter = src/locales/<lang>.json
 source_file = src/locales/en.json
 source_lang = en
-type = KEYVALUEJSON
+type        = KEYVALUEJSON
