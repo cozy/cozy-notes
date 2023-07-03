@@ -7,7 +7,7 @@
     "build:browser": "cs build --browser",
     "build:mobile": "cs build --mobile",
     "build": "yarn build:browser",
-    "cozyPublish": "cs publish --token $REGISTRY_TOKEN --build-commit $(git rev-parse ${DEPLOY_BRANCH:-build})",
+    "cozyPublish": "cs publish --token $REGISTRY_TOKEN --build-commit $(git rev-parse ${DEPLOY_BRANCH:-build}) --postpublish mattermost",
     "deploy": "git-directory-deploy --directory build/ --branch ${DEPLOY_BRANCH:-build} --repo ${DEPLOY_REPOSITORY:-https://cozy-bot:$GITHUB_TOKEN@github.com/cozy/cozy-notes}",
     "lint:js": "eslint '{src,test}/**/*.{ts,tsx,js,jsx}'",
     "lint:styles": "stylint src/styles --config ./.stylintrc",
