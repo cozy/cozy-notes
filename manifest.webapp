@@ -32,8 +32,20 @@
       "folder": "/",
       "index": "index.html",
       "public": true
+    },
+    "/intents": {
+      "folder": "/intents",
+      "index": "index.html",
+      "public": false
     }
   },
+  "intents": [
+    {
+      "action": "OPEN",
+      "type": ["io.cozy.notes.documents"],
+      "href": "/intents"
+    }
+  ],
   "permissions": {
     "apps": {
       "description": "Required by the cozy-bar to display the icons of the apps",
@@ -60,6 +72,10 @@
     },
     "groups": {
       "type": "io.cozy.contacts.groups",
+      "verbs": ["GET"]
+    },
+    "intents": {
+      "type": "io.cozy.notes.documents",
       "verbs": ["GET"]
     }
   }
