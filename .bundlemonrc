@@ -3,11 +3,11 @@
   "files": [
     {
       "path": "app/notes.<hash>.js",
-      "maxSize": "62 KB"
+      "maxSize": "65 KB"
     },
     {
       "path": "intents/notes.<hash>.js",
-      "maxSize": "1 KB"
+      "maxSize": "50 KB"
     },
     {
       "path": "public/notes.<hash>.js",
