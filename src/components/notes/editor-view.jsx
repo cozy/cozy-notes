@@ -30,7 +30,9 @@ function EditorView(props) {
     onContentChange,
     readOnly,
     bannerRef,
-    headerMenu
+    headerMenu,
+    isIntent,
+    children
   } = props
   const { t } = useI18n()
 
@@ -68,7 +70,11 @@ function EditorView(props) {
   const [isUploading, setUploading] = useState(false)
 
   return (
-    <article className={styles['note-article']}>
+    <article
+      className={`${styles['note-article']}${
+        isIntent ? ' ' + styles['note-article--intents'] : ''
+      }`}
+    >
       {isUploading && (
         <Overlay>
           <Spinner size="xxlarge" middle />
@@ -93,7 +99,7 @@ function EditorView(props) {
           })}
           contentComponents={
             <WithEditorActions
-              render={() => (
+              render={actions => (
                 <>
                   <aside ref={bannerRef} className={styles.banner}></aside>
                   <TextField
@@ -111,6 +117,11 @@ function EditorView(props) {
                     }}
                     onChange={readOnly ? nullCallback : onTitleEvent}
                   />
+                  {React.Children.map(children, child =>
+                    React.isValidElement(child)
+                      ? React.cloneElement(child, { actions })
+                      : null
+                  )}
                 </>
               )}
             />
