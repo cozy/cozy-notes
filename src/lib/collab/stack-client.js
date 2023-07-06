@@ -100,16 +100,18 @@ export class ServiceClient {
    * @param {string} title
    * @param {Object} schema
    */
-  async create(title, schema) {
+  async create(title, schema, content) {
     const doc = {
       data: {
         type: 'io.cozy.notes.documents',
         attributes: {
           title: title || this.defaultTitle(),
-          schema: schema || this.schema || defaultSchema
+          schema: schema || this.schema || defaultSchema,
+          content
         }
       }
     }
+
     return this.stackClient.fetchJSON('POST', this.path(), doc)
   }
 

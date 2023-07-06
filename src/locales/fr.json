@@ -106,5 +106,8 @@
       "screenshots/fr/screenshot01.png",
       "screenshots/fr/screenshot02.png"
     ]
+  },
+  "Intents": {
+    "save": "Enregistrer"
   }
 }
