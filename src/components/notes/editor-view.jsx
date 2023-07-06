@@ -2,15 +2,16 @@ import React, { useCallback, useRef, useEffect, useMemo, useState } from 'react'
 
 import { Editor, WithEditorActions } from '@atlaskit/editor-core'
 
-import Textarea from 'cozy-ui/transpiled/react/Textarea'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import useEventListener from 'cozy-ui/transpiled/react/hooks/useEventListener'
 import Overlay from 'cozy-ui/transpiled/react/Overlay'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
-import Typography from 'cozy-ui/transpiled/react/Typography'
-import editorConfig from 'components/notes/editor_config'
-import styles from 'components/notes/editor-view.styl'
+import TextField from 'cozy-ui/transpiled/react/MuiCozyTheme/TextField'
+
 import { imageUploadProvider } from 'lib/image-upload-provider'
+import editorConfig from 'components/notes/editor_config'
+
+import styles from 'components/notes/editor-view.styl'
 
 function updateTextareaHeight(target) {
   if (target) target.style.height = `${target.scrollHeight}px`
@@ -95,23 +96,21 @@ function EditorView(props) {
               render={() => (
                 <>
                   <aside ref={bannerRef} className={styles.banner}></aside>
-                  <Typography
-                    tag="h1"
+                  <TextField
+                    ref={titleEl}
                     className={styles.title}
-                    variant="h3"
-                    component="h1"
-                  >
-                    <Textarea
-                      ref={titleEl}
-                      rows="1"
-                      readOnly={!!readOnly}
-                      fullwidth={true}
-                      value={title}
-                      onChange={readOnly ? nullCallback : onTitleEvent}
-                      placeholder={defaultTitle}
-                      className={styles.titleInput}
-                    />
-                  </Typography>
+                    multiline
+                    minRows={1}
+                    value={title}
+                    placeholder={defaultTitle}
+                    fullWidth={true}
+                    InputProps={{ disableUnderline: true }}
+                    inputProps={{
+                      className: styles.titleInput,
+                      readOnly: !!readOnly
+                    }}
+                    onChange={readOnly ? nullCallback : onTitleEvent}
+                  />
                 </>
               )}
             />

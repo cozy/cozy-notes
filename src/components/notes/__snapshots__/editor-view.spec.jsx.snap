@@ -21,19 +21,31 @@ exports[`EditorView readOnly when false without a collabProvider should not disa
           <aside
             class="banner"
           />
-          <h1
-            class="MuiTypography-root title MuiTypography-h3 MuiTypography-colorTextPrimary"
-            tag="h1"
+          <div
+            class="MuiFormControl-root MuiTextField-root title MuiFormControl-fullWidth"
+            style="height: 0px;"
           >
-            <textarea
-              class="styles__c-textarea___D7EEH styles__c-textarea--fullwidth___Ih_mg titleInput"
-              placeholder="placeholder"
-              rows="1"
-              style="height: 0px;"
+            <div
+              class="MuiInputBase-root MuiInput-root MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl MuiInputBase-multiline MuiInput-multiline"
             >
-              title
-            </textarea>
-          </h1>
+              <textarea
+                aria-invalid="false"
+                class="MuiInputBase-input MuiInput-input titleInput MuiInputBase-inputMultiline MuiInput-inputMultiline"
+                placeholder="placeholder"
+                rows="1"
+                style="height: 0px; overflow: hidden;"
+              >
+                title
+              </textarea>
+              <textarea
+                aria-hidden="true"
+                class="MuiInputBase-input MuiInput-input titleInput MuiInputBase-inputMultiline MuiInput-inputMultiline"
+                readonly=""
+                style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); width: 100%;"
+                tabindex="-1"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </section>
