@@ -6,13 +6,16 @@ on medium-screen to give to the bar the needed place. Since we hide the cozy-bar
 on the editor-view we remove this margin
 */
 $COZY_BAR_HEIGHT=-3rem
+
 .note-article
     display flex
     flex-direction column
     height 100%
+    width 100%
 
-    +medium-screen()
-        margin-top $COZY_BAR_HEIGHT
+    &:not(.note-article--intents)
+        +medium-screen()
+            margin-top $COZY_BAR_HEIGHT
 
 .banner
     & > :first-child
