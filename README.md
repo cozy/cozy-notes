@@ -7,7 +7,7 @@
 
 ## What's Cozy Notes?
 
-<TODO>...
+Note manager for Cozy Cloud
 
 
 ## Hack
@@ -104,6 +104,9 @@ Whenever your app needs to use a given `doctype`, you should:
 
 If you want to work on cozy-notes and submit code modifications, feel free to open pull-requests! See the [contributing guide][contribute] for more information about how to properly open pull-requests.
 
+## Atlaskit
+
+We use Atlassian Atlaskit under the hood to provide a note editor. [See documentation here][editor-doc]
 
 ## Community
 
@@ -173,3 +176,4 @@ cozy-notes is developed by edas and distributed under the [AGPL v3 license][agpl
 [nvm]: https://github.com/creationix/nvm
 [ndenv]: https://github.com/riywo/ndenv
 [jest]: https://facebook.github.io/jest/
+[editor-doc]: https://atlaskit.atlassian.com/packages/editor/editor-core
