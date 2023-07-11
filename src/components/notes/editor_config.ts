@@ -22,7 +22,8 @@ const editorConfig: EditorProps = {
   allowPanel: true,
   allowStatus: true,
   allowRule: true,
-  allowDate: true
+  allowDate: true,
+  allowTasksAndDecisions: true
 }
 
 export default editorConfig
