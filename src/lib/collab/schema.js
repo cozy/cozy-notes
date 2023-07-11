@@ -6,8 +6,8 @@ import { Schema } from 'prosemirror-model'
 // @quentin: I don't understand yet why we need to do that, so if someone
 // knows, then update the comment ;)
 
-// To get the schema, we need to log the values from node_modules/@atlaskit/editor-core/dist/esm/create-editor/create-schema
-// itself just before the call on new Schema({nodes, marks}) and then
+// To get the schema, we need to log the values from node_modules/cozy-editor-core/src/create-editor/create-schema
+// itself just before the call on new Schema({ nodes, marks }) and then
 // console.log({nodes})
 // console.log({marks})
 // to be able to copy paste the value in this file, click right on the log -> store as global value
@@ -30,7 +30,7 @@ import { Schema } from 'prosemirror-model'
 
 // if you edit the schema, please upgrade this schemaVersion
 
-export const schemaVersion = 3
+export const schemaVersion = 4
 
 export const getSchemaVersion = () => {
   return schemaVersion
@@ -69,7 +69,7 @@ export const nodes = [
           default: ''
         },
         localId: {
-          default: 'adf1f61a-da02-4a41-a6c3-183fdcac102d'
+          default: 'dfab1003-a025-425f-869b-4592431ae618'
         },
         style: {
           default: ''
@@ -487,7 +487,7 @@ export const nodes = [
     {
       selectable: false,
       content:
-        '(paragraph | panel | blockquote | orderedList | bulletList | rule | heading | codeBlock | mediaSingle )+',
+        '(paragraph | panel | blockquote | orderedList | bulletList | rule | heading | codeBlock | mediaSingle | decisionList | taskList )+',
       attrs: {
         colspan: {
           default: 1
@@ -513,6 +513,27 @@ export const nodes = [
     }
   ],
   [
+    'decisionList',
+    {
+      group: 'block',
+      defining: true,
+      content: 'decisionItem+',
+      marks: 'unsupportedMark unsupportedNodeAttribute',
+      selectable: false,
+      attrs: {
+        localId: {
+          default: ''
+        }
+      },
+      parseDOM: [
+        {
+          tag: 'ol[data-node-type="decisionList"]',
+          priority: 100
+        }
+      ]
+    }
+  ],
+  [
     'tableRow',
     {
       selectable: false,
@@ -527,11 +548,33 @@ export const nodes = [
     }
   ],
   [
+    'decisionItem',
+    {
+      content: 'inline*',
+      defining: true,
+      marks: '_',
+      attrs: {
+        localId: {
+          default: ''
+        },
+        state: {
+          default: 'DECIDED'
+        }
+      },
+      parseDOM: [
+        {
+          tag: 'li[data-decision-local-id]',
+          priority: 100
+        }
+      ]
+    }
+  ],
+  [
     'tableCell',
     {
       selectable: false,
       content:
-        '(paragraph | panel | blockquote | orderedList | bulletList | rule | heading | codeBlock | mediaSingle | unsupportedBlock)+',
+        '(paragraph | panel | blockquote | orderedList | bulletList | rule | heading | codeBlock | mediaSingle | decisionList | taskList | unsupportedBlock)+',
       attrs: {
         colspan: {
           default: 1
@@ -559,6 +602,50 @@ export const nodes = [
         }
       ]
     }
+  ],
+  [
+    'taskList',
+    {
+      group: 'block',
+      defining: true,
+      selectable: false,
+      content: 'taskItem+ (taskItem|taskList)*',
+      marks: 'unsupportedMark unsupportedNodeAttribute',
+      attrs: {
+        localId: {
+          default: ''
+        }
+      },
+      parseDOM: [
+        {
+          tag: 'div[data-node-type="actionList"]',
+          priority: 100
+        }
+      ]
+    }
+  ],
+  [
+    'taskItem',
+    {
+      content: 'inline*',
+      defining: true,
+      selectable: false,
+      marks: '_',
+      attrs: {
+        localId: {
+          default: ''
+        },
+        state: {
+          default: 'TODO'
+        }
+      },
+      parseDOM: [
+        {
+          tag: 'div[data-task-local-id]',
+          priority: 100
+        }
+      ]
+    }
   ]
 ]
 
@@ -581,7 +668,7 @@ export const marks = [
         },
         {
           tag: 'a[href]',
-          context: 'paragraph/|heading/|mediaSingle/'
+          context: 'paragraph/|heading/|mediaSingle/|taskItem/|decisionItem/'
         },
         {
           tag: 'a[href]'
