@@ -7602,10 +7602,10 @@ cozy-interapp@^0.5.4:
   resolved "https://registry.yarnpkg.com/cozy-interapp/-/cozy-interapp-0.5.7.tgz#75cafe1732ad660e2caf1ccf412f302594705f39"
   integrity sha512-laIL/ATYV9oZnmqS+LMoO9qzk8XjJ1v2/YrA1Po2rI8ia/MDgjYO07424x2RuvHhNOBPGjD+JmqwQ0rNDlLW+Q==
 
-cozy-interapp@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/cozy-interapp/-/cozy-interapp-0.8.0.tgz#ca6749fcc674603269cf861fe808fc1a1add409c"
-  integrity sha512-oXz0HjMLmUWjhVZjZoqVL6llZDLE7v0Hv+kDT8b3s/0hF7Wa9MISBsjJ9sAJbRcJUGfnYNcwBu39F8zZNvMHuQ==
+cozy-interapp@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/cozy-interapp/-/cozy-interapp-0.8.1.tgz#960fb98a2e93192980449b0b75521f47b4de7d22"
+  integrity sha512-yYCOMVKRjGzvu/TuTj/9jir+Zr3OvXGWJUu9J9dk1jMcBZqXq4D9uIdnqxMJlpovUUJnehzIdgCfbL3JKaZc0Q==
 
 cozy-logger@^1.10.0:
   version "1.10.0"
