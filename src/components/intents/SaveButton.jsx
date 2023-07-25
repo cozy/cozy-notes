@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import log from 'cozy-logger'
 import { useClient } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import Buttons from 'cozy-ui/transpiled/react/Buttons'
@@ -34,10 +35,11 @@ const SaveButton = ({ title, actions }) => {
     try {
       setIsBusy(true)
       const doc = await actions.getValue()
-      await serviceClient.create(title, undefined, doc)
-      service.terminate()
+      const { data } = await serviceClient.create(title, undefined, doc)
+      service.terminate({ id: data.id })
       setIsBusy(false)
     } catch (error) {
+      log('error', error)
       service.cancel()
     }
   }
