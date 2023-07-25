@@ -827,7 +827,8 @@ function orderedToObject(ordered) {
 
 export const schemaOrdered = {
   nodes,
-  marks
+  marks,
+  version: schemaVersion
 }
 
 export const schemaObject = {
