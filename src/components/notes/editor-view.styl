@@ -29,12 +29,13 @@ $COZY_BAR_HEIGHT=-3rem
     margin-bottom var(--note-block-spacing) !important // to override Mui
 
     &>div
-        padding 0 !important // to override Mui
         font-size var(--note-title0-fs)
         line-height var(--note-title0-lh)
         font-weight 900
         font-family Lato-Black, var(--primaryFont)
         color var(--charcoal-grey)
+        +small-screen()
+            line-height var(--note-title6-lh)
 
 .titleInput
     &, &:focus, &:hover, &::placeholder
@@ -45,6 +46,8 @@ $COZY_BAR_HEIGHT=-3rem
         font-family Lato-Black, var(--primaryFont)
         overflow visible
         min-height min-content
+        +small-screen()
+            line-height var(--note-title6-lh)
 
     &::placeholder
         opacity 1 !important // to override Mui
