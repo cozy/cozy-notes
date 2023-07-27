@@ -31,7 +31,10 @@ const SaveButton = ({ title, actions }) => {
   })
   const [isBusy, setIsBusy] = useState(false)
 
-  const handleClick = actions => async () => {
+  const handleClick = actions => async ev => {
+    // because the button is on top of the note and propagation
+    // opens the keyboard on the mobile phone
+    ev.stopPropagation()
     try {
       setIsBusy(true)
       const doc = await actions.getValue()
