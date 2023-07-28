@@ -7348,16 +7348,17 @@ cozy-client@^27.14.4:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
-cozy-client@^34.1.0:
-  version "34.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-34.1.0.tgz#5528b67f941cbb434459dca75a1d157d9d7ef2ab"
-  integrity sha512-2F6c7Y6cnrfDHdh9EIz13g0ylO2vaTKQslhbiUZWxQbWTlnEqgRqcFgtn3hYfi4VOeTW1gBT9HnJxcM+kVVYjg==
+cozy-client@^40.0.1:
+  version "40.0.1"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-40.0.1.tgz#cc085c655f57fc6c38954e4b68317611d679fc59"
+  integrity sha512-wAOGKDC0BfgfJkorVJZEw+xRwjNW6xiFyJIzWO0nFIxmfJDB+6w6yceH/7fp9ayk+H9VHRXDPe+YL8xIxM1ARA==
   dependencies:
     "@cozy/minilog" "1.0.0"
     "@types/jest" "^26.0.20"
     "@types/lodash" "^4.14.170"
     btoa "^1.2.1"
-    cozy-stack-client "^34.1.0"
+    cozy-stack-client "^40.0.1"
+    date-fns "2.29.3"
     json-stable-stringify "^1.0.1"
     lodash "^4.17.13"
     microee "^0.0.6"
@@ -7747,10 +7748,10 @@ cozy-stack-client@^27.15.0:
     mime "^2.4.0"
     qs "^6.7.0"
 
-cozy-stack-client@^34.1.0:
-  version "34.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-34.1.0.tgz#2ff134ad3717947c669e49489da3bd1dedae12d0"
-  integrity sha512-Xg5yqtJTpJtxLVEHJbtrEdIpA/yNePHI4k9jFkoHII72Rb/sW71aWihQHuOhm+7fKyYDeV5hi7cHg82BB6+cAQ==
+cozy-stack-client@^40.0.1:
+  version "40.0.1"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-40.0.1.tgz#44f28b5aa669fd2cb44abe5462fd10f70c5034e7"
+  integrity sha512-55rgMv/AFILV/K7yUmjxVXbDWtMT4htiy/D+N4VTGL5/BCUasHGvRK9hRvzYMxMrQbWeLOvTK0V9itmcDwJtWw==
   dependencies:
     detect-node "^2.0.4"
     mime "^2.4.0"
@@ -8130,6 +8131,11 @@ dataloader@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/dataloader/-/dataloader-1.4.0.tgz#bca11d867f5d3f1b9ed9f737bd15970c65dff5c8"
   integrity sha512-68s5jYdlvasItOJnCuI2Q9s4q98g0pCyL3HrcKJu8KNugUl8ahgmZYg38ysLTgQjjXX3H8CJLkAvWrclWfcalw==
+
+date-fns@2.29.3:
+  version "2.29.3"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.29.3.tgz#27402d2fc67eb442b511b70bbdf98e6411cd68a8"
+  integrity sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==
 
 date-fns@^1.28.5, date-fns@^1.30.1:
   version "1.30.1"
