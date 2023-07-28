@@ -132,9 +132,12 @@ const NoteRow = ({ note, f, t, client }) => {
           </TableCell>
         </WithBreakpoints>
 
-        <TableCell className={styles.tableCell} onClick={isMobile && openMenu}>
+        <TableCell
+          className={styles.tableCell}
+          onClick={isMobile ? openMenu : undefined}
+        >
           <span ref={menuTriggerRef}>
-            <IconButton onClick={!isMobile && openMenu}>
+            <IconButton onClick={!isMobile ? openMenu : undefined}>
               <Icon icon="dots" />
             </IconButton>
           </span>
