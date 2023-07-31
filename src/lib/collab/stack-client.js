@@ -1,4 +1,5 @@
 import { schemaOrdered as defaultSchema, schemaVersion } from './schema'
+import { defaultContent } from './content'
 
 // Warning: sessionID on the server, sessionId on the client
 
@@ -99,20 +100,25 @@ export class ServiceClient {
    * Create a new note on the server
    * @param {string} title
    * @param {Object} schema
+   * @param {Object} doc
    */
-  async create(title, schema, content) {
-    const doc = {
+  async create(title, schema, doc) {
+    const newDoc = {
       data: {
         type: 'io.cozy.notes.documents',
         attributes: {
           title: title || this.defaultTitle(),
           schema: schema || this.schema || defaultSchema,
-          content
+          content: doc
+            ? doc.content?.length > 0
+              ? doc
+              : { ...doc, content: defaultContent }
+            : undefined
         }
       }
     }
 
-    return this.stackClient.fetchJSON('POST', this.path(), doc)
+    return this.stackClient.fetchJSON('POST', this.path(), newDoc)
   }
 
   /**
