@@ -8,6 +8,8 @@ import {
   StylesProvider,
   createGenerateClassName
 } from '@material-ui/core/styles'
+import { IntlProvider, addLocaleData } from 'react-intl'
+import { fr, en } from '@atlaskit/editor-core/i18n'
 
 import { WebviewIntentProvider } from 'cozy-intent'
 import Intents from 'cozy-interapp'
@@ -17,6 +19,7 @@ import I18n from 'cozy-ui/transpiled/react/I18n'
 import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
 
 const manifest = require('../../../manifest.webapp')
+const frenchAtlaskitCozy = require(`locales/atlassian_missing_french.json`)
 
 import { getDataset, getDataOrDefault } from 'lib/initFromDom'
 import IntentEditorView from 'components/intents/IntentEditorView'
@@ -33,11 +36,27 @@ const generateClassName = createGenerateClassName({
   disableGlobal: true
 })
 
+const locales = {
+  en: {
+    react: require('react-intl/locale-data/en'),
+    atlaskit: en
+  },
+  fr: {
+    react: require('react-intl/locale-data/fr'),
+    atlaskit: { ...fr, ...frenchAtlaskitCozy }
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const data = getDataset()
   const token = data.token
   const appSlug = getDataOrDefault(data.app.slug, manifest.slug)
   const appVersion = getDataOrDefault(data.app.version, manifest.version)
+  addLocaleData(locales.en.react)
+  addLocaleData(locales.fr.react)
+  const userLocale = getDataOrDefault(data.locale, 'en')
+  const supportedLocales = ['en', 'fr']
+  const appLocale = supportedLocales.includes(userLocale) ? userLocale : 'en'
 
   const protocol = window.location.protocol
   const client = new CozyClient({
@@ -61,13 +80,18 @@ document.addEventListener('DOMContentLoaded', () => {
         dictRequire={lang => require(`../../locales/${lang}`)}
       >
         <StylesProvider generateClassName={generateClassName}>
-          <CozyProvider client={client}>
-            <IntentProvider intentId={intentId}>
-              <MuiCozyTheme>
-                <IntentEditorView />
-              </MuiCozyTheme>
-            </IntentProvider>
-          </CozyProvider>
+          <IntlProvider
+            locale={appLocale}
+            messages={locales[appLocale].atlaskit}
+          >
+            <CozyProvider client={client}>
+              <IntentProvider intentId={intentId}>
+                <MuiCozyTheme>
+                  <IntentEditorView />
+                </MuiCozyTheme>
+              </IntentProvider>
+            </CozyProvider>
+          </IntlProvider>
         </StylesProvider>
       </I18n>
     </WebviewIntentProvider>,
