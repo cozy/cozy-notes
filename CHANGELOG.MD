@@ -1,3 +1,23 @@
+# 1.30.0
+
+### ✨ Features
+
+* Add intent for editor view
+* Upgrade cozy-interapp from 0.8.0 to 0.8.1
+* Spread the id of the doc created to the service
+
+### 🐛 Bug Fixes
+
+* Schema version wasn't present on default schema
+
+
+### 🔧 Tech
+
+* Publish to mattermost
+* Add atlaskit doc
+* Upgrade Cozy-Client to not destroy indexes automatically
+* refactor: Remove && and use ? for onClick handlers in order to remove warning in the console
+
 # 1.25.0
 
 ### ✨ Features
@@ -8,7 +28,7 @@
 
 ### 🐛 Bug Fixes
 
-* Fix: Code line number alignment 
+* Fix: Code line number alignment
 * Fix text ellipsis on mobile note name
 
 # 1.24.0
