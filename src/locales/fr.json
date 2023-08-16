@@ -12,7 +12,7 @@
       "main_placeholder": "Écrivez ce que vous souhaitez…"
     },
     "Editor": {
-      "title_placeholder": "Ici votre titre",
+      "title_placeholder": "Écrivez votre titre",
       "exit_confirmation_message": "La sauvegarde automatique n'a pas encore pris en compte vos dernières modifications. Merci de retourner sur votre note pour ne pas les perdre.",
       "exit_confirmation_title": "Abandonner les modifications ?",
       "exit_confirmation_leave": "Quitter sans sauvegarder",
