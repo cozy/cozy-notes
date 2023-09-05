@@ -1,3 +1,9 @@
+# 1.31.0
+
+### ✨ Features
+
+* Change title placeholder wording
+
 # 1.30.0
 
 ### ✨ Features
