@@ -111,10 +111,6 @@ export default class DropdownMenuWrapper extends PureComponent<Props, State> {
       isOpen,
       zIndex
     } = this.props
-    const isCellPopup = items[0].items.some(
-      ({ content }) => content === 'Cell background'
-    )
-    const position = isCellPopup ? popupPlacement.join(' ') : 'top left'
 
     return (
       <Popup
@@ -131,7 +127,7 @@ export default class DropdownMenuWrapper extends PureComponent<Props, State> {
         <DropListWithOutsideListeners
           isOpen={true}
           appearance="tall"
-          position={position}
+          position={popupPlacement.join(' ')}
           shouldFlip={false}
           shouldFitContainer={true}
           isTriggerNotTabbable={true}
