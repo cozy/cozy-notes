@@ -495,3 +495,7 @@ Here we set it to 26px because: 12px (from .code-content padding top) + 14px (fr
 .ProseMirror .code-block .line-number-gutter {
     padding: 26px 8px !important;
 }
+
+.ProseMirror div[data-task-list-local-id] {
+    margin-bottom: var(--note-block-spacing) !important;
+}
