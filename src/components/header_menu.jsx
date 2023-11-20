@@ -3,7 +3,7 @@ import React from 'react'
 import { models } from 'cozy-client'
 import AppLinker from 'cozy-ui/transpiled/react/AppLinker'
 import AppIcon from 'cozy-ui/transpiled/react/AppIcon'
-import Divider from 'cozy-ui/transpiled/react/MuiCozyTheme/Divider'
+import Divider from 'cozy-ui/transpiled/react/Divider'
 import Link from 'cozy-ui/transpiled/react/Link'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 
