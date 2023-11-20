@@ -2,8 +2,9 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import SavingIndicator from './saving-indicator'
+import { AppLike } from 'test/AppLike'
 
-jest.mock('cozy-ui/transpiled/react/hooks/useBreakpoints')
+jest.mock('cozy-ui/transpiled/react/providers/Breakpoints')
 
 const sec = 1000
 const min = 60 * sec
@@ -28,7 +29,9 @@ global.document.createRange = jest.fn()
 function itMatchSnapshot(collabProvider) {
   it('should match snapshot', () => {
     const { container } = render(
-      <SavingIndicator collabProvider={collabProvider} />
+      <AppLike>
+        <SavingIndicator collabProvider={collabProvider} />
+      </AppLike>
     )
     expect(container).toMatchSnapshot()
   })

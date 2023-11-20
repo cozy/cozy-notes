@@ -31,6 +31,7 @@ exports[`EditorView readOnly when false without a collabProvider should not disa
               <textarea
                 aria-invalid="false"
                 class="MuiInputBase-input MuiInput-input titleInput MuiInputBase-inputMultiline MuiInput-inputMultiline"
+                id="random-uuid-for-jest"
                 placeholder="placeholder"
                 rows="1"
                 style="height: 0px; overflow: hidden;"
