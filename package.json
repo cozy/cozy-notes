@@ -72,7 +72,7 @@
     "cozy-logger": "^1.9.0",
     "cozy-realtime": "4.0.5",
     "cozy-scripts": "8.1.2",
-    "cozy-sharing": "^6.0.5",
+    "cozy-sharing": "10.0.1",
     "cozy-stack-client": "^40.0.1",
     "cozy-ui": "^95.10.0",
     "lodash": "4.17.21",
