@@ -109,5 +109,11 @@
   },
   "Intents": {
     "save": "Enregistrer"
+  },
+  "TrashedBanner": {
+    "text": "L’élément a été mis à la corbeille",
+    "redirect": "Ouvrir la corbeille",
+    "restore": "Restaurer",
+    "restoreError": "Une erreur s'est produite, veuillez réessayer."
   }
 }

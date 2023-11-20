@@ -22,6 +22,7 @@ import useReturnUrl from 'hooks/useReturnUrl'
 import useUser from 'hooks/useUser'
 import { usePreview } from 'hooks/usePreview'
 import { useDebugValue } from 'lib/debug'
+import { TrashedBanner } from 'components/notes/TrashedBanner'
 
 import useConfirmExit from 'cozy-ui/transpiled/react/hooks/useConfirmExit'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
@@ -43,7 +44,7 @@ export default function Editor(props) {
     cozyClient
   })
   const serviceClient = useServiceClient({ userId, userName, cozyClient })
-  const { loading, title, doc, setTitle } = useNote({
+  const { loading, title, doc, setTitle, isTrashed } = useNote({
     serviceClient,
     noteId,
     readOnly
@@ -110,7 +111,7 @@ export default function Editor(props) {
       <>
         <EditorView
           bannerRef={bannerRef}
-          readOnly={readOnly}
+          readOnly={isTrashed ? true : readOnly}
           onTitleChange={onLocalTitleChange}
           onTitleBlur={emergencySync}
           collabProvider={collabProvider}
@@ -136,16 +137,18 @@ export default function Editor(props) {
                   title={title}
                 />
               }
+              bannerComponent={
+                isPreview ? (
+                  <SharingBannerPlugin previewPath={SHARING_LOCATION} />
+                ) : isTrashed ? (
+                  <TrashedBanner noteId={noteId} />
+                ) : null
+              }
               homeHref={
                 collabProvider.serviceClient.cozyClient.getStackClient().uri
               }
               isPublic={isPublic}
               file={doc.file}
-              primaryToolbarComponents={
-                isPreview ? (
-                  <SharingBannerPlugin previewPath={SHARING_LOCATION} />
-                ) : null
-              }
             />
           }
         />
