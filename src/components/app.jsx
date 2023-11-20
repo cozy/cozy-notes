@@ -21,6 +21,7 @@ import { Layout, Main, Content } from 'cozy-ui/transpiled/react/Layout'
 import { ShareModal } from 'cozy-sharing'
 import { useClient } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import AlertProvider from 'cozy-ui/transpiled/react/providers/Alert'
 
 const manifest = require('../../manifest.webapp')
 import { AppRoutes } from 'constants/routes'
@@ -142,7 +143,9 @@ const App = ({ isPublic }) => {
 
           <Main>
             <Content>
-              {isPublic ? <PublicContext /> : <PrivateContext />}
+              <AlertProvider>
+                {isPublic ? <PublicContext /> : <PrivateContext />}
+              </AlertProvider>
             </Content>
           </Main>
 
