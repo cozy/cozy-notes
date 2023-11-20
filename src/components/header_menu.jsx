@@ -20,7 +20,7 @@ const HeaderMenu = ({
   rightComponent,
   isPublic,
   file,
-  primaryToolbarComponents
+  bannerComponent
 }) => {
   const { fetchHomeIcon, fetchNoteIcon } = useFetchIcons()
   const { filename } = models.file.splitFilename(file.attributes)
@@ -69,7 +69,7 @@ const HeaderMenu = ({
 
         {rightComponent}
       </div>
-      {primaryToolbarComponents}
+      {bannerComponent}
     </header>
   )
 }

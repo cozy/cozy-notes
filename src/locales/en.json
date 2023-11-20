@@ -109,5 +109,11 @@
   },
   "Intents": {
     "save": "Save"
+  },
+  "TrashedBanner": {
+    "text": "The item has been trashed",
+    "redirect": "Open the trash",
+    "restore": "Restore",
+    "restoreError": "An error has occurred, please try again."
   }
 }
