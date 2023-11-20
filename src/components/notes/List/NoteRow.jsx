@@ -4,7 +4,6 @@ import { Link, useLocation } from 'react-router-dom'
 import ActionMenu, {
   ActionMenuItem
 } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'
@@ -14,6 +13,8 @@ import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import { withClient } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
+
 import NoteIcon from 'assets/icons/icon-note-32.svg'
 import styles from 'components/notes/List/list.styl'
 import { AppRoutes } from 'constants/routes'
@@ -28,6 +29,7 @@ const NoteRow = ({ note, f, t, client }) => {
   const location = useLocation()
   const { filename, extension } = CozyFile.splitFilename(note)
   const [isMenuOpen, setMenuOpen] = useState(false)
+  const { showAlert } = useAlert()
 
   const openMenu = useCallback(
     e => {
@@ -43,11 +45,11 @@ const NoteRow = ({ note, f, t, client }) => {
     try {
       await client.destroy(note)
       setMenuOpen(false)
-      Alerter.info(t('Notes.Delete.deleted'))
+      showAlert(t('Notes.Delete.deleted'), 'info')
     } catch (error) {
-      Alerter.error(t('Notes.Delete.failed'))
+      showAlert(t('Notes.Delete.failed'), 'error')
     }
-  }, [client, note, t, setMenuOpen])
+  }, [client, note, t, setMenuOpen, showAlert])
 
   const drivePath = useMemo(() => getDriveLink(client, note.dir_id), [
     client,
@@ -61,7 +63,7 @@ const NoteRow = ({ note, f, t, client }) => {
       const url = await generateReturnUrlToNotesIndex(client, note)
       window.location.href = url
     } catch (error) {
-      Alerter.error(t('Error.loading_error_title'))
+      showAlert(t('Error.loading_error_title'), 'error')
     }
   }
 
