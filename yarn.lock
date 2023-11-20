@@ -7488,16 +7488,16 @@ cozy-client@^27.14.4:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
-cozy-client@^40.0.1:
-  version "40.0.1"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-40.0.1.tgz#cc085c655f57fc6c38954e4b68317611d679fc59"
-  integrity sha512-wAOGKDC0BfgfJkorVJZEw+xRwjNW6xiFyJIzWO0nFIxmfJDB+6w6yceH/7fp9ayk+H9VHRXDPe+YL8xIxM1ARA==
+cozy-client@^43.5.0:
+  version "43.5.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-43.5.0.tgz#e11e24e9b19b173c016e5e6fdf4198685ae68fa9"
+  integrity sha512-quVWsnIL6TzRz3pd/KsZqQ3/RwQzoPTKP+KmH4eKo/R4tKvMRNIiRBsX5CD+leWJP7jjwisz4R2SieVUyrdV3g==
   dependencies:
     "@cozy/minilog" "1.0.0"
     "@types/jest" "^26.0.20"
     "@types/lodash" "^4.14.170"
     btoa "^1.2.1"
-    cozy-stack-client "^40.0.1"
+    cozy-stack-client "^43.0.0"
     date-fns "2.29.3"
     json-stable-stringify "^1.0.1"
     lodash "^4.17.13"
@@ -7888,10 +7888,10 @@ cozy-stack-client@^27.15.0:
     mime "^2.4.0"
     qs "^6.7.0"
 
-cozy-stack-client@^40.0.1:
-  version "40.0.1"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-40.0.1.tgz#44f28b5aa669fd2cb44abe5462fd10f70c5034e7"
-  integrity sha512-55rgMv/AFILV/K7yUmjxVXbDWtMT4htiy/D+N4VTGL5/BCUasHGvRK9hRvzYMxMrQbWeLOvTK0V9itmcDwJtWw==
+cozy-stack-client@^43.0.0:
+  version "43.0.0"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-43.0.0.tgz#05ef0dc9f6fe4db70d06c17962d44e05c6e593fb"
+  integrity sha512-ZxVYc4OGhWWPKMxUjmVBiLNzzQ162x6X9EzcDnwvtIHpJRDHlN3aBFaMdfPh/uO8zJv8FbATrHFADQCWAXP0lg==
   dependencies:
     detect-node "^2.0.4"
     mime "^2.4.0"
