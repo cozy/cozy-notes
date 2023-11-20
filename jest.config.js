@@ -1,10 +1,11 @@
 module.exports = {
+  roots: ['<rootDir>/src'],
   testEnvironmentOptions: {
     url: 'http://cozy.localhost:8080/'
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'styl'],
   setupFilesAfterEnv: ['<rootDir>/test/jestLib/setup.js'],
-  moduleDirectories: ['src', 'node_modules'],
+  moduleDirectories: ['src', 'node_modules', 'test'],
   moduleNameMapper: {
     '\\.(png|gif|jpe?g|svg)$': '<rootDir>/test/__mocks__/fileMock.js',
     // identity-obj-proxy module is installed by cozy-scripts
@@ -12,7 +13,8 @@ module.exports = {
     '^cozy-client$': 'cozy-client/dist/index.js',
     '^cozy-ui/react(.*)$': 'cozy-ui/transpiled/react$1',
     '^@atlaskit/editor-core(.*)$':
-      '<rootDir>/node_modules/cozy-editor-core/src$1'
+      '<rootDir>/node_modules/cozy-editor-core/src$1',
+    '^test(.*)': '<rootDir>/test/$1'
   },
   testEnvironment: '<rootDir>/test/jestLib/custom-test-env.js',
   transformIgnorePatterns: ['node_modules/(?!cozy-(ui|sharing|harvest-lib))'],
