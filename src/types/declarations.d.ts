@@ -1,4 +1,4 @@
-declare module 'cozy-ui/transpiled/react/Alerter' {
+declare module 'cozy-ui/transpiled/react/deprecated/Alerter' {
   function error(
     error: string,
     options?: {
