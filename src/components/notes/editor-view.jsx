@@ -6,7 +6,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import useEventListener from 'cozy-ui/transpiled/react/hooks/useEventListener'
 import Overlay from 'cozy-ui/transpiled/react/deprecated/Overlay'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
-import TextField from 'cozy-ui/transpiled/react/MuiCozyTheme/TextField'
+import TextField from 'cozy-ui/transpiled/react/TextField'
 
 import { imageUploadProvider } from 'lib/image-upload-provider'
 import editorConfig from 'components/notes/editor_config'
