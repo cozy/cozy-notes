@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useEffect, useMemo, useState } from 'react'
 
 import { Editor, WithEditorActions } from '@atlaskit/editor-core'
 
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import useEventListener from 'cozy-ui/transpiled/react/hooks/useEventListener'
 import Overlay from 'cozy-ui/transpiled/react/deprecated/Overlay'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'

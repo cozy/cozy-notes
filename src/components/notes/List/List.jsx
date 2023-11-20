@@ -9,7 +9,7 @@ import {
   TableCell
 } from 'cozy-ui/transpiled/react/Table'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import EmptyComponent from 'components/notes/List/EmptyComponent'
 import NoteRow from 'components/notes/List/NoteRow'

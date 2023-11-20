@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import Tooltip from 'cozy-ui/transpiled/react/Tooltip'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import SharingWidget from 'components/notes/sharing'
 
