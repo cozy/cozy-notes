@@ -15,12 +15,12 @@ import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import useBreakpoints, {
   BreakpointsProvider
-} from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+} from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import useClientErrors from 'cozy-client/dist/hooks/useClientErrors'
 import { Layout, Main, Content } from 'cozy-ui/transpiled/react/Layout'
 import { ShareModal } from 'cozy-sharing'
 import { useClient } from 'cozy-client'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 const manifest = require('../../manifest.webapp')
 import { AppRoutes } from 'constants/routes'

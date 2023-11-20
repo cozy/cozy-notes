@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from '@testing-library/react'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import SavingIndicator from './saving-indicator'
 
 jest.mock('cozy-ui/transpiled/react/hooks/useBreakpoints')

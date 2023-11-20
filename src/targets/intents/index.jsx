@@ -15,7 +15,7 @@ import { WebviewIntentProvider } from 'cozy-intent'
 import Intents from 'cozy-interapp'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import flag from 'cozy-flags'
-import I18n from 'cozy-ui/transpiled/react/I18n'
+import I18n from 'cozy-ui/transpiled/react/providers/I18n'
 import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
 
 const manifest = require('../../../manifest.webapp')

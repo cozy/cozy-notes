@@ -1,6 +1,6 @@
 import React from 'react'
 
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { Breakpoints } from 'types/enums'
 

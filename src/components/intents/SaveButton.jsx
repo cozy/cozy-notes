@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import log from 'cozy-logger'
 import { useClient } from 'cozy-client'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Buttons from 'cozy-ui/transpiled/react/Buttons'
 import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 

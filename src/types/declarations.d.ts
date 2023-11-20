@@ -10,7 +10,7 @@ declare module 'cozy-ui/transpiled/react/deprecated/Alerter' {
 }
 
 // At some point this should be declared in cozy-ui instead
-declare module 'cozy-ui/transpiled/react/hooks/useBreakpoints' {
+declare module 'cozy-ui/transpiled/react/providers/Breakpoints' {
   export default function useBreakpoints(): {
     isExtraLarge: boolean
     isLarge: boolean

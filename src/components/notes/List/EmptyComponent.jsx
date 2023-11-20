@@ -1,5 +1,5 @@
 import React from 'react'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import Empty from 'cozy-ui/transpiled/react/Empty'
 import { withClient } from 'cozy-client'
 
