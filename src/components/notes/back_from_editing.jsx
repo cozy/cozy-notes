@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Button, ButtonLink } from 'cozy-ui/transpiled/react/Button'
+import { Button, ButtonLink } from 'cozy-ui/transpiled/react/deprecated/Button'
 import IsPublicContext from 'components/IsPublicContext'
 import AppLinker from 'cozy-ui/transpiled/react/AppLinker'
 import { getFolderLink } from 'lib/utils'

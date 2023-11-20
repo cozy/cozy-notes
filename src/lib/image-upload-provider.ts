@@ -1,7 +1,7 @@
 import { ImageUploadProvider } from '@atlaskit/editor-common/dist/types/provider-factory'
 import { ElementType, Errors, EventType, InputType } from 'constants/strings'
 import { processFile } from 'lib/helpers'
-import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import { isCozyStackError } from 'types/guards'
 import { TOASTER_DURATION } from 'constants/interface'
 import { InsertedImageProperties } from 'cozy-editor-core/src/plugins/image-upload/types'

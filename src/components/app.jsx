@@ -8,7 +8,7 @@ import {
   useParams
 } from 'react-router-dom'
 
-import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import BarTitle from 'cozy-ui/transpiled/react/BarTitle'
 import IconSprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
