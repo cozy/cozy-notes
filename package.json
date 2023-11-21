@@ -5,7 +5,6 @@
     "analyze": "COZY_SCRIPTS_ANALYZER=true yarn build",
     "build:browser:dev": "cs build --browser --development",
     "build:browser": "cs build --browser",
-    "build:mobile": "cs build --mobile",
     "build": "yarn build:browser",
     "cozyPublish": "cs publish --token $REGISTRY_TOKEN --build-commit $(git rev-parse ${DEPLOY_BRANCH:-build}) --postpublish mattermost",
     "deploy": "git-directory-deploy --directory build/ --branch ${DEPLOY_BRANCH:-build} --repo ${DEPLOY_REPOSITORY:-https://cozy-bot:$GITHUB_TOKEN@github.com/cozy/cozy-notes}",
@@ -20,7 +19,6 @@
     "test": "env NODE_ENV='test' cs test --verbose",
     "tx": "tx pull --all || true",
     "watch:browser": "cs watch --browser",
-    "watch:mobile": "cs watch --mobile",
     "watch": "yarn watch:browser"
   },
   "repository": {
