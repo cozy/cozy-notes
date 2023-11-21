@@ -10,6 +10,7 @@ import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
 import { CozyProvider } from 'cozy-client'
 import I18n from 'cozy-ui/transpiled/react/providers/I18n'
 import { WebviewIntentProvider } from 'cozy-intent'
+import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 const frenchAtlaskitCozy = require(`locales/atlassian_missing_french.json`)
 
@@ -48,7 +49,9 @@ const AppProviders = ({ appLocale, client, children }) => {
             messages={locales[appLocale].atlaskit}
           >
             <CozyProvider client={client}>
-              <MuiCozyTheme>{children}</MuiCozyTheme>
+              <MuiCozyTheme>
+                <BreakpointsProvider>{children} </BreakpointsProvider>
+              </MuiCozyTheme>
             </CozyProvider>
           </IntlProvider>
         </StylesProvider>

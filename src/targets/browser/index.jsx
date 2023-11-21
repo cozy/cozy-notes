@@ -13,7 +13,7 @@ import { SHARING_LOCATION } from '../../constants/strings'
 import { initApp } from 'lib/initApp'
 
 const renderApp = function(appLocale, client) {
-  const App = require('components/app').default
+  const App = require('components/App').default
 
   render(
     <AppProviders appLocale={appLocale} client={client}>
