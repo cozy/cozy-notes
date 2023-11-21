@@ -24,12 +24,12 @@
       "public": false
     },
     "/public": {
-      "folder": "/",
+      "folder": "/public",
       "index": "index.html",
       "public": true
     },
     "/preview": {
-      "folder": "/",
+      "folder": "/public",
       "index": "index.html",
       "public": true
     },
