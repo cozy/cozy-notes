@@ -9,11 +9,7 @@ import { RealtimePlugin } from 'cozy-realtime'
 import { Document } from 'cozy-doctypes'
 import flag from 'cozy-flags'
 
-import {
-  getDataset,
-  getDataOrDefault,
-  getPublicSharecode
-} from 'lib/initFromDom'
+import { getDataset, getDataOrDefault } from 'lib/initFromDom'
 
 const manifest = require('../../manifest.webapp')
 
@@ -31,7 +27,7 @@ const locales = {
 }
 
 // initial rendering of the application
-const initApp = memoize(() => {
+const initApp = memoize(({ isPublic = false } = {}) => {
   const data = getDataset()
   const appIcon = getDataOrDefault(
     data.app.icon,
@@ -54,10 +50,7 @@ const initApp = memoize(() => {
   const appLocale = supportedLocales.includes(userLocale) ? userLocale : 'en'
 
   const protocol = window.location ? window.location.protocol : 'https:'
-
-  const shareCode = getPublicSharecode()
   const token = data.token
-  const isPublic = Boolean(shareCode)
 
   // initialize the client to interact with the cozy stack
   const client = new CozyClient({
