@@ -74,7 +74,7 @@
     "cozy-scripts": "8.1.2",
     "cozy-sharing": "10.0.1",
     "cozy-stack-client": "^43.0.0",
-    "cozy-ui": "^95.10.0",
+    "cozy-ui": "^96.1.0",
     "lodash": "4.17.21",
     "prop-types": "15.8.1",
     "react": "16.14.0",
