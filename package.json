@@ -60,6 +60,8 @@
     "@atlaskit/media-state": "^1.0.3",
     "@cozy/editor-core": "https://github.com/cozy/editor-core#feat/update-to-189.3.28",
     "@cozy/minilog": "^1.0.0",
+    "@emotion/cache": "10",
+    "@emotion/core": "10",
     "@material-ui/core": "4.12.3",
     "@material-ui/styles": "4.11.4",
     "classnames": "2.3.1",
@@ -86,6 +88,8 @@
     "rooks": "7.1.1",
     "rxjs": "5.5.12",
     "styled-components": "3.4.10",
+    "stylis": "^4.3.0",
+    "typescript": "4.5",
     "url-search-params-polyfill": "7.0.1",
     "utf-8-validate": "5.0.8"
   },
