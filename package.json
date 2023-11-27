@@ -54,8 +54,10 @@
     "stylint": "1.5.9"
   },
   "dependencies": {
+    "prosemirror-state": "1.4.3",
     "@atlaskit/icon": "21.1.0",
-    "@atlaskit/media-core": "32.2.0",
+    "@atlaskit/link-provider": "^1.6.2",
+    "@atlaskit/media-core": "^34.1.2",
     "@cozy/minilog": "^1.0.0",
     "@material-ui/core": "4.12.3",
     "@material-ui/styles": "4.11.4",
@@ -64,7 +66,7 @@
     "cozy-client": "^40.0.1",
     "cozy-device-helper": "^2.6.0",
     "cozy-doctypes": "1.86.1",
-    "cozy-editor-core": "134.0.3",
+    "@cozy/editor-core": "147.0.2",
     "cozy-flags": "2.8.4",
     "cozy-harvest-lib": "7.2.3",
     "cozy-intent": "^2.0.2",
@@ -88,7 +90,7 @@
     "utf-8-validate": "5.0.8"
   },
   "resolutions": {
-    "prosemirror-model": "1.11.0",
+    "prosemirror-model": "1.19.3",
     "cozy-editor-core/@atlaskit/editor-tables": "1.1.3"
   }
 }
