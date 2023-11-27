@@ -6,7 +6,7 @@ import { Schema } from 'prosemirror-model'
 // @quentin: I don't understand yet why we need to do that, so if someone
 // knows, then update the comment ;)
 
-// To get the schema, we need to log the values from node_modules/cozy-editor-core/src/create-editor/create-schema
+// To get the schema, we need to log the values from node_modules/@cozy/editor-core/src/create-editor/create-schema
 // itself just before the call on new Schema({ nodes, marks }) and then
 // console.log({nodes})
 // console.log({marks})

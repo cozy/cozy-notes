@@ -4,7 +4,7 @@ import { processFile } from 'lib/helpers'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { isCozyStackError } from 'types/guards'
 import { TOASTER_DURATION } from 'constants/interface'
-import { InsertedImageProperties } from 'cozy-editor-core/src/plugins/image-upload/types'
+import { InsertedImageProperties } from '@cozy/editor-core/src/plugins/image-upload/types'
 
 interface CollabProvider {
   config: {

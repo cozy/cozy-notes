@@ -12,7 +12,7 @@ module.exports = {
     '^cozy-client$': 'cozy-client/dist/index.js',
     '^cozy-ui/react(.*)$': 'cozy-ui/transpiled/react$1',
     '^@atlaskit/editor-core(.*)$':
-      '<rootDir>/node_modules/cozy-editor-core/src$1'
+      '<rootDir>/node_modules/@cozy/editor-core/src$1'
   },
   testEnvironment: '<rootDir>/test/jestLib/custom-test-env.js',
   transformIgnorePatterns: ['node_modules/(?!cozy-(ui|sharing|harvest-lib))'],

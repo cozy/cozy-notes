@@ -18,9 +18,9 @@
     "target": "es5",
     "paths": {
       "@atlaskit/editor-core": [
-        "../node_modules/cozy-editor-core/src/index.ts"
+        "../node_modules/@cozy/editor-core/src/index.ts"
       ],
-      "@atlaskit/editor-core/*": ["../node_modules/cozy-editor-core/src/*"]
+      "@atlaskit/editor-core/*": ["../node_modules/@cozy/editor-core/src/*"]
     },
     "strict": true
   }
