@@ -19,23 +19,23 @@ const extraConfig = {
       ),
       [path.resolve(
         __dirname,
-        'node_modules/cozy-editor-core/src/plugins/media'
+        'node_modules/@cozy/editor-core/src/plugins/media'
       )]: path.resolve(__dirname, './src/plugins/media'),
       [path.resolve(
         __dirname,
-        'node_modules/cozy-editor-core/src/plugins/image-upload'
+        'node_modules/@cozy/editor-core/src/plugins/image-upload'
       )]: path.resolve(__dirname, './src/plugins/image-upload'),
       [path.resolve(
         __dirname,
-        'node_modules/cozy-editor-core/src/ui/Dropdown'
+        'node_modules/@cozy/editor-core/src/ui/Dropdown'
       )]: path.resolve(__dirname, './src/ui/Dropdown'),
       [path.resolve(
         __dirname,
-        'node_modules/cozy-editor-core/src/ui/DropdownMenu'
+        'node_modules/@cozy/editor-core/src/ui/DropdownMenu'
       )]: path.resolve(__dirname, './src/ui/DropdownMenu'),
       ['@atlaskit/editor-core']: path.resolve(
         __dirname,
-        'node_modules/cozy-editor-core/src'
+        'node_modules/@cozy/editor-core/src'
       ),
       // The app will not work if we don't use a single version
       // Updating every atlaskit dependency at the same time should help
