@@ -44,7 +44,7 @@ const extraConfig = {
       ),
       // Same as above
       '@atlaskit/adf-schema': path.resolve(
-        './node_modules/@atlaskit/editor-common/node_modules/@atlaskit/adf-schema'
+        './node_modules/@atlaskit/adf-schema'
       ),
       '@atlaskit/media-viewer': path.resolve('./src/plugins/altaskit-unused'),
       '@atlaskit/user-picker': path.resolve('./src/plugins/altaskit-unused')
