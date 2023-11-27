@@ -1814,6 +1814,22 @@
     use-debounce "^3.4.0"
     uuid "^3.1.0"
 
+"@atlaskit/link-provider@^1.6.12":
+  version "1.6.12"
+  resolved "https://registry.yarnpkg.com/@atlaskit/link-provider/-/link-provider-1.6.12.tgz#c9e7088654ef1dcb268250c96655f0bc0109fba2"
+  integrity sha512-QkNrXBD7lit88jgp/mHrKzBLNGbA6SV6r8hK+qq83NIaYmR4kana1XvU8vCJiwRjLmof9ft5kMsG8F3b2dj/Jg==
+  dependencies:
+    "@atlaskit/link-extractors" "^1.2.0"
+    "@atlaskit/linking-common" "^4.12.0"
+    "@babel/runtime" "^7.0.0"
+    async-retry "^1.2.3"
+    dataloader "^2.0.0"
+    json-ld-types "^3.9.1"
+    lru_map "^0.4.1"
+    p-throttle "^4.1.1"
+    redux "^3.7.2"
+    setimmediate "^1.0.5"
+
 "@atlaskit/linking-common@^4.12.0", "@atlaskit/linking-common@^4.18.0", "@atlaskit/linking-common@^4.21.0":
   version "4.21.0"
   resolved "https://registry.yarnpkg.com/@atlaskit/linking-common/-/linking-common-4.21.0.tgz#c82f5afd37953b8c12e8fc2ed69b314b54583a67"
@@ -1936,14 +1952,15 @@
     "@atlaskit/section-message" "^6.4.0"
     "@babel/runtime" "^7.0.0"
 
-"@atlaskit/media-core@32.2.0":
-  version "32.2.0"
-  resolved "https://registry.yarnpkg.com/@atlaskit/media-core/-/media-core-32.2.0.tgz#63a0ecb7998d48b49f8ea901398872a732f50623"
-  integrity sha512-QAAO0gOvWGj/0Qoe6DL/DCsOpELDNPnr49P2bTHY8z3wB6c77EcBB+zHpr/d/Zbv+wFs/9M8+p3/UZ/9Tze6ug==
+"@atlaskit/media-core@^34.1.4":
+  version "34.1.4"
+  resolved "https://registry.yarnpkg.com/@atlaskit/media-core/-/media-core-34.1.4.tgz#5e1035e0bfeff420b25e54fe06cced85f6b5813b"
+  integrity sha512-0HY9vA8Lu7ERg2eko1yWxXVSP4xq+ihCtTS+APMyAGQ73/SX3bdCT9H4lS2m6co4npIrEY+yV611GhNARLQCeA==
   dependencies:
     "@babel/runtime" "^7.0.0"
     eventemitter2 "^4.1.0"
-    lru-fast "^0.2.2"
+    lru_map "^0.4.1"
+    rxjs "^5.5.0"
 
 "@atlaskit/media-filmstrip@^47.0.0":
   version "47.0.17"
@@ -6552,6 +6569,13 @@ async-limiter@~1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.1.tgz#dd379e94f0db8310b08291f9d64c3209766617fd"
   integrity sha512-csOlWGAcRFJaI6m+F2WKdnMKr4HhdhFVBk0H/QbJFMCr+uO2kwohwXQPxw/9OCxp05r5ghVBFSyioixx3gfkNQ==
+
+async-retry@^1.2.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/async-retry/-/async-retry-1.3.3.tgz#0e7f36c04d8478e7a58bdbed80cedf977785f280"
+  integrity sha512-wfr/jstw9xNi/0teMHrRW7dsz3Lt5ARhYNZ2ewpadnhaIp5mbALhOAP+EAdsC7t4Z6wqsDVv9+W6gm1Dk9mEyw==
+  dependencies:
+    retry "0.13.1"
 
 async@1.5.2:
   version "1.5.2"
@@ -13963,11 +13987,6 @@ lru-cache@^6.0.0:
   dependencies:
     yallist "^4.0.0"
 
-lru-fast@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/lru-fast/-/lru-fast-0.2.2.tgz#30c233304cdd9b694b75141d897c52d4d413796c"
-  integrity sha512-2lrmGAoTHDPoiTwgaAt3Gw8TXMdHuYNAhBUi2PRoSeSknovaJQUrKK9c07AmFocNcOEoqPpEAZjSo9v3+CB+zg==
-
 lru_map@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/lru_map/-/lru_map-0.4.1.tgz#f7b4046283c79fb7370c36f8fca6aee4324b0a98"
@@ -14512,9 +14531,9 @@ ms@2.1.3, ms@^2.0.0, ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
 
-"mui-bottom-sheet@git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
+"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
   version "1.0.8"
-  resolved "git+https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
+  resolved "https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
     jest-environment-jsdom-sixteen "^1.0.3"
@@ -15188,6 +15207,11 @@ p-retry@^3.0.1:
   integrity sha512-XE6G4+YTTkT2a0UWb2kjZe8xNwf8bIbnqpc/IS/idOBVhyves0mK5OJgeocjx7q5pvX/6m23xuzVPYT1uGM73w==
   dependencies:
     retry "^0.12.0"
+
+p-throttle@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/p-throttle/-/p-throttle-4.1.1.tgz#80b1fbd358af40a8bfa1667f9dc8b72b714ad692"
+  integrity sha512-TuU8Ato+pRTPJoDzYD4s7ocJYcNSEZRvlxoq3hcPI2kZDZ49IQ1Wkj7/gDJc3X7XiEAAvRGtDzdXJI0tC3IL1g==
 
 p-try@^1.0.0:
   version "1.0.0"
@@ -17199,6 +17223,11 @@ ret@~0.1.10:
   version "0.1.15"
   resolved "https://registry.yarnpkg.com/ret/-/ret-0.1.15.tgz#b8a4825d5bdb1fc3f6f53c2bc33f81388681c7bc"
   integrity sha512-TTlYpa+OL+vMMNG24xSlQGEJ3B/RzEfUlLct7b5G/ytav+wPrplCpVMFuwzXbkecJrb6IYo1iFb0S9v37754mg==
+
+retry@0.13.1:
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/retry/-/retry-0.13.1.tgz#185b1587acf67919d63b357349e03537b2484658"
+  integrity sha512-XQBQ3I8W1Cge0Seh+6gjj03LbmRFWuoszgK9ooCpwYIrhhoO80pfq4cUkU5DkknwfOfFteRwlZ56PYOGYyFWdg==
 
 retry@^0.10.0:
   version "0.10.1"

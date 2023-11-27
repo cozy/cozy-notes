@@ -55,7 +55,8 @@
   },
   "dependencies": {
     "@atlaskit/icon": "21.1.0",
-    "@atlaskit/media-core": "32.2.0",
+    "@atlaskit/link-provider": "^1.6.12",
+    "@atlaskit/media-core": "^34.1.4",
     "@cozy/editor-core": "https://github.com/cozy/editor-core#feat/update-to-189.3.28",
     "@cozy/minilog": "^1.0.0",
     "@material-ui/core": "4.12.3",
