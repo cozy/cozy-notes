@@ -23,7 +23,7 @@ const SaveButton = ({ title, actions }) => {
   const styles = useStyles()
   const cozyClient = useClient()
   const { service } = useIntent()
-  const { userName, userId } = useUser({ cozyClient })
+  const { userName, userId } = useUser()
   const serviceClient = useServiceClient({
     cozyClient,
     userId,
