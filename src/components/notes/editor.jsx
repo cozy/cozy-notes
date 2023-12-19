@@ -1,4 +1,10 @@
-import React, { useEffect, useContext, useCallback, useRef } from 'react'
+import React, {
+  useEffect,
+  useContext,
+  useCallback,
+  useRef,
+  useState
+} from 'react'
 import PropTypes from 'prop-types'
 
 import { useClient } from 'cozy-client'
@@ -22,7 +28,7 @@ import useReturnUrl from 'hooks/useReturnUrl'
 import useUser from 'hooks/useUser'
 import { usePreview } from 'hooks/usePreview'
 import { useDebugValue } from 'lib/debug'
-import { TrashedBanner } from 'components/notes/TrashedBanner'
+import { TrashedBanner } from 'components/notes/TrashedBanner/TrashedBanner'
 
 import useConfirmExit from 'cozy-ui/transpiled/react/hooks/useConfirmExit'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
@@ -44,7 +50,7 @@ export default function Editor(props) {
     cozyClient
   })
   const serviceClient = useServiceClient({ userId, userName, cozyClient })
-  const { loading, title, doc, setTitle, isTrashed } = useNote({
+  const { loading, title, doc, setTitle } = useNote({
     serviceClient,
     noteId,
     readOnly
@@ -92,6 +98,16 @@ export default function Editor(props) {
     cancelLabel: t('Notes.Editor.exit_confirmation_cancel')
   })
 
+  const [isTrashed, setTrashed] = useState(false)
+
+  useEffect(() => {
+    setTrashed(!!doc?.file?.attributes?.trashed)
+  }, [doc])
+
+  const handleRestore = () => {
+    setTrashed(false)
+  }
+
   const isPreview = usePreview(window.location.pathname)
 
   useDebugValue('client', cozyClient)
@@ -138,10 +154,14 @@ export default function Editor(props) {
                 />
               }
               bannerComponent={
-                isPreview ? (
+                isTrashed ? (
+                  <TrashedBanner
+                    noteId={noteId}
+                    isPublic={isPublic}
+                    returnUrl={returnUrl}
+                  />
+                ) : isPreview ? (
                   <SharingBannerPlugin previewPath={SHARING_LOCATION} />
-                ) : isTrashed ? (
-                  <TrashedBanner noteId={noteId} />
                 ) : null
               }
               homeHref={

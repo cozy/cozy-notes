@@ -8,7 +8,6 @@ function useNote({ serviceClient, noteId, readOnly }) {
   const [loading, setLoading] = useState(true)
   const [doc, setDoc] = useState(undefined)
   const [title, setTitle] = useState(undefined)
-  const [isTrashed, setTrashed] = useState(false)
 
   useEffect(
     () => {
@@ -26,9 +25,6 @@ function useNote({ serviceClient, noteId, readOnly }) {
           }
           setTitle(doc.title || '')
           setDoc(doc)
-          if (doc.file.attributes.trashed) {
-            setTrashed(true)
-          }
         } catch (e) {
           setTitle(false)
           setDoc(false)
@@ -54,14 +50,13 @@ function useNote({ serviceClient, noteId, readOnly }) {
     [noteId, docId, setDocId, setLoading, serviceClient, setDoc, setTitle]
   )
 
-  if (docId === noteId) return { loading, title, doc, setTitle, isTrashed }
+  if (docId === noteId) return { loading, title, doc, setTitle }
   else
     return {
       loading: true,
       title: undefined,
       doc: undefined,
-      setTitle,
-      isTrashed
+      setTitle
     }
 }
 
