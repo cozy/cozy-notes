@@ -1,5 +1,5 @@
 import get from 'lodash/get'
-import { generateWebLink } from 'cozy-ui/transpiled/react/AppLinker'
+import { generateWebLink } from 'cozy-client'
 import { getDataset, getDataOrDefault } from './initFromDom'
 import { schemaOrdered, schemaVersion } from 'lib/collab/schema'
 import { models } from 'cozy-client'
@@ -130,8 +130,9 @@ export function getDriveLink(client, id = null) {
   const webUrl = generateWebLink({
     cozyUrl: cozyURL.origin,
     slug: driveSlug,
+    pathname: '/',
     subDomainType: subdomain,
-    nativePath: pathForDrive
+    hash: pathForDrive
   })
 
   return webUrl
