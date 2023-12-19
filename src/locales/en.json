@@ -114,6 +114,16 @@
     "text": "The item has been trashed",
     "redirect": "Open the trash",
     "restore": "Restore",
-    "restoreError": "An error has occurred, please try again."
+    "restoreSuccess": "The item has been restored",
+    "restoreError": "An error has occurred, please try again.",
+    "destroy": "Delete permanently"
+  },
+  "DestroyConfirm": {
+    "title": "Permanently delete?",
+    "forbidden": "You won't be able to access this file anymore.",
+    "restore": "You won't be able to restore this file if you didn't make a backup.",
+    "cancel": "Cancel",
+    "delete": "Delete permanently",
+    "deleteError": "An error has occurred, please try again."
   }
 }

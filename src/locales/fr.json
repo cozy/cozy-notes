@@ -114,6 +114,16 @@
     "text": "L’élément a été mis à la corbeille",
     "redirect": "Ouvrir la corbeille",
     "restore": "Restaurer",
-    "restoreError": "Une erreur s'est produite, veuillez réessayer."
+    "restoreSuccess": "L'élément a été restauré avec succès",
+    "restoreError": "Une erreur s'est produite, veuillez réessayer",
+    "destroy": "Supprimer définitivement"
+  },
+  "DestroyConfirm": {
+    "title": "Supprimer définitivement ?",
+    "forbidden": "Vous ne pourrez plus accéder à ce fichier.",
+    "restore": "Vous ne pourrez pas restaurer ce fichier.",
+    "cancel": "Annuler",
+    "delete": "Supprimer définitivement",
+    "deleteError": "Une erreur s'est produite, veuillez réessayer"
   }
 }
