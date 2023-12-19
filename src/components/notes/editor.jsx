@@ -42,10 +42,7 @@ export default function Editor(props) {
 
   // plugins and config
   const isPublic = useContext(IsPublicContext)
-  const { userName, userId } = useUser({
-    userName: props.userName,
-    cozyClient
-  })
+  const { userName, userId } = useUser()
   const serviceClient = useServiceClient({ userId, userName, cozyClient })
   const { loading, title, doc, setTitle } = useNote({
     serviceClient,
