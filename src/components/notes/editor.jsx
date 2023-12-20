@@ -1,13 +1,7 @@
-import React, {
-  useEffect,
-  useContext,
-  useCallback,
-  useRef,
-  useState
-} from 'react'
+import React, { useEffect, useContext, useCallback, useRef } from 'react'
 import PropTypes from 'prop-types'
 
-import { useClient } from 'cozy-client'
+import { RealTimeQueries, useClient, useQuery } from 'cozy-client'
 import { SharingBannerPlugin } from 'cozy-sharing'
 import { useLocation } from 'react-router-dom'
 import { useWindowEventListener } from 'rooks/dist/esm/hooks/useWindowEventListener'
@@ -29,6 +23,7 @@ import useUser from 'hooks/useUser'
 import { usePreview } from 'hooks/usePreview'
 import { useDebugValue } from 'lib/debug'
 import { TrashedBanner } from 'components/notes/TrashedBanner/TrashedBanner'
+import { buildFileByIdQuery } from 'lib/queries'
 
 import useConfirmExit from 'cozy-ui/transpiled/react/hooks/useConfirmExit'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
@@ -42,6 +37,8 @@ export default function Editor(props) {
   const { t } = useI18n()
   const bannerRef = useRef()
   const location = useLocation()
+  const fileQuery = buildFileByIdQuery(noteId)
+  const fileResult = useQuery(fileQuery.definition, fileQuery.options)
 
   // plugins and config
   const isPublic = useContext(IsPublicContext)
@@ -98,15 +95,8 @@ export default function Editor(props) {
     cancelLabel: t('Notes.Editor.exit_confirmation_cancel')
   })
 
-  const [isTrashed, setTrashed] = useState(false)
-
-  useEffect(() => {
-    setTrashed(!!doc?.file?.attributes?.trashed)
-  }, [doc])
-
-  const handleRestore = () => {
-    setTrashed(false)
-  }
+  const file = fileResult?.data
+  const isTrashed = file?.trashed ?? false
 
   const isPreview = usePreview(window.location.pathname)
 
@@ -120,11 +110,10 @@ export default function Editor(props) {
   useDebugValue('notes.returnUrl', returnUrl)
 
   // rendering
-  if (loading) {
-    return <EditorLoading />
-  } else if (doc) {
+  if (!loading && fileResult.fetchStatus === 'loaded') {
     return (
       <>
+        <RealTimeQueries doctype="io.cozy.files" />
         <EditorView
           bannerRef={bannerRef}
           readOnly={isTrashed ? true : readOnly}
@@ -140,14 +129,14 @@ export default function Editor(props) {
                 <div className="u-mr-1">
                   <BackFromEditing
                     returnUrl={returnUrl}
-                    file={doc.file}
+                    file={file}
                     requestToLeave={requestToLeave}
                   />
                 </div>
               }
               rightComponent={
                 <EditorCorner
-                  doc={doc}
+                  file={file}
                   isPublic={isPublic}
                   isReadOnly={readOnly}
                   title={title}
@@ -168,7 +157,7 @@ export default function Editor(props) {
                 collabProvider.serviceClient.cozyClient.getStackClient().uri
               }
               isPublic={isPublic}
-              file={doc.file}
+              file={file}
             />
           }
         />
@@ -179,9 +168,13 @@ export default function Editor(props) {
         {exitConfirmationModal}
       </>
     )
-  } else {
+  }
+
+  if (fileResult.fetchStatus === 'failed') {
     return <EditorLoadingError returnUrl={returnUrl} />
   }
+
+  return <EditorLoading />
 }
 
 Editor.propTypes = {

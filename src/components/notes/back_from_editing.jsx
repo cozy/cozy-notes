@@ -1,9 +1,12 @@
 import React, { useContext } from 'react'
-import { Button, ButtonLink } from 'cozy-ui/transpiled/react/deprecated/Button'
-import IsPublicContext from 'components/IsPublicContext'
-import AppLinker from 'cozy-ui/transpiled/react/AppLinker'
-import { getFolderLink } from 'lib/utils'
+import PropTypes from 'prop-types'
+
 import { deconstructCozyWebLinkWithSlug, models, useClient } from 'cozy-client'
+import { Button, ButtonLink } from 'cozy-ui/transpiled/react/deprecated/Button'
+import AppLinker from 'cozy-ui/transpiled/react/AppLinker'
+
+import IsPublicContext from 'components/IsPublicContext'
+import { getFolderLink } from 'lib/utils'
 import { Slugs } from 'constants/strings'
 
 /**
@@ -54,9 +57,9 @@ const getSlugFromUrl = (client, url) => {
  *
  * Default is going back to the root of the app if in a private view
  * or do nothing if in a public view
- * @param {string|null} returnUrl - URL to go back to
- * @param {object|null} file - io.cozy.file object to generate a folder link
- * @param {function|null} requestToLeave - function, if present, it should
+ * @param {string} [returnUrl] - URL to go back to
+ * @param {import('cozy-client/types').IOCozyFile} file - io.cozy.file object to generate a folder link
+ * @param {function} [requestToLeave] - function, if present, it should
  * wrap any regular action that should have taken place when clicking the button
  */
 export default function BackFromEditing({ returnUrl, file, requestToLeave }) {
@@ -100,4 +103,10 @@ export default function BackFromEditing({ returnUrl, file, requestToLeave }) {
       />
     )
   }
+}
+
+BackFromEditing.propTypes = {
+  returnUrl: PropTypes.string,
+  file: PropTypes.object.isRequired,
+  requestToLeave: PropTypes.func
 }

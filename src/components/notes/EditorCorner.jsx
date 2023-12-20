@@ -16,22 +16,38 @@ const ForwardedIcon = React.forwardRef(function ForwardedIcon(props, ref) {
   )
 })
 
-const EditorCorner = ({ doc, isPublic, isReadOnly, title }) => {
+/**
+ * EditorCorner is responsible to display the sharing button or the lock icon
+ *
+ * @component
+ * @param {boolean} isPublic - Indicates whether the editor is public or not.
+ * @param {boolean} isReadOnly - Indicates whether the editor is read-only or not.
+ * @param {string} title - The title of the editor.
+ * @param {import('cozy-client/types').IOCozyFile} file - The file associated with the editor.
+ */
+const EditorCorner = ({ isPublic, isReadOnly, title, file }) => {
   const { t } = useI18n()
-  if (!isPublic) return <SharingWidget file={doc.file} title={title} />
-  else if (isReadOnly) {
+
+  if (!isPublic) {
+    return <SharingWidget file={file} title={title} />
+  }
+
+  if (isReadOnly) {
     return (
       <Tooltip title={t('Notes.Editor.read_only')}>
         <ForwardedIcon icon="lock" color="var(--primaryTextColor)" />
       </Tooltip>
     )
-  } else return null
+  }
+
+  return null
 }
 
 EditorCorner.propTypes = {
-  doc: PropTypes.object.isRequired,
   isPublic: PropTypes.bool.isRequired,
-  isReadOnly: PropTypes.bool.isRequired
+  isReadOnly: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired,
+  file: PropTypes.object.isRequired
 }
 
 export default EditorCorner

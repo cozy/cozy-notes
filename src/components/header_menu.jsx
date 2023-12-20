@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { models } from 'cozy-client'
 import AppLinker from 'cozy-ui/transpiled/react/AppLinker'
@@ -14,6 +15,17 @@ import styles from './header_menu.styl'
 import { useFetchIcons } from 'hooks/useFetchIcons'
 import { HeaderNotePath } from './HeaderNotePath'
 
+/**
+ * HeaderMenu component.
+ *
+ * @component
+ * @param {string} props.homeHref - The home href.
+ * @param {ReactNode} props.leftComponent - The left component.
+ * @param {ReactNode} props.rightComponent - The right component.
+ * @param {boolean} props.isPublic - Indicates if the component is public.
+ * @param {import('cozy-client/types').IOCozyFile} props.file - The file associated with the editor.
+ * @param {ReactNode} props.bannerComponent - The banner component.
+ */
 const HeaderMenu = ({
   homeHref,
   leftComponent,
@@ -72,6 +84,15 @@ const HeaderMenu = ({
       {bannerComponent}
     </header>
   )
+}
+
+HeaderMenu.propTypes = {
+  homeHref: PropTypes.string,
+  leftComponent: PropTypes.node,
+  rightComponent: PropTypes.node,
+  isPublic: PropTypes.bool,
+  file: PropTypes.object.isRequired,
+  bannerComponent: PropTypes.node
 }
 
 export default HeaderMenu
