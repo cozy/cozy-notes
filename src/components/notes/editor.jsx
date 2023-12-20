@@ -94,6 +94,7 @@ export default function Editor(props) {
 
   const file = fileResult?.data
   const isTrashed = file?.trashed ?? false
+  const isReadOnly = readOnly || isTrashed
 
   const isPreview = usePreview(window.location.pathname)
 
@@ -113,7 +114,7 @@ export default function Editor(props) {
         <RealTimeQueries doctype="io.cozy.files" />
         <EditorView
           bannerRef={bannerRef}
-          readOnly={isTrashed ? true : readOnly}
+          readOnly={isReadOnly}
           onTitleChange={onLocalTitleChange}
           onTitleBlur={emergencySync}
           collabProvider={collabProvider}
@@ -135,7 +136,7 @@ export default function Editor(props) {
                 <EditorCorner
                   file={file}
                   isPublic={isPublic}
-                  isReadOnly={readOnly}
+                  isReadOnly={isReadOnly}
                   title={title}
                 />
               }
