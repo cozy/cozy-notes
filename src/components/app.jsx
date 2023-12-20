@@ -31,12 +31,17 @@ import { getDataOrDefault } from 'lib/initFromDom'
 import { getReturnUrl, getSharedDocument } from 'lib/utils'
 import { useFlagSwitcher } from 'lib/debug'
 import RouteNew from 'components/notes/new-route'
+import { NoteProvider } from 'components/notes/NoteProvider'
 
 const RoutedEditor = () => {
   const { id } = useParams()
   const returnUrl = getReturnUrl()
 
-  return <Editor noteId={id} returnUrl={returnUrl} readOnly={false} />
+  return (
+    <NoteProvider noteId={id}>
+      <Editor noteId={id} returnUrl={returnUrl} readOnly={false} />
+    </NoteProvider>
+  )
 }
 
 const PrivateContext = () => {
@@ -102,11 +107,13 @@ const PublicContext = () => {
   }, [client])
   if (sharedDocumentId) {
     return (
-      <Editor
-        readOnly={readOnly}
-        noteId={sharedDocumentId}
-        returnUrl={returnUrl}
-      />
+      <NoteProvider noteId={sharedDocumentId}>
+        <Editor
+          readOnly={readOnly}
+          noteId={sharedDocumentId}
+          returnUrl={returnUrl}
+        />
+      </NoteProvider>
     )
   } else if (sharedDocumentId !== null) {
     return <Unshared />
