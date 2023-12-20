@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import SavingIndicator from './saving-indicator'
-import { AppLike } from 'test/AppLike'
+import { TestI18n } from 'test/AppLike'
 
 jest.mock('cozy-ui/transpiled/react/providers/Breakpoints')
 
@@ -29,9 +29,9 @@ global.document.createRange = jest.fn()
 function itMatchSnapshot(collabProvider) {
   it('should match snapshot', () => {
     const { container } = render(
-      <AppLike>
+      <TestI18n>
         <SavingIndicator collabProvider={collabProvider} />
-      </AppLike>
+      </TestI18n>
     )
     expect(container).toMatchSnapshot()
   })

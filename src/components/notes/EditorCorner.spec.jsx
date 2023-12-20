@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from '@testing-library/react'
 
 import EditorCorner from './EditorCorner'
-import { AppLike } from 'test/AppLike'
+import { TestI18n } from 'test/AppLike'
 
 jest.mock('components/notes/sharing', () => {
   const MockSharing = () => <div data-testid="SharingWidget" />
@@ -12,9 +12,9 @@ jest.mock('components/notes/sharing', () => {
 describe('EditorCorner', () => {
   const setup = ({ doc = {}, isPublic = false, isReadOnly = false } = {}) => {
     return render(
-      <AppLike>
+      <TestI18n>
         <EditorCorner doc={doc} isPublic={isPublic} isReadOnly={isReadOnly} />
-      </AppLike>
+      </TestI18n>
     )
   }
   it('shows the sharing widget on private views - readOnly', () => {

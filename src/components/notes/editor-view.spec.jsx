@@ -3,7 +3,7 @@ import { render } from '@testing-library/react'
 
 import EditorView from './editor-view'
 import CollabProvider from 'lib/collab/provider'
-import { AppLike } from 'test/AppLike'
+import { TestI18n } from 'test/AppLike'
 
 jest.mock('@atlaskit/editor-core', () => ({
   Editor: function Editor(props) {
@@ -54,7 +54,7 @@ function setupCollabProvider() {
 
 function mountEditorView({ readOnly, collabProvider }) {
   return render(
-    <AppLike>
+    <TestI18n>
       <EditorView
         readOnly={readOnly}
         collabProvider={collabProvider}
@@ -62,7 +62,7 @@ function mountEditorView({ readOnly, collabProvider }) {
         defaultValue={{ doc: {}, version: 42 }}
         title="title"
       />
-    </AppLike>
+    </TestI18n>
   )
 }
 
