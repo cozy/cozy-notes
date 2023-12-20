@@ -10,10 +10,20 @@ jest.mock('components/notes/sharing', () => {
 })
 
 describe('EditorCorner', () => {
-  const setup = ({ doc = {}, isPublic = false, isReadOnly = false } = {}) => {
+  const setup = ({
+    file = {},
+    isPublic = false,
+    isReadOnly = false,
+    title = ''
+  } = {}) => {
     return render(
       <TestI18n>
-        <EditorCorner doc={doc} isPublic={isPublic} isReadOnly={isReadOnly} />
+        <EditorCorner
+          file={file}
+          isPublic={isPublic}
+          isReadOnly={isReadOnly}
+          title={title}
+        />
       </TestI18n>
     )
   }
