@@ -13,13 +13,10 @@ import EditorLoadingError from 'components/notes/editor-loading-error'
 import SavingIndicator from 'components/notes/saving-indicator'
 import BackFromEditing from 'components/notes/back_from_editing'
 import IsPublicContext from 'components/IsPublicContext'
-import useNote from 'hooks/useNote'
-import useServiceClient from 'hooks/useServiceClient'
 import useCollabProvider from 'hooks/useCollabProvider'
 import useTitleChanges from 'hooks/useTitleChanges'
 import useForceSync from 'hooks/useForceSync'
 import useReturnUrl from 'hooks/useReturnUrl'
-import useUser from 'hooks/useUser'
 import { usePreview } from 'hooks/usePreview'
 import { useDebugValue } from 'lib/debug'
 import { TrashedBanner } from 'components/notes/TrashedBanner/TrashedBanner'
@@ -29,6 +26,7 @@ import useConfirmExit from 'cozy-ui/transpiled/react/hooks/useConfirmExit'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import HeaderMenu from 'components/header_menu'
 import { SHARING_LOCATION } from '../../constants/strings'
+import { useNoteContext } from 'components/notes/NoteProvider'
 
 export default function Editor(props) {
   // base parameters
@@ -42,13 +40,7 @@ export default function Editor(props) {
 
   // plugins and config
   const isPublic = useContext(IsPublicContext)
-  const { userName, userId } = useUser()
-  const serviceClient = useServiceClient({ userId, userName, cozyClient })
-  const { loading, title, doc, setTitle } = useNote({
-    serviceClient,
-    noteId,
-    readOnly
-  })
+  const { doc, serviceClient, status, title, setTitle } = useNoteContext()
 
   const returnUrl = useReturnUrl({
     returnUrl: props.returnUrl || location?.state?.returnUrl,
@@ -108,7 +100,7 @@ export default function Editor(props) {
   useDebugValue('notes.returnUrl', returnUrl)
 
   // rendering
-  if (!loading && fileResult.fetchStatus === 'loaded') {
+  if (status === 'loaded' && fileResult.fetchStatus === 'loaded') {
     return (
       <>
         <RealTimeQueries doctype="io.cozy.files" />
@@ -168,7 +160,7 @@ export default function Editor(props) {
     )
   }
 
-  if (fileResult.fetchStatus === 'failed') {
+  if (status === 'failed' || fileResult.fetchStatus === 'failed') {
     return <EditorLoadingError returnUrl={returnUrl} />
   }
 

@@ -144,7 +144,7 @@ export class ServiceClient {
         }
       }
     )
-    const formatedDoc = this.formatDoc(res)
+    const formatedDoc = this.formatDoc(res.data)
     this.schemaVersion = formatedDoc.schemaVersion
     return formatedDoc
   }
@@ -275,7 +275,17 @@ export class ServiceClient {
    */
   async getDoc(noteId) {
     const res = await this.stackClient.fetchJSON('GET', this.path(noteId))
-    const formatedDoc = this.formatDoc(res)
+    const formatedDoc = this.formatDoc(res.data)
+    this.schemaVersion = formatedDoc.schemaVersion
+    return formatedDoc
+  }
+
+  /**
+   * Get the full document for a note
+   * @param {uuid} noteId
+   */
+  getFormatedDoc(note) {
+    const formatedDoc = this.formatDoc(note)
     this.schemaVersion = formatedDoc.schemaVersion
     return formatedDoc
   }
@@ -283,17 +293,17 @@ export class ServiceClient {
   /**
    * Returns a formated document with easier access
    *
-   * @param {Note} Note document
+   * @param {Note} note document
    * @return {Object} formated document
    */
-  formatDoc(res) {
+  formatDoc(note) {
     return {
-      doc: res.data.attributes.metadata.content,
-      version: res.data.attributes.metadata.version,
-      title: res.data.attributes.metadata.title,
-      updatedAt: new Date(res.data.attributes.updated_at),
-      file: res.data,
-      schemaVersion: res.data.attributes.metadata.schema.version
+      doc: note.attributes.metadata.content,
+      version: note.attributes.metadata.version,
+      title: note.attributes.metadata.title,
+      updatedAt: new Date(note.attributes.updated_at),
+      file: note,
+      schemaVersion: note.attributes.metadata.schema.version
     }
   }
 
