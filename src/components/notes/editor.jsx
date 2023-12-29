@@ -100,7 +100,7 @@ export default function Editor(props) {
   useDebugValue('notes.returnUrl', returnUrl)
 
   // rendering
-  if (status === 'loaded' && fileResult.fetchStatus === 'loaded') {
+  if (doc && file) {
     return (
       <>
         <RealTimeQueries doctype="io.cozy.files" />
