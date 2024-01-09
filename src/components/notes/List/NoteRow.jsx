@@ -45,7 +45,7 @@ const NoteRow = ({ note, f, t, client }) => {
     try {
       await client.destroy(note)
       setMenuOpen(false)
-      showAlert(t('Notes.Delete.deleted'), 'info')
+      showAlert(t('Notes.Delete.deleted'), 'success')
     } catch (error) {
       showAlert(t('Notes.Delete.failed'), 'error')
     }
