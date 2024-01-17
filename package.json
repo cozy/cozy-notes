@@ -69,7 +69,7 @@
     "cozy-harvest-lib": "7.2.3",
     "cozy-intent": "^2.18.0",
     "cozy-interapp": "^0.8.1",
-    "cozy-logger": "^1.9.0",
+    "cozy-logger": "^1.10.4",
     "cozy-realtime": "4.0.5",
     "cozy-scripts": "8.1.2",
     "cozy-sharing": "10.0.1",
