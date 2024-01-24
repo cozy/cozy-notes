@@ -1,8 +1,8 @@
 import { MediaAttributes } from '@atlaskit/adf-schema'
 import { stateKey as mediaPluginKey } from '../pm-plugins/plugin-key'
-import { Command } from '../../../types/command'
 import { MediaNodeWithPosHandler, MediaPluginState } from '../pm-plugins/types'
 import { SetAttrsStep } from '@atlaskit/adf-schema/steps'
+import { Command } from 'cozy-editor-core/src/types'
 
 export const findMediaSingleNode = (
   mediaPluginState: MediaPluginState,
@@ -107,6 +107,7 @@ export const updateAllMediaNodesAttrs = (
   }
   return true
 }
+
 export const updateMediaNodeAttrs = (
   id: string,
   attrs: object,
@@ -117,7 +118,18 @@ export const updateMediaNodeAttrs = (
   const mediaNodeWithPos = findMediaNode(mediaPluginState, id, isMediaSingle)
 
   if (!mediaNodeWithPos) {
-    return false
+    // We can still try to find the node by position id (media nodes can have no id but only position, it is unknown why)
+    const nodeFoundByPos = mediaPluginState.mediaNodes.find(node => node.getPos().toString() === id)
+    
+    if (!nodeFoundByPos) return false
+
+    dispatch?.(
+      state.tr
+        .step(new SetAttrsStep(nodeFoundByPos.getPos(), attrs))
+        .setMeta('addToHistory', false) // unsure what this does
+    )
+
+    return true
   }
 
   if (dispatch) {
@@ -127,8 +139,10 @@ export const updateMediaNodeAttrs = (
         .setMeta('addToHistory', false)
     )
   }
+
   return true
 }
+
 export const replaceExternalMedia = (pos: number, attrs: object): Command => (
   state,
   dispatch

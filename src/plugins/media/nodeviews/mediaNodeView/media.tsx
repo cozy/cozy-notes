@@ -207,19 +207,54 @@ export class MediaNode extends Component<MediaNodeProps, MediaNodeState> {
 
       if (!res) throw Error(Errors.CouldNotGetNoteImages)
 
-      const imageObject = res.included.find(
+      const imageObject = res.included?.find(
         ({ id }) => id === this.props.node.attrs.url
       )
 
-      if (!imageObject) throw Error(Errors.CouldNotFindFileInCurrentNote)
+      if (!imageObject) {
+        try {
+        // If there is no imageObject, it could mean the image has been copied from another note
+        // We are going to try to copy the image from the original note to the current one
+        const { url } = this.props.node.attrs // Find the original image id
+        const to = noteId // Get the current note id
 
-      !imageObject.attributes.willBeResized &&
-        this.setState({
-          imageUrl: `${serviceClient.stackClient.uri}${imageObject.links.self}`,
+        // Copy the image from the original note to the current one
+        // We will get the new image file object in the response
+        const copiedImage = await serviceClient.cozyClient.getStackClient().fetchJSON(
+          'POST',
+          `/notes/${url}/copy?To=${to}`
+        )
+
+        if (!copiedImage) throw Error('failed to POST /notes/:id/copy')
+
+        // We update the node attrs with the new image url that we just fetched
+        // This will replace the bad id from the copied image with the new one
+        this.mediaPluginState.updateMediaNodeAttrs(
+          this.props.getPos().toString(), // Position of the node in the Prosemirror document
+          {...this.props.node.attrs, url: copiedImage.data.id}, // We keep the same attrs except for the url
+          true // isMediaSingle
+        )
+
+        // We can then display the image from the new url that we just fetched
+        // Next render the MediaNode should not get through this flow since the imageObject is supposed to exist now
+        return this.setState({
+          imageUrl: `${serviceClient.stackClient.uri}${copiedImage.data.links.self}`, // We can display the image from
           imageLoading: false
-        })
+        }) 
+      } catch (error) {
+        console.error(Errors.CouldNotCopyImage)
+        throw error
+      }
+    }
+
+    !imageObject.attributes.willBeResized &&
+      this.setState({
+        imageUrl: `${serviceClient.stackClient.uri}${imageObject.links.self}`,
+        imageLoading: false
+      })
     } catch (error) {
-      this.setState({ imageError: error.message })
+      this.setState({ imageError: (error as Error).message, imageLoading: false })
+      console.error(error)
     }
   }
 

@@ -3,7 +3,8 @@ export enum Errors {
   FileNotProcessable = 'Could not process the uploaded image.',
   CouldNotFindFileInCurrentNote = 'Could not find file in current note.',
   MissingCollabEdit = '`CollabEditProvider` was `undefined` in `fetchCozyImage`. <Media> was unable to fetch the image source. The component might be unmounted.',
-  CouldNotGetNoteImages = 'MediaNode failed to fetch included files in the current note'
+  CouldNotGetNoteImages = 'MediaNode failed to fetch included files in the current note',
+  CouldNotCopyImage = 'Could not copy image from another note'
 }
 
 export enum ElementType {
