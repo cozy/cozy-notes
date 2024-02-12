@@ -46,7 +46,10 @@ const NoteProvider = ({ children, noteId, readOnly = false }) => {
         // to be able to use the latest features brought by
         // the new schema
         if (!readOnly && doc.schemaVersion !== getSchemaVersion()) {
-          doc = await serviceClient.updateSchema(noteId, schemaOrdered)
+          // Only attempt update if not previously failed, as this would trigger an infinite loop
+          if (status !== 'failed') {
+            doc = await serviceClient.updateSchema(noteId, schemaOrdered)
+          }
         }
         setTitle(doc.title || '')
         setFormatedDocument(doc)
