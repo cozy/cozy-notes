@@ -7,6 +7,7 @@ import {
   useNavigate,
   useParams
 } from 'react-router-dom'
+import * as Sentry from '@sentry/react'
 
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import BarTitle from 'cozy-ui/transpiled/react/BarTitle'
@@ -33,6 +34,8 @@ import { useFlagSwitcher } from 'lib/debug'
 import RouteNew from 'components/notes/new-route'
 import { NoteProvider } from 'components/notes/NoteProvider'
 
+const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes)
+
 const RoutedEditor = () => {
   const { id } = useParams()
   const returnUrl = getReturnUrl()
@@ -55,18 +58,18 @@ const PrivateContext = () => {
 
   return (
     <>
-      <Routes location={state?.backgroundLocation || location}>
+      <SentryRoutes location={state?.backgroundLocation || location}>
         <Route path={AppRoutes.New} element={<RouteNew />} />
         <Route path={AppRoutes.Root} element={<List />} />
         <Route path={AppRoutes.Editor} element={<RoutedEditor />} />
-      </Routes>
+      </SentryRoutes>
 
       {state?.backgroundLocation && state?.shareModalProps && (
-        <Routes>
+        <SentryRoutes>
           <Route path={AppRoutes.ShareFromEditor} element={<ModalElement />} />
 
           <Route path={AppRoutes.ShareFromList} element={<ModalElement />} />
-        </Routes>
+        </SentryRoutes>
       )}
     </>
   )

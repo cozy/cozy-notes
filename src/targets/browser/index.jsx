@@ -12,6 +12,14 @@ import {
   createGenerateClassName
 } from '@material-ui/core/styles'
 import { fr, en } from '@atlaskit/editor-core/i18n'
+import { CaptureConsole } from '@sentry/integrations'
+import * as Sentry from '@sentry/react'
+import {
+  useLocation,
+  useNavigationType,
+  createRoutesFromChildren,
+  matchRoutes
+} from 'react-router-dom'
 
 import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
 import CozyClient, { CozyProvider } from 'cozy-client'
@@ -154,6 +162,25 @@ export const initApp = () => {
       replaceTitleOnMobile: true,
       cozyClient: client,
       isPublic: isPublic
+    })
+    Sentry.init({
+      dsn: 'https://16c26a60d9019eea9d9a9775573e3765@errors.cozycloud.cc/73',
+      environment: process.env.NODE_ENV,
+      release: manifest.version,
+      integrations: [
+        new CaptureConsole({ levels: ['error'] }), // We also want to capture the `console.error` to, among other things, report the logs present in the `try/catch`
+        Sentry.reactRouterV6BrowserTracingIntegration({
+          useEffect: React.useEffect,
+          useLocation,
+          useNavigationType,
+          createRoutesFromChildren,
+          matchRoutes
+        })
+      ],
+      tracesSampleRate: 0.1,
+      // React log these warnings(bad Proptypes), in a console.error, it is not relevant to report this type of information to Sentry
+      ignoreErrors: [/^Warning: /],
+      defaultIntegrations: false
     })
   }
   return { appLocale, client, isPublic }
