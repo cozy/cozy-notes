@@ -499,3 +499,22 @@ Here we set it to 26px because: 12px (from .code-content padding top) + 14px (fr
 .ProseMirror div[data-task-list-local-id] {
     margin-bottom: var(--note-block-spacing) !important;
 }
+
+/*
+2 problems with tables:
+
+When the user is selecting text inside a cell,
+for unknown reasons AtlasKit will add CSS class `pm-table-last-item-in-cell` along other DOM elements at unpredictable places in the table.
+This specific class will add a margin-bottom 0 to the last item in a cell,
+but it will also change the height of the cell, triggering the cursor position of the user to be wrong,
+triggering in turn a whole new selection of text itself triggering a selection of the cell, and so on.
+Finding the exact origin of the problem is too time-consuming at this point, so we just remove the margin-bottom 0 on that class and keep the default value,
+this way the table height should not jump around and the user's cursor should not be misplaced, avoiding the cascade of problems described above.
+
+The second problem is that ProseMirror adds a margin-bottom inside each cell, which is not what we want.
+
+Updating the CSS var responsible for both these margins to 0 (meaning no more layout change) will fix both problems.
+*/
+.ProseMirror table {
+    --note-block-spacing: 0;
+}
