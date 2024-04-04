@@ -128,7 +128,7 @@ export default class DropdownMenuWrapper extends PureComponent<Props, State> {
           isOpen={true}
           appearance="tall"
           position={popupPlacement.join(' ')}
-          shouldFlip={false}
+          shouldFlip={true} // flip the dropdown up if there is not enough space below
           shouldFitContainer={true}
           isTriggerNotTabbable={true}
           handleClickOutside={this.handleClose}
