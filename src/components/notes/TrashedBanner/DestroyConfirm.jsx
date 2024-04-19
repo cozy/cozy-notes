@@ -25,7 +25,7 @@ const DestroyConfirm = ({ noteId, onCancel, onConfirm }) => {
       await client.collection('io.cozy.files').deleteFilePermanently(noteId)
       onConfirm()
     } catch (e) {
-      showAlert(t('TrashedBanner.deleteError'), 'error')
+      showAlert({ message: t('TrashedBanner.deleteError'), severity: 'error' })
       onCancel()
       setBusy(false)
     }
