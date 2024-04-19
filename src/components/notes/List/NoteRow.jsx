@@ -45,9 +45,9 @@ const NoteRow = ({ note, f, t, client }) => {
     try {
       await client.destroy(note)
       setMenuOpen(false)
-      showAlert(t('Notes.Delete.deleted'), 'success')
+      showAlert({ message: t('Notes.Delete.deleted'), severity: 'success' })
     } catch (error) {
-      showAlert(t('Notes.Delete.failed'), 'error')
+      showAlert({ message: t('Notes.Delete.failed'), severity: 'error' })
     }
   }, [client, note, t, setMenuOpen, showAlert])
 
@@ -63,7 +63,7 @@ const NoteRow = ({ note, f, t, client }) => {
       const url = await generateReturnUrlToNotesIndex(client, note)
       window.location.href = url
     } catch (error) {
-      showAlert(t('Error.loading_error_title'), 'error')
+      showAlert({ message: t('Error.loading_error_title'), severity: 'error' })
     }
   }
 

@@ -26,9 +26,12 @@ const TrashedBanner = ({ noteId, isPublic, returnUrl }) => {
   const restore = async () => {
     try {
       await client.collection('io.cozy.files').restore(noteId)
-      showAlert(t('TrashedBanner.restoreSuccess'), 'secondary')
+      showAlert({
+        message: t('TrashedBanner.restoreSuccess'),
+        severity: 'secondary'
+      })
     } catch {
-      showAlert(t('TrashedBanner.restoreError'), 'error')
+      showAlert({ message: t('TrashedBanner.restoreError'), severity: 'error' })
     } finally {
       setBusy(false)
     }
