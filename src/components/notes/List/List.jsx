@@ -7,7 +7,7 @@ import {
   TableRow,
   TableHeader,
   TableCell
-} from 'cozy-ui/transpiled/react/Table'
+} from 'cozy-ui/transpiled/react/deprecated/Table'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
