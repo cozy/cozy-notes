@@ -1,7 +1,8 @@
 import React from 'react'
 
-import { CozyProvider } from 'cozy-client'
+import { CozyProvider, createMockClient } from 'cozy-client'
 import { I18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import en from '../src/locales/en.json'
 
 const TestI18n = ({ children }) => {
@@ -13,10 +14,14 @@ const TestI18n = ({ children }) => {
 }
 
 const AppLike = ({ children, client }) => {
+  const mockClient = createMockClient({})
+
   return (
-    <CozyProvider client={client}>
-      <TestI18n>{children}</TestI18n>
-    </CozyProvider>
+    <BreakpointsProvider>
+      <CozyProvider client={client || mockClient}>
+        <TestI18n>{children}</TestI18n>
+      </CozyProvider>
+    </BreakpointsProvider>
   )
 }
 
