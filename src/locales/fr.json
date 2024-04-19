@@ -114,7 +114,7 @@
     "text": "L’élément a été mis à la corbeille",
     "redirect": "Ouvrir la corbeille",
     "restore": "Restaurer",
-    "restoreSuccess": "L'élément a été restauré avec succès",
+    "restoreSuccess": "Cet élément est dans la corbeille",
     "restoreError": "Une erreur s'est produite, veuillez réessayer",
     "destroy": "Supprimer définitivement"
   },
