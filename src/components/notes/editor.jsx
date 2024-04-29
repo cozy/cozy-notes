@@ -27,6 +27,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import HeaderMenu from 'components/header_menu'
 import { SHARING_LOCATION } from '../../constants/strings'
 import { useNoteContext } from 'components/notes/NoteProvider'
+import { useFixedToBottomOnIOS } from 'hooks/useFixedToBottomOnIos'
 
 export default function Editor(props) {
   // base parameters
@@ -37,6 +38,9 @@ export default function Editor(props) {
   const location = useLocation()
   const fileQuery = buildFileByIdQuery(noteId)
   const fileResult = useQuery(fileQuery.definition, fileQuery.options)
+  // On iOS, the toolbar is fixed to the bottom of the screen manually
+  // This is to avoid an issue with the keyboard that hides the toolbar
+  useFixedToBottomOnIOS()
 
   // plugins and config
   const isPublic = useContext(IsPublicContext)
