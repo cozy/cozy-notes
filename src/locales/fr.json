@@ -111,10 +111,10 @@
     "save": "Enregistrer"
   },
   "TrashedBanner": {
-    "text": "L’élément a été mis à la corbeille",
+    "text": "Cet élément est dans la corbeille",
     "redirect": "Ouvrir la corbeille",
     "restore": "Restaurer",
-    "restoreSuccess": "Cet élément est dans la corbeille",
+    "restoreSuccess": "Cet élément a été restauré avec succès",
     "restoreError": "Une erreur s'est produite, veuillez réessayer",
     "destroy": "Supprimer définitivement"
   },
