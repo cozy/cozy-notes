@@ -12,7 +12,7 @@ import * as Sentry from '@sentry/react'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import BarTitle from 'cozy-ui/transpiled/react/BarTitle'
 import IconSprite from 'cozy-ui/transpiled/react/Icon/Sprite'
-import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
+import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import useBreakpoints, {
   BreakpointsProvider
@@ -145,9 +145,9 @@ const App = ({ isPublic }) => {
         <Layout monoColumn={true}>
           {!isPublic && isMobile && (
             <BarCenter>
-              <MuiCozyTheme>
+              <CozyTheme>
                 <BarTitle>{appName}</BarTitle>
-              </MuiCozyTheme>
+              </CozyTheme>
             </BarCenter>
           )}
 
