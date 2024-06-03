@@ -7,7 +7,7 @@ import { render } from 'react-dom'
 import {
   StylesProvider,
   createGenerateClassName
-} from '@material-ui/core/styles'
+} from 'cozy-ui/transpiled/react/styles'
 import { IntlProvider, addLocaleData } from 'react-intl'
 import { fr, en } from '@atlaskit/editor-core/i18n'
 
@@ -16,7 +16,7 @@ import Intents from 'cozy-interapp'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import flag from 'cozy-flags'
 import I18n from 'cozy-ui/transpiled/react/providers/I18n'
-import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
+import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
 
 const manifest = require('../../../manifest.webapp')
 const frenchAtlaskitCozy = require(`locales/atlassian_missing_french.json`)
@@ -86,9 +86,9 @@ document.addEventListener('DOMContentLoaded', () => {
           >
             <CozyProvider client={client}>
               <IntentProvider intentId={intentId}>
-                <MuiCozyTheme>
+                <CozyTheme>
                   <IntentEditorView />
-                </MuiCozyTheme>
+                </CozyTheme>
               </IntentProvider>
             </CozyProvider>
           </IntlProvider>

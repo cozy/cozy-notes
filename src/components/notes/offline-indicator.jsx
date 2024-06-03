@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Grid } from '@material-ui/core'
+import Grid from 'cozy-ui/transpiled/react/Grid'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import Chip from 'cozy-ui/transpiled/react/deprecated/Chip'
 import Tooltip from 'cozy-ui/transpiled/react/Tooltip'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-import { withStyles } from '@material-ui/core/styles'
+import { withStyles } from 'cozy-ui/transpiled/react/styles'
 
 import styles from 'components/notes/offline-indicator.styl'
 
@@ -18,6 +18,7 @@ const tooltipStyles = {
     margin: '12px 24px'
   }
 }
+
 const StyledTooltip = withStyles(tooltipStyles, { name: 'MuiTooltip' })(Tooltip)
 
 /**
@@ -56,12 +57,14 @@ function Balloon(props) {
  */
 function Banner(props) {
   const ref = props.bannerRef && props.bannerRef.current
+
   if (ref) {
     return ReactDOM.createPortal(
       <div className={styles.banner}>{props.content}</div>,
       ref
     )
   }
+
   return null
 }
 
@@ -78,6 +81,7 @@ function Banner(props) {
 export default function OfflineIndicator(props) {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
+
   const content = (
     <Grid
       direction="row"
@@ -88,13 +92,15 @@ export default function OfflineIndicator(props) {
     >
       <Grid item>
         <Chip.Round className={styles.chip}>
-          <Icon icon="offline" color="var(--black)" />
+          <Icon icon="offline" color="var(--iconTextColor)" />
         </Chip.Round>
       </Grid>
       <Grid item>{t('Notes.OfflineIndicator.message')}</Grid>
     </Grid>
   )
+
   const Component = isMobile ? Banner : Balloon
+
   return (
     <Component open={props.open} content={content} bannerRef={props.bannerRef}>
       {props.children}

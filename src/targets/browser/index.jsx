@@ -10,7 +10,7 @@ import memoize from 'lodash/memoize'
 import {
   StylesProvider,
   createGenerateClassName
-} from '@material-ui/core/styles'
+} from 'cozy-ui/transpiled/react/styles'
 import { fr, en } from '@atlaskit/editor-core/i18n'
 import { CaptureConsole } from '@sentry/integrations'
 import * as Sentry from '@sentry/react'
@@ -21,7 +21,7 @@ import {
   matchRoutes
 } from 'react-router-dom'
 
-import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
+import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { RealtimePlugin } from 'cozy-realtime'
 import I18n from 'cozy-ui/transpiled/react/providers/I18n'
@@ -80,7 +80,7 @@ const renderApp = function(appLocale, client, isPublic) {
             messages={locales[appLocale].atlaskit}
           >
             <CozyProvider client={client}>
-              <MuiCozyTheme>
+              <CozyTheme>
                 <IsPublicContext.Provider value={isPublic}>
                   {!isPublic && (
                     <SharingProvider
@@ -93,7 +93,7 @@ const renderApp = function(appLocale, client, isPublic) {
                   )}
                   {isPublic && <App isPublic={isPublic} />}
                 </IsPublicContext.Provider>
-              </MuiCozyTheme>
+              </CozyTheme>
             </CozyProvider>
           </IntlProvider>
         </StylesProvider>
