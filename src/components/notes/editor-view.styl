@@ -22,7 +22,7 @@ $COZY_BAR_HEIGHT=-3rem
         margin calc(-1 * var(--documentTopPadding)) calc(-1 * var(--documentPadding)) var(--documentTopPadding) calc(-1 * var(--documentPadding))
         position relative
         z-index 5
-        border-top 1px solid var(--silver)
+        border-top 1px solid var(--borderMainColor)
 
 .title
     height fit-content !important // to override computed value
@@ -33,7 +33,6 @@ $COZY_BAR_HEIGHT=-3rem
         line-height var(--note-title0-lh)
         font-weight 900
         font-family Lato-Black, var(--primaryFont)
-        color var(--charcoal-grey)
         +small-screen()
             line-height var(--note-title6-lh)
 
@@ -51,8 +50,6 @@ $COZY_BAR_HEIGHT=-3rem
 
     &::placeholder
         opacity 1 !important // to override Mui
-        color var(--coolGrey) !important // to override Mui
 
     &, &:focus, &:hover
         opacity 1 !important // to override Mui
-        color var(--charcoalGrey) !important // to override Mui
