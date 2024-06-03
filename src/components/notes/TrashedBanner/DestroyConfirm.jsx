@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { useClient } from 'cozy-client'
 import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
-import Button from 'cozy-ui/transpiled/react/deprecated/Button'
+import Button from 'cozy-ui/transpiled/react/Buttons'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import List from 'cozy-ui/transpiled/react/List'
 import ListItem from 'cozy-ui/transpiled/react/ListItem'
@@ -55,13 +55,13 @@ const DestroyConfirm = ({ noteId, onCancel, onConfirm }) => {
       actions={
         <>
           <Button
-            theme="secondary"
+            variant="secondary"
             onClick={onCancel}
             label={t('DestroyConfirm.cancel')}
             disabled={isBusy}
           />
           <Button
-            theme="danger"
+            color="error"
             onClick={handleDestroy}
             label={t('DestroyConfirm.delete')}
             busy={isBusy}

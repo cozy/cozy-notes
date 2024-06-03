@@ -2,7 +2,8 @@ import React, { useState, useCallback } from 'react'
 
 import { useClient } from 'cozy-client'
 
-import Button from 'cozy-ui/transpiled/react/deprecated/Button'
+import Button from 'cozy-ui/transpiled/react/Buttons'
+import Icon from 'cozy-ui/transpiled/react/Icon'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import BarButton from 'cozy-ui/transpiled/react/BarButton'
 
@@ -23,9 +24,8 @@ export default function Add({ className }) {
       onClick={handleClick}
       type="submit"
       busy={isWorking}
-      icon="plus"
+      startIcon={<Icon icon="plus" />}
       label={t('Notes.Add.add_note')}
-      extension="narrow"
       className={className}
     />
   )
