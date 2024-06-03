@@ -5,10 +5,9 @@
 
 html {
     --documentMaxWidth: 48rem;
-    --documentDividerColor: #D6D8DA;
+    --documentDividerColor: var(--dividerColor);
     --note-base-size: 1.125rem;
     --note-base-lh: 1.5;
-    --note-base-color: var(--charcoalGrey);
     --note-block-spacing: calc(var(--note-base-size) * 1.333);
     --note-maintitle-padding: 2rem;
     --documentTopPadding: calc(2 * var(--note-base-size));
@@ -27,17 +26,10 @@ html {
     --note-title4-lh: var(--note-base-lh);
     --note-title5-lh: 1.55;
     --note-title6-lh: 1.6;
-    --note-title0-color: var(--note-base-color);
-    --note-title1-color: var(--note-base-color);
-    --note-title2-color: var(--note-base-color);
-    --note-title3-color: var(--note-base-color);
-    --note-title4-color: var(--coolGrey);
-    --note-title5-color: var(--coolGrey);
-    --note-title6-color: var(--coolGrey);
     --note-border-radius: 8px;
     --note-header-height: 64px;
     --note-header-height-half: 1.5rem;
-    color: var(--note-base-color);
+    color: var(--primaryTextColor);
 }
 
 @media (max-width: 800px) {
@@ -62,7 +54,7 @@ html {
     position: sticky;
     top: 0;
     z-index: 2;
-    background-color: var(--white);
+    background-color: var(--paperBackgroundColor);
 }
 
 html .akEditor>div:first-child {
@@ -91,10 +83,10 @@ html .akEditor>div:first-child {
 
 /* toolbar inner wrapper */
 html .akEditor>div:first-child>div>div:last-child {
-    box-shadow: 0px 0px 0px 0.5px rgba(29, 33, 42, 0.12), 0px 2px 4px rgba(29, 33, 42, 0.0793047), 0px 4px 16px rgba(29, 33, 42, 0.06);
+    box-shadow: var(--shadow1);
     border-radius: 8px;
     padding: 0.5rem;
-    background: white;
+    background: var(--paperBackgroundColor);
 }
 
 /* This is the main toolbar wrapper */
@@ -128,9 +120,90 @@ html .akEditor>div:first-child>div:first-child+div hr {
     margin: auto;
 }
 
-[data-testid="ak-editor-main-toolbar"]+div {
+[data-testid="ak-editor-main-toolbar"] [role="presentation"] > div > button {
+    color: var(--primaryTextColor) !important;
+    background-color: var(--paperBackgroundColor);
+}
+
+[data-testid="ak-editor-main-toolbar"] [role="presentation"] > div > button:hover {
+    /* color: var(--primaryTextColor) !important; */
+    background-color: var(--actionColorHover);
+}
+
+[data-testid="ak-editor-main-toolbar"] + div {
     height: calc(100%);
 }
+
+/* main toolbar menu */
+[data-role="droplistContent"] {
+    background-color: var(--paperBackgroundColor) !important;
+    box-shadow: var(--shadow1) !important;
+}
+
+[data-role="droplistContent"] [role="group"] > div > span,
+[data-role="droplistContent"] [role="group"] [role="presentation"] > div > span {
+    color: var(--primaryTextColor) !important;
+    background-color: var(--paperBackgroundColor) !important;
+}
+
+[data-role="droplistContent"] [role="group"] > div > span:hover,
+[data-role="droplistContent"] [role="group"] [role="presentation"] > div > span:hover {
+    background-color: var(--actionColorHover) !important;
+}
+
+[data-role="droplistContent"] [role="group"] > div > span p,
+[data-role="droplistContent"] [role="group"] [role="presentation"] > div > span p {
+    color: var(--primaryTextColor) !important;
+}
+
+/* shortcut tag in main toolbar menu */
+[data-role="droplistContent"] [role="group"] > div > span > span:last-child > div,
+[data-role="droplistContent"] [role="group"] [role="presentation"] > div > span > span:last-child > div {
+    color: var(--secondaryTextColor);
+    background-color: var(--defaultBackgroundColor);
+}
+
+/* date element */
+.dateView-content-wrap .date-lozenger-container > span {
+    color: var(--primaryTextColor);
+    background-color: var(--defaultBackgroundColor);
+}
+
+/* calendar popup */
+[role="presentation"] > [aria-label="calendar"] {
+    background-color: var(--paperBackgroundColor);
+}
+
+/* calendar popup header */
+[role="presentation"] > [aria-label="calendar"] > div {
+    color: var(--secondaryTextColor);
+}
+
+/* calendar popup content */
+[role="presentation"] > [aria-label="calendar"] > table > th {
+    color: var(--secondaryTextColor);
+}
+
+[role="presentation"] > [aria-label="calendar"] > table > tbody div {
+    color: var(--primaryTextColor);
+}
+
+[role="presentation"] > [aria-label="calendar"] > table > tbody div[data-focused="true"] {
+    border-color: var(--primaryColor);
+}
+
+[role="presentation"] > [aria-label="calendar"] > table > tbody div[data-today="true"]:after {
+    background-color: var(--primaryColor);
+}
+
+[role="presentation"] > [aria-label="calendar"] > table > tbody div:hover {
+    background-color: var(--actionColorHover);
+}
+
+[role="presentation"] > [aria-label="calendar"] > table > tbody div[data-sibling="true"] {
+    color: var(--secondaryTextColor);
+}
+
 
 /* Hacky CSS to hide anything that isn't the toolbar in the atlaskit toolbar wrapper (avatar component for instance) */
 [data-testid="ak-editor-main-toolbar"]> :not(:first-child) {
@@ -161,7 +234,7 @@ html .akEditor>div:first-child>div:first-child+div hr {
     display: inline-flex;
     align-items: center;
     text-decoration: none;
-    color: var(--slateGrey) !important;
+    color: var(--iconTextColor) !important;
 }
 
 .note-header-menu--editing {
@@ -218,45 +291,45 @@ html body .note-editor-container .ak-editor-content-area p,
 html body .note-editor-container .akEditor li {
     font-size: var(--note-base-size) !important;
     line-height: var(--note-base-lh) !important;
-    color: var(--note-base-color);
+    color: var(--primaryTextColor);
 }
 
 html body .note-editor-container .akEditor h1 {
-    border-top: 1px solid var(--silver);
+    border-top: 1px solid var(--borderMainColor);
     padding-top: var(--note-block-spacing);
     font-size: var(--note-title1-fs) !important;
     line-height: var(--note-title1-lh) !important;
-    color: var(--note-title1-color);
+    color: var(--primaryTextColor);
 }
 
 html body .note-editor-container .akEditor h2 {
     font-size: var(--note-title2-fs) !important;
     line-height: var(--note-title2-lh) !important;
-    color: var(--note-title2-color);
+    color: var(--primaryTextColor);
 }
 
 html body .note-editor-container .akEditor h3 {
     font-size: var(--note-title3-fs) !important;
     line-height: var(--note-title3-lh) !important;
-    color: var(--note-title3-color);
+    color: var(--primaryTextColor);
 }
 
 html body .note-editor-container .akEditor h4 {
     font-size: var(--note-title4-fs) !important;
     line-height: var(--note-title4-lh) !important;
-    color: var(--note-title4-color);
+    color: var(--primaryTextColor);
 }
 
 html body .note-editor-container .akEditor h5 {
     font-size: var(--note-title5-fs) !important;
     line-height: var(--note-title5-lh) !important;
-    color: var(--note-title5-color);
+    color: var(--primaryTextColor);
 }
 
 html body .note-editor-container .akEditor h6 {
     font-size: var(--note-title6-fs) !important;
     line-height: var(--note-title6-lh) !important;
-    color: var(--note-title6-color);
+    color: var(--primaryTextColor);
 }
 
 /* Titres dans la dropdown de la barre d'outils */
@@ -293,7 +366,7 @@ html body .note-editor-container .akEditor li>* {
 html body .note-editor-container .akEditor blockquote {
     margin-left: 0;
     padding-left: 28px;
-    border-left: 4px solid var(--silver);
+    border-left: 4px solid var(--borderMainColor);
     font-style: italic;
 }
 
@@ -309,7 +382,8 @@ html body .note-editor-container .akEditor blockquote::before {
 /* hr */
 html body .note-editor-container .akEditor hr {
     height: 1px;
-    color: var(--silver);
+    color: var(--dividerColor);
+    background-color: var(--dividerColor);
 }
 
 /* tables */
@@ -325,7 +399,7 @@ html body .note-editor-container .akEditor .pm-table-wrapper>table {
 
 html body .note-editor-container .akEditor .pm-table-wrapper>table td,
 html body .note-editor-container .akEditor .pm-table-wrapper>table th {
-    border: 1px solid #C1C7D0;
+    border: 1px solid var(--borderMainColor);
     border-bottom-width: 0;
     border-right-width: 0;
 }
@@ -366,8 +440,7 @@ html body .note-editor-container .akEditor .ak-editor-panel {
 }
 
 html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=note] {
-    background-color: #F5F6F7;
-    /* var(--pale-grey) * 0.8 */
+    background-color: var(--paperBackgroundColor);
 }
 
 html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=note] .ak-editor-panel__icon {
@@ -375,39 +448,35 @@ html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=note
 }
 
 html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=info] {
-    background-color: #EEF5FD;
-    /* var(--dodgerBlue) * 0.8 */
+    background-color: var(--paperBackgroundColor);
 }
 
 html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=info] .ak-editor-panel__icon {
-    color: #3F7FE9;
+    color: var(--primaryColor);
 }
 
 html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=success] {
-    background-color: #F0FAF4;
-    /* var(--emerald) * 0.8 */
+    background-color: var(--paperBackgroundColor);
 }
 
 html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=success] .ak-editor-panel__icon {
-    color: #68CA73;
+    color: var(--successColor);
 }
 
 html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=warning] {
-    background-color: #FEF7EF;
-    /* var(--mango) * 0.8 */
+    background-color: var(--paperBackgroundColor);
 }
 
 html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=warning] .ak-editor-panel__icon {
-    color: #EAA649;
+    color: var(--warningColor);
 }
 
 html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=error] {
-    background-color: #FBEFEE;
-    /* var(--pomegranate) * 0,8; */
+    background-color: var(--paperBackgroundColor);
 }
 
 html body .note-editor-container .akEditor .ak-editor-panel[data-panel-type=error] .ak-editor-panel__icon {
-    color: #E24239;
+    color: var(--errorColor);
 }
 
 html .akEditor {
@@ -423,7 +492,7 @@ html .fabric-editor-popup-scroll-parent>div>div {
 
 html .ak-editor-content-area {
     padding: var(--documentTopPadding) var(--documentPadding) calc(3 * var(--note-base-size)) var(--documentPadding) !important;
-    background-color: var(--white);
+    background-color: var(--paperBackgroundColor);
 }
 
 #editor-scroll-gutter {
@@ -441,7 +510,7 @@ html .fabric-editor-popup-scroll-parent>div>div {
 .notes-list td,
 .notes-list th {
     text-align: left;
-    color: var(--coolGrey);
+    color: var(--primaryTextColor);
 }
 
 .notes-list tr>th:first-child {
