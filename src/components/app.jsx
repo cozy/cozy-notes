@@ -9,10 +9,10 @@ import {
 } from 'react-router-dom'
 import * as Sentry from '@sentry/react'
 
+import { BarProvider, BarComponent, BarCenter } from 'cozy-bar'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import BarTitle from 'cozy-ui/transpiled/react/BarTitle'
 import IconSprite from 'cozy-ui/transpiled/react/Icon/Sprite'
-import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import useBreakpoints, {
   BreakpointsProvider
@@ -135,19 +135,16 @@ const App = ({ isPublic }) => {
     ? getDataOrDefault(client.getInstanceOptions().app.name, manifest.name)
     : ''
 
-  const { BarCenter } = cozy.bar
-
   const FlagSwitcher = useFlagSwitcher()
 
   return (
     <>
       <HashRouter>
         <Layout monoColumn={true}>
+          <BarComponent />
           {!isPublic && isMobile && (
             <BarCenter>
-              <CozyTheme>
-                <BarTitle>{appName}</BarTitle>
-              </CozyTheme>
+              <BarTitle>{appName}</BarTitle>
             </BarCenter>
           )}
 
@@ -172,9 +169,11 @@ const App = ({ isPublic }) => {
 }
 
 const WrappedApp = props => (
-  <BreakpointsProvider>
-    <App {...props} />
-  </BreakpointsProvider>
+  <BarProvider>
+    <BreakpointsProvider>
+      <App {...props} />
+    </BreakpointsProvider>
+  </BarProvider>
 )
 
 export default WrappedApp
