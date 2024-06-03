@@ -1,6 +1,6 @@
 import 'cozy-ui/dist/cozy-ui.utils.min.css'
 import 'cozy-ui/transpiled/react/stylesheet.css'
-import 'cozy-sharing/dist/stylesheet.css'
+import 'cozy-bar/dist/stylesheet.css'
 import 'styles/index.css'
 
 import React from 'react'
@@ -106,15 +106,6 @@ const renderApp = function(appLocale, client, isPublic) {
 // initial rendering of the application
 export const initApp = () => {
   const data = getDataset()
-  const appIcon = getDataOrDefault(
-    data.app.icon,
-    require('../vendor/assets/icon.svg')
-  )
-  const appNamePrefix = getDataOrDefault(
-    data.app.prefix || manifest.name_prefix,
-    ''
-  )
-  const appName = getDataOrDefault(data.app.name, manifest.name)
   const appSlug = getDataOrDefault(data.app.slug, manifest.slug)
   const appVersion = getDataOrDefault(data.app.version, manifest.version)
 
@@ -136,6 +127,7 @@ export const initApp = () => {
   const client = new CozyClient({
     uri: `${protocol}//${data.domain}`,
     token: token,
+    store: true,
     appMetadata: {
       slug: appSlug,
       version: appVersion
@@ -154,15 +146,6 @@ export const initApp = () => {
     // necessary to initialize the bar with the correct React instance
     window.React = React
     window.ReactDOM = ReactDOM
-    cozy.bar.init({
-      appName: appName,
-      appNamePrefix: appNamePrefix,
-      iconPath: appIcon,
-      lang: appLocale,
-      replaceTitleOnMobile: true,
-      cozyClient: client,
-      isPublic: isPublic
-    })
     Sentry.init({
       dsn: 'https://16c26a60d9019eea9d9a9775573e3765@errors.cozycloud.cc/73',
       environment: process.env.NODE_ENV,

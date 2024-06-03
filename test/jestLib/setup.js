@@ -6,15 +6,6 @@ global.requestAnimationFrame = cb => {
   setTimeout(cb, 0)
 }
 
-global.cozy = {
-  bar: {
-    BarLeft: () => null,
-    BarRight: ({ children }) => children,
-    BarCenter: () => null,
-    setTheme: () => null
-  }
-}
-
 expect.addSnapshotSerializer({
   test: function(val) {
     return val && typeof val === 'string' && val.indexOf('mui-') >= 0

@@ -22,7 +22,6 @@ const configs = [
   require('cozy-scripts/config/webpack.config.manifest'),
   require('cozy-scripts/config/webpack.config.progress'),
   require('cozy-scripts/config/webpack.config.duplicates'),
-  require('cozy-scripts/config/webpack.config.cozy-bar-v7'),
   addAnalyzer ? require('cozy-scripts/config/webpack.config.analyzer') : null,
   require('cozy-scripts/config/webpack.config.services'),
   require(target === 'browser'

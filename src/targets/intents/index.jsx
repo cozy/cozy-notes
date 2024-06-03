@@ -1,5 +1,6 @@
 import 'cozy-ui/dist/cozy-ui.utils.min.css'
 import 'cozy-ui/transpiled/react/stylesheet.css'
+import 'cozy-bar/dist/stylesheet.css'
 import 'styles/index.css'
 
 import React from 'react'
@@ -62,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const client = new CozyClient({
     uri: `${protocol}//${data.domain}`,
     token,
+    store: true,
     appMetadata: {
       slug: appSlug,
       version: appVersion
