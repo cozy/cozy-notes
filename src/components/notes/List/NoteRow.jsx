@@ -6,6 +6,7 @@ import ActionMenu, {
 } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconButton from 'cozy-ui/transpiled/react/IconButton'
+import Typography from 'cozy-ui/transpiled/react/Typography'
 import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'
 import { CozyFile } from 'cozy-doctypes'
 import { SharedRecipients } from 'cozy-sharing'
@@ -92,12 +93,16 @@ const NoteRow = ({ note, f, t, client }) => {
               className="u-flex u-flex-column u-flex-grow-1"
               style={{ minWidth: 0 }}
             >
-              <span className="u-charcoalGrey u-ellipsis">{filename}</span>
+              <Typography display="inline" noWrap>
+                {filename}
+              </Typography>
               <NotePath drivePath={drivePath} path={note.path} noLink />
             </div>
           ) : (
             <div className="u-flex-grow-1">
-              <span className="u-charcoalGrey u-ellipsis">{filename}</span>
+              <Typography display="inline" noWrap>
+                {filename}
+              </Typography>
               <span className="u-ellipsis">{extension}</span>
             </div>
           )}
@@ -157,6 +162,7 @@ const NoteRow = ({ note, f, t, client }) => {
           }}
         >
           <Link
+            style={{ color: 'var(--primaryTextColor)' }}
             className={styles.actionMenuItem}
             onClick={closeMenu}
             to={AppRoutes.ShareFromList}
