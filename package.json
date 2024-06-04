@@ -3,11 +3,11 @@
   "version": "1.36.0",
   "scripts": {
     "analyze": "COZY_SCRIPTS_ANALYZER=true yarn build",
-    "build:browser:dev": "cs build --browser --development",
-    "build:browser": "cs build --browser --barV7 false",
-    "build": "yarn build:browser",
-    "cozyPublish": "cs publish --token $REGISTRY_TOKEN --build-commit $(git rev-parse ${DEPLOY_BRANCH:-build}) --postpublish mattermost",
+    "build": "cs build --barV7 false",
+    "start": "cs start --barV7 false",
+    "watch": "cs watch --barV7 false",
     "deploy": "git-directory-deploy --directory build/ --branch ${DEPLOY_BRANCH:-build} --repo ${DEPLOY_REPOSITORY:-https://cozy-bot:$GITHUB_TOKEN@github.com/cozy/cozy-notes}",
+    "cozyPublish": "cs publish --token $REGISTRY_TOKEN --build-commit $(git rev-parse ${DEPLOY_BRANCH:-build}) --postpublish mattermost",
     "lint:js": "eslint '{src,test}/**/*.{ts,tsx,js,jsx}'",
     "lint:styles": "stylint src/styles --config ./.stylintrc",
     "lint": "yarn lint:js && yarn lint:styles",
@@ -15,11 +15,8 @@
     "ci:check": "yarn lint && yarn test && yarn build",
     "stack:docker:dev": "COZY_STACK_HOST=cozy.localhost docker run --rm -it -p 8080:8080 -p 5984:5984 -e COZY_DISABLE_CSP=1 -v $(pwd)/build:/data/cozy-app/app -v $(pwd)/build:/data/cozy-app/notes cozy/cozy-app-dev",
     "stack:docker:prod": "COZY_STACK_HOST=cozy.localhost docker run --rm -it -p 8080:8080 -p 5984:5984 -v \"$(pwd)/build\":/data/cozy-app/app -v \"$(pwd)/build\":/data/cozy-app/notes cozy/cozy-app-dev",
-    "start": "cs start --browser --barV7 false",
     "test": "env NODE_ENV='test' cs test --verbose",
-    "tx": "tx pull --all || true",
-    "watch:browser": "cs watch --browser --barV7 false",
-    "watch": "yarn watch:browser"
+    "tx": "tx pull --all || true"
   },
   "repository": {
     "type": "git",
