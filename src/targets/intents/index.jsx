@@ -18,6 +18,7 @@ import CozyClient, { CozyProvider } from 'cozy-client'
 import flag from 'cozy-flags'
 import I18n from 'cozy-ui/transpiled/react/providers/I18n'
 import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
+import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 const manifest = require('../../../manifest.webapp')
 const frenchAtlaskitCozy = require(`locales/atlassian_missing_french.json`)
@@ -86,13 +87,15 @@ document.addEventListener('DOMContentLoaded', () => {
             locale={appLocale}
             messages={locales[appLocale].atlaskit}
           >
-            <CozyProvider client={client}>
-              <IntentProvider intentId={intentId}>
-                <CozyTheme>
-                  <IntentEditorView />
-                </CozyTheme>
-              </IntentProvider>
-            </CozyProvider>
+            <BreakpointsProvider>
+              <CozyProvider client={client}>
+                <IntentProvider intentId={intentId}>
+                  <CozyTheme>
+                    <IntentEditorView />
+                  </CozyTheme>
+                </IntentProvider>
+              </CozyProvider>
+            </BreakpointsProvider>
           </IntlProvider>
         </StylesProvider>
       </I18n>
