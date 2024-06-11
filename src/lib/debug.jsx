@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import useFlag from 'cozy-flags/dist/useFlag'
-import FlagSwitcher from 'cozy-flags/dist/FlagSwitcher'
 import set from 'lodash/set'
 import get from 'lodash/get'
 import flag from 'cozy-flags'
@@ -23,23 +22,9 @@ export function useDebugValue(name, value) {
   }, [activated, name, value])
 }
 
-/**
- * Returns a React component that will show
- * the flag switcher from cozy-flags
- * when the flag 'swicher' is activated
- */
-export function useFlagSwitcher() {
-  useFlag('switcher')
-  return FlagSwitcher
-}
-
 export function setDebugValue(name, value) {
   set(window, `cozy.debug.${name}`, value)
 }
-
-// Sets a global 'window.cozy.debug.showSwitcher()'
-// that will activate the cozy-flag switcher
-set(window, `cozy.debug.showSwitcher`, () => flag('switcher', true))
 
 set(window, 'cozy.debug.notes.debugCollab', async function debugCollab() {
   // activate all needed flags

@@ -76,6 +76,7 @@
     "prop-types": "15.8.1",
     "react": "16.14.0",
     "react-dom": "16.14.0",
+    "react-inspector": "5.1.1",
     "react-intl": "2.9.0",
     "react-router-dom": "6.3.0",
     "rooks": "7.1.1",

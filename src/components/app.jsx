@@ -9,6 +9,8 @@ import {
 } from 'react-router-dom'
 import * as Sentry from '@sentry/react'
 
+import CozyDevTools from 'cozy-client/dist/devtools'
+import flag from 'cozy-flags'
 import { BarProvider, BarComponent, BarCenter } from 'cozy-bar'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import BarTitle from 'cozy-ui/transpiled/react/BarTitle'
@@ -30,7 +32,6 @@ import { List, Editor, Unshared } from 'components/notes'
 import { fetchIfIsNoteReadOnly } from 'lib/utils'
 import { getDataOrDefault } from 'lib/initFromDom'
 import { getReturnUrl, getSharedDocument } from 'lib/utils'
-import { useFlagSwitcher } from 'lib/debug'
 import RouteNew from 'components/notes/new-route'
 import { NoteProvider } from 'components/notes/NoteProvider'
 
@@ -135,8 +136,6 @@ const App = ({ isPublic }) => {
     ? getDataOrDefault(client.getInstanceOptions().app.name, manifest.name)
     : ''
 
-  const FlagSwitcher = useFlagSwitcher()
-
   return (
     <>
       <HashRouter>
@@ -155,12 +154,9 @@ const App = ({ isPublic }) => {
               </AlertProvider>
             </Content>
           </Main>
-
           <IconSprite />
-
           <Alerter t={t} />
-
-          <FlagSwitcher />
+          {flag('debug') && <CozyDevTools />}
         </Layout>
       </HashRouter>
       <ClientErrors />
