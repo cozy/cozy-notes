@@ -1,6 +1,7 @@
 import 'cozy-ui/dist/cozy-ui.utils.min.css'
 import 'cozy-ui/transpiled/react/stylesheet.css'
 import 'cozy-bar/dist/stylesheet.css'
+import 'cozy-sharing/dist/stylesheet.css'
 import 'styles/index.css'
 
 import React from 'react'
