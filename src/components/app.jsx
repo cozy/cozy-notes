@@ -22,7 +22,7 @@ import useBreakpoints, {
 import useClientErrors from 'cozy-client/dist/hooks/useClientErrors'
 import { Layout, Main, Content } from 'cozy-ui/transpiled/react/Layout'
 import { ShareModal } from 'cozy-sharing'
-import { useClient } from 'cozy-client'
+import { RealTimeQueries, useClient } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import AlertProvider from 'cozy-ui/transpiled/react/providers/Alert'
 
@@ -152,6 +152,7 @@ const App = ({ isPublic }) => {
               <AlertProvider>
                 {isPublic ? <PublicContext /> : <PrivateContext />}
               </AlertProvider>
+              <RealTimeQueries doctype="io.cozy.settings" />
             </Content>
           </Main>
           <IconSprite />
