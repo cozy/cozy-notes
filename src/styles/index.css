@@ -395,13 +395,26 @@ html body .note-editor-container .akEditor .pm-table-wrapper>table {
     border-collapse: separate;
     border-spacing: 0;
     border-width: 0;
+    background-color: var(--paperBackgroundColor);
+    color: var(--primaryTextColor);
 }
 
 html body .note-editor-container .akEditor .pm-table-wrapper>table td,
 html body .note-editor-container .akEditor .pm-table-wrapper>table th {
     border: 1px solid var(--borderMainColor);
+    background-color: var(--paperBackgroundColor) !important;
+    color: var(--primaryTextColor) !important;
     border-bottom-width: 0;
     border-right-width: 0;
+}
+
+html body .note-editor-container .akEditor .pm-table-numbered-column div {
+    background-color: var(--defaultBackgroundColor);
+    border: 1px solid var(--borderMainColor);
+}
+
+html body .note-editor-container .akEditor .pm-table-numbered-column__button:last-child {
+    border: 1px solid var(--borderMainColor);
 }
 
 html body .note-editor-container .akEditor .pm-table-wrapper>table tr:last-child td,
@@ -563,6 +576,14 @@ Here we set it to 26px because: 12px (from .code-content padding top) + 14px (fr
 */
 .ProseMirror .code-block .line-number-gutter {
     padding: 26px 8px !important;
+}
+
+html body .note-editor-container .akEditor .code-block {
+    background-color: var(--defaultBackgroundColor);
+}
+
+html body .note-editor-container .akEditor .code-block .code-content {
+    color: var(--primaryTextColor);
 }
 
 .ProseMirror div[data-task-list-local-id] {
