@@ -1,0 +1,120 @@
+{
+  "name": "Notes",
+  "name_prefix": "Cozy",
+  "slug": "notes",
+  "icon": "icon.svg",
+  "categories": [
+    "cozy"
+  ],
+  "version": "1.36.0",
+  "licence": "AGPL-3.0",
+  "editor": "Cozy",
+  "source": "https://github.com/cozy/cozy-notes.git@build",
+  "developer": {
+    "name": "Cozy Cloud",
+    "url": "https://cozy.io"
+  },
+  "screenshots": [
+    "screenshots/fr/screenshot01.png",
+    "screenshots/fr/screenshot02.png"
+  ],
+  "langs": [
+    "en",
+    "fr"
+  ],
+  "routes": {
+    "/": {
+      "folder": "/",
+      "index": "index.html",
+      "public": false
+    },
+    "/public": {
+      "folder": "/",
+      "index": "index.html",
+      "public": true
+    },
+    "/preview": {
+      "folder": "/",
+      "index": "index.html",
+      "public": true
+    },
+    "/intents": {
+      "folder": "/intents",
+      "index": "index.html",
+      "public": false
+    }
+  },
+  "intents": [
+    {
+      "action": "OPEN",
+      "type": [
+        "io.cozy.notes.documents"
+      ],
+      "href": "/intents"
+    }
+  ],
+  "permissions": {
+    "apps": {
+      "description": "Required by the cozy-bar to display the icons of the apps",
+      "type": "io.cozy.apps",
+      "verbs": [
+        "GET"
+      ]
+    },
+    "files": {
+      "description": "Notes as files",
+      "type": "io.cozy.files"
+    },
+    "settings": {
+      "description": "Required by the cozy-bar to display Claudy and know which applications are coming soon",
+      "type": "io.cozy.settings",
+      "verbs": [
+        "GET"
+      ]
+    },
+    "sharings": {
+      "description": "Required to have access to the sharings in realtime",
+      "type": "io.cozy.sharings",
+      "verbs": [
+        "GET"
+      ]
+    },
+    "contacts": {
+      "type": "io.cozy.contacts",
+      "verbs": [
+        "GET",
+        "POST"
+      ]
+    },
+    "groups": {
+      "type": "io.cozy.contacts.groups",
+      "verbs": [
+        "GET"
+      ]
+    },
+    "intents": {
+      "type": "io.cozy.notes.documents",
+      "verbs": [
+        "GET"
+      ]
+    }
+  },
+  "locales": {
+    "en": {
+      "short_description": "Cozy Notes is your personal and collaborative note-taking application.",
+      "long_description": "Notes is an online text editor that can already offer you to:\n\n* Create your own notes with the essential features (bold, underlined, links, tables...)\n* Fill and find your notes with you other documents in files of your personal Drive\n* Edit easily your notes from all your devices\n* Access your notes offline\n* For the fans, use shortcuts and input in markdown format ... and even write with contacts together on the same note (coming soon)!",
+      "screenshots": [
+        "screenshots/en/screenshot01.png",
+        "screenshots/en/screenshot02.png"
+      ]
+    },
+    "fr": {
+      "short_description": "Cozy Notes est votre application de prise de notes personnelles et collaboratives.",
+      "long_description": "Notes est un éditeur de texte en ligne destiné à :\n\n* Créer vos propres notes avec les fonctionnalités essentielles (gras, souligné, liens, tableaux...)\n* Classer et retrouver vos notes avec vos autres documents, dans les répertoires de votre Drive personnel\n* Éditer facilement vos notes depuis tous vos appareils\n* Accéder à vos notes, même sans internet, stockées sur votre PC\n* Pour les aficionados, utiliser les raccourcis et la saisie au format markdown\n*  ... et même écrire à plusieurs simultanément sur la même note (à venir) ! ",
+      "screenshots": [
+        "screenshots/fr/screenshot01.png",
+        "screenshots/fr/screenshot02.png"
+      ]
+    }
+  }
+}
