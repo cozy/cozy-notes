@@ -1,6 +1,6 @@
 {
   "name": "cozy-notes",
-  "version": "1.37.0",
+  "version": "1.38.0",
   "scripts": {
     "analyze": "COZY_SCRIPTS_ANALYZER=true yarn build",
     "build": "cs build --barV7 false",
