@@ -590,6 +590,10 @@ html body .note-editor-container .akEditor .code-block .code-content {
     margin-bottom: var(--note-block-spacing) !important;
 }
 
+.ProseMirror .placeholder-decoration {
+    color: var(--secondaryTextColor) !important;
+}
+
 /*
 2 problems with tables:
 

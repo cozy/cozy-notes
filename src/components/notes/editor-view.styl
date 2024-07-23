@@ -28,11 +28,12 @@ $COZY_BAR_HEIGHT=-3rem
     height fit-content !important // to override computed value
     margin-bottom var(--note-block-spacing) !important // to override Mui
 
-    &>div
+    & > div
         font-size var(--note-title0-fs)
         line-height var(--note-title0-lh)
         font-weight 900
         font-family Lato-Black, var(--primaryFont)
+
         +small-screen()
             line-height var(--note-title6-lh)
 
@@ -50,6 +51,7 @@ $COZY_BAR_HEIGHT=-3rem
 
     &::placeholder
         opacity 1 !important // to override Mui
+        color var(--secondaryTextColor) !important // to override Mui
 
     &, &:focus, &:hover
         opacity 1 !important // to override Mui
