@@ -81,7 +81,7 @@ const renderApp = function(appLocale, client, isPublic) {
             messages={locales[appLocale].atlaskit}
           >
             <CozyProvider client={client}>
-              <CozyTheme>
+              <CozyTheme ignoreCozySettings={isPublic}>
                 <IsPublicContext.Provider value={isPublic}>
                   {!isPublic && (
                     <SharingProvider
