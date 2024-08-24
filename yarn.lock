@@ -7869,7 +7869,7 @@ cozy-release@1.10.0:
   dependencies:
     exec-sh "0.3.2"
 
-cozy-scripts@^8.2.0:
+cozy-scripts@^8.3.0:
   version "8.3.0"
   resolved "https://registry.yarnpkg.com/cozy-scripts/-/cozy-scripts-8.3.0.tgz#dec3a5c9568a5e44e1baf6cd9983a7c55418ba95"
   integrity sha512-UrzifMUyIleTs7M+H449uOm/3OA/7vqUVlpA6IYi+BftUG4WbOEmU3oG9dmxRK5kVK+VhJURBk+9LJ+C+84syg==
