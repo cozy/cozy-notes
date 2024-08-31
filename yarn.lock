@@ -11391,10 +11391,10 @@ inquirer@^6.2.2:
     strip-ansi "^5.1.0"
     through "^2.3.6"
 
-install-peers@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/install-peers/-/install-peers-1.0.3.tgz#6348f8f67e6bc23c19ee78adb819c43f8d1dd7d7"
-  integrity sha512-MAlSHlrn4p+g3fhx8ZVxQZXX+MkeinKLu/ThfAmrVnN5c2L8Vof7myb0UsgowJEiGcFNHYnTvo37r3uap5asYA==
+install-peers@1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/install-peers/-/install-peers-1.0.4.tgz#0fcfe18d223a72bb39ddeca09394ce50e3305c79"
+  integrity sha512-0POFG2zRn/rt0uO1tUekCDhq6t6l3HDjxR42+Hcbjmj75Gv4yuqEfMe63HC76piO1lsctAp/cQW+Ny+i/SxTlg==
   dependencies:
     executioner "^2.0.1"
 
