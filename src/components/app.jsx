@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom'
 import * as Sentry from '@sentry/react'
 
-import CozyDevTools from 'cozy-client/dist/devtools'
+import CozyDevTools from 'cozy-devtools'
 import flag from 'cozy-flags'
 import { BarProvider, BarComponent, BarCenter } from 'cozy-bar'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
@@ -19,7 +19,7 @@ import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import useBreakpoints, {
   BreakpointsProvider
 } from 'cozy-ui/transpiled/react/providers/Breakpoints'
-import useClientErrors from 'cozy-client/dist/hooks/useClientErrors'
+import useClientErrors from 'cozy-ui/transpiled/react/hooks/useClientErrors'
 import { Layout, Main, Content } from 'cozy-ui/transpiled/react/Layout'
 import { ShareModal } from 'cozy-sharing'
 import { RealTimeQueries, useClient } from 'cozy-client'
