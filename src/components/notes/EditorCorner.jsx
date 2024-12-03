@@ -1,11 +1,10 @@
-import React from 'react'
+import SharingWidget from 'components/notes/sharing'
 import PropTypes from 'prop-types'
+import React from 'react'
 
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import Tooltip from 'cozy-ui/transpiled/react/Tooltip'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-
-import SharingWidget from 'components/notes/sharing'
 
 // https://mui.com/components/tooltips/#custom-child-element
 const ForwardedIcon = React.forwardRef(function ForwardedIcon(props, ref) {

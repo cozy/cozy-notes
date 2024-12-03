@@ -1,9 +1,9 @@
-import React from 'react'
 import { render } from '@testing-library/react'
+import CollabProvider from 'lib/collab/provider'
+import React from 'react'
+import { AppLike } from 'test/AppLike'
 
 import EditorView from './editor-view'
-import CollabProvider from 'lib/collab/provider'
-import { AppLike } from 'test/AppLike'
 
 jest.mock('@atlaskit/editor-core', () => ({
   Editor: function Editor(props) {

@@ -1,8 +1,7 @@
 import React from 'react'
+import { Breakpoints } from 'types/enums'
 
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-
-import { Breakpoints } from 'types/enums'
 
 interface Props {
   hideOn?: Breakpoints

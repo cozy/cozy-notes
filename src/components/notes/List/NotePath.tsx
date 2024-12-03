@@ -1,11 +1,11 @@
+import { Slugs } from 'constants/strings'
+
+import { removeFilename } from 'lib/helpers'
 import React from 'react'
 
-import FilePathLink from 'cozy-ui/transpiled/react/FilePathLink'
-import FilePath from 'cozy-ui/transpiled/react/FilePath'
 import AppLinker from 'cozy-ui/transpiled/react/AppLinker'
-
-import { Slugs } from 'constants/strings'
-import { removeFilename } from 'lib/helpers'
+import FilePath from 'cozy-ui/transpiled/react/FilePath'
+import FilePathLink from 'cozy-ui/transpiled/react/FilePathLink'
 
 interface NotePathProps {
   drivePath: string

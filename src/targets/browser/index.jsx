@@ -1,43 +1,43 @@
+/* eslint-disable import/order */
 import 'cozy-ui/dist/cozy-ui.utils.min.css'
 import 'cozy-ui/transpiled/react/stylesheet.css'
-import 'cozy-bar/dist/stylesheet.css'
-import 'cozy-sharing/dist/stylesheet.css'
-import 'styles/index.css'
 
-import React from 'react'
-import ReactDOM, { render } from 'react-dom'
-import { IntlProvider, addLocaleData } from 'react-intl'
-import memoize from 'lodash/memoize'
-import {
-  StylesProvider,
-  createGenerateClassName
-} from 'cozy-ui/transpiled/react/styles'
 import { fr, en } from '@atlaskit/editor-core/i18n'
 import { CaptureConsole } from '@sentry/integrations'
 import * as Sentry from '@sentry/react'
-import {
-  useLocation,
-  useNavigationType,
-  createRoutesFromChildren,
-  matchRoutes
-} from 'react-router-dom'
-
-import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
-import CozyClient, { CozyProvider } from 'cozy-client'
-import { RealtimePlugin } from 'cozy-realtime'
-import I18n from 'cozy-ui/transpiled/react/providers/I18n'
-import { Document } from 'cozy-doctypes'
-import SharingProvider from 'cozy-sharing'
-import { WebviewIntentProvider } from 'cozy-intent'
-
 import IsPublicContext from 'components/IsPublicContext'
 import {
   getDataset,
   getDataOrDefault,
   getPublicSharecode
 } from 'lib/initFromDom'
+import memoize from 'lodash/memoize'
+import React from 'react'
+import ReactDOM, { render } from 'react-dom'
+import { IntlProvider, addLocaleData } from 'react-intl'
+import {
+  useLocation,
+  useNavigationType,
+  createRoutesFromChildren,
+  matchRoutes
+} from 'react-router-dom'
+import 'styles/index.css'
 
+import 'cozy-bar/dist/stylesheet.css'
+import CozyClient, { CozyProvider } from 'cozy-client'
+import { Document } from 'cozy-doctypes'
 import flag from 'cozy-flags'
+import { WebviewIntentProvider } from 'cozy-intent'
+import { RealtimePlugin } from 'cozy-realtime'
+import SharingProvider from 'cozy-sharing'
+import 'cozy-sharing/dist/stylesheet.css'
+import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
+import I18n from 'cozy-ui/transpiled/react/providers/I18n'
+import {
+  StylesProvider,
+  createGenerateClassName
+} from 'cozy-ui/transpiled/react/styles'
+
 import { SHARING_LOCATION } from '../../constants/strings'
 
 const manifest = require('../../../manifest.webapp')
@@ -66,7 +66,7 @@ const generateClassName = createGenerateClassName({
   disableGlobal: true
 })
 
-const renderApp = function(appLocale, client, isPublic) {
+const renderApp = function (appLocale, client, isPublic) {
   const App = require('components/app').default
 
   render(

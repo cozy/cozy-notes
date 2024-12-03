@@ -1,6 +1,7 @@
-import { CollabProvider } from './provider'
-import { getVersion, sendableSteps } from 'prosemirror-collab'
 import isEqual from 'lodash/isEqual'
+import { getVersion, sendableSteps } from 'prosemirror-collab'
+
+import { CollabProvider } from './provider'
 
 const noteId = 'myDocId'
 const version = 96
@@ -43,7 +44,7 @@ function stripSessionId(arr) {
 function hasReceivedSteps(fn, steps, version) {
   expect(fn).toHaveBeenCalled()
   const strippedSteps = stripSessionId(steps)
-  const reduce = function(prev, curr) {
+  const reduce = function (prev, curr) {
     const given = curr[0]
     if (prev) return true
     if (version && given.version != version) return false

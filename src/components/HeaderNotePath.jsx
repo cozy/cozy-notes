@@ -1,13 +1,13 @@
-import React, { useMemo } from 'react'
-
+import { buildFileByIdQuery } from 'lib/queries'
 import { getDriveLink } from 'lib/utils'
+import React, { useMemo } from 'react'
 import { Breakpoints } from 'types/enums'
+
+import { useClient, useQuery } from 'cozy-client'
+import { ensureFilePath } from 'cozy-client/dist/models/file'
+
 import { NotePath } from './notes/List/NotePath'
 import { WithBreakpoints } from './notes/List/WithBreakpoints'
-import { useClient, useQuery } from 'cozy-client'
-import { buildFileByIdQuery } from 'lib/queries'
-
-import { ensureFilePath } from 'cozy-client/dist/models/file'
 
 export const HeaderNotePath = ({ file }) => {
   const client = useClient()
@@ -23,10 +23,10 @@ export const HeaderNotePath = ({ file }) => {
     [file, parentResult.data]
   )
 
-  const drivePath = useMemo(() => getDriveLink(client, file.dir_id), [
-    client,
-    file.dir_id
-  ])
+  const drivePath = useMemo(
+    () => getDriveLink(client, file.dir_id),
+    [client, file.dir_id]
+  )
 
   if (fileWithPath) {
     return (

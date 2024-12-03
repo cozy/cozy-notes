@@ -1,5 +1,5 @@
-import { schemaOrdered as defaultSchema, schemaVersion } from './schema'
 import { defaultContent } from './content'
+import { schemaOrdered as defaultSchema, schemaVersion } from './schema'
 
 // Warning: sessionID on the server, sessionId on the client
 

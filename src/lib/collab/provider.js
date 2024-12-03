@@ -1,10 +1,11 @@
-import { EventEmitter2 } from 'eventemitter2'
-import { getVersion, sendableSteps } from 'prosemirror-collab'
 import { JSONTransformer } from '@atlaskit/editor-json-transformer'
+import { EventEmitter2 } from 'eventemitter2'
+import debounce from 'lodash/debounce'
+import get from 'lodash/get'
+import { getVersion, sendableSteps } from 'prosemirror-collab'
+
 import { Channel } from './channel'
 import { getParticipant } from './participant'
-import get from 'lodash/get'
-import debounce from 'lodash/debounce'
 
 const jsonTransformer = new JSONTransformer()
 // Using the jsonTransformer directly introduce a bug for empty documents
@@ -14,7 +15,7 @@ const jsonTransformer = new JSONTransformer()
 // This patch fixes this unique case, creating a correct empty document with
 // an empty paragraph
 const oldEncode = jsonTransformer.encode.bind(jsonTransformer)
-jsonTransformer.encode = function(doc) {
+jsonTransformer.encode = function (doc) {
   const transformed = oldEncode(doc)
   if (transformed.content.length === 0 && doc.content.length != 0) {
     return {

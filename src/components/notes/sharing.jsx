@@ -1,11 +1,11 @@
+import { AppRoutes } from 'constants/routes'
+import { DocumentTypes } from 'constants/strings'
+
+import styles from 'components/notes/sharing.styl'
 import React, { useCallback } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 import { ShareButtonWithRecipients } from 'cozy-sharing'
-
-import styles from 'components/notes/sharing.styl'
-import { AppRoutes } from 'constants/routes'
-import { DocumentTypes } from 'constants/strings'
 
 export const SharingWidget = ({ file, title }) => {
   const handleClick = useCallback(() => {}, [])

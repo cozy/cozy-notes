@@ -1,17 +1,14 @@
+import { Editor, WithEditorActions } from '@atlaskit/editor-core'
+import styles from 'components/notes/editor-view.styl'
+import editorConfig from 'components/notes/editor_config'
+import { imageUploadProvider } from 'lib/image-upload-provider'
 import React, { useCallback, useRef, useEffect, useMemo, useState } from 'react'
 
-import { Editor, WithEditorActions } from '@atlaskit/editor-core'
-
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import useEventListener from 'cozy-ui/transpiled/react/hooks/useEventListener'
-import Overlay from 'cozy-ui/transpiled/react/deprecated/Overlay'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import TextField from 'cozy-ui/transpiled/react/TextField'
-
-import { imageUploadProvider } from 'lib/image-upload-provider'
-import editorConfig from 'components/notes/editor_config'
-
-import styles from 'components/notes/editor-view.styl'
+import Overlay from 'cozy-ui/transpiled/react/deprecated/Overlay'
+import useEventListener from 'cozy-ui/transpiled/react/hooks/useEventListener'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 function updateTextareaHeight(target) {
   if (target) target.style.height = `${target.scrollHeight}px`
@@ -46,10 +43,10 @@ function EditorView(props) {
   )
 
   // put the provider in readonly mode if requested and react to changes of values
-  useMemo(() => collabProvider && collabProvider.setReadOnly(!!readOnly), [
-    readOnly,
-    collabProvider
-  ])
+  useMemo(
+    () => collabProvider && collabProvider.setReadOnly(!!readOnly),
+    [readOnly, collabProvider]
+  )
 
   const collabEdit = useMemo(
     () =>

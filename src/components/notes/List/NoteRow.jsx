@@ -1,29 +1,30 @@
-import React, { useState, useCallback, useMemo } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-
-import ActionMenu, {
-  ActionMenuItem
-} from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
-import Icon from 'cozy-ui/transpiled/react/Icon'
-import IconButton from 'cozy-ui/transpiled/react/IconButton'
-import Typography from 'cozy-ui/transpiled/react/Typography'
-import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'
-import { CozyFile } from 'cozy-doctypes'
-import { SharedRecipients } from 'cozy-sharing'
-import { TableRow, TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
-import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
-import { withClient } from 'cozy-client'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
+import { AppRoutes } from 'constants/routes'
+import { DocumentTypes } from 'constants/strings'
 
 import NoteIcon from 'assets/icons/icon-note-32.svg'
 import styles from 'components/notes/List/list.styl'
-import { AppRoutes } from 'constants/routes'
+import { generateReturnUrlToNotesIndex, getDriveLink } from 'lib/utils'
+import React, { useState, useCallback, useMemo } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { Breakpoints } from 'types/enums'
-import { DocumentTypes } from 'constants/strings'
+
+import { withClient } from 'cozy-client'
+import { CozyFile } from 'cozy-doctypes'
+import { SharedRecipients } from 'cozy-sharing'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import IconButton from 'cozy-ui/transpiled/react/IconButton'
+import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'
+import Typography from 'cozy-ui/transpiled/react/Typography'
+import ActionMenu, {
+  ActionMenuItem
+} from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import { TableRow, TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
+
 import { NotePath } from './NotePath'
 import { WithBreakpoints } from './WithBreakpoints'
-import { generateReturnUrlToNotesIndex, getDriveLink } from 'lib/utils'
 
 const NoteRow = ({ note, f, t, client }) => {
   const { isMobile } = useBreakpoints()
@@ -52,10 +53,10 @@ const NoteRow = ({ note, f, t, client }) => {
     }
   }, [client, note, t, setMenuOpen, showAlert])
 
-  const drivePath = useMemo(() => getDriveLink(client, note.dir_id), [
-    client,
-    note
-  ])
+  const drivePath = useMemo(
+    () => getDriveLink(client, note.dir_id),
+    [client, note]
+  )
 
   const menuTriggerRef = React.createRef()
 
