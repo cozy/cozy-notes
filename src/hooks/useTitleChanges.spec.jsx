@@ -1,6 +1,5 @@
-import useTitleChanges from './useTitleChanges'
 import { renderHook, act } from '@testing-library/react-hooks'
-
+import useTitleChanges from 'hooks/useTitleChanges'
 import {} from 'lib/utils.js'
 jest.mock('lib/utils.js')
 

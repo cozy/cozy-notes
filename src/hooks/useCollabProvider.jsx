@@ -1,5 +1,5 @@
-import { useMemo } from 'react'
 import CollabProvider from 'lib/collab/provider'
+import { useMemo } from 'react'
 
 /**
  * @typedef {object} useCollabProviderParams

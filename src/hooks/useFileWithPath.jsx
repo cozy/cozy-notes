@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+
 import { models } from 'cozy-client'
 
 export const normalizeAndAddName = rawFile => {

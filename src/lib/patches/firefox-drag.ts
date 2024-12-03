@@ -21,11 +21,11 @@ export const firefoxElement = (): Element | null =>
   document.querySelector('.ua-firefox')
 
 export const initFirefoxDrag = (element: Element | null): void => (
-  element?.addEventListener('dragstart', handleDragStart),
-  element?.addEventListener('dragend', handleDragEnd)
+  element.addEventListener('dragstart', handleDragStart),
+  element.addEventListener('dragend', handleDragEnd)
 )
 
 export const removeFirefoxDrag = (element: Element | null): void => (
-  element?.removeEventListener('dragstart', handleDragStart),
-  element?.removeEventListener('dragend', handleDragEnd)
+  element.removeEventListener('dragstart', handleDragStart),
+  element.removeEventListener('dragend', handleDragEnd)
 )

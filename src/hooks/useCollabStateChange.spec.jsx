@@ -1,5 +1,6 @@
-import useCollabStateChange from './useCollabStateChange'
 import { renderHook, act } from '@testing-library/react-hooks'
+
+import useCollabStateChange from './useCollabStateChange'
 
 function createProvider() {
   const listeners = []

@@ -460,7 +460,7 @@
     raf-schd "^2.1.0"
     react-loadable "^5.1.0"
 
-"@atlaskit/editor-json-transformer@^8.4.0", "@atlaskit/editor-json-transformer@^8.5.0", "@atlaskit/editor-json-transformer@^8.6.0":
+"@atlaskit/editor-json-transformer@8.6.5", "@atlaskit/editor-json-transformer@^8.4.0", "@atlaskit/editor-json-transformer@^8.5.0", "@atlaskit/editor-json-transformer@^8.6.0":
   version "8.6.5"
   resolved "https://registry.yarnpkg.com/@atlaskit/editor-json-transformer/-/editor-json-transformer-8.6.5.tgz#92cfa6a9eb33f136f76cc10578b5ac124aada19d"
   integrity sha512-IoCLRVbND+c/reQJP77WEoo56LGcRP8LMloCsCx9KczfZluZVaEQzGwXLKm1pEFW9vV0Xx7M2i5fj/vC72O4zg==
@@ -9696,7 +9696,7 @@ etag@~1.8.1:
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
 
-eventemitter2@^4.1.0:
+eventemitter2@4.1.2, eventemitter2@^4.1.0:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/eventemitter2/-/eventemitter2-4.1.2.tgz#0e1a8477af821a6ef3995b311bf74c23a5247f15"
   integrity sha1-DhqEd6+CGm7zmVsxG/dMI6UkfxU=
@@ -15641,7 +15641,7 @@ property-information@^5.0.0:
   dependencies:
     xtend "^4.0.0"
 
-prosemirror-collab@^1.2.2:
+prosemirror-collab@1.2.2, prosemirror-collab@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/prosemirror-collab/-/prosemirror-collab-1.2.2.tgz#8d2c0e82779cfef5d051154bd0836428bd6d9c4a"
   integrity sha512-tBnHKMLgy5Qmx9MYVcLfs3pAyjtcqYYDd9kp3y+LSiQzkhMQDfZSV3NXWe4Gsly32adSef173BvObwfoSQL5MA==

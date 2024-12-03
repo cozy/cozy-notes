@@ -1,8 +1,8 @@
-import React from 'react'
 import { render } from '@testing-library/react'
+import React from 'react'
+import { TestI18n } from 'test/AppLike'
 
 import EditorCorner from './EditorCorner'
-import { TestI18n } from 'test/AppLike'
 
 jest.mock('components/notes/sharing', () => {
   const MockSharing = () => <div data-testid="SharingWidget" />
