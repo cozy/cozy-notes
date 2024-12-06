@@ -1,9 +1,11 @@
 import { AppRoutes } from 'constants/routes'
+import { SHARING_LOCATION } from 'constants/strings'
 
 import * as Sentry from '@sentry/react'
 import { List, Editor, Unshared } from 'components/notes'
 import { NoteProvider } from 'components/notes/NoteProvider'
 import RouteNew from 'components/notes/new-route'
+import { usePreview } from 'hooks/usePreview'
 import { getDataOrDefault } from 'lib/initFromDom'
 import { fetchIfIsNoteReadOnly } from 'lib/utils'
 import { getReturnUrl, getSharedDocument } from 'lib/utils'
@@ -21,7 +23,11 @@ import { BarProvider, BarComponent, BarCenter } from 'cozy-bar'
 import { RealTimeQueries, useClient } from 'cozy-client'
 import CozyDevTools from 'cozy-devtools'
 import flag from 'cozy-flags'
-import { ShareModal } from 'cozy-sharing'
+import {
+  ShareModal,
+  useSharingInfos,
+  OpenSharingLinkFabButton
+} from 'cozy-sharing'
 import BarTitle from 'cozy-ui/transpiled/react/BarTitle'
 import IconSprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { Layout, Main, Content } from 'cozy-ui/transpiled/react/Layout'
@@ -77,11 +83,20 @@ const PrivateContext = () => {
   )
 }
 
+const openSharingLinkFabButtonStyle = {
+  bottom: '4.5rem'
+}
 const PublicContext = () => {
   const client = useClient()
+  const { isMobile } = useBreakpoints()
   const [sharedDocumentId, setSharedDocumentId] = useState(null)
   const [readOnly, setReadOnly] = useState(false)
   const returnUrl = useMemo(() => getReturnUrl(), [])
+  const { loading, isSharingShortcutCreated, discoveryLink } =
+    useSharingInfos(SHARING_LOCATION)
+  const isPreview = usePreview(window.location.pathname)
+  const isAddToMyCozyFabDisplayed =
+    isMobile && isPreview && !loading && !isSharingShortcutCreated
 
   useEffect(() => {
     const fetchData = async () => {
@@ -118,6 +133,13 @@ const PublicContext = () => {
           noteId={sharedDocumentId}
           returnUrl={returnUrl}
         />
+        {isAddToMyCozyFabDisplayed && (
+          <OpenSharingLinkFabButton
+            link={discoveryLink}
+            isSharingShortcutCreated={isSharingShortcutCreated}
+            style={openSharingLinkFabButtonStyle}
+          />
+        )}
       </NoteProvider>
     )
   } else if (sharedDocumentId !== null) {
@@ -141,7 +163,7 @@ const App = ({ isPublic }) => {
     <>
       <HashRouter>
         <Layout monoColumn={true}>
-          <BarComponent />
+          <BarComponent isPublic={isPublic} />
           {!isPublic && isMobile && (
             <BarCenter>
               <BarTitle>{appName}</BarTitle>
