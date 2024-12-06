@@ -83,16 +83,14 @@ const renderApp = function (appLocale, client, isPublic) {
             <CozyProvider client={client}>
               <CozyTheme ignoreCozySettings={isPublic}>
                 <IsPublicContext.Provider value={isPublic}>
-                  {!isPublic && (
-                    <SharingProvider
-                      doctype="io.cozy.files"
-                      documentType="Notes"
-                      previewPath={SHARING_LOCATION}
-                    >
-                      <App isPublic={isPublic} />
-                    </SharingProvider>
-                  )}
-                  {isPublic && <App isPublic={isPublic} />}
+                  <SharingProvider
+                    doctype="io.cozy.files"
+                    documentType="Notes"
+                    previewPath={SHARING_LOCATION}
+                    isPublic={isPublic}
+                  >
+                    <App isPublic={isPublic} />
+                  </SharingProvider>
                 </IsPublicContext.Provider>
               </CozyTheme>
             </CozyProvider>
