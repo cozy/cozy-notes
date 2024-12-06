@@ -1,7 +1,6 @@
 {
-  "extends": "cozy-tsconfig",
-  "exclude": ["node_modules"],
   "compilerOptions": {
+    "baseUrl": ".",
     "paths": {
       "components/*": ["./src/components/*"],
       "lib/*": ["./src/lib/*"],
@@ -13,11 +12,7 @@
       "styles/*": ["./src/styles/*"],
       "types/*": ["./src/types/*"],
       "ui/*": ["./src/ui/*"],
-      "@atlaskit/editor-core": [
-        "../node_modules/cozy-editor-core/src/index.ts"
-      ],
-      "@atlaskit/editor-core/*": ["../node_modules/cozy-editor-core/src/*"]
-    },
+    }
   },
-  "include": ["./src/**/*"]
+  "exclude": ["node_modules", "build"]
 }

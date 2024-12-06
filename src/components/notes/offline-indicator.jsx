@@ -1,14 +1,14 @@
+import styles from 'components/notes/offline-indicator.styl'
 import React from 'react'
 import ReactDOM from 'react-dom'
+
 import Grid from 'cozy-ui/transpiled/react/Grid'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import Chip from 'cozy-ui/transpiled/react/deprecated/Chip'
 import Tooltip from 'cozy-ui/transpiled/react/Tooltip'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import Chip from 'cozy-ui/transpiled/react/deprecated/Chip'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { withStyles } from 'cozy-ui/transpiled/react/styles'
-
-import styles from 'components/notes/offline-indicator.styl'
 
 const tooltipStyles = {
   tooltipPlacementBottom: {

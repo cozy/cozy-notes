@@ -1,8 +1,8 @@
+import { renderHook } from '@testing-library/react-hooks'
 import React from 'react'
+
 import useUser from './useUser'
 import IsPublicContext from '../components/IsPublicContext'
-
-import { renderHook } from '@testing-library/react-hooks'
 
 function withPublicContext(value) {
   return props => (

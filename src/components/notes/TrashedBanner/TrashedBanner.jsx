@@ -1,25 +1,22 @@
+import { DestroyConfirm } from 'components/notes/TrashedBanner/DestroyConfirm'
 import React, { useState } from 'react'
 
+import { useClient } from 'cozy-client'
 import Alert from 'cozy-ui/transpiled/react/Alert'
 import Buttons from 'cozy-ui/transpiled/react/Buttons'
-import TrashDuotoneIcon from 'cozy-ui/transpiled/react/Icons/TrashDuotone'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import { useClient } from 'cozy-client'
+import TrashDuotoneIcon from 'cozy-ui/transpiled/react/Icons/TrashDuotone'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-
-import { DestroyConfirm } from 'components/notes/TrashedBanner/DestroyConfirm'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 const TrashedBanner = ({ noteId, isPublic, returnUrl }) => {
   const { t } = useI18n()
   const client = useClient()
   const { showAlert } = useAlert()
   const { isMobile } = useBreakpoints()
-  const [
-    isDestroyConfirmationDisplayed,
-    setDestroyConfirmationDisplayed
-  ] = useState(false)
+  const [isDestroyConfirmationDisplayed, setDestroyConfirmationDisplayed] =
+    useState(false)
 
   const [isBusy, setBusy] = useState(false)
 

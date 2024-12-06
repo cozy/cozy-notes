@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { Empty } from 'cozy-ui/transpiled/react'
 import Button from 'cozy-ui/transpiled/react/Buttons'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'

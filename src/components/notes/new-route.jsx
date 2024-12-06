@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
-import { useClient } from 'cozy-client'
 import { createNoteDocument } from 'lib/utils'
-import Spinner from 'cozy-ui/transpiled/react/Spinner'
-import { generateWebLink } from 'cozy-client'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+
+import { useClient } from 'cozy-client'
+import { generateWebLink } from 'cozy-client'
+import Spinner from 'cozy-ui/transpiled/react/Spinner'
 
 const NewRoute = () => {
   const client = useClient()

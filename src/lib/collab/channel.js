@@ -2,6 +2,7 @@ import { EventEmitter2 } from 'eventemitter2'
 import { getVersion, sendableSteps } from 'prosemirror-collab'
 
 import flag from 'cozy-flags'
+
 import { setDebugValue } from '../debug'
 
 const minimumBackoff = 128 // 128ms

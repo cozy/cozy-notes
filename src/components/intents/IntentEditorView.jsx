@@ -1,9 +1,8 @@
+import SaveButton from 'components/intents/SaveButton'
+import EditorView from 'components/notes/editor-view'
 import React, { useState } from 'react'
 
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-
-import EditorView from 'components/notes/editor-view'
-import SaveButton from 'components/intents/SaveButton'
 
 const IntentEditorView = () => {
   const { t } = useI18n()

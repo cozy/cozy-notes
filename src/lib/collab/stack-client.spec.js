@@ -1,9 +1,8 @@
+import { createMockClient } from 'cozy-client/dist/mock'
+
 import ServiceClient from './stack-client'
 
 // eslint-disable-next-line no-unused-vars
-import CozyRealtime from 'cozy-realtime'
-
-import { createMockClient } from 'cozy-client/dist/mock'
 
 const userId = 'myuser'
 const noteId = 'e3a0921e38f9687cd9e8c60a3c04f9d0'

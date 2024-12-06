@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
-import { CozyFolder } from 'cozy-doctypes'
 import { getDriveLink } from 'lib/utils'
+import { useState, useEffect } from 'react'
+
+import { CozyFolder } from 'cozy-doctypes'
 
 const notesFolderDocument = {
   _type: 'io.cozy.apps',

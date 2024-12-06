@@ -1,9 +1,10 @@
-import get from 'lodash/get'
-import { generateWebLink } from 'cozy-client'
-import { getDataset, getDataOrDefault } from './initFromDom'
 import { schemaOrdered, schemaVersion } from 'lib/collab/schema'
+import get from 'lodash/get'
+
+import { generateWebLink } from 'cozy-client'
 import { models } from 'cozy-client'
 
+import { getDataset, getDataOrDefault } from './initFromDom'
 import manifest from '../../manifest.webapp'
 
 export function getShortNameFromClient(client) {

@@ -1,13 +1,13 @@
-import React, { useContext } from 'react'
-import PropTypes from 'prop-types'
-
-import { deconstructCozyWebLinkWithSlug, models, useClient } from 'cozy-client'
-import { Button, ButtonLink } from 'cozy-ui/transpiled/react/deprecated/Button'
-import AppLinker from 'cozy-ui/transpiled/react/AppLinker'
+import { Slugs } from 'constants/strings'
 
 import IsPublicContext from 'components/IsPublicContext'
 import { getFolderLink } from 'lib/utils'
-import { Slugs } from 'constants/strings'
+import PropTypes from 'prop-types'
+import React, { useContext } from 'react'
+
+import { deconstructCozyWebLinkWithSlug, models, useClient } from 'cozy-client'
+import AppLinker from 'cozy-ui/transpiled/react/AppLinker'
+import { Button, ButtonLink } from 'cozy-ui/transpiled/react/deprecated/Button'
 
 /**
  * Simple fake event to detect if the handler
@@ -34,7 +34,7 @@ function createOnClick(requestToLeave, href, onClick) {
     if (onClick) onClick(ev)
     if (!ev.prevented) document.location = href
   }
-  return function(ev) {
+  return function (ev) {
     ev.preventDefault()
     requestToLeave(go)
   }

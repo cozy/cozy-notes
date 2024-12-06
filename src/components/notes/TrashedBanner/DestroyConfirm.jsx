@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 
 import { useClient } from 'cozy-client'
-import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Button from 'cozy-ui/transpiled/react/Buttons'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import ForbiddenIcon from 'cozy-ui/transpiled/react/Icons/Forbidden'
+import RestoreIcon from 'cozy-ui/transpiled/react/Icons/Restore'
 import List from 'cozy-ui/transpiled/react/List'
 import ListItem from 'cozy-ui/transpiled/react/ListItem'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
-import ForbiddenIcon from 'cozy-ui/transpiled/react/Icons/Forbidden'
-import RestoreIcon from 'cozy-ui/transpiled/react/Icons/Restore'
-import Icon from 'cozy-ui/transpiled/react/Icon'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 const DestroyConfirm = ({ noteId, onCancel, onConfirm }) => {
   const { t } = useI18n()

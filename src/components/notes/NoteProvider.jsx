@@ -1,3 +1,7 @@
+import useServiceClient from 'hooks/useServiceClient'
+import useUser from 'hooks/useUser'
+import { getSchemaVersion, schemaOrdered } from 'lib/collab/schema'
+import { buildNoteByIdQuery } from 'lib/queries'
 import React, {
   createContext,
   useContext,
@@ -7,11 +11,6 @@ import React, {
 } from 'react'
 
 import { useClient, useQuery } from 'cozy-client'
-
-import useUser from 'hooks/useUser'
-import useServiceClient from 'hooks/useServiceClient'
-import { buildNoteByIdQuery } from 'lib/queries'
-import { getSchemaVersion, schemaOrdered } from 'lib/collab/schema'
 
 const NoteContext = createContext()
 

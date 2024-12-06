@@ -1,5 +1,5 @@
-import { useMemo } from 'react'
 import ServiceClient from 'lib/collab/stack-client'
+import { useMemo } from 'react'
 
 function useServiceClient({ userId, userName, cozyClient }) {
   return useMemo(() => {

@@ -1,5 +1,10 @@
+import EmptyComponent from 'components/notes/List/EmptyComponent'
+import NoteRow from 'components/notes/List/NoteRow'
+import styles from 'components/notes/List/list.styl'
 import React from 'react'
+import { Breakpoints } from 'types/enums'
 
+import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import {
   Table,
   TableHead,
@@ -8,14 +13,9 @@ import {
   TableHeader,
   TableCell
 } from 'cozy-ui/transpiled/react/deprecated/Table'
-import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import EmptyComponent from 'components/notes/List/EmptyComponent'
-import NoteRow from 'components/notes/List/NoteRow'
-import styles from 'components/notes/List/list.styl'
 import { WithBreakpoints } from './WithBreakpoints'
-import { Breakpoints } from 'types/enums'
 
 const EmptyTableRow = () => (
   <TableRow className={styles.tableSpecialRow}>

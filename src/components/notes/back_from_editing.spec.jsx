@@ -1,5 +1,6 @@
-import React from 'react'
 import { render } from '@testing-library/react'
+import React from 'react'
+
 import BackFromEditing from './back_from_editing'
 
 describe('BackFromEditing', () => {

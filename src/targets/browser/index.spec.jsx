@@ -1,5 +1,6 @@
-import { initApp } from './index'
 import { getDataset } from 'lib/initFromDom'
+
+import { initApp } from './index'
 
 jest.mock('lib/initFromDom', () => ({
   ...jest.requireActual('lib/initFromDom'),

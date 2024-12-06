@@ -23,7 +23,7 @@ function useForceSync({ doc, collabProvider }) {
   // Sync on unload will probably be stopped by the browser,
   // as most async code on unload, but let's try anyway
   const emergencySync = useCallback(
-    function() {
+    function () {
       if (noteId && serviceClient) {
         serviceClient.sync(noteId) // force a server sync
       }

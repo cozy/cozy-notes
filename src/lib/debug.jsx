@@ -1,10 +1,10 @@
-import { useEffect } from 'react'
-import useFlag from 'cozy-flags/dist/useFlag'
-import set from 'lodash/set'
 import get from 'lodash/get'
-import flag from 'cozy-flags'
-
+import set from 'lodash/set'
 import { getVersion, sendableSteps } from 'prosemirror-collab'
+import { useEffect } from 'react'
+
+import flag from 'cozy-flags'
+import useFlag from 'cozy-flags/dist/useFlag'
 
 /**
  * Sets a value in a global debug object

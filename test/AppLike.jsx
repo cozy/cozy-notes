@@ -1,8 +1,9 @@
 import React from 'react'
 
 import { CozyProvider, createMockClient } from 'cozy-client'
-import { I18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { I18n } from 'cozy-ui/transpiled/react/providers/I18n'
+
 import en from '../src/locales/en.json'
 
 const TestI18n = ({ children }) => {

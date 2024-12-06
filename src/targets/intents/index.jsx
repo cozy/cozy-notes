@@ -1,32 +1,32 @@
+/* eslint-disable import/order */
 import 'cozy-ui/dist/cozy-ui.utils.min.css'
 import 'cozy-ui/transpiled/react/stylesheet.css'
 import 'cozy-bar/dist/stylesheet.css'
 import 'cozy-sharing/dist/stylesheet.css'
 import 'styles/index.css'
 
+import { fr, en } from '@atlaskit/editor-core/i18n'
+import IntentEditorView from 'components/intents/IntentEditorView'
+import IntentProvider from 'components/intents/IntentProvider'
+import { getDataset, getDataOrDefault } from 'lib/initFromDom'
 import React from 'react'
 import { render } from 'react-dom'
+import { IntlProvider, addLocaleData } from 'react-intl'
+
+import CozyClient, { CozyProvider } from 'cozy-client'
+import flag from 'cozy-flags'
+import { WebviewIntentProvider } from 'cozy-intent'
+import Intents from 'cozy-interapp'
+import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
+import I18n from 'cozy-ui/transpiled/react/providers/I18n'
 import {
   StylesProvider,
   createGenerateClassName
 } from 'cozy-ui/transpiled/react/styles'
-import { IntlProvider, addLocaleData } from 'react-intl'
-import { fr, en } from '@atlaskit/editor-core/i18n'
-
-import { WebviewIntentProvider } from 'cozy-intent'
-import Intents from 'cozy-interapp'
-import CozyClient, { CozyProvider } from 'cozy-client'
-import flag from 'cozy-flags'
-import I18n from 'cozy-ui/transpiled/react/providers/I18n'
-import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
-import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 const manifest = require('../../../manifest.webapp')
 const frenchAtlaskitCozy = require(`locales/atlassian_missing_french.json`)
-
-import { getDataset, getDataOrDefault } from 'lib/initFromDom'
-import IntentEditorView from 'components/intents/IntentEditorView'
-import IntentProvider from 'components/intents/IntentProvider'
 
 /*
 With MUI V4, it is possible to generate deterministic class names.

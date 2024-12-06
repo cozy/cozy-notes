@@ -1,19 +1,20 @@
-import React from 'react'
+import { Slugs } from 'constants/strings'
+
+import { useFetchIcons } from 'hooks/useFetchIcons'
 import PropTypes from 'prop-types'
+import React from 'react'
+import { Breakpoints } from 'types/enums'
 
 import { models } from 'cozy-client'
-import AppLinker from 'cozy-ui/transpiled/react/AppLinker'
 import AppIcon from 'cozy-ui/transpiled/react/AppIcon'
+import AppLinker from 'cozy-ui/transpiled/react/AppLinker'
 import Divider from 'cozy-ui/transpiled/react/Divider'
 import Link from 'cozy-ui/transpiled/react/Link'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 
-import { Slugs } from 'constants/strings'
-import { Breakpoints } from 'types/enums'
-import { WithBreakpoints } from './notes/List/WithBreakpoints'
-import styles from './header_menu.styl'
-import { useFetchIcons } from 'hooks/useFetchIcons'
 import { HeaderNotePath } from './HeaderNotePath'
+import styles from './header_menu.styl'
+import { WithBreakpoints } from './notes/List/WithBreakpoints'
 
 /**
  * HeaderMenu component.

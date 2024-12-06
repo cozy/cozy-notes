@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect } from 'react'
 import throttle from 'lodash/throttle'
+import { useState, useCallback, useEffect } from 'react'
 
 const throttleValue = 200 // milliseconds
 

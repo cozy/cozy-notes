@@ -906,7 +906,7 @@ export const marks = [
 ]
 
 function orderedToObject(ordered) {
-  return ordered.reduce(function(acc, cur) {
+  return ordered.reduce(function (acc, cur) {
     acc[cur[0]] = cur[1]
     return acc
   }, {})

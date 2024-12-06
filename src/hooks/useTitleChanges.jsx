@@ -1,5 +1,5 @@
-import { useMemo, useEffect, useCallback } from 'react'
 import { getAppFullName } from 'lib/utils'
+import { useMemo, useEffect, useCallback } from 'react'
 
 function useTitleChanges({ noteId, title, setTitle, serviceClient }) {
   // Title change because of a local change from the editor

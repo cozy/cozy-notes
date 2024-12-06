@@ -125,5 +125,8 @@
     "cancel": "Cancel",
     "delete": "Delete permanently",
     "deleteError": "An error has occurred, please try again."
+  },
+  "MoreButton": {
+    "more": "More"
   }
 }

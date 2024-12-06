@@ -1,10 +1,11 @@
-import React from 'react'
 import { render, screen } from '@testing-library/react'
-import { getSchemaVersion } from 'lib/collab/schema'
 import { NoteProvider, useNoteContext } from 'components/notes/NoteProvider'
-import { AppLike } from 'test/AppLike'
-import { createMockClient } from 'cozy-client'
 import useServiceClient from 'hooks/useServiceClient'
+import { getSchemaVersion } from 'lib/collab/schema'
+import React from 'react'
+import { AppLike } from 'test/AppLike'
+
+import { createMockClient } from 'cozy-client'
 
 const NEW_SCHEMA_VERSION = 1
 

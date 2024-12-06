@@ -1,14 +1,14 @@
-import React from 'react'
-
-import Stack from 'cozy-ui/transpiled/react/Stack'
-import { Query, Q } from 'cozy-client'
-import { BarRight } from 'cozy-bar'
-
-import Add, { AddMobile } from 'components/notes/add'
 import AppTitle from 'components/notes/List/AppTitle'
 import List from 'components/notes/List/List'
 import styles from 'components/notes/List/list.styl'
+import Add, { AddMobile } from 'components/notes/add'
+import React from 'react'
 import { Breakpoints } from 'types/enums'
+
+import { BarRight } from 'cozy-bar'
+import { Query, Q } from 'cozy-client'
+import Stack from 'cozy-ui/transpiled/react/Stack'
+
 import { WithBreakpoints } from './WithBreakpoints'
 
 const shouldDisplayAddButton = (fetchStatus, notes) =>

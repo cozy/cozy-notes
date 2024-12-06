@@ -1,6 +1,7 @@
-import { useMemo, useContext } from 'react'
 import IsPublicContext from 'components/IsPublicContext'
 import { getShortNameFromClient, getUserNameFromUrl } from 'lib/utils'
+import { useMemo, useContext } from 'react'
+
 import { useClient } from 'cozy-client'
 
 function useUser() {

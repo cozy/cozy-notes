@@ -1,5 +1,6 @@
-import { Channel } from './channel'
 import { getVersion, sendableSteps } from 'prosemirror-collab'
+
+import { Channel } from './channel'
 
 const noteId = 'myNoteId'
 const config = { noteId }
@@ -43,7 +44,7 @@ describe('Channel', () => {
       it('should resolve immediatly when no failures', async () => {
         const channel = new Channel(config, service)
         const race = Promise.race([
-          new Promise(function(resolve) {
+          new Promise(function (resolve) {
             window.setTimeout(() => resolve('backoff is > 100ms'), 100)
           }),
           channel.afterBackoff().then(() => 'backoff is < 100ms')
@@ -56,7 +57,7 @@ describe('Channel', () => {
         channel.increaseBackoff()
         channel.increaseBackoff()
         const race = Promise.race([
-          new Promise(function(resolve) {
+          new Promise(function (resolve) {
             window.setTimeout(() => resolve('backoff is > 50ms'), 50)
           }),
           channel.afterBackoff().then(() => 'backoff is < 50ms')
@@ -74,7 +75,7 @@ describe('Channel', () => {
         channel.increaseBackoff()
         channel.resetBackoff()
         const race = Promise.race([
-          new Promise(function(resolve) {
+          new Promise(function (resolve) {
             window.setTimeout(() => resolve('backoff is > 100ms'), 100)
           }),
           channel.afterBackoff().then(() => 'backoff is < 100ms')
@@ -230,7 +231,7 @@ describe('Channel', () => {
         channel.increaseBackoff()
         channel.increaseBackoff()
         const data = channel.processQueue()
-        const time = new Promise(function(resolve) {
+        const time = new Promise(function (resolve) {
           window.setTimeout(() => resolve(), 100)
         })
         const race = Promise.race([
@@ -462,7 +463,7 @@ describe('Channel', () => {
       const channel = new Channel(config, service)
       expect(channel.hasQueuedSteps()).toBeFalsy()
       const race = Promise.race([
-        new Promise(function(resolve) {
+        new Promise(function (resolve) {
           window.setTimeout(() => resolve('ensureEmptyQueue is > 50ms'), 50)
         }),
         channel.ensureEmptyQueue().then(() => 'ensureEmptyQueue is < 50ms')
@@ -517,7 +518,7 @@ describe('Channel', () => {
       // eslint-disable-next-line promise/catch-or-return, promise/no-callback-in-promise
       channel.ensureEmptyQueue().then(callback)
       const process = channel.processQueue()
-      await new Promise(function(resolve) {
+      await new Promise(function (resolve) {
         window.setTimeout(() => resolve(), 500)
       })
       expect(callback).not.toHaveBeenCalled()

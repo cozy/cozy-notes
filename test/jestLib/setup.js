@@ -7,10 +7,10 @@ global.requestAnimationFrame = cb => {
 }
 
 expect.addSnapshotSerializer({
-  test: function(val) {
+  test: function (val) {
     return val && typeof val === 'string' && val.indexOf('mui-') >= 0
   },
-  print: function(val) {
+  print: function (val) {
     let str = val
     str = str.replace(/mui-[0-9]*/g, 'mui-00000')
 

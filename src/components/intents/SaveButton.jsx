@@ -1,14 +1,13 @@
-import React, { useState } from 'react'
-
-import log from 'cozy-logger'
-import { useClient } from 'cozy-client'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import Buttons from 'cozy-ui/transpiled/react/Buttons'
-import { makeStyles } from 'cozy-ui/transpiled/react/styles'
-
+import { useIntent } from 'components/intents/IntentProvider'
 import useServiceClient from 'hooks/useServiceClient'
 import useUser from 'hooks/useUser'
-import { useIntent } from 'components/intents/IntentProvider'
+import React, { useState } from 'react'
+
+import { useClient } from 'cozy-client'
+import log from 'cozy-logger'
+import Buttons from 'cozy-ui/transpiled/react/Buttons'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 
 const useStyles = makeStyles({
   root: {
