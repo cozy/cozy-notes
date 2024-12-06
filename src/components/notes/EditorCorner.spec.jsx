@@ -2,6 +2,8 @@ import { render } from '@testing-library/react'
 import React from 'react'
 import { TestI18n } from 'test/AppLike'
 
+import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoints'
+
 import EditorCorner from './EditorCorner'
 
 jest.mock('components/notes/sharing', () => {
@@ -17,14 +19,16 @@ describe('EditorCorner', () => {
     title = ''
   } = {}) => {
     return render(
-      <TestI18n>
-        <EditorCorner
-          file={file}
-          isPublic={isPublic}
-          isReadOnly={isReadOnly}
-          title={title}
-        />
-      </TestI18n>
+      <BreakpointsProvider>
+        <TestI18n>
+          <EditorCorner
+            file={file}
+            isPublic={isPublic}
+            isReadOnly={isReadOnly}
+            title={title}
+          />
+        </TestI18n>
+      </BreakpointsProvider>
     )
   }
   it('shows the sharing widget on private views - readOnly', () => {
@@ -46,7 +50,7 @@ describe('EditorCorner', () => {
       <div>
         <div>
           <svg
-            class="styles__icon___23x3R"
+            class="u-ml-half styles__icon___23x3R"
             height="16"
             style="fill: var(--primaryTextColor);"
             title="This note is in read-only mode."
