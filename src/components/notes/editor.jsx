@@ -23,6 +23,7 @@ import { useWindowEventListener } from 'rooks/dist/esm/hooks/useWindowEventListe
 
 import { RealTimeQueries, useClient, useQuery } from 'cozy-client'
 import { SharingBannerPlugin } from 'cozy-sharing'
+import { useSharingInfos } from 'cozy-sharing'
 import useConfirmExit from 'cozy-ui/transpiled/react/hooks/useConfirmExit'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -33,6 +34,8 @@ export default function Editor(props) {
   const cozyClient = useClient()
   const { noteId, readOnly } = props
   const { t } = useI18n()
+  const { loading, isSharingShortcutCreated } =
+    useSharingInfos(SHARING_LOCATION)
   const bannerRef = useRef()
   const location = useLocation()
   const fileQuery = buildFileByIdQuery(noteId)
@@ -92,6 +95,8 @@ export default function Editor(props) {
   const isReadOnly = readOnly || isTrashed
 
   const isPreview = usePreview(window.location.pathname)
+  const isSharingBannerDisplayed =
+    isPreview && !loading && !isSharingShortcutCreated
 
   useDebugValue('client', cozyClient)
   useDebugValue('notes.service', serviceClient)
@@ -142,7 +147,7 @@ export default function Editor(props) {
                     isPublic={isPublic}
                     returnUrl={returnUrl}
                   />
-                ) : isPreview ? (
+                ) : isSharingBannerDisplayed ? (
                   <SharingBannerPlugin previewPath={SHARING_LOCATION} />
                 ) : null
               }
