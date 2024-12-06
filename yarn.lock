@@ -7914,10 +7914,10 @@ cozy-scripts@^8.3.0:
     webpack-dev-server "3.10.3"
     webpack-merge "4.2.2"
 
-cozy-sharing@^16.8.0:
-  version "16.8.0"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-16.8.0.tgz#a0b68f073801ccdd2f04dff58313e8e9539a99f6"
-  integrity sha512-NL9n9+hfpMKsV20A7MhT9QOFJ73OPlNHVuVVx4jIsfk90Hu2M7b6dqlskU9FITd+vaoas+ccq5M6SaNkl6HMKw==
+cozy-sharing@^16.13.0:
+  version "16.13.0"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-16.13.0.tgz#6229fed4cb04bbb1ddc23021dcef15348fb40002"
+  integrity sha512-MjiQEFYQicvJa7dCy0hr8AjGU7hxB434sAzEdvEX/dpYgvywu/3B8u4e5FaGez0eOrLsIDomP8B7pT9lA/spaQ==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     classnames "^2.2.6"
@@ -7942,10 +7942,10 @@ cozy-tsconfig@1.2.0:
   resolved "https://registry.yarnpkg.com/cozy-tsconfig/-/cozy-tsconfig-1.2.0.tgz#17e61f960f139fae4d26cbac2254b9ab632b269e"
   integrity sha512-TRHnY9goF3FzVlUbP7BcHxuN2XAA4AmppT4fHHZmTKaSwYTByVR1Al+riFMDbce94kJZ1wzl9WNLWQuqzGZ6Cw==
 
-cozy-ui@113.7.0:
-  version "113.7.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-113.7.0.tgz#11b897adc8158bc0c1ab36409312b0b817c88869"
-  integrity sha512-7TTBVWOh2km8s/Q7suJl9WGbU7Ebx0fQdwzPjfYod8PkBXHn1G02ndJCkqcNSfA0VE4oD4JS+BGfbK9ZVck/dA==
+cozy-ui@113.8.0:
+  version "113.8.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-113.8.0.tgz#bb5fa11b86e2b51b92973a517554c048edbcfa77"
+  integrity sha512-VNfLwjxZ9SRRzg0FvJ80AkduTx+5wZkCKu4OheWLrtaX0VB9BVm4EB89jYplL7orO/fEEPvDdOjhZk1zUlHTBw==
   dependencies:
     "@babel/runtime" "^7.3.4"
     "@material-ui/core" "4.12.3"
