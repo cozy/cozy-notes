@@ -112,7 +112,7 @@ const NoteRow = ({ note, f, t, client }) => {
         <WithBreakpoints hideOn={Breakpoints.Mobile}>
           <TableCell className={styles.tableCell}>
             {t('Notes.List.at', {
-              date: f(note.updated_at, 'DD MMMM'),
+              date: f(note.updated_at, 'dd LLLL'),
               time: f(note.updated_at, 'HH:mm')
             })}
           </TableCell>
