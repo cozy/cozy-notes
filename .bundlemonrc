@@ -3,27 +3,27 @@
   "files": [
     {
       "path": "app/notes.<hash>.js",
-      "maxSize": "70 KB"
+      "maxPercentIncrease": 10
     },
     {
       "path": "intents/notes.<hash>.js",
-      "maxSize": "50 KB"
+      "maxPercentIncrease": 10
     },
     {
       "path": "public/notes.<hash>.js",
-      "maxSize": "40 KB"
+      "maxPercentIncrease": 10
     },
     {
       "path": "vendors/notes.<hash>.js",
-      "maxSize": "3 MB"
+      "maxPercentIncrease": 10
     },
     {
       "path": "app-notes.<hash>.min.css",
-      "maxSize": "4 KB"
+      "maxPercentIncrease": 10
     },
     {
       "path": "vendors-notes.<hash>.0.min.css",
-      "maxSize": "36 KB"
+      "maxPercentIncrease": 10
     }
   ],
   "groups": [
