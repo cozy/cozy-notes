@@ -29,7 +29,7 @@ import { Document } from 'cozy-doctypes'
 import flag from 'cozy-flags'
 import { WebviewIntentProvider } from 'cozy-intent'
 import { RealtimePlugin } from 'cozy-realtime'
-import SharingProvider from 'cozy-sharing'
+import SharingProvider, { NativeFileSharingProvider } from 'cozy-sharing'
 import 'cozy-sharing/dist/stylesheet.css'
 import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
 import I18n from 'cozy-ui/transpiled/react/providers/I18n'
@@ -89,7 +89,9 @@ const renderApp = function (appLocale, client, isPublic) {
                     previewPath={SHARING_LOCATION}
                     isPublic={isPublic}
                   >
-                    <App isPublic={isPublic} />
+                    <NativeFileSharingProvider>
+                      <App isPublic={isPublic} />
+                    </NativeFileSharingProvider>
                   </SharingProvider>
                 </IsPublicContext.Provider>
               </CozyTheme>

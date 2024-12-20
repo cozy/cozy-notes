@@ -10,7 +10,11 @@ import { Breakpoints } from 'types/enums'
 
 import { withClient } from 'cozy-client'
 import { CozyFile } from 'cozy-doctypes'
-import { SharedRecipients } from 'cozy-sharing'
+import {
+  SharedRecipients,
+  useNativeFileSharing,
+  shareNative
+} from 'cozy-sharing'
 import ActionsMenu from 'cozy-ui/transpiled/react/ActionsMenu'
 import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import Icon from 'cozy-ui/transpiled/react/Icon'
@@ -33,6 +37,8 @@ const NoteRow = ({ note, f, t, client }) => {
   const { filename, extension } = CozyFile.splitFilename(note)
   const [isMenuOpen, setMenuOpen] = useState(false)
   const { showAlert } = useAlert()
+  const { isNativeFileSharingAvailable, shareFilesNative } =
+    useNativeFileSharing()
 
   const openMenu = useCallback(
     e => {
@@ -67,8 +73,10 @@ const NoteRow = ({ note, f, t, client }) => {
     })
   }
 
-  const actions = makeActions([shareNote, deleteNote], {
+  const actions = makeActions([shareNote, shareNative, deleteNote], {
     onDeleteNote,
+    isNativeFileSharingAvailable,
+    shareFilesNative,
     onShareNote,
     t
   })
