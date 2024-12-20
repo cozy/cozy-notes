@@ -5,19 +5,17 @@ import NoteIcon from 'assets/icons/icon-note-32.svg'
 import styles from 'components/notes/List/list.styl'
 import { generateReturnUrlToNotesIndex, getDriveLink } from 'lib/utils'
 import React, { useState, useCallback, useMemo } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Breakpoints } from 'types/enums'
 
 import { withClient } from 'cozy-client'
 import { CozyFile } from 'cozy-doctypes'
 import { SharedRecipients } from 'cozy-sharing'
+import ActionsMenu from 'cozy-ui/transpiled/react/ActionsMenu'
+import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconButton from 'cozy-ui/transpiled/react/IconButton'
-import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'
 import Typography from 'cozy-ui/transpiled/react/Typography'
-import ActionMenu, {
-  ActionMenuItem
-} from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import { TableRow, TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -25,10 +23,13 @@ import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { NotePath } from './NotePath'
 import { WithBreakpoints } from './WithBreakpoints'
+import { deleteNote } from './actions/deleteNote'
+import { shareNote } from './actions/shareNote'
 
 const NoteRow = ({ note, f, t, client }) => {
   const { isMobile } = useBreakpoints()
   const location = useLocation()
+  const navigate = useNavigate()
   const { filename, extension } = CozyFile.splitFilename(note)
   const [isMenuOpen, setMenuOpen] = useState(false)
   const { showAlert } = useAlert()
@@ -43,7 +44,7 @@ const NoteRow = ({ note, f, t, client }) => {
 
   const closeMenu = useCallback(() => setMenuOpen(false), [setMenuOpen])
 
-  const deleteNote = useCallback(async () => {
+  const onDeleteNote = useCallback(async () => {
     try {
       await client.destroy(note)
       setMenuOpen(false)
@@ -53,12 +54,31 @@ const NoteRow = ({ note, f, t, client }) => {
     }
   }, [client, note, t, setMenuOpen, showAlert])
 
+  const onShareNote = () => {
+    navigate(AppRoutes.ShareFromList, {
+      state: {
+        backgroundLocation: location,
+        shareModalProps: {
+          document: { ...note, name: note.attributes.name },
+          documentType: DocumentTypes.Notes,
+          sharingDesc: note.attributes.name
+        }
+      }
+    })
+  }
+
+  const actions = makeActions([shareNote, deleteNote], {
+    onDeleteNote,
+    onShareNote,
+    t
+  })
+
   const drivePath = useMemo(
     () => getDriveLink(client, note.dir_id),
     [client, note]
   )
 
-  const menuTriggerRef = React.createRef()
+  const menuTriggerRef = React.useRef()
 
   const goToNote = async () => {
     try {
@@ -155,44 +175,14 @@ const NoteRow = ({ note, f, t, client }) => {
       </TableRow>
 
       {isMenuOpen && (
-        <ActionMenu
+        <ActionsMenu
+          open
+          ref={menuTriggerRef}
           onClose={closeMenu}
-          anchorElRef={menuTriggerRef}
-          popperOptions={{
-            strategy: 'fixed'
-          }}
-        >
-          <Link
-            style={{ color: 'var(--primaryTextColor)' }}
-            className={styles.actionMenuItem}
-            onClick={closeMenu}
-            to={AppRoutes.ShareFromList}
-            state={{
-              backgroundLocation: location,
-              shareModalProps: {
-                document: { ...note, name: note.attributes.name },
-                documentType: DocumentTypes.Notes,
-                sharingDesc: note.attributes.name
-              }
-            }}
-          >
-            <ActionMenuItem
-              left={<Icon icon={ShareIcon} />}
-              autoclose={true}
-              right={
-                <WithBreakpoints showOn={Breakpoints.Mobile}>
-                  <SharedRecipients docId={note.id} size="small" />
-                </WithBreakpoints>
-              }
-            >
-              {t('Notes.Files.share.cta')}
-            </ActionMenuItem>
-          </Link>
-
-          <ActionMenuItem onClick={deleteNote} left={<Icon icon="trash" />}>
-            {t('Notes.Delete.delete_note')}
-          </ActionMenuItem>
-        </ActionMenu>
+          actions={actions}
+          docs={[note]}
+          autoClose
+        ></ActionsMenu>
       )}
     </>
   )
