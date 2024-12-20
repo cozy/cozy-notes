@@ -6364,10 +6364,10 @@ babel-preset-cozy-app@1.9.2:
     browserslist-config-cozy "^0.3.1"
     lodash "4.17.19"
 
-babel-preset-cozy-app@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/babel-preset-cozy-app/-/babel-preset-cozy-app-2.0.2.tgz#057da4ac68b1340a58cde18dbd40e67e04f3b998"
-  integrity sha512-D7+LE5zVDFhD9fxfhjERr2qxfxf+pc8w6RWe5mV/bS5Hz2iULNlScslg2Pbz+U5gHQtxysxmwQYz8ufjZmfFbg==
+babel-preset-cozy-app@^2.8.1:
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/babel-preset-cozy-app/-/babel-preset-cozy-app-2.8.1.tgz#6c14bcdfee86195044907e35fb524c4fbdd66f65"
+  integrity sha512-ymg/4wfntdxJrxlp25edVtg33jpcpipiZtUhmJL/YK0cON9wLBmq2I+dVAaqMG2VFQjViXnegxXLew59uU8dxg==
   dependencies:
     "@babel/core" "7.16.12"
     "@babel/eslint-parser" "^7.16.3"
@@ -6379,9 +6379,9 @@ babel-preset-cozy-app@^2.0.2:
     "@babel/preset-react" "^7.16.0"
     "@babel/preset-typescript" "^7.16.0"
     "@babel/runtime" "^7.16.3"
-    browserslist-config-cozy "^0.4.0"
+    browserslist-config-cozy "^0.11.1"
     lodash "^4.17.21"
-    typescript "^4.5.2"
+    typescript "5.5.2"
 
 babel-preset-current-node-syntax@^1.0.0:
   version "1.0.1"
@@ -6710,15 +6710,15 @@ browserify-zlib@^0.2.0:
   dependencies:
     pako "~1.0.5"
 
+browserslist-config-cozy@^0.11.1:
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/browserslist-config-cozy/-/browserslist-config-cozy-0.11.1.tgz#c0fd45c5e95f3f110facc7e7721f875103ac7364"
+  integrity sha512-w0YdkvnZtJhO9Cb5z7t0Fc+kU0JZiEUFCJkdJpxktJAU580NHuRIEw0UdV7HJuVnLfBYmPx4Ew4g/fUi5VXL3A==
+
 browserslist-config-cozy@^0.3.1:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/browserslist-config-cozy/-/browserslist-config-cozy-0.3.2.tgz#0a06ed1357480e4e90bbe826aa3159c7e8bc85b3"
   integrity sha512-d3wUIrKK8OYUPpgY3FJdb2I3xoDLtia7s2hhNfVUvQMldhw/xivmbtrPlkDdtsOjXa/SXKNhJT45uiS1QOhqVg==
-
-browserslist-config-cozy@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/browserslist-config-cozy/-/browserslist-config-cozy-0.4.0.tgz#0b3fd831ce59c69e70b799a4e57a206535468878"
-  integrity sha512-t2q4UoWotfnT9Zw/GKXgSh0nMyvUCQEji+EObSQXsUCnEwhac8Ae3AJYd2ySsEHZ/ufEX8f6kR6jPbWJqBpUUw==
 
 browserslist@^4.11.1, browserslist@^4.16.6, browserslist@^4.3.4:
   version "4.16.7"
@@ -7625,7 +7625,7 @@ cozy-device-helper@^2.1.0:
   dependencies:
     lodash "^4.17.19"
 
-cozy-device-helper@^3.7.0, cozy-device-helper@^3.7.1:
+cozy-device-helper@^3.7.1:
   version "3.7.1"
   resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-3.7.1.tgz#59f11ab3ab92335525a767e78f983b07eeaf4eea"
   integrity sha512-D0zkEFynUrICNhQixyyYGhRHTwgJL+pf7XtmTwjKePIn2pNHKw5V64IhGg9uLYf6tI9uivkUKvZvFYuKzEvlqA==
@@ -7921,10 +7921,10 @@ cozy-scripts@^8.3.0:
     webpack-dev-server "3.10.3"
     webpack-merge "4.2.2"
 
-cozy-sharing@^16.14.0:
-  version "16.14.0"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-16.14.0.tgz#cd294c9b546f4db713cd89b110bec4709ad7e576"
-  integrity sha512-iSxiPFeCJX8sDG1bhkndtQ5ZSSr3t6EOEMN2hDZmkFFkVGO/NAClIxtpBMSJ05RR3APKoY3mAJc09hvw0SxXQg==
+cozy-sharing@^17.0.0:
+  version "17.0.0"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-17.0.0.tgz#7da5ec722aa37b9416da845092844e268fe144c0"
+  integrity sha512-rUDqZLE8BOzfW6QLrEL/7zdKeQbd9m3WdZ2nKXZHkK2ovrfUs7sa2lGtjm0gYn0RYPG0Cfpv237PnhcvHSQzXQ==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     classnames "^2.2.6"
@@ -18636,15 +18636,15 @@ typescript@4.9.5:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.5.tgz#095979f9bcc0d09da324d58d03ce8f8374cbe65a"
   integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
 
+typescript@5.5.2:
+  version "5.5.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.5.2.tgz#c26f023cb0054e657ce04f72583ea2d85f8d0507"
+  integrity sha512-NcRtPEOsPFFWjobJEtfihkLCZCXZt/os3zf8nTxjVH3RvTSxjrCamJpbExGvYOF+tFHc3pA65qpdwPbzjohhew==
+
 typescript@^4.3.5:
   version "4.3.5"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.3.5.tgz#4d1c37cc16e893973c45a06886b7113234f119f4"
   integrity sha512-DqQgihaQ9cUrskJo9kIyW/+g0Vxsk8cDtZ52a3NGh0YNTfpUSArXSohyUGnvbPazEPLu398C0UxmKSOrPumUzA==
-
-typescript@^4.5.2:
-  version "4.5.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.5.5.tgz#d8c953832d28924a9e3d37c73d729c846c5896f3"
-  integrity sha512-TCTIul70LyWe6IJWT8QSYeA54WQe8EjQFU4wY52Fasj5UKx88LNYKCgBEHcOMOrFF1rKGbD8v/xcNWVUq9SymA==
 
 typestyle@^1.4.4:
   version "1.7.2"
