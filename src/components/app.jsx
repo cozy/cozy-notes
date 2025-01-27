@@ -92,7 +92,7 @@ const PublicContext = () => {
   const [sharedDocumentId, setSharedDocumentId] = useState(null)
   const [readOnly, setReadOnly] = useState(false)
   const returnUrl = useMemo(() => getReturnUrl(), [])
-  const { loading, isSharingShortcutCreated, discoveryLink } =
+  const { loading, isSharingShortcutCreated, addSharingLink } =
     useSharingInfos(SHARING_LOCATION)
   const isPreview = usePreview(window.location.pathname)
   const isAddToMyCozyFabDisplayed =
@@ -135,7 +135,7 @@ const PublicContext = () => {
         />
         {isAddToMyCozyFabDisplayed && (
           <OpenSharingLinkFabButton
-            link={discoveryLink}
+            link={addSharingLink}
             isSharingShortcutCreated={isSharingShortcutCreated}
             style={openSharingLinkFabButtonStyle}
           />

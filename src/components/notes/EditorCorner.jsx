@@ -8,7 +8,8 @@ import React from 'react'
 
 import {
   useSharingInfos,
-  openSharingLink,
+  addToCozySharingLink,
+  syncToCozySharingLink,
   OpenSharingLinkButton
 } from 'cozy-sharing'
 import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
@@ -38,13 +39,13 @@ const ForwardedIcon = React.forwardRef(function ForwardedIcon(props, ref) {
 const EditorCorner = ({ isPublic, isReadOnly, title, file }) => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
-  const { discoveryLink, isSharingShortcutCreated, loading } =
+  const { addSharingLink, isSharingShortcutCreated, loading } =
     useSharingInfos(SHARING_LOCATION)
   const isPreview = usePreview(window.location.pathname)
 
-  const actions = makeActions([isPublic && openSharingLink], {
+  const actions = makeActions([addToCozySharingLink, syncToCozySharingLink], {
     isSharingShortcutCreated,
-    link: discoveryLink
+    addSharingLink
   })
 
   if (!isPublic) {
@@ -58,7 +59,7 @@ const EditorCorner = ({ isPublic, isReadOnly, title, file }) => {
     <>
       {isToolbarButtonsDisplayed && (
         <OpenSharingLinkButton
-          link={discoveryLink}
+          link={addSharingLink}
           isSharingShortcutCreated={isSharingShortcutCreated}
         />
       )}
