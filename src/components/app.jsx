@@ -171,7 +171,7 @@ const App = ({ isPublic }) => {
           )}
 
           <Main>
-            <Content>
+            <Content className={isMobile ? '' : 'u-m-0 u-bdrs-0'}>
               <AlertProvider>
                 {isPublic ? <PublicContext /> : <PrivateContext />}
               </AlertProvider>
