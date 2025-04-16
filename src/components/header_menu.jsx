@@ -57,7 +57,7 @@ const HeaderMenu = ({
             )}
           </AppLinker>
 
-          <Divider orientation="vertical" className="u-mh-1" />
+          <Divider orientation="vertical" className="u-ml-1" flexItem />
         </WithBreakpoints>
 
         {leftComponent}

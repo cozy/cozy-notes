@@ -230,13 +230,6 @@ html .akEditor>div:first-child>div:first-child+div hr {
     }
 }
 
-.sto-app-back {
-    display: inline-flex;
-    align-items: center;
-    text-decoration: none;
-    color: var(--iconTextColor) !important;
-}
-
 .note-header-menu--editing {
     z-index: 4;
 }
