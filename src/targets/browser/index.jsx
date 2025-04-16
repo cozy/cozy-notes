@@ -1,6 +1,7 @@
 /* eslint-disable import/order */
 import 'cozy-ui/dist/cozy-ui.utils.min.css'
 import 'cozy-ui/transpiled/react/stylesheet.css'
+import 'cozy-search/dist/stylesheet.css'
 
 import { fr, en } from '@atlaskit/editor-core/i18n'
 import { CaptureConsole } from '@sentry/integrations'

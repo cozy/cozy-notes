@@ -21,6 +21,7 @@ import {
 
 import { BarProvider, BarComponent, BarCenter } from 'cozy-bar'
 import { RealTimeQueries, useClient } from 'cozy-client'
+import { DataProxyProvider } from 'cozy-dataproxy-lib'
 import CozyDevTools from 'cozy-devtools'
 import flag from 'cozy-flags'
 import {
@@ -189,11 +190,13 @@ const App = ({ isPublic }) => {
 }
 
 const WrappedApp = props => (
-  <BarProvider>
-    <BreakpointsProvider>
-      <App {...props} />
-    </BreakpointsProvider>
-  </BarProvider>
+  <DataProxyProvider>
+    <BarProvider>
+      <BreakpointsProvider>
+        <App {...props} />
+      </BreakpointsProvider>
+    </BarProvider>
+  </DataProxyProvider>
 )
 
 export default WrappedApp
