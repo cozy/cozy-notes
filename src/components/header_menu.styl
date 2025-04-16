@@ -1,11 +1,15 @@
+@require 'settings/breakpoints.styl'
+
 .header-menu
     align-items center
     box-shadow var(--shadow1)
     display flex
-    justify-content space-between
-    padding 0.5rem 1rem
+    padding 0.5rem 1rem 0.5rem 0
     position relative
     z-index var(--zIndex-low) // Needed for the drop-shadow to be above the editor area
+
+    +small-screen('min')
+        padding 0.5rem 1rem
 
 .app-icon
 .home-link

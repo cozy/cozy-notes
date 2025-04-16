@@ -124,13 +124,11 @@ export default function Editor(props) {
           headerMenu={
             <HeaderMenu
               leftComponent={
-                <div className="u-mr-1">
-                  <BackFromEditing
-                    returnUrl={returnUrl}
-                    file={file}
-                    requestToLeave={requestToLeave}
-                  />
-                </div>
+                <BackFromEditing
+                  returnUrl={returnUrl}
+                  file={file}
+                  requestToLeave={requestToLeave}
+                />
               }
               rightComponent={
                 <EditorCorner

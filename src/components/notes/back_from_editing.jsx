@@ -7,7 +7,9 @@ import React, { useContext } from 'react'
 
 import { deconstructCozyWebLinkWithSlug, models, useClient } from 'cozy-client'
 import AppLinker from 'cozy-ui/transpiled/react/AppLinker'
-import { Button, ButtonLink } from 'cozy-ui/transpiled/react/deprecated/Button'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import IconButton from 'cozy-ui/transpiled/react/IconButton'
+import PreviousIcon from 'cozy-ui/transpiled/react/Icons/Previous'
 
 /**
  * Simple fake event to detect if the handler
@@ -80,27 +82,28 @@ export default function BackFromEditing({ returnUrl, file, requestToLeave }) {
       <AppLinker app={{ slug: slug }} href={returnUrl} nativePath={nativePath}>
         {({ onClick, href }) => {
           return (
-            <ButtonLink
-              icon="previous"
-              onClick={createOnClick(requestToLeave, href, onClick)}
+            <IconButton
+              component="a"
               href={href}
-              className="sto-app-back"
-              subtle
-            />
+              onClick={createOnClick(requestToLeave, href, onClick)}
+            >
+              <Icon icon={PreviousIcon} />
+            </IconButton>
           )
         }}
       </AppLinker>
     )
   } else {
     const href = '#/'
+
     return (
-      <Button
-        icon="previous"
+      <IconButton
+        component="a"
         href={href}
         onClick={createOnClick(requestToLeave, href)}
-        className="sto-app-back"
-        subtle
-      />
+      >
+        <Icon icon={PreviousIcon} />
+      </IconButton>
     )
   }
 }

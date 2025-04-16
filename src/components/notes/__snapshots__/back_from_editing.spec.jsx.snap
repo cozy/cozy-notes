@@ -3,22 +3,29 @@
 exports[`BackFromEditing mounts 1`] = `
 <div>
   <a
-    class="styles__c-btn___3kXsk styles__c-btn--subtle___2rRQ0 sto-app-back"
+    aria-disabled="false"
+    class="MuiButtonBase-root MuiIconButton-root large"
     href="/"
+    tabindex="0"
   >
-    <span>
+    <span
+      class="MuiIconButton-label"
+    >
       <svg
-        aria-hidden="true"
         class="styles__icon___23x3R"
-        focusable="false"
         height="16"
+        viewBox="0 0 16 16"
         width="16"
       >
-        <use
-          xlink:href="#previous"
+        <path
+          d="M3.414 7h11.58C15.548 7 16 7.444 16 8c0 .552-.45 1-1.007 1H3.414l5.293 5.293a1 1 0 01-1.414 1.414l-7-7a1 1 0 010-1.414l7-7a1 1 0 111.414 1.414L3.414 7z"
+          fill-rule="evenodd"
         />
       </svg>
     </span>
+    <span
+      class="MuiTouchRipple-root"
+    />
   </a>
 </div>
 `;
