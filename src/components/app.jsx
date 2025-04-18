@@ -19,6 +19,7 @@ import {
   useParams
 } from 'react-router-dom'
 
+import { BarRoutes } from 'cozy-bar'
 import { BarProvider, BarComponent, BarCenter } from 'cozy-bar'
 import { RealTimeQueries, useClient } from 'cozy-client'
 import { DataProxyProvider } from 'cozy-dataproxy-lib'
@@ -71,6 +72,7 @@ const PrivateContext = () => {
         <Route path={AppRoutes.New} element={<RouteNew />} />
         <Route path={AppRoutes.Root} element={<List />} />
         <Route path={AppRoutes.Editor} element={<RoutedEditor />} />
+        {BarRoutes.map(BarRoute => BarRoute)}
       </SentryRoutes>
 
       {state?.backgroundLocation && state?.shareModalProps && (
