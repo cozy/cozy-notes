@@ -33,7 +33,7 @@
       "at": "%{date} at %{time}"
     },
     "Empty": {
-      "welcome": "Welcome on Cozy Notes",
+      "welcome": "Welcome on Twake Notes",
       "after_created": "Once your Note is created, you can find it in your "
     },
     "SavingIndicator": {
