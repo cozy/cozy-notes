@@ -1,6 +1,6 @@
 {
   "name": "Notes",
-  "name_prefix": "Cozy",
+  "name_prefix": "Twake",
   "slug": "notes",
   "icon": "icon.svg",
   "categories": ["cozy"],
@@ -9,8 +9,8 @@
   "editor": "Cozy",
   "source": "https://github.com/cozy/cozy-notes.git@build",
   "developer": {
-    "name": "Cozy Cloud",
-    "url": "https://cozy.io"
+    "name": "Twake Workplace",
+    "url": "https://twake.app"
   },
   "screenshots": [
     "screenshots/fr/screenshot01.png",
