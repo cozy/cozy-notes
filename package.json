@@ -52,7 +52,7 @@
     "eslint-plugin-react": "7.33.2",
     "eslint-plugin-react-hooks": "4.6.0",
     "git-directory-deploy": "1.5.1",
-    "install-peers": "1.0.3",
+    "install-peers": "1.0.4",
     "jest": "28.1.3",
     "jest-environment-jsdom": "28.1.3",
     "patch-package": "^8.0.0",
