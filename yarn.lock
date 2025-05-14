@@ -7684,10 +7684,10 @@ cozy-app-publish@^0.27.2:
     request "^2.88.0"
     tar "^4.4.13"
 
-cozy-bar@^21.2.0:
-  version "21.2.0"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-21.2.0.tgz#2ea5cf893fe43aca520aa182c9df7bf65d87a17b"
-  integrity sha512-4rxFb0A8jqpV2uE6B9/DwrHoZoisWVJOUrjP0KDKGNiuGp0QEa9glkHLZvHUq/Qmji/L/O+kG7QX5h1ItBc9wA==
+cozy-bar@^22.1.0:
+  version "22.1.0"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-22.1.0.tgz#b485f355b3eb35ebe7d4b083e44c3e57831d68f1"
+  integrity sha512-9NC4gDHd7y9hjwm8jhrFqYREykOphwdgpSD8NO7YwL/t/+ug+Qk0ftnOGswDVUb3nnaMu5rSVBzPGfyn/NYeAg==
   dependencies:
     hammerjs "2.0.8"
     lodash.debounce "4.0.8"
@@ -8046,10 +8046,10 @@ cozy-scripts@^8.3.0:
     webpack-dev-server "3.10.3"
     webpack-merge "4.2.2"
 
-cozy-search@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/cozy-search/-/cozy-search-0.5.1.tgz#85c81a139d585117395231b37ec8e0ca701a4c37"
-  integrity sha512-8u3HiPO9fVPXhJPtbyUISGB9osOsMrLQmyZHjtobJtwT4Q8oeKBVPSeh0apKaGg/h2jES8Z/G+ygK+Mq7QNiPw==
+cozy-search@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/cozy-search/-/cozy-search-0.6.0.tgz#b3debc8d626f4d7f33842306f57cbd53275aaa7f"
+  integrity sha512-8co1c3TSkWMqTSBPrcvsz/S4RKcYsmeK4JvT0oixvgoXpQwUh9bkIM8qlo9fRkp0kYycLyI5yB32rvChMw+RwA==
   dependencies:
     classnames "2.5.1"
     lodash "4.17.21"
@@ -8057,10 +8057,10 @@ cozy-search@^0.5.1:
     react-type-animation "3.2.0"
     rooks "7.14.1"
 
-cozy-sharing@^25.3.0:
-  version "25.3.0"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-25.3.0.tgz#dfffe840d2a2de305ec54eff17d17e4b9e41c7a1"
-  integrity sha512-vxn22Owj+mR+FsY/YrhEoxGe/jPqAe8FsAr1JMLkWj9+shLdvv2O1840XU4NSZlBy415lkO9g7AWgl8XFssBfA==
+cozy-sharing@^25.4.0:
+  version "25.4.0"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-25.4.0.tgz#08646a9891fa88860f850feec55fbb52885ed9ab"
+  integrity sha512-VLA/rpc1FMV0hxLbm673JNYQ7ivy6BkSiz+QHvZBcNfMJ3w3UMMs7ww1VHF6edETytgrntGWj762+n9kPuWL0A==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     classnames "^2.2.6"
@@ -8086,10 +8086,10 @@ cozy-tsconfig@1.2.0:
   resolved "https://registry.yarnpkg.com/cozy-tsconfig/-/cozy-tsconfig-1.2.0.tgz#17e61f960f139fae4d26cbac2254b9ab632b269e"
   integrity sha512-TRHnY9goF3FzVlUbP7BcHxuN2XAA4AmppT4fHHZmTKaSwYTByVR1Al+riFMDbce94kJZ1wzl9WNLWQuqzGZ6Cw==
 
-cozy-ui@^122.11.1:
-  version "122.11.1"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-122.11.1.tgz#c428a6f6af5ea98da6dbebf68fc997676195c336"
-  integrity sha512-80j6FdBf3ix5kCkdSGtFS7iHQNMhYOq/lp2CeOxcbUI4CGm47jrqDE/Bh+Ok28qXmoiUVfYVZ48rsOQXqvPt2A==
+cozy-ui@^123.1.1:
+  version "123.1.1"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-123.1.1.tgz#7ab9046db40a13593724304c7e64ae68eb51956e"
+  integrity sha512-OKKEwyMwEuFYCDjKbW7fdRC4RO5HFaUwfUl+SF2m8krqocBUjGzXILPKPMtdpZhgxTm2MdvCDJtU7Eo69n15xQ==
   dependencies:
     "@babel/runtime" "^7.3.4"
     "@date-io/date-fns" "1"
