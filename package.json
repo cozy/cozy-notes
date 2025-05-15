@@ -1,6 +1,6 @@
 {
   "name": "cozy-notes",
-  "version": "1.42.0",
+  "version": "1.43.0",
   "scripts": {
     "postinstall": "patch-package",
     "analyze": "COZY_SCRIPTS_ANALYZER=true yarn build",
