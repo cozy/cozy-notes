@@ -3,6 +3,10 @@
     font-size: 1rem;
 }
 
+:root {
+    --sidebarHeight: 0.01px; /* to avoid replacing by `0` when building the file */
+}
+
 html {
     --documentMaxWidth: 48rem;
     --documentDividerColor: var(--dividerColor);
