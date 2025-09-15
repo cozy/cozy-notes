@@ -3,7 +3,7 @@ import 'cozy-ui/dist/cozy-ui.utils.min.css'
 import 'cozy-ui/transpiled/react/stylesheet.css'
 import 'cozy-search/dist/stylesheet.css'
 
-import { fr, en } from '@atlaskit/editor-core/i18n'
+import { fr, en, ru, vi } from '@atlaskit/editor-core/i18n'
 import { CaptureConsole } from '@sentry/integrations'
 import * as Sentry from '@sentry/react'
 import IsPublicContext from 'components/IsPublicContext'
@@ -53,6 +53,14 @@ const locales = {
   fr: {
     react: require('react-intl/locale-data/fr'),
     atlaskit: { ...fr, ...frenchAtlaskitCozy }
+  },
+  ru: {
+    react: require('react-intl/locale-data/ru'),
+    atlaskit: ru
+  },
+  vi: {
+    react: require('react-intl/locale-data/vi'),
+    atlaskit: vi
   }
 }
 
@@ -111,10 +119,12 @@ export const initApp = () => {
   const appSlug = getDataOrDefault(data.app.slug, manifest.slug)
   const appVersion = getDataOrDefault(data.app.version, manifest.version)
 
-  const supportedLocales = ['en', 'fr']
+  const supportedLocales = ['en', 'fr', 'ru', 'vi']
 
   addLocaleData(locales.en.react)
   addLocaleData(locales.fr.react)
+  addLocaleData(locales.ru.react)
+  addLocaleData(locales.vi.react)
 
   const userLocale = getDataOrDefault(data.locale, 'en')
   const appLocale = supportedLocales.includes(userLocale) ? userLocale : 'en'
