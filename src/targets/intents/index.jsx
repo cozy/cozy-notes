@@ -6,7 +6,7 @@ import 'cozy-sharing/dist/stylesheet.css'
 import 'cozy-search/dist/stylesheet.css'
 import 'styles/index.css'
 
-import { fr, en } from '@atlaskit/editor-core/i18n'
+import { fr, en, ru, vi } from '@atlaskit/editor-core/i18n'
 import IntentEditorView from 'components/intents/IntentEditorView'
 import IntentProvider from 'components/intents/IntentProvider'
 import { getDataset, getDataOrDefault } from 'lib/initFromDom'
@@ -48,6 +48,14 @@ const locales = {
   fr: {
     react: require('react-intl/locale-data/fr'),
     atlaskit: { ...fr, ...frenchAtlaskitCozy }
+  },
+  ru: {
+    react: require('react-intl/locale-data/ru'),
+    atlaskit: ru
+  },
+  vi: {
+    react: require('react-intl/locale-data/vi'),
+    atlaskit: vi
   }
 }
 
@@ -58,8 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const appVersion = getDataOrDefault(data.app.version, manifest.version)
   addLocaleData(locales.en.react)
   addLocaleData(locales.fr.react)
+  addLocaleData(locales.ru.react)
+  addLocaleData(locales.vi.react)
   const userLocale = getDataOrDefault(data.locale, 'en')
-  const supportedLocales = ['en', 'fr']
+  const supportedLocales = ['en', 'fr', 'ru', 'vi']
   const appLocale = supportedLocales.includes(userLocale) ? userLocale : 'en'
 
   const protocol = window.location.protocol
