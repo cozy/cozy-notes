@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const client = new CozyClient({
     uri: `${protocol}//${data.domain}`,
     token,
-    store: true,
+    autoHydrate: true,
     appMetadata: {
       slug: appSlug,
       version: appVersion

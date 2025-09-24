@@ -139,7 +139,7 @@ export const initApp = () => {
   const client = new CozyClient({
     uri: `${protocol}//${data.domain}`,
     token: token,
-    store: true,
+    autoHydrate: true,
     appMetadata: {
       slug: appSlug,
       version: appVersion
