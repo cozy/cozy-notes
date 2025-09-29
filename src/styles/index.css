@@ -69,6 +69,7 @@ html .akEditor>div:first-child {
 
 .note-editor-container {
     overflow: hidden;
+    margin-top: 3rem; /* To go below the toolbar which is fixed */
 }
 
 /* prose mirror toolbar in the upper bar */
