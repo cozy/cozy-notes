@@ -39,7 +39,7 @@ const HeaderMenu = ({
   const { filename } = models.file.splitFilename(file.attributes)
 
   return (
-    <header>
+    <header className={styles['header']}>
       <div className={styles['header-menu']}>
         <WithBreakpoints hideOn={Breakpoints.Mobile}>
           <AppLinker app={{ slug: Slugs.Home }} href={homeHref}>
