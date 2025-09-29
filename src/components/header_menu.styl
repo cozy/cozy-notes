@@ -1,11 +1,15 @@
 @require 'settings/breakpoints.styl'
 
+.header
+    position fixed // To be above the cozy-bar
+    z-index calc(var(--zIndex-bar) + 1) // To be above the cozy-bar
+    width 100%
+
 .header-menu
     align-items center
     box-shadow var(--shadow1)
     display flex
     padding 0.5rem 1rem 0.5rem 0
-    position relative
     z-index var(--zIndex-low) // Needed for the drop-shadow to be above the editor area
 
     +small-screen('min')
