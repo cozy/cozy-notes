@@ -10,7 +10,7 @@ $COZY_BAR_HEIGHT=-3rem
 .note-article
     display flex
     flex-direction column
-    height 100%
+    height calc(100% + 3rem) // To keep a 100% height even with the negative margin-top
     width 100%
 
     &:not(.note-article--intents)
