@@ -7757,10 +7757,10 @@ cozy-client@^60.8.0:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
-cozy-dataproxy-lib@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-dataproxy-lib/-/cozy-dataproxy-lib-4.1.0.tgz#20d0a38e059fb5924d85f3b5a550d7d28ec9a477"
-  integrity sha512-k5lVjnpPmATEUZaYeK0B8J0+ntiNRmpmTXyDi8p6H7y41LO/yZ0XhbIqxbO4PjPnT8aKFWx3zQ7LGqIXS2Y7LA==
+cozy-dataproxy-lib@^4.9.0:
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/cozy-dataproxy-lib/-/cozy-dataproxy-lib-4.9.0.tgz#622eed2782438c36eb1c50a3c263db4c12bd3026"
+  integrity sha512-KHz7RLXxSVvB3z9Ix6zh9nKy7GBULJFGabWCRDzTjrc/nGNahSBuyANDN1w+8u2OHJLJvGJc+xaTWPZ8CrayXg==
   dependencies:
     comlink "4.4.1"
     flexsearch "0.7.43"
@@ -14509,9 +14509,9 @@ msgpack5@^4.0.2:
     readable-stream "^2.3.6"
     safe-buffer "^5.1.2"
 
-"mui-bottom-sheet@git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
+"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
   version "1.0.8"
-  resolved "git+https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
+  resolved "https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
     jest-environment-jsdom-sixteen "^1.0.3"
