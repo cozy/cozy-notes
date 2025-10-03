@@ -1,0 +1,102 @@
+{
+  "name": "Notes",
+  "name_prefix": "Twake",
+  "slug": "app",
+  "icon": "icon.svg",
+  "categories": [
+    "cozy"
+  ],
+  "version": "1.43.0",
+  "licence": "AGPL-3.0",
+  "editor": "Cozy",
+  "source": "https://github.com/cozy/cozy-notes.git@build",
+  "developer": {
+    "name": "Twake Workplace",
+    "url": "https://twake.app"
+  },
+  "screenshots": [
+    "screenshots/fr/screenshot01.png",
+    "screenshots/fr/screenshot02.png"
+  ],
+  "langs": [
+    "en",
+    "fr"
+  ],
+  "routes": {
+    "/": {
+      "folder": "/",
+      "index": "index.html",
+      "public": false
+    },
+    "/public": {
+      "folder": "/",
+      "index": "index.html",
+      "public": true
+    },
+    "/preview": {
+      "folder": "/",
+      "index": "index.html",
+      "public": true
+    },
+    "/intents": {
+      "folder": "/intents",
+      "index": "index.html",
+      "public": false
+    }
+  },
+  "intents": [
+    {
+      "action": "OPEN",
+      "type": [
+        "io.cozy.notes.documents"
+      ],
+      "href": "/intents"
+    }
+  ],
+  "permissions": {
+    "apps": {
+      "description": "Required by the cozy-bar to display the icons of the apps",
+      "type": "io.cozy.apps",
+      "verbs": [
+        "GET"
+      ]
+    },
+    "files": {
+      "description": "Notes as files",
+      "type": "io.cozy.files"
+    },
+    "settings": {
+      "description": "Required by the cozy-bar to display Claudy and know which applications are coming soon",
+      "type": "io.cozy.settings",
+      "verbs": [
+        "GET"
+      ]
+    },
+    "sharings": {
+      "description": "Required to have access to the sharings in realtime",
+      "type": "io.cozy.sharings",
+      "verbs": [
+        "GET"
+      ]
+    },
+    "contacts": {
+      "type": "io.cozy.contacts",
+      "verbs": [
+        "GET",
+        "POST"
+      ]
+    },
+    "groups": {
+      "type": "io.cozy.contacts.groups",
+      "verbs": [
+        "GET"
+      ]
+    },
+    "intents": {
+      "type": "io.cozy.notes.documents",
+      "verbs": [
+        "GET"
+      ]
+    }
+  }
+}

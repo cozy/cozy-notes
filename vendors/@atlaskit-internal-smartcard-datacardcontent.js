@@ -1,0 +1,1 @@
+(this["webpackJsonp"] = this["webpackJsonp"] || []).push([["@atlaskit-internal-smartcard-datacardcontent"],[]]);
