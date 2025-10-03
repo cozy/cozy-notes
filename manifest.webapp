@@ -4,7 +4,7 @@
   "slug": "notes",
   "icon": "icon.svg",
   "categories": ["cozy"],
-  "version": "1.43.0",
+  "version": "1.44.0",
   "licence": "AGPL-3.0",
   "editor": "Cozy",
   "source": "https://github.com/cozy/cozy-notes.git@build",
