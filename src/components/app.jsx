@@ -192,13 +192,21 @@ const App = ({ isPublic }) => {
 }
 
 const WrappedApp = props => (
-  <DataProxyProvider>
+  <DataProxyWrapper isPublic={props?.isPublic}>
     <BarProvider>
       <BreakpointsProvider>
         <App {...props} />
       </BreakpointsProvider>
     </BarProvider>
-  </DataProxyProvider>
+  </DataProxyWrapper>
 )
+
+const DataProxyWrapper = ({ children, isPublic }) => {
+  if (isPublic) {
+    // Do not include DataProxy for public sharings
+    return children
+  }
+  return <DataProxyProvider>{children}</DataProxyProvider>
+}
 
 export default WrappedApp
