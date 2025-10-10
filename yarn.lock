@@ -7689,10 +7689,10 @@ cozy-app-publish@^0.27.2:
     request "^2.88.0"
     tar "^4.4.13"
 
-cozy-bar@^23.1.0:
-  version "23.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-23.1.0.tgz#088247e2397fe2622ef81d62ed607ad95696dff8"
-  integrity sha512-fQyArlKfc2L8vZ7FM8kIM1W0skFDgJt4ItJ7f83OeCl78lFHAT+UUdP6gSL2+qW98uKIwtaDnD9uqQJJobJTmw==
+cozy-bar@^24.1.1:
+  version "24.1.1"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-24.1.1.tgz#352e7fa65c31a5e32d4aff762afadff4e6547fd6"
+  integrity sha512-7OVRF4QfbiH2IbRkGpNulpqfu7Wgu0Gm80Cue+Nq2icC+lWjZr6PEaiygHtEC/Ja+wr8kvBSf8ed1nVndW6P4g==
   dependencies:
     lodash.set "^4.3.2"
     lodash.unionwith "4.6.0"
@@ -7730,10 +7730,10 @@ cozy-client@^57.7.0:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
-cozy-client@^60.8.0:
-  version "60.8.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-60.8.0.tgz#e4edf2c4154a0cd7d68a815941c7f2ecce38c2a0"
-  integrity sha512-jkF+grk5OR96avpoknz+kZHPcTY96E82R4oejMZkLHxFLme+1hG+q/B19eRemx0M8swZbxDOc7a2K1/ZrBgeGw==
+cozy-client@^60.13.0:
+  version "60.13.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-60.13.0.tgz#d47ff9888ca364143670ad2c2ffdef9aa48ecdaf"
+  integrity sha512-1LxMEvumlxFksjAWjotaClRuyKkcvJBM04Bu+3LlMXyozN4GS6P6PT2n21YFkuJHAYuQJnJ2nGJ6rHgdIpqx2w==
   dependencies:
     "@cozy/minilog" "1.0.0"
     "@fastify/deepmerge" "^2.0.2"
