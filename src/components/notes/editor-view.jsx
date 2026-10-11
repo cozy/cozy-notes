@@ -118,7 +118,9 @@ function EditorView(props) {
           onChange={onContentChange || nullCallback}
           defaultValue={defaultValue}
           appearance="full-page"
-          placeholder={t('Notes.EditorView.main_placeholder')}
+          placeholder={
+            readOnly ? undefined : t('Notes.EditorView.main_placeholder')
+          }
           shouldFocus={!readOnly}
           legacyImageUploadProvider={imageUploadProvider({
             collabProvider,

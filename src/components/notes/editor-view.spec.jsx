@@ -1,3 +1,4 @@
+import { Editor } from '@atlaskit/editor-core'
 import { render } from '@testing-library/react'
 import CollabProvider from 'lib/collab/provider'
 import React from 'react'
@@ -6,7 +7,7 @@ import { AppLike } from 'test/AppLike'
 import EditorView from './editor-view'
 
 jest.mock('@atlaskit/editor-core', () => ({
-  Editor: function Editor(props) {
+  Editor: jest.fn(function Editor(props) {
     return (
       <div
         data-testid="Editor"
@@ -17,7 +18,7 @@ jest.mock('@atlaskit/editor-core', () => ({
         {props.children}
       </div>
     )
-  },
+  }),
   WithEditorActions: function WithEditorActions(props) {
     return (
       <div>
@@ -67,6 +68,10 @@ function mountEditorView({ readOnly, collabProvider }) {
 }
 
 describe('EditorView', () => {
+  beforeEach(() => {
+    Editor.mockClear()
+  })
+
   describe('readOnly', () => {
     describe('when true', () => {
       const readOnly = true
@@ -85,6 +90,13 @@ describe('EditorView', () => {
           'data-should-focus',
           'false'
         )
+      })
+
+      it('should not pass editor placeholder', async () => {
+        const collabProvider = setupCollabProvider()
+        mountEditorView({ collabProvider, readOnly })
+        expect(Editor).toHaveBeenCalled()
+        expect(Editor.mock.calls[0][0].placeholder).toBeUndefined()
       })
 
       describe('with a collabProvider', () => {
@@ -124,6 +136,13 @@ describe('EditorView', () => {
           'data-should-focus',
           'true'
         )
+      })
+
+      it('should pass editor placeholder', async () => {
+        const collabProvider = setupCollabProvider()
+        mountEditorView({ collabProvider, readOnly })
+        expect(Editor).toHaveBeenCalled()
+        expect(Editor.mock.calls[0][0].placeholder).toBeTruthy()
       })
 
       describe('with a collabProvider', () => {
